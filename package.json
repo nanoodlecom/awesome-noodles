@@ -1,0 +1,14 @@
+{
+  "name": "awesome-noodles",
+  "version": "0.0.0",
+  "private": true,
+  "description": "Curated gallery of nanoodle workflow graphs (noodles) — not published to npm; package.json exists only to run the link checker.",
+  "type": "module",
+  "scripts": {
+    "test": "node --test"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "license": "MIT"
+}
