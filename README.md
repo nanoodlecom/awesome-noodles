@@ -13,6 +13,10 @@ workflows: wire text, image, video, audio, and LLM nodes into a graph and run
 it against the [NanoGPT](https://nano-gpt.com) API. **A noodle** is one such
 graph — the `noodle-graph.json` file the editor's 💾 button saves.
 
+**This repo vs [noodle-skills](https://github.com/nanoodlecom/noodle-skills):**
+this repo is graphs you open and edit on the nanoodle canvas; noodle-skills is
+prebuilt Agent Skills an AI agent runs headlessly.
+
 **How the links work:** an "Open in nanoodle" link is
 `https://nanoodle.com/#g=` + base64url(gzip(graph JSON)). The entire graph
 rides the URL fragment — nothing is uploaded, no server ever sees it, and this
@@ -26,7 +30,11 @@ to exactly the committed graph file.
 
 ## 🏆 Noodle Cookoff 2026
 
-*Winners land July 13, 2026 — watch this space.*
+*Entries are in and the judges are slurping — winners will be announced right
+here once they're finalized.*
+
+The gallery so far is six deliberately small starter noodles (2–4 nodes each) —
+copy one, remix it, and send us yours via [CONTRIBUTING.md](CONTRIBUTING.md).
 
 ## 🖼 Image
 
