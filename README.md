@@ -28,11 +28,6 @@ to exactly the committed graph file.
 > spends real money from your NanoGPT balance — images are typically cents,
 > video more.
 
-## 🏆 Noodle Cookoff 2026
-
-*Entries are in and the judges are slurping — winners will be announced right
-here once they're finalized.*
-
 The gallery so far is six deliberately small starter noodles (2–4 nodes each) —
 copy one, remix it, and send us yours via [CONTRIBUTING.md](CONTRIBUTING.md).
 
