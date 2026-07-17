@@ -28,13 +28,14 @@ to exactly the committed graph file.
 > spends real money from your NanoGPT balance — images are typically cents,
 > video more.
 
-The gallery so far is six deliberately small starter noodles (2–4 nodes each) —
+The gallery so far is seven deliberately small starter noodles —
 copy one, remix it, and send us yours via [CONTRIBUTING.md](CONTRIBUTING.md).
 
 ## 🖼 Image
 
 - 🖼 **Text → image** — Type a scene, wire it into an image node: the one-wire hello-world of noodling. [Open in nanoodle](https://nanoodle.com/#g=H4sIAAAAAAAAA03PwWrDMBCE4VdZ5rwB202h6Dl6KzmISHaXWCsjb0KM0bsXk5r4PHP4_hUPuJahOcQZ7meFBDhoC4YtU4SDxaeB8YT7ahgLXNs1jF7iGGa49bU7eCox0OQ1ePKzlaz-bhSK9CY6UH7EQhqznkYx-s63JZM3Uhl-jekqGpM3uTJ9fKaEWnmXdG-JJD_EF-Xc_Vuao6XWC2MUvR1Sxi2lLzlt1i1zz5tysT2vMiwfD937MJWcJkOtl_oHaw3NGy4BAAA) · [graph](graphs/text-to-image.noodle-graph.json)
 - ✂️ **Edit a photo** — Upload any photo and describe the change in plain words; an edit node repaints it. [Open in nanoodle](https://nanoodle.com/#g=H4sIAAAAAAAAA2XPwWrDMBCE4VcRc96CbXIoepWQg4jW6hJpJSS1STB692LaUEPv8zH8G75gZ4Jmzw32vEE8LHQGoT8Lw-KzxOw8CA_Y94nwhJ2XibAKR99gtzHoxZY_xl76Dzotv2o6KpSaU-mwSO7GRrpRCR_9rUtiMs57E2K-iwajnNU0CdqMU2-qEzWV18jXLlkbxrgQoujtEBD3gLXmtD_tca-okuv-KckFxiD0fFws_xbjMr4B7HVuiiQBAAA) · [graph](graphs/edit-a-photo.noodle-graph.json)
+- 🥊 **Model arena** — Same prompt fanned into four image nodes: pick a different model on each contender, run once, judge side by side. [Open in nanoodle](https://nanoodle.com/#g=H4sIAAAAAAAAA52SvU7DMBRGX-XqzhZqkzSDV6ASAwwVG-pg4pvENP6R46BGVSRmZnYmXown4BFQWkoyVKnUyYOvj47v9-3wFfmcobGSauRPO1QSOZo5MgytI-SYWa3JBGS4RZ7OGLbIkxnDXFEla-Q7DLQNyPHn8-sd7q2kCoQnIzg4lW1AwM3dcnm7un14BL2_tQZIZCVcWxPISPIMQkkGShVg1Rj4fvuAWmgC5612gUFuG394WzN4aWRBEmolCZ7b_XmFXceO6tGgvhcbe8ezU-ICgjItSC8KayBrfEUSGgeirogcKAMCAomscQy0yLwFV9pgGdQ2D6CtN8oUUKmiDGOReBBRWhR0MEn-VNKxScfQCN1P_u8E5jigkklUlJxjRSPWYpKVROdY8YiVnvniOVaC3ZphpcxmVL6qL1_ure4j6ot5TNVZH46pdgyDHQ_Ew8ChNqMoqugSYjJFjC8hLqaIySXE9ARx3f0CQT9_ktYDAAA) · [graph](graphs/model-arena.noodle-graph.json)
 
 ## 🎬 Video
 
