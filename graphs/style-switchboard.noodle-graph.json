@@ -1,0 +1,14 @@
+{
+  "v": 1,
+  "nodes": [
+    { "id": "n1", "type": "text", "x": 60, "y": 60, "fields": { "text": "a lighthouse on a storm-battered cliff" } },
+    { "id": "n2", "type": "choice", "x": 60, "y": 300, "fields": { "options": "loose watercolor and ink\nisometric low-poly 3D render\nvintage 1970s travel poster\ncharcoal sketch, heavy grain\nstained-glass window", "selected": "loose watercolor and ink" } },
+    { "id": "n3", "type": "join", "x": 400, "y": 160, "fields": { "sep": ", in the style of " } },
+    { "id": "n4", "type": "image", "x": 700, "y": 140, "fields": {} }
+  ],
+  "links": [
+    { "id": "l1", "from": { "node": "n1", "port": "text" }, "to": { "node": "n3", "port": "a" } },
+    { "id": "l2", "from": { "node": "n2", "port": "text" }, "to": { "node": "n3", "port": "b" } },
+    { "id": "l3", "from": { "node": "n3", "port": "text" }, "to": { "node": "n4", "port": "prompt" } }
+  ]
+}
