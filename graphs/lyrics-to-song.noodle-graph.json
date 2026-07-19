@@ -1,6 +1,7 @@
 {
   "v": 1,
   "nodes": [
+    { "id": "c-intent", "type": "comment", "x": 60, "y": -110, "w": 320, "fields": { "text": "Fans one song idea out to two LLMs — lyrics and a matching style — then a music node sings the result.", "color": "yellow" } },
     { "id": "n1", "type": "text", "x": 60, "y": 60, "fields": { "text": "Write a wistful 90s trip-hop track. Repeat the hook." } },
     { "id": "n2", "type": "llm", "x": 340, "y": 20, "fields": { "system": "You are a songwriter. Write only the lyrics — no title, no commentary." } },
     { "id": "n3", "type": "llm", "x": 620, "y": 260, "fields": { "system": "You invent a musical style that fits the given lyrics. Reply with only the style, richly descriptive — no commentary." } },

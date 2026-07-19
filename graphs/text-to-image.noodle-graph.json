@@ -1,6 +1,7 @@
 {
   "v": 1,
   "nodes": [
+    { "id": "c-intent", "type": "comment", "x": 80, "y": -30, "w": 320, "fields": { "text": "Generates an image from a one-line scene description — the one-wire hello-world of noodling.", "color": "yellow" } },
     { "id": "n1", "type": "text", "x": 80, "y": 120, "fields": { "text": "a red panda astronaut drifting over neon-lit Tokyo at night, cinematic, 35mm" } },
     { "id": "n2", "type": "image", "x": 420, "y": 100, "fields": {} }
   ],
