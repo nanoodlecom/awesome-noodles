@@ -1,14 +1,81 @@
 {
   "v": 1,
   "nodes": [
-    { "id": "n1", "type": "upload", "x": 60, "y": 60, "fields": {} },
-    { "id": "n2", "type": "text", "x": 60, "y": 320, "fields": { "text": "Hi there! I used to be a still photo — then somebody wired three nodes together, and now I won't stop talking." } },
-    { "id": "n3", "type": "tts", "x": 400, "y": 300, "fields": {} },
-    { "id": "n4", "type": "lipsync", "x": 740, "y": 120, "fields": {} }
+    {
+      "id": "c-intent",
+      "type": "comment",
+      "x": 80,
+      "y": -30,
+      "w": 320,
+      "fields": {
+        "text": "Animates an uploaded portrait: TTS speaks your line and a lipsync node moves the face to match.",
+        "color": "yellow"
+      }
+    },
+    {
+      "id": "n1",
+      "type": "upload",
+      "x": 60,
+      "y": 60,
+      "fields": {}
+    },
+    {
+      "id": "n2",
+      "type": "text",
+      "x": 60,
+      "y": 320,
+      "fields": {
+        "text": "Hi there! I used to be a still photo — then somebody wired three nodes together, and now I won't stop talking."
+      }
+    },
+    {
+      "id": "n3",
+      "type": "tts",
+      "x": 400,
+      "y": 300,
+      "fields": {}
+    },
+    {
+      "id": "n4",
+      "type": "lipsync",
+      "x": 740,
+      "y": 120,
+      "fields": {}
+    }
   ],
   "links": [
-    { "id": "l1", "from": { "node": "n2", "port": "text" }, "to": { "node": "n3", "port": "prompt" } },
-    { "id": "l2", "from": { "node": "n1", "port": "image" }, "to": { "node": "n4", "port": "image" } },
-    { "id": "l3", "from": { "node": "n3", "port": "audio" }, "to": { "node": "n4", "port": "audio" } }
+    {
+      "id": "l1",
+      "from": {
+        "node": "n2",
+        "port": "text"
+      },
+      "to": {
+        "node": "n3",
+        "port": "prompt"
+      }
+    },
+    {
+      "id": "l2",
+      "from": {
+        "node": "n1",
+        "port": "image"
+      },
+      "to": {
+        "node": "n4",
+        "port": "image"
+      }
+    },
+    {
+      "id": "l3",
+      "from": {
+        "node": "n3",
+        "port": "audio"
+      },
+      "to": {
+        "node": "n4",
+        "port": "audio"
+      }
+    }
   ]
 }
