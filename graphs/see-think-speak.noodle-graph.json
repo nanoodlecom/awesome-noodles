@@ -1,7 +1,7 @@
 {
   "v": 1,
   "nodes": [
-    { "id": "c-intent", "type": "comment", "x": 60, "y": -30, "w": 320, "fields": { "text": "Describes an uploaded photo with a vision model, distills it into a four-line poem, and reads it aloud as speech.", "color": "yellow" } },
+    { "id": "c-intent", "type": "comment", "x": 60, "y": -80, "w": 460, "fields": { "text": "A vision model describes your photo, an LLM distills it into a poem, and speech reads it aloud.", "color": "yellow" } },
     { "id": "n1", "type": "upload", "x": 60, "y": 120, "fields": {} },
     { "id": "n2", "type": "vision", "x": 340, "y": 100, "fields": { "q": "Describe this image in vivid, concrete detail." } },
     { "id": "n3", "type": "llm", "x": 620, "y": 100, "fields": { "system": "You are a poet. Turn the description into a wistful four-line poem. Reply with only the poem." } },

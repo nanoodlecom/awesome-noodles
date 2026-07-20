@@ -1,63 +1,13 @@
 {
   "v": 1,
   "nodes": [
-    {
-      "id": "c-intent",
-      "type": "comment",
-      "x": 80,
-      "y": -30,
-      "w": 320,
-      "fields": {
-        "text": "Turns a rambling voice memo into a summary, bullet points, and action items via transcription plus an LLM.",
-        "color": "yellow"
-      }
-    },
-    {
-      "id": "n1",
-      "type": "aupload",
-      "x": 60,
-      "y": 120,
-      "fields": {}
-    },
-    {
-      "id": "n2",
-      "type": "transcribe",
-      "x": 340,
-      "y": 100,
-      "fields": {}
-    },
-    {
-      "id": "n3",
-      "type": "llm",
-      "x": 620,
-      "y": 100,
-      "fields": {
-        "system": "Turn this raw voice-memo transcript into tidy notes: one-line summary first, then bullet points, then any action items. Reply with only the notes."
-      }
-    }
+    { "id": "c-intent", "type": "comment", "x": 60, "y": -80, "w": 460, "fields": { "text": "Transcribes a rambling voice memo, then an LLM tidies it into a summary, bullets, and action items.", "color": "yellow" } },
+    { "id": "n1", "type": "aupload", "x": 60, "y": 120, "fields": {} },
+    { "id": "n2", "type": "transcribe", "x": 340, "y": 100, "fields": {} },
+    { "id": "n3", "type": "llm", "x": 620, "y": 100, "fields": { "system": "Turn this raw voice-memo transcript into tidy notes: one-line summary first, then bullet points, then any action items. Reply with only the notes." } }
   ],
   "links": [
-    {
-      "id": "l1",
-      "from": {
-        "node": "n1",
-        "port": "audio"
-      },
-      "to": {
-        "node": "n2",
-        "port": "audio"
-      }
-    },
-    {
-      "id": "l2",
-      "from": {
-        "node": "n2",
-        "port": "text"
-      },
-      "to": {
-        "node": "n3",
-        "port": "prompt"
-      }
-    }
+    { "id": "l1", "from": { "node": "n1", "port": "audio" }, "to": { "node": "n2", "port": "audio" } },
+    { "id": "l2", "from": { "node": "n2", "port": "text" }, "to": { "node": "n3", "port": "prompt" } }
   ]
 }
