@@ -1,7 +1,7 @@
 {
   "v": 1,
   "nodes": [
-    { "id": "c-intent", "type": "comment", "x": 80, "y": -30, "w": 320, "fields": { "text": "Repaints an uploaded photo according to an edit described in plain words.", "color": "yellow" } },
+    { "id": "c-intent", "type": "comment", "x": 80, "y": -60, "w": 340, "fields": { "text": "Repaints an uploaded photo according to an edit described in plain words.", "color": "yellow" } },
     { "id": "n1", "type": "upload", "x": 80, "y": 120, "fields": {} },
     { "id": "n2", "type": "edit", "x": 420, "y": 100, "fields": { "prompt": "make it night-time, add glowing neon signs and rain reflections" } }
   ],
