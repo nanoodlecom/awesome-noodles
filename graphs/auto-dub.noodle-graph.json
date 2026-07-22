@@ -4,9 +4,9 @@
     { "id": "c-intent", "type": "comment", "x": 60, "y": -120, "w": 460, "fields": { "text": "Extracts audio, transcribes, translates, re-speaks — then lays the new voice back over the clip.", "color": "yellow" } },
     { "id": "n1", "type": "vupload", "x": 60, "y": 60, "fields": {} },
     { "id": "n2", "type": "extractaudio", "x": 340, "y": 260, "fields": {} },
-    { "id": "n3", "type": "transcribe", "x": 620, "y": 260, "fields": {} },
-    { "id": "n4", "type": "llm", "x": 900, "y": 260, "fields": { "system": "Translate the transcript into Spanish. Natural spoken phrasing, similar length to the original so the timing roughly fits. Reply with only the translation." } },
-    { "id": "n5", "type": "tts", "x": 1180, "y": 260, "fields": {} },
+    { "id": "n3", "type": "transcribe", "x": 620, "y": 260, "fields": { "model": "Systran/faster-whisper-large-v3" } },
+    { "id": "n4", "type": "llm", "x": 900, "y": 260, "fields": { "model": "zai-org/glm-5.2", "system": "Translate the transcript into Spanish. Natural spoken phrasing, similar length to the original so the timing roughly fits. Reply with only the translation." } },
+    { "id": "n5", "type": "tts", "x": 1180, "y": 260, "fields": { "model": "Kokoro-82m" } },
     { "id": "n6", "type": "soundtrack", "x": 1460, "y": 80, "fields": {} }
   ],
   "links": [

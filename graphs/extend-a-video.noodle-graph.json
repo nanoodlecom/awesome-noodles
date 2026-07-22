@@ -4,7 +4,7 @@
     { "id": "c-intent", "type": "comment", "x": 80, "y": -80, "w": 420, "fields": { "text": "Grabs the last frame of your clip and hands it to image→video — the shot keeps going.", "color": "yellow" } },
     { "id": "n1", "type": "vupload", "x": 60, "y": 120, "fields": {} },
     { "id": "n2", "type": "vframes", "x": 340, "y": 100, "fields": { "frames": 1, "dir": "end" } },
-    { "id": "n3", "type": "ivideo", "x": 620, "y": 100, "fields": { "prompt": "continue the shot seamlessly — same subject, same motion, same lighting" } }
+    { "id": "n3", "type": "ivideo", "x": 620, "y": 100, "fields": { "model": "pruna-ai/p-video/image-to-video", "prompt": "continue the shot seamlessly — same subject, same motion, same lighting" } }
   ],
   "links": [
     { "id": "l1", "from": { "node": "n1", "port": "video" }, "to": { "node": "n2", "port": "video" } },

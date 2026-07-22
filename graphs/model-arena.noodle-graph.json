@@ -3,10 +3,10 @@
   "nodes": [
     { "id": "n1", "type": "comment", "x": 60, "y": 40, "fields": { "text": "Pick a DIFFERENT model on each Contender, then Run — same prompt four ways, side by side." }, "w": 340, "sizes": { "text": 74 } },
     { "id": "n2", "type": "text", "x": 60, "y": 300, "fields": { "text": "a tiny dragon curled up asleep in a teacup, macro photo, soft morning light" } },
-    { "id": "n3", "type": "image", "x": 460, "y": 60, "fields": {}, "name": "Contender 1" },
-    { "id": "n4", "type": "image", "x": 860, "y": 60, "fields": {}, "name": "Contender 2" },
-    { "id": "n5", "type": "image", "x": 460, "y": 460, "fields": {}, "name": "Contender 3" },
-    { "id": "n6", "type": "image", "x": 860, "y": 460, "fields": {}, "name": "Contender 4" }
+    { "id": "n3", "type": "image", "x": 460, "y": 60, "fields": { "model": "gpt-image-1.5" }, "name": "Contender 1" },
+    { "id": "n4", "type": "image", "x": 860, "y": 60, "fields": { "model": "ideogram/v4/instant" }, "name": "Contender 2" },
+    { "id": "n5", "type": "image", "x": 460, "y": 460, "fields": { "model": "hidream-o1-image" }, "name": "Contender 3" },
+    { "id": "n6", "type": "image", "x": 860, "y": 460, "fields": { "model": "krea/v2/medium/text-to-image" }, "name": "Contender 4" }
   ],
   "links": [
     { "id": "l1", "from": { "node": "n2", "port": "text" }, "to": { "node": "n3", "port": "prompt" } },
