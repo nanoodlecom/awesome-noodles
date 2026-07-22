@@ -1,0 +1,61 @@
+{
+  "v": 1,
+  "nodes": [
+    {
+      "id": "c-intent",
+      "type": "comment",
+      "x": 60,
+      "y": -90,
+      "w": 400,
+      "fields": {
+        "text": "Name your product, get a favicon — an LLM distills the brand to one bold glyph, an image model renders it, and it comes back as a crisp 512×512 square (~$0.04/run).",
+        "color": "yellow"
+      }
+    },
+    {
+      "id": "n1",
+      "type": "text",
+      "name": "Brand",
+      "x": 60,
+      "y": 100,
+      "w": 240,
+      "fields": { "text": "" }
+    },
+    {
+      "id": "n2",
+      "type": "llm",
+      "x": 360,
+      "y": 80,
+      "w": 260,
+      "sizes": { "system": 140 },
+      "fields": {
+        "model": "zai-org/glm-5.2",
+        "system": "You design one favicon. From the brand name/description, write ONE image prompt for a square app icon: a single bold glyph or symbol that captures the brand, flat vector style, strong silhouette, high contrast, centered on a solid or subtly-gradient background, generous margins, no text, no letters, no photorealism, no drop shadows. It must stay recognizable scaled down to 16 pixels. Reply with the prompt only."
+      }
+    },
+    {
+      "id": "n3",
+      "type": "image",
+      "x": 680,
+      "y": 80,
+      "w": 250,
+      "fields": { "model": "nano-banana-2-lite" }
+    },
+    {
+      "id": "n4",
+      "type": "resize",
+      "name": "Icon",
+      "x": 990,
+      "y": 100,
+      "w": 220,
+      "fields": { "mode": "fill", "width": "512", "height": "512" }
+    }
+  ],
+  "links": [
+    { "id": "l1", "from": { "node": "n1", "port": "text" }, "to": { "node": "n2", "port": "prompt" } },
+    { "id": "l2", "from": { "node": "n2", "port": "text" }, "to": { "node": "n3", "port": "prompt" } },
+    { "id": "l3", "from": { "node": "n3", "port": "image" }, "to": { "node": "n4", "port": "image" } }
+  ],
+  "nid": 5,
+  "lid": 4
+}
