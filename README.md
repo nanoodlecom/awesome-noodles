@@ -4,9 +4,9 @@
 "Open in nanoodle" on any entry and the whole workflow lands on your canvas,
 ready to run — or grab the committed graph file and run it headless with
 [nanoodle-js](https://github.com/nanoodlecom/nanoodle-js) /
-[nanoodle-py](https://github.com/nanoodlecom/nanoodle-py) *after* setting a
-model on each model-bearing node (the committed graphs deliberately ship
-without model ids — see [Limitations](#limitations)).
+[nanoodle-py](https://github.com/nanoodlecom/nanoodle-py) — most graphs ship
+with a working model id baked into every model-bearing node (see
+[Limitations](#limitations)).
 
 **What's nanoodle?** A no-server, bring-your-own-key visual editor for AI
 workflows: wire text, image, video, audio, and LLM nodes into a graph and run
@@ -28,7 +28,7 @@ to exactly the committed graph file.
 > spends real money from your NanoGPT balance — images are typically cents,
 > video more.
 
-The gallery so far is twelve deliberately small starter noodles —
+The gallery so far is ten deliberately small starter noodles —
 copy one, remix it, and send us yours via [CONTRIBUTING.md](CONTRIBUTING.md).
 
 ## 🖼 Image
@@ -37,6 +37,7 @@ copy one, remix it, and send us yours via [CONTRIBUTING.md](CONTRIBUTING.md).
 - ✂️ **Edit a photo** — Upload any photo and describe the change in plain words; an edit node repaints it. [Open in nanoodle](https://nanoodle.com/#g=H4sIAAAAAAAAA2WRwWoDMQxEf0Xo7JTNNpTiz-i15OCulY2ILRnb7SYE_3sxScmGHjVomHnSFX_Qbg2KeipoP6_IHi1OG5ZKUtFgvSTqisZ4E85o3weDF7Sbt8HggvZ1Nxg8MAVf0F6x0rmixQ9KjqUWcALfKajz5CEdtSq4adLsWWbogwB5ruCpTJm_yAMLpOBYYNHsywsanDRoRosXCkEXbM3ci8r2UfEW8tRwO66brWzjw9bDb6bdeHcNTzwpa0ydKLoTAVcQno91UzmSAec9zEGXDiOkAoVn6cweckfIdAg0VVYp2NreYGA5rS4dOsAha-xJ_Qt_UElzz-ToZsJmsOp6Y_y30fbtF9aUWqzNAQAA) · [graph](graphs/edit-a-photo.noodle-graph.json)
 - 🥊 **Model arena** — Same prompt fanned into four image nodes: pick a different model on each contender, run once, judge side by side. [Open in nanoodle](https://nanoodle.com/#g=H4sIAAAAAAAAA52TQW7bMBBFrzKYNR1ZFu0W3KYJ0E0QBN0VWbDiWCIscgSKcqIaAnqInDAnKWTXtQIoWnilhQb_vSE_D7hHlQr0bKhB9fOA1qBCn6LA2NWECnN2jnxEga-oNkuBHSq5FLi1VJkG1QEjvUZU-GjzHWj49v3-_u7p7uEHODZUAXsgnZdwyz6SNxQExJI8PLUe3v-8QaMdQR3Y1RG23AZ40V0joLGG4Fd3_N5gL_AFVTZwG_ubRtgvsu_FWXt10T7-HTtnyylpDdH6DkzQBXvI21CRgbYG3VRENVgPGiLpvK0FOJ0HhrrkyAIa3kZwHLz1BVS2KCOORLKLiHW6oJOJ_Key-WByPCZUWNRxcRxepDfrYWOv3RDw_-AgxQtBThK-zhKsIS6CdsleJtY3Ufs4yVmNOOvZTeQ0qLQmkHYLTk8bTVKyEWUzu80nlF0gnexXiSNjW5cMN7qIPEOU2D8LrKzfjbpeDV3fBnZD9PAOzkWqOcRzkXqBkccD2WXg1N3R7VeraxLlXGJ2TeJ6LlFek7iZSHzu_wLvOVqlRQQAAA) · [graph](graphs/model-arena.noodle-graph.json)
 - 🎛️ **Style switchboard** — One subject, a Choice node full of art styles, a Join to splice them: flip the switch and re-run. [Open in nanoodle](https://nanoodle.com/#g=H4sIAAAAAAAAA5VSQY7bMAz8CsGzXMR2sLvVtUU_sdmDYtOxGpk0JG68bmCgj-gL-5LC3iziAEGLngRQ5HBmOGc8oc0NstSU0D6f0ddosco8K7GiQR17mivSde-FN7QPG4Mj2iwvNgYHtNv5bTyFOqE9o9KbosVvwfegLcGXVnxFkAavVQuOa4iUxVeG3z9_QXIdQaqIyUDjTwQuKiQdA6VPaLCSIBEtjhSCDDhN5kKR8yu5ZeGa2cM9Pg6CP7TaymsiEAYHSSV22d6pUqQaquCbZr2iWOlfNNwsKbc3W6RXL5zQYhBJBINTigv9RbLn4459ko40-gqCDFkvYYTyK0TimuKOT57VHQjyz4-bBBrdiQL0knT-rFoXK3EB0pG0ag205E4jHKLzvOOkzjPV2SG4lGDwXMuABhMFqpTqv5DCaTlhOZ8w-R90qyXPn1Z-lFc_vovndzeW449oi6cbOxL1aNGA5yUDy0VBGlj7u73i-c4dLvY-bi-AmxvATmoK85RjyfaOHbusyIJXwml6MRg8H1cRDnM-mijdPDvH-yMzvUT9yMxkUGXdUF4b3IppKO6AFf8Btl-DlXfAyn-Bba8NfZSu11n19AddHDlSwAMAAA) · [graph](graphs/style-switchboard.noodle-graph.json)
+- 🖥 **Render a mockup** — Describe a screen, keep the style guide: an LLM writes the image prompt and an image model renders a screenshot-style UI mockup (~$0.04/run). [Open in nanoodle](https://nanoodle.com/#g=H4sIAAAAAAAAA5VX247cuBH9lYLmwQlAdfo247FeAnvGDjZY7wZx8hBk96FEliSmKVIhqe7RGgPkI_KF-ZKgyFa37J3sIk-DUVPFqlOnzil9Lo5FtRGFdYpCUf39c6FVURWy1DaSjYUo4jQQP3F9nx88FdXdWhRTUZWb_VoUp6La84NGk1GhqD4XkZ5iURWPFKTXNQFCkJ7ICjgQDRA7ghAnQ9COWlEFaOHbbz9CHL0NULvYgbbRgbMEimwg0D22BIN3_RABreI38rPeKTLgySryIUXunTyMwwo-nXAYtG0hOkAwuu0i_97T7-HBEPp0OAfh4l8FsNRi1MfLRdG5VSEK6YzzRVVMZIw7Fc_P4gyS3VzhSSUvsXkRkbfQYa1jGT3KA3k4UQ04DKAwdLVDryqITuH0KoDsSB6MDlGAHL0nGyFET3gIAhBORIcSY4lla9BKgtZrJTI08M9Ry0OJSkE9xujsqnhOXdqt19fct7-Q-26b23r7YhGflq0bnNGhIwUK_aHkbjB6apTxWpRIUJON2tO5VaS4xeQblATOMkOc0QosoS9rg_IAN-t3m_V2DRLtEcMKvnNw6nQkqFEeWu9Gq8SyrQIGNAQDNxQ9oQDpCXsIY7pFgPNQ-3Se-iFO0KNvtQW006kjT_Cff_0b6Eh-Ak-tdpYDWjICZKqBsW3HGMlDiDiFVHF6KplOZoJAA3qMpFbwyDy3eJzgZrPZ3G9fw-B1j37KMYOAkFI3Uy6BPNxsXm_Xux0Eks6q5VHpnClz7Tcfdh_uPjxconFLBPRjJAW1GalsPU5w8-bt2_t3D4tQ-RwZktFrWcoJLdxst4-79-8B89zMIVFGzR2RkmwUcNTOUISb-3e3Dx_uoHF5cEKKRYqLBB2pFxAJTdnynMPNbv-4e_MmnQ6jlBQCgxYprOB-eIIwoOTRDFNIr27uhidwI8OQuxIEbLbDU4IeBlRK21bAZniCm-3dbr9_hNp5HnkBm_XwBIkOpEA6b9PTMNbREIQOlTuFFXx0iryFllxPDAEEtKEM5HUDRh8IvmE6poT_-g1PWMQQqRkN9M46zpfyuT9SfOdR2wAfnXXpBTv2NatP4oJTxO0Ph-gGkK4fXNAMaMUd78FQExkzzVLjLHjUzDDXDyhZcQboCBVLg44d1B4tl55CB0IvO5Fl0fXaoo3QkXczT8M4DM7HBGzEmMALsyhIZ6UO9DW90ly1HpUmG4MA60CRdD4LoTZmDNGnVPOP7kg-6J9InYeIJy3_0pIlBrZHf6CUhHTDtIJH9AcBnhpticcosUHXhgQQhonlOUi0rLRu4IvQFFX0Iz2Lgm9aSM_2br1Q391Vwf7htM0K9nqdJWxz_4V0BRqKqvjB_mCX-r2_RjCmzwHe7M8B1utZNJeBkt8UVfET6tL59net6cvbFYtp5nJRFX9zI5w8T-vStsKZW2d_Civ4gz6SvXgjqOSWQx6-1LKFRzKAg5kyK77_7j0oiqgNy-jSGvmKOWDoXCxziIvUVmCxp7PKGZzcGM9il67UMcDMV3FOqKY87-eJ1RZOzqsAHmNHrAVo5wEQMIZ8mp6YzazHMRI03vVfm36mpbZHNjZPyE7HU9k5HxklgzWZAL_ZlvvzhYSy-20GYDA4JgrNN6_gLx1bSxhNBB0AodE2-9LsRldQmK0RkOvTrYUwkKyYwIN-IgM9YRg99XkcPCmjLQUBSvdkQ0LKe3cKAjp6SuMekrWgtS7mmZZojBtjAOXxZNneLqtGLts6bifhWT9nLWAZDRxLOhu9M2EFn1g0GeT4NYCvwsIIgXeU0UOjjclq3vjUaNUSDxj_FaCtNGOWE2Og4Rcueplwte7iRqf8So3sspzSGEvXNGneV_B2YDL-PKO543xl4tiAPoJrFimxy2ZLFxeDy7YaxFX8F-KS3kiocUhoOHeuPO91ihrkpp9XA-4M-QUyK3hIGkzprA0k4ETGlIwUby1nob4uIwnrMVCGMWcK1DRaskKaqYJeW92jgRaHZM5pUQZp-JLoWuK54FK0nUfbSTkOEwPfu_AVHqdOs09FTL97QoW1oRV8MBgv6X1J3kuZsvOOFx_roEOrEncUHbWkLMknZDq4hgdGUucMGwtL6Qr-fJWTbP5JP5w1U9oWL8I7q9p2vZTe26twJlpn6dykvfFnu-8smRatK2u0aLHclkZHfo0vKqpicyhEMe_ff0rJFFXxv_Y9jijmZe5KpvP2Ny9-y_fSWrRc-3iiv6AOu_4JWTJKVsWZmgZ9S1AbtIfZ6_L5PDnzf-dx-QUJWQjEi2rCMnRRjoW48Hp21Fntkgted_kfRWG0PSw-2wx_kbDcMu78VTN_pfBeMG_6z6KIbnlgdz2AC3s02xeCbf-PYPUy2O6FYLtfC7a_HsgMXUbcvxBx_2sRb1-I-OPzfwG4QgTLBg8AAA) · [graph](graphs/render-a-mockup.noodle-graph.json)
 
 ## 🎬 Video
 
@@ -72,13 +73,14 @@ Node ≥ 20, zero dependencies — `package.json` exists only so `npm test` work
 
 - **No screenshots yet.** v1 is text-only; previews are planned but we won't
   fake them.
-- **Graphs deliberately omit model ids.** The editor backfills each
-  model-bearing node with the newest live-catalog model of the right kind on
-  load, so links never go stale — but it also means results (and prices) drift
-  as the catalog evolves. The headless runners do **no** such backfill:
+- **Model ids are pinned, not permanent.** Most graphs bake a working model id
+  into each model-bearing node so they run headless as-is; those ids age as the
+  catalog moves, so swap in whatever's current. A few graphs still leave
+  `fields.model` blank — the editor backfills the newest live-catalog model of
+  the right kind on load, but the headless runners do **no** such backfill:
   nanoodle-js / nanoodle-py refuse to run a model-less node (`pick a model
-  first`), so open the graph in the editor and pick models — or set
-  `fields.model` in the JSON — before running a committed graph headless.
+  first`), so set `fields.model` in the JSON — or open the graph in the editor
+  and pick — before running those headless.
 - **Costs are estimates.** Rough cost is covered by the heads-up at the top
   (images typically cents, video more) rather than per entry; actual price
   depends on the model the editor picks and your settings.
