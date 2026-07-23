@@ -1,0 +1,140 @@
+{
+  "v": 1,
+  "nodes": [
+    {
+      "id": "n1",
+      "type": "comment",
+      "x": -337.72727966308594,
+      "y": -241.8181610107422,
+      "fields": {
+        "text": "Pick a DIFFERENT model on each Contender, then Run — same prompt four ways, side by side."
+      },
+      "w": 340,
+      "sizes": {
+        "text": 74
+      }
+    },
+    {
+      "id": "n2",
+      "type": "text",
+      "x": 60,
+      "y": 300,
+      "fields": {
+        "text": "a tiny dragon curled up asleep in a teacup, macro photo, soft morning light"
+      }
+    },
+    {
+      "id": "n3",
+      "type": "image",
+      "x": 385.4180200301924,
+      "y": -157.85789059301652,
+      "fields": {
+        "model": "gpt-image-2",
+        "size": "1024x1024",
+        "variations": "1"
+      },
+      "sizes": {
+        "prompt": 0
+      },
+      "name": "Contender 1"
+    },
+    {
+      "id": "n4",
+      "type": "image",
+      "x": 838.410480349345,
+      "y": -136.26833799936887,
+      "fields": {
+        "model": "nano-banana-2-fast",
+        "size": "1024x1024",
+        "variations": "1"
+      },
+      "sizes": {
+        "prompt": 0
+      },
+      "name": "Contender 2"
+    },
+    {
+      "id": "n5",
+      "type": "image",
+      "x": 330.46288209606985,
+      "y": 533.6005752763374,
+      "fields": {
+        "model": "qwen-image-3",
+        "size": "1024x1024",
+        "variations": "1"
+      },
+      "sizes": {
+        "prompt": 0
+      },
+      "name": "Contender 3"
+    },
+    {
+      "id": "n6",
+      "type": "image",
+      "x": 967.9475982532751,
+      "y": 562.0595654083652,
+      "fields": {
+        "model": "wavespeed-ai/krea-v2-large/text-to-image",
+        "size": "1:1",
+        "variations": "1"
+      },
+      "sizes": {
+        "prompt": 0
+      },
+      "name": "Contender 4"
+    }
+  ],
+  "links": [
+    {
+      "id": "l1",
+      "from": {
+        "node": "n2",
+        "port": "text"
+      },
+      "to": {
+        "node": "n3",
+        "port": "prompt"
+      }
+    },
+    {
+      "id": "l2",
+      "from": {
+        "node": "n2",
+        "port": "text"
+      },
+      "to": {
+        "node": "n4",
+        "port": "prompt"
+      }
+    },
+    {
+      "id": "l3",
+      "from": {
+        "node": "n2",
+        "port": "text"
+      },
+      "to": {
+        "node": "n5",
+        "port": "prompt"
+      }
+    },
+    {
+      "id": "l4",
+      "from": {
+        "node": "n2",
+        "port": "text"
+      },
+      "to": {
+        "node": "n6",
+        "port": "prompt"
+      }
+    }
+  ],
+  "nid": 8,
+  "lid": 6,
+  "view": {
+    "panX": 253.1771441512301,
+    "panY": 296.87293830551306,
+    "scale": 0.7086244000000003
+  }
+}
