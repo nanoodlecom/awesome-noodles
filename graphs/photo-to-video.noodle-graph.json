@@ -1,13 +1,181 @@
 {
   "v": 1,
   "nodes": [
-    { "id": "c-intent", "type": "comment", "x": 80, "y": -60, "w": 340, "fields": { "text": "Generates a still image from a prompt, then animates it into a short video clip.", "color": "yellow" } },
-    { "id": "n1", "type": "text", "x": 60, "y": 120, "fields": { "text": "a tiny sailboat on a glowing bioluminescent sea, night, stars" } },
-    { "id": "n2", "type": "image", "x": 400, "y": 100, "fields": { "model": "nano-banana-2-lite" } },
-    { "id": "n3", "type": "ivideo", "x": 820, "y": 100, "fields": { "model": "pruna-ai/p-video/image-to-video", "prompt": "slow push-in, gentle waves, camera drifts forward" } }
+    {
+      "id": "c-intent",
+      "type": "comment",
+      "x": 80,
+      "y": -60,
+      "fields": {
+        "text": "Generates a still image from a prompt, then animates it into a short video clip.",
+        "color": "yellow"
+      },
+      "w": 340
+    },
+    {
+      "id": "n1",
+      "type": "text",
+      "x": -36.63060546098497,
+      "y": 80.63198528663212,
+      "fields": {
+        "text": "a tiny sailboat on a glowing bioluminescent sea, night, stars"
+      },
+      "name": "the image being"
+    },
+    {
+      "id": "n2",
+      "type": "image",
+      "x": 400,
+      "y": 100,
+      "fields": {
+        "model": "qwen-image-3",
+        "size": "1024x1024",
+        "variations": "1"
+      },
+      "sizes": {
+        "prompt": 0
+      }
+    },
+    {
+      "id": "n3",
+      "type": "ivideo",
+      "x": 820,
+      "y": 100,
+      "fields": {
+        "model": "ltx-2.3-quality",
+        "prompt": "slow push-in, gentle waves, camera drifts forward",
+        "resolution": "480p",
+        "aspect": "16:9",
+        "duration": "5",
+        "modelOpts": {},
+        "loras": [
+          {
+            "url": "",
+            "strength": ""
+          }
+        ]
+      },
+      "sizes": {
+        "prompt": 0
+      }
+    },
+    {
+      "id": "n4",
+      "type": "llm",
+      "x": 414.8945610165405,
+      "y": 605.2625832387628,
+      "fields": {
+        "model": "openai/gpt-5.6-terra",
+        "prompt": ""
+      },
+      "sizes": {
+        "system": 0,
+        "prompt": 0
+      }
+    },
+    {
+      "id": "n5",
+      "type": "text",
+      "x": -190.00000305175774,
+      "y": 679.9999633789063,
+      "fields": {
+        "text": "You are animating this image for ltx-2.3.\nPromptig guide:\n1. Be More Specific. The Engine Can Handle It.\nLTX-2.3 includes a larger, more capable text connector. It interprets complex prompts more accurately, especially when they include:\nMultiple subjects\nSpatial relationships\nStylistic constraints\nDetailed actions\nPreviously, simplifying prompts improved consistency.\nNow, specificity wins.\nInstead of:\nA woman in a café\n\nTry:\nA woman in her 30s sits by the window of a small Parisian café. Rain runs down the glass behind her. Warm tungsten interior lighting. She slowly stirs her coffee while glancing at her phone. Background softly out of focus.\n0:00 / 0:06\n\nThe creative engine drifts less. Use that.\n2. Direct the Scene, Don’t Just Describe It\nLTX-2.3 is better at respecting spatial layout and relationships.\nBe explicit about:\nLeft vs right\nForeground vs background\nFacing toward vs away\nDistance between subjects\nInstead of:\nTwo people talking outside\n\nTry:\nTwo people stand facing each other on a quiet suburban sidewalk. The taller man stands on the left, hands in pockets. The woman stands on the right, holding a bicycle. Houses blurred in the background.\n\nBlock the scene like a director.\n3. Describe Texture and Material\nWith a rebuilt latent space and updated VAE, fine detail is sharper across resolutions.\nSo describe:\nFabric types\nHair texture\nSurface finish\nEnvironmental wear\nEdge detail\nExample:\nClose-up of wind moving through fine, curly hair. Individual strands visible. Soft afternoon backlight catching edge detail.\n\nYou should need less compensation in post.\n4. For Image-to-Video, Use Verbs\nOne of the biggest upgrades in 2.3 is reduced freezing and more natural motion.\nBut motion still needs clarity.\nAvoid:\nThe scene comes alive\n\nInstead:\nThe camera slowly pushes forward as the subject turns their head and begins walking toward the street. Cars pass.\nSpecify:\nWho moves\nWhat moves\nHow they move\nWhat the camera does\nMotion is driven by verbs.\n5. Avoid Static, Photo-Like Prompts\nIf your prompt reads like a still image, the output may behave like one.\nInstead of:\nA dramatic portrait of a man standing\n\nTry:\nA man stands on a windy rooftop. His coat flaps in the wind. He adjusts his collar and steps forward as the camera tracks right.\n\nAction reduces static outputs.\n6. Design for Native Portrait\nLTX-2.3 supports native vertical video up to 1080x1920, trained on vertical data.\nWhen generating portrait content, compose for vertical intentionally.\nExample:\nInfluencer vlogging while on holiday.\n\nDon’t treat vertical as cropped landscape. Frame for it.\n7. Be Clear About Audio\nThe new vocoder improves reliability and alignment.\nIf you want sound, describe it:\nEnvironmental audio\nTone and intensity\nDialogue clarity\nExample:\nA low, pulsing energy hum radiates from the glowing orb. A sharp, intermittent alarm blares in the background, metallic and urgent, echoing through the spacecraft interior.\n\nSpecific inputs produce more controlled outputs.\n8. Unlock More Complex Shots\nEarlier checkpoints rewarded simplicity.\nLTX-2.3 rewards direction.\nWith significantly stronger prompt adherence and improved visual quality, you can now design more ambitious scenes with confidence.\n\nYou can:\nLayer multiple actions within a single shot\nCombine detailed environments with character performance\nIntroduce precise stylistic constraints\nDirect camera movement alongside subject motion\nNo preamble or postamble",
+        "optional": true
+      },
+      "w": 418,
+      "sizes": {
+        "text": 354
+      },
+      "name": "motion system prompt"
+    },
+    {
+      "id": "n8",
+      "type": "text",
+      "x": -9.368380319129095,
+      "y": 389.52823917260065,
+      "fields": {
+        "text": "sailing very fast in rough seas"
+      },
+      "w": 254,
+      "sizes": {
+        "text": 98
+      },
+      "name": "movement"
+    }
   ],
   "links": [
-    { "id": "l1", "from": { "node": "n1", "port": "text" }, "to": { "node": "n2", "port": "prompt" } },
-    { "id": "l2", "from": { "node": "n2", "port": "image" }, "to": { "node": "n3", "port": "image" } }
-  ]
+    {
+      "id": "l1",
+      "from": {
+        "node": "n1",
+        "port": "text"
+      },
+      "to": {
+        "node": "n2",
+        "port": "prompt"
+      }
+    },
+    {
+      "id": "l2",
+      "from": {
+        "node": "n2",
+        "port": "image"
+      },
+      "to": {
+        "node": "n3",
+        "port": "image"
+      }
+    },
+    {
+      "id": "l3",
+      "from": {
+        "node": "n2",
+        "port": "image"
+      },
+      "to": {
+        "node": "n4",
+        "port": "img1"
+      }
+    },
+    {
+      "id": "l4",
+      "from": {
+        "node": "n5",
+        "port": "text"
+      },
+      "to": {
+        "node": "n4",
+        "port": "system"
+      }
+    },
+    {
+      "id": "l7",
+      "from": {
+        "node": "n8",
+        "port": "text"
+      },
+      "to": {
+        "node": "n4",
+        "port": "prompt"
+      }
+    },
+    {
+      "id": "l8",
+      "from": {
+        "node": "n4",
+        "port": "text"
+      },
+      "to": {
+        "node": "n3",
+        "port": "prompt"
+      }
+    }
+  ],
+  "nid": 9,
+  "lid": 9,
+  "view": {
+    "panX": 206.7787288640572,
+    "panY": 27.32052487753026,
+    "scale": 1.0160530740967995
+  }
 }
