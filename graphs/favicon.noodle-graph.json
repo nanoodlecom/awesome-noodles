@@ -4,58 +4,137 @@
     {
       "id": "c-intent",
       "type": "comment",
-      "x": 60,
-      "y": -90,
-      "w": 400,
+      "x": -317.0012233817421,
+      "y": -286.89084847129584,
       "fields": {
-        "text": "Name your product, get a favicon — an LLM distills the brand to one bold glyph, an image model renders it, and it comes back as a crisp 512×512 square (~$0.04/run).",
+        "text": "Describe your idea, get a favicon — an LLM distills the brand to one bold glyph, an image model renders it, and it comes back as a crisp square (~$0.04/run).",
         "color": "yellow"
+      },
+      "w": 606,
+      "sizes": {
+        "text": 74
       }
     },
     {
       "id": "n1",
       "type": "text",
-      "name": "Brand",
-      "x": 60,
-      "y": 100,
+      "x": -240.92969817448912,
+      "y": 18.33511504460631,
+      "fields": {
+        "text": ""
+      },
       "w": 240,
-      "fields": { "text": "" }
+      "name": "Brand"
     },
     {
       "id": "n2",
       "type": "llm",
-      "x": 360,
-      "y": 80,
-      "w": 260,
-      "sizes": { "system": 140 },
+      "x": 368.9495558559634,
+      "y": -28.513702739065906,
       "fields": {
-        "model": "zai-org/glm-5.2",
-        "system": "You design one favicon. From the brand name/description, write ONE image prompt for a square app icon: a single bold glyph or symbol that captures the brand, flat vector style, strong silhouette, high contrast, centered on a solid or subtly-gradient background, generous margins, no text, no letters, no photorealism, no drop shadows. It must stay recognizable scaled down to 16 pixels. Reply with the prompt only."
-      }
+        "model": "openai/gpt-5.6-terra"
+      },
+      "w": 260
     },
     {
       "id": "n3",
       "type": "image",
       "x": 680,
       "y": 80,
-      "w": 250,
-      "fields": { "model": "nano-banana-2-lite" }
+      "fields": {
+        "model": "nano-banana-2-lite",
+        "size": "1k",
+        "variations": "1"
+      },
+      "w": 250
     },
     {
-      "id": "n4",
-      "type": "resize",
-      "name": "Icon",
-      "x": 990,
-      "y": 100,
-      "w": 220,
-      "fields": { "mode": "fill", "width": "512", "height": "512" }
+      "id": "n102",
+      "type": "text",
+      "x": -190.7427439660484,
+      "y": 348.4505346573076,
+      "fields": {
+        "text": "You design one favicon. From the brand name/description, write ONE image prompt for a square app icon: a single bold glyph or symbol that captures the brand, flat vector style, strong silhouette, high contrast, centered on a solid or subtly-gradient background, generous margins, no text, no letters, no photorealism, no drop shadows. It must stay recognizable scaled down to 16 pixels. Reply with the prompt only.",
+        "optional": true
+      }
+    },
+    {
+      "id": "n103",
+      "type": "join",
+      "x": 153,
+      "y": 376,
+      "fields": {
+        "sep": "\\n "
+      }
+    },
+    {
+      "id": "n104",
+      "type": "text",
+      "x": -192.33505871368808,
+      "y": 609.6261103600914,
+      "fields": {
+        "text": "style guide:\n- Reduce the brand to its most distinctive visual idea; prefer a simple metaphor over a literal product depiction.\n- Use one primary glyph only: geometric, abstract, or mascot-like, with clean vector edges and a confident silhouette.\n- Compose on a true square canvas with the glyph centered, occupying roughly 55–70% of the frame and surrounded by ample clear space.\n- Choose a restrained palette: one vivid brand color plus one dark or light supporting background; use high contrast and avoid busy multicolor treatments.\n- Favor flat fills, simple cutouts, or a very subtle gradient. Avoid thin lines, intricate detail, textures, realistic lighting, glossy effects, shadows, borders, mockups, and visual clutter.\n- The icon must read instantly at 16×16 pixels. Do not include words, initials, letters, numbers, logos, or trademarked imagery.",
+        "optional": true
+      }
     }
   ],
   "links": [
-    { "id": "l1", "from": { "node": "n1", "port": "text" }, "to": { "node": "n2", "port": "prompt" } },
-    { "id": "l2", "from": { "node": "n2", "port": "text" }, "to": { "node": "n3", "port": "prompt" } },
-    { "id": "l3", "from": { "node": "n3", "port": "image" }, "to": { "node": "n4", "port": "image" } }
+    {
+      "id": "l16",
+      "from": {
+        "node": "n1",
+        "port": "text"
+      },
+      "to": {
+        "node": "n2",
+        "port": "prompt"
+      }
+    },
+    {
+      "id": "l17",
+      "from": {
+        "node": "n2",
+        "port": "text"
+      },
+      "to": {
+        "node": "n3",
+        "port": "prompt"
+      }
+    },
+    {
+      "id": "l19",
+      "from": {
+        "node": "n102",
+        "port": "text"
+      },
+      "to": {
+        "node": "n103",
+        "port": "a"
+      }
+    },
+    {
+      "id": "l20",
+      "from": {
+        "node": "n104",
+        "port": "text"
+      },
+      "to": {
+        "node": "n103",
+        "port": "b"
+      }
+    },
+    {
+      "id": "l21",
+      "from": {
+        "node": "n103",
+        "port": "text"
+      },
+      "to": {
+        "node": "n2",
+        "port": "system"
+      }
+    }
   ],
-  "nid": 5,
-  "lid": 4
+  "nid": 107,
+  "lid": 23
 }
