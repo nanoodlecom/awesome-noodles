@@ -1,16 +1,191 @@
 {
   "v": 1,
   "nodes": [
-    { "id": "c-intent", "type": "comment", "x": 60, "y": -140, "w": 460, "fields": { "text": "One idea fans out to two LLMs — lyrics plus a matching style — then a music model sings it.", "color": "yellow" } },
-    { "id": "n1", "type": "text", "x": 60, "y": 140, "fields": { "text": "Write a wistful 90s trip-hop track. Repeat the hook." } },
-    { "id": "n2", "type": "llm", "x": 400, "y": 20, "fields": { "model": "zai-org/glm-5.2", "system": "You are a songwriter. Write only the lyrics — no title, no commentary." } },
-    { "id": "n3", "type": "llm", "x": 820, "y": 440, "fields": { "model": "zai-org/glm-5.2", "system": "You invent a musical style that fits the given lyrics. Reply with only the style, richly descriptive — no commentary." } },
-    { "id": "n4", "type": "music", "x": 1240, "y": 120, "fields": { "model": "Minimax-Music-02", "instrumental": false } }
+    {
+      "id": "c-intent",
+      "type": "comment",
+      "x": -264.94360553331603,
+      "y": -62.99027876420456,
+      "fields": {
+        "text": "One idea fans out to two LLMs — lyrics plus a matching style — then a music model sings it.",
+        "color": "yellow"
+      },
+      "w": 460
+    },
+    {
+      "id": "n1",
+      "type": "text",
+      "x": 58.12171872982309,
+      "y": 224.52290936935043,
+      "fields": {
+        "text": "Write a wistful 90s trip-hop track about the singularity."
+      },
+      "name": "Song Instructions"
+    },
+    {
+      "id": "n2",
+      "type": "llm",
+      "x": 445.07887658994065,
+      "y": 55.68747023905603,
+      "fields": {
+        "model": "moonshotai/kimi-k3",
+        "system": "You are an award-winning songwriter. Write only the lyrics — no title, no commentary, no explanations.\nPrinciples:\n- Melody is king: write the singable line first. Favor open vowels, natural word stress, and steady syllable counts so every line lands cleanly on a melody.\n- Keep it simple (KISS): short lines, plain words, one clear emotional idea per song.\n- Build one unforgettable hook and bring it back in every chorus.\n- Show, don't tell: concrete images and sensory detail beat abstract statements.\n- Serve the mood and genre of the request; the lyrics exist to serve the melody, never the other way around.\nFormat: label each section so a music model can sing it — [Verse 1], [Chorus], [Verse 2], [Chorus], [Bridge], [Chorus], [Outro]. Output the labeled lyrics and nothing else."
+      },
+      "w": 549,
+      "sizes": {
+        "prompt": 0,
+        "system": 178
+      }
+    },
+    {
+      "id": "n3",
+      "type": "llm",
+      "x": 427.05900004694405,
+      "y": 766.418919525732,
+      "fields": {
+        "system": "",
+        "model": "moonshotai/kimi-k3"
+      },
+      "w": 611,
+      "sizes": {
+        "prompt": 0,
+        "system": 0
+      }
+    },
+    {
+      "id": "n4",
+      "type": "music",
+      "x": 1240,
+      "y": 120,
+      "fields": {
+        "model": "mureka-ai/mureka-v9/generate-song",
+        "instrumental": false,
+        "response_format": "mp3"
+      },
+      "w": 406,
+      "sizes": {
+        "prompt": 0,
+        "lyrics": 0,
+        "negative_prompt": 0,
+        "extraJson": 0
+      }
+    },
+    {
+      "id": "n5",
+      "type": "text",
+      "x": -238.9634060686595,
+      "y": 856.4101975358853,
+      "fields": {
+        "text": "Bands liked:\nSoundgarden, XX",
+        "optional": false
+      },
+      "name": "Bands"
+    },
+    {
+      "id": "n6",
+      "type": "join",
+      "x": 38.990690739015974,
+      "y": 699.4014944403325,
+      "fields": {
+        "sep": "\\n"
+      }
+    },
+    {
+      "id": "n7",
+      "type": "text",
+      "x": -245.00987130448726,
+      "y": 440.29345742716674,
+      "fields": {
+        "text": "You invent a musical style that fits the given lyrics. Reply with only the style, richly descriptive — no commentary.\nDo not mention any band names.",
+        "optional": true
+      },
+      "name": "Style System Prompt"
+    }
   ],
   "links": [
-    { "id": "l1", "from": { "node": "n1", "port": "text" }, "to": { "node": "n2", "port": "prompt" } },
-    { "id": "l2", "from": { "node": "n2", "port": "text" }, "to": { "node": "n4", "port": "lyrics" } },
-    { "id": "l3", "from": { "node": "n2", "port": "text" }, "to": { "node": "n3", "port": "prompt" } },
-    { "id": "l4", "from": { "node": "n3", "port": "text" }, "to": { "node": "n4", "port": "prompt" } }
-  ]
+    {
+      "id": "l11",
+      "from": {
+        "node": "n1",
+        "port": "text"
+      },
+      "to": {
+        "node": "n2",
+        "port": "prompt"
+      }
+    },
+    {
+      "id": "l12",
+      "from": {
+        "node": "n2",
+        "port": "text"
+      },
+      "to": {
+        "node": "n4",
+        "port": "lyrics"
+      }
+    },
+    {
+      "id": "l13",
+      "from": {
+        "node": "n2",
+        "port": "text"
+      },
+      "to": {
+        "node": "n3",
+        "port": "prompt"
+      }
+    },
+    {
+      "id": "l14",
+      "from": {
+        "node": "n3",
+        "port": "text"
+      },
+      "to": {
+        "node": "n4",
+        "port": "prompt"
+      }
+    },
+    {
+      "id": "l15",
+      "from": {
+        "node": "n6",
+        "port": "text"
+      },
+      "to": {
+        "node": "n3",
+        "port": "system"
+      }
+    },
+    {
+      "id": "l16",
+      "from": {
+        "node": "n7",
+        "port": "text"
+      },
+      "to": {
+        "node": "n6",
+        "port": "a"
+      }
+    },
+    {
+      "id": "l17",
+      "from": {
+        "node": "n5",
+        "port": "text"
+      },
+      "to": {
+        "node": "n6",
+        "port": "b"
+      }
+    }
+  ],
+  "nid": 10,
+  "lid": 19,
+  "view": {
+    "panX": 73.47866034245544,
+    "panY": 309.7675057047464,
+    "scale": 0.6442040000000002
+  }
 }
