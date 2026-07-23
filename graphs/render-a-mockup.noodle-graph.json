@@ -1,17 +1,136 @@
 {
   "v": 1,
   "nodes": [
-    { "id": "c-intent", "type": "comment", "x": 60, "y": -140, "w": 460, "fields": { "text": "Describe a screen, keep the style guide: an LLM turns both into one dense image prompt and an image model renders the mockup. Swapping to a light theme? Clear the image node's negative prompt too.", "color": "yellow" } },
-    { "id": "n1", "type": "text", "x": 60, "y": 60, "fields": { "text": "A habit-tracker web app dashboard: today's checklist, current streaks, a week-at-a-glance grid, and a quick-add button." }, "w": 300 },
-    { "id": "n2", "type": "text", "x": 60, "y": 320, "w": 560, "fields": { "text": "Style guide: polished dark-mode product dashboard, the entire rendered interface on a solid near-black #0B1020 canvas. No white background, light theme, pale page area, cream surface, or bright empty margin anywhere — every region, panel, card, and gutter stays dark and clearly separated. Deep navy #111827 primary panels, slightly lighter #172033 secondary panels, cool-white #F3F6FC primary text, muted blue-gray #9AA8BC secondary text, electric-cyan #22D3EE as the primary action accent, violet #8B5CF6 for the selected nav item, teal-green #34D399 for success states. 8px spacing system, 16px outer margins, 12px card padding, 1px #26344D borders, 10px rounded corners, subtle shadows. Modern geometric sans-serif like Inter for UI, a tasteful monospace like JetBrains Mono for numbers and code. Desktop composition: slim left navigation rail, compact top header with branding and search, one dominant hero panel, supporting stat cards, and a concise secondary panel. No gradients, no decorative illustrations, no oversized empty areas, no generic marketing copy. Dark, refined, accessible, easy to scan.", "optional": true }, "sizes": { "text": 260 } },
-    { "id": "n3", "type": "join", "x": 700, "y": 180, "fields": { "sep": "\n\n" } },
-    { "id": "n4", "type": "llm", "x": 940, "y": 100, "w": 300, "fields": { "model": "zai-org/glm-5.2", "system": "You write image prompts for UI mockups. Given a screen description and a style guide, reply with ONE detailed image prompt for a screenshot-style interface: name every layout region and its position, describe the spacing in words rather than numbers, use the exact palette from the style guide, and invent realistic short UI labels (2-4 words each) with plausible numbers. The result is a finished product screenshot, not a design spec: no pixel measurements, redlines, dimension arrows, hex codes, or annotation callouts drawn on the image, and no repeated navigation items or controls. State that the style guide's background colour fills the frame edge to edge, including all four corners, with no lighter wedge, band, or cut-off area. Apply the style guide's palette to every part of the frame — canvas, panels, gutters, margins, empty areas — and never fall back to a default white browser background. Compose a dense, well-filled desktop interface that uses the canvas efficiently: minimal gaps, content close together, main screen occupying most of the frame while staying readable. Flat desktop screenshot, no browser chrome, no hands or devices, no walls of placeholder text. Reply with the prompt only." }, "sizes": { "system": 200 } },
-    { "id": "n5", "type": "image", "x": 1320, "y": 60, "fields": { "model": "nano-banana-2-lite", "size": "1k", "negativePrompt": "white background, light mode, bright canvas, pale page, cream background, gray empty margins, default white UI, washed-out panels, large blank areas, white corner, white wedge, pixel measurements, redline annotations, dimension arrows, spec callouts, hex codes as visible text" }, "w": 300 }
+    {
+      "id": "c-intent",
+      "type": "comment",
+      "x": 28.44462890625,
+      "y": -384.5541480451692,
+      "fields": {
+        "text": "Describe a screen, keep the style guide: an LLM turns both into one dense image prompt and an image model renders the mockup.",
+        "color": "yellow"
+      },
+      "w": 672,
+      "sizes": {
+        "text": 0
+      }
+    },
+    {
+      "id": "n1",
+      "type": "text",
+      "x": 60,
+      "y": 60,
+      "fields": {
+        "text": "A habit-tracker web app dashboard: today's checklist, current streaks, a week-at-a-glance grid, and a quick-add button."
+      },
+      "w": 300
+    },
+    {
+      "id": "n2",
+      "type": "text",
+      "x": 60,
+      "y": 320,
+      "fields": {
+        "text": "Style guide: premium, cinematic dark-mode product dashboard with an immediate wow factor, rendered as an exceptionally polished launch-ready SaaS interface. The entire rendered interface sits edge-to-edge on a solid near-black #0B1020 canvas. No white background, light theme, pale page area, cream surface, or bright empty margin anywhere — every region, panel, card, gutter, and corner stays dark and deliberately composed. Deep navy #111827 primary panels, slightly lighter #172033 secondary panels, cool-white #F3F6FC primary text, muted blue-gray #9AA8BC secondary text, electric-cyan #22D3EE as the primary action accent, violet #8B5CF6 for the selected nav item, teal-green #34D399 for success states. Use restrained luminous cyan and violet edge glows only around the most important active data, controls, and progress moments; create depth with layered dark surfaces, crisp 1px #26344D borders, soft ambient shadows, and subtle glass-like translucency while keeping the design flat enough to read as a real desktop UI. 8px spacing system, compact outer margins, generous but efficient card padding, 10px rounded corners. Modern geometric sans-serif like Inter for UI, a tasteful monospace like JetBrains Mono for numbers and metrics. Desktop composition: slim left navigation rail, compact top header with branding and search, one dominant hero panel that makes the streak and completion progress feel dramatic, supporting stat cards with elegant data visualization, and a concise secondary panel. Make the hierarchy editorial and intentional: large confident headline, oversized but plausible streak number, refined micro-labels, luminous progress rings or bars, tiny heatmap cells, and precise alignment. No generic marketing copy, decorative illustrations, oversized empty areas, noisy charts, or excessive effects. Dark, refined, futuristic, accessible, dense, and unmistakably premium.",
+        "optional": true
+      },
+      "w": 560,
+      "sizes": {
+        "text": 0
+      }
+    },
+    {
+      "id": "n3",
+      "type": "join",
+      "x": 700,
+      "y": 180,
+      "fields": {
+        "sep": "\n\n"
+      }
+    },
+    {
+      "id": "n4",
+      "type": "llm",
+      "x": 940,
+      "y": 100,
+      "fields": {
+        "model": "openai/gpt-5.6-terra",
+        "system": "You write image prompts for UI mockups. Given a screen description and a style guide, reply with ONE detailed image prompt for a screenshot-style interface that feels like an award-winning, launch-ready product shot rather than a generic dashboard. Name every layout region and its position, establish one clear visual hero moment, describe the spacing in words rather than numbers, use the exact palette from the style guide, and invent realistic short UI labels (2-4 words each) with plausible numbers. Give the interface strong hierarchy, meticulous alignment, layered surface depth, and a small number of purposeful premium details such as a luminous active progress treatment, elegant data visualization, or restrained ambient accent glow. The result is a finished product screenshot, not a design spec: no pixel measurements, redlines, dimension arrows, hex codes, or annotation callouts drawn on the image, and no repeated navigation items or controls. State that the style guide's background colour fills the frame edge to edge, including all four corners, with no lighter wedge, band, or cut-off area. Apply the style guide's palette to every part of the frame — canvas, panels, gutters, margins, empty areas — and never fall back to a default white browser background. Compose a dense, well-filled desktop interface that uses the canvas efficiently: minimal gaps, content close together, main screen occupying most of the frame while staying readable. Flat front-facing desktop screenshot, no browser chrome, no hands or devices, no decorative illustration, no walls of placeholder text, no excessive glow, and no illegible tiny text. Reply with the prompt only. 600 characters or less."
+      },
+      "w": 300,
+      "sizes": {
+        "system": 0,
+        "prompt": 0
+      }
+    },
+    {
+      "id": "n5",
+      "type": "image",
+      "x": 1320,
+      "y": 60,
+      "fields": {
+        "model": "qwen-image-3",
+        "size": "auto",
+        "negativePrompt": "white background, light mode, bright canvas, pale page, cream background, gray empty margins, default white UI, washed-out panels, large blank areas, white corner, white wedge, generic template dashboard, cluttered layout, excessive neon glow, rainbow gradients, decorative illustrations, fake 3D device mockup, browser chrome, pixel measurements, redline annotations, dimension arrows, spec callouts, hex codes as visible text",
+        "variations": "1"
+      },
+      "w": 565,
+      "sizes": {
+        "prompt": 308
+      }
+    }
   ],
   "links": [
-    { "id": "l1", "from": { "node": "n1", "port": "text" }, "to": { "node": "n3", "port": "a" } },
-    { "id": "l2", "from": { "node": "n2", "port": "text" }, "to": { "node": "n3", "port": "b" } },
-    { "id": "l3", "from": { "node": "n3", "port": "text" }, "to": { "node": "n4", "port": "prompt" } },
-    { "id": "l4", "from": { "node": "n4", "port": "text" }, "to": { "node": "n5", "port": "prompt" } }
-  ]
+    {
+      "id": "l6",
+      "from": {
+        "node": "n1",
+        "port": "text"
+      },
+      "to": {
+        "node": "n3",
+        "port": "a"
+      }
+    },
+    {
+      "id": "l7",
+      "from": {
+        "node": "n2",
+        "port": "text"
+      },
+      "to": {
+        "node": "n3",
+        "port": "b"
+      }
+    },
+    {
+      "id": "l8",
+      "from": {
+        "node": "n3",
+        "port": "text"
+      },
+      "to": {
+        "node": "n4",
+        "port": "prompt"
+      }
+    },
+    {
+      "id": "l9",
+      "from": {
+        "node": "n4",
+        "port": "text"
+      },
+      "to": {
+        "node": "n5",
+        "port": "prompt"
+      }
+    }
+  ],
+  "nid": 8,
+  "lid": 11,
+  "view": {
+    "panX": -57.85707078049279,
+    "panY": 331.990989627937,
+    "scale": 0.7086244000000003
+  }
 }
