@@ -1,11 +1,77 @@
 {
   "v": 1,
   "nodes": [
-    { "id": "c-intent", "type": "comment", "x": 80, "y": -60, "w": 340, "fields": { "text": "Repaints an uploaded photo according to an edit described in plain words.", "color": "yellow" } },
-    { "id": "n1", "type": "upload", "x": 80, "y": 120, "fields": {} },
-    { "id": "n2", "type": "edit", "x": 420, "y": 100, "fields": { "prompt": "make it night-time, add glowing neon signs and rain reflections" } }
+    {
+      "id": "c-intent",
+      "type": "comment",
+      "x": 80,
+      "y": -60,
+      "fields": {
+        "text": "Repaints an uploaded photo according to an edit described in plain words.",
+        "color": "yellow"
+      },
+      "w": 340
+    },
+    {
+      "id": "n1",
+      "type": "upload",
+      "x": 80,
+      "y": 120,
+      "fields": {}
+    },
+    {
+      "id": "n2",
+      "type": "edit",
+      "x": 420,
+      "y": 100,
+      "fields": {
+        "prompt": "",
+        "size": "1024x1024",
+        "model": "qwen-image-3"
+      },
+      "sizes": {
+        "prompt": 0
+      }
+    },
+    {
+      "id": "n3",
+      "type": "text",
+      "x": -66,
+      "y": 479,
+      "fields": {
+        "text": "make it night-time, add glowing neon signs and rain reflections"
+      }
+    }
   ],
   "links": [
-    { "id": "l1", "from": { "node": "n1", "port": "image" }, "to": { "node": "n2", "port": "image" } }
-  ]
+    {
+      "id": "l1",
+      "from": {
+        "node": "n1",
+        "port": "image"
+      },
+      "to": {
+        "node": "n2",
+        "port": "image"
+      }
+    },
+    {
+      "id": "l2",
+      "from": {
+        "node": "n3",
+        "port": "text"
+      },
+      "to": {
+        "node": "n2",
+        "port": "prompt"
+      }
+    }
+  ],
+  "nid": 4,
+  "lid": 3,
+  "view": {
+    "panX": 217,
+    "panY": 423.5,
+    "scale": 1
+  }
 }
