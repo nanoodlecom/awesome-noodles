@@ -54,7 +54,7 @@
       "x": 940,
       "y": 100,
       "fields": {
-        "model": "openai/gpt-5.6-terra",
+        "model": "z-ai/glm-5.3-flash",
         "system": "You write image prompts for UI mockups. Given a screen description and a style guide, reply with ONE detailed image prompt for a screenshot-style interface that feels like an award-winning, launch-ready product shot rather than a generic dashboard. Name every layout region and its position, establish one clear visual hero moment, describe the spacing in words rather than numbers, use the exact palette from the style guide, and invent realistic short UI labels (2-4 words each) with plausible numbers. Give the interface strong hierarchy, meticulous alignment, layered surface depth, and a small number of purposeful premium details such as a luminous active progress treatment, elegant data visualization, or restrained ambient accent glow. The result is a finished product screenshot, not a design spec: no pixel measurements, redlines, dimension arrows, hex codes, or annotation callouts drawn on the image, and no repeated navigation items or controls. State that the style guide's background colour fills the frame edge to edge, including all four corners, with no lighter wedge, band, or cut-off area. Apply the style guide's palette to every part of the frame — canvas, panels, gutters, margins, empty areas — and never fall back to a default white browser background. Compose a dense, well-filled desktop interface that uses the canvas efficiently: minimal gaps, content close together, main screen occupying most of the frame while staying readable. Flat front-facing desktop screenshot, no browser chrome, no hands or devices, no decorative illustration, no walls of placeholder text, no excessive glow, and no illegible tiny text. Reply with the prompt only. 600 characters or less."
       },
       "w": 300,
@@ -69,7 +69,7 @@
       "x": 1320,
       "y": 60,
       "fields": {
-        "model": "qwen-image-3",
+        "model": "qwen-image-3-pro",
         "size": "auto",
         "negativePrompt": "white background, light mode, bright canvas, pale page, cream background, gray empty margins, default white UI, washed-out panels, large blank areas, white corner, white wedge, generic template dashboard, cluttered layout, excessive neon glow, rainbow gradients, decorative illustrations, fake 3D device mockup, browser chrome, pixel measurements, redline annotations, dimension arrows, spec callouts, hex codes as visible text",
         "variations": "1"

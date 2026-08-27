@@ -32,7 +32,7 @@
       "x": 368.9495558559634,
       "y": -28.513702739065906,
       "fields": {
-        "model": "openai/gpt-5.6-terra"
+        "model": "z-ai/glm-5.3-flash"
       },
       "w": 260
     },
@@ -42,8 +42,8 @@
       "x": 680,
       "y": 80,
       "fields": {
-        "model": "nano-banana-2-lite",
-        "size": "1k",
+        "model": "meta/muse-image/text-to-image",
+        "size": "1:1",
         "variations": "1"
       },
       "w": 250

@@ -28,8 +28,8 @@
       "x": 400,
       "y": 100,
       "fields": {
-        "model": "qwen-image-3",
-        "size": "1024x1024",
+        "model": "qwen-image-3-pro",
+        "size": "1k",
         "variations": "1"
       },
       "sizes": {
@@ -42,7 +42,7 @@
       "x": 820,
       "y": 100,
       "fields": {
-        "model": "ltx-2.3-quality",
+        "model": "minimax/h3-max",
         "prompt": "slow push-in, gentle waves, camera drifts forward",
         "resolution": "480p",
         "aspect": "16:9",

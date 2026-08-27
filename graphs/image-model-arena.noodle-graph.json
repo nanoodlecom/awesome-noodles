@@ -29,8 +29,8 @@
       "x": 385.4180200301924,
       "y": -157.85789059301652,
       "fields": {
-        "model": "gpt-image-2",
-        "size": "1024x1024",
+        "model": "meta/muse-image/text-to-image",
+        "size": "1:1",
         "variations": "1"
       },
       "sizes": {
@@ -44,8 +44,8 @@
       "x": 838.410480349345,
       "y": -136.26833799936887,
       "fields": {
-        "model": "nano-banana-2-fast",
-        "size": "1024x1024",
+        "model": "wavespeed-ai/krea-v2/turbo",
+        "size": "1k",
         "variations": "1"
       },
       "sizes": {
@@ -59,8 +59,8 @@
       "x": 330.46288209606985,
       "y": 533.6005752763374,
       "fields": {
-        "model": "qwen-image-3",
-        "size": "1024x1024",
+        "model": "xai/grok-imagine-image/v2.0/text-to-image",
+        "size": "1:1",
         "variations": "1"
       },
       "sizes": {
@@ -74,8 +74,8 @@
       "x": 967.9475982532751,
       "y": 562.0595654083652,
       "fields": {
-        "model": "wavespeed-ai/krea-v2-large/text-to-image",
-        "size": "1:1",
+        "model": "recraft-ai/recraft-v4-style/text-to-image",
+        "size": "1024x1024",
         "variations": "1"
       },
       "sizes": {
