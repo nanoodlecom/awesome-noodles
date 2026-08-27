@@ -9,7 +9,7 @@
       "w": 280,
       "name": "Night-market postcard",
       "fields": {
-        "text": "Shareable demo: place + vibe → Gemma 4 writes a postcard prompt → image.\nEdit the place, pick a vibe, hit Run. No uploads. Cheap models (1x Gemma + banana-lite).",
+        "text": "Shareable demo: place + vibe → GLM 5.3 Flash writes a postcard prompt → image.\nEdit the place, pick a vibe, hit Run. No uploads. Cheap models (1x GLM Flash + Muse Image).",
         "color": "#2a1f14"
       }
     },
@@ -55,7 +55,7 @@
       "w": 300,
       "name": "Postcard prompt",
       "fields": {
-        "model": "google/gemma-4-26b-a4b-uncensored",
+        "model": "z-ai/glm-5.3-flash",
         "system": "You write one image prompt for a cinematic travel postcard. Combine the place and the vibe into a single vivid prompt: camera, lighting, materials, weather, time of day, one human figure at most (no readable signage, no logos). 80-140 words. Reply with the prompt only."
       },
       "sizes": {
@@ -70,8 +70,8 @@
       "w": 280,
       "name": "Postcard",
       "fields": {
-        "model": "nano-banana-2-lite",
-        "size": "1k",
+        "model": "meta/muse-image/text-to-image",
+        "size": "1:1",
         "variations": "1"
       }
     }

@@ -26,8 +26,8 @@
       "y": 100,
       "fields": {
         "prompt": "",
-        "size": "1024x1024",
-        "model": "qwen-image-3"
+        "size": "1:1",
+        "model": "meta/muse-image/edit"
       },
       "sizes": {
         "prompt": 0
