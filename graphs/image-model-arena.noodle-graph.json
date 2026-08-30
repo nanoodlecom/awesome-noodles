@@ -74,7 +74,7 @@
       "x": 967.9475982532751,
       "y": 562.0595654083652,
       "fields": {
-        "model": "recraft-ai/recraft-v4-style/text-to-image",
+        "model": "recraft-v4",
         "size": "1024x1024",
         "variations": "1"
       },
