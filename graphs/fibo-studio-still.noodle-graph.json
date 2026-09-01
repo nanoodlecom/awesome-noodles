@@ -1,0 +1,132 @@
+{
+  "v": 1,
+  "nodes": [
+    {
+      "id": "n1",
+      "type": "comment",
+      "x": 40,
+      "y": 20,
+      "w": 300,
+      "name": "FIBO studio still",
+      "fields": {
+        "text": "Shareable demo: product brief + lighting → GLM 5.3 Flash writes a structured photoreal prompt → Bria FIBO Generate 1.5.\nLicensed-data image model, distilled to ~6 steps, built for commercially safe stills. Edit the product, pick a light, hit Run. No uploads. ~$0.05/run (1x GLM Flash + FIBO 1.5 at 1mp).",
+        "color": "#1f2420"
+      }
+    },
+    {
+      "id": "n2",
+      "type": "text",
+      "x": 40,
+      "y": 200,
+      "w": 260,
+      "name": "Product",
+      "fields": {
+        "text": "Handmade stoneware pour-over dripper and matching cup on raw flax linen, wet coffee grounds in the filter, no logos or brand marks"
+      }
+    },
+    {
+      "id": "n3",
+      "type": "choice",
+      "x": 40,
+      "y": 440,
+      "w": 260,
+      "name": "Light",
+      "fields": {
+        "options": "north-window daylight, cool linen, pale celadon glaze\nlate-afternoon tungsten, honey glaze, walnut table\novercast skylight, wet slate, olive-oil sheen\nhard studio key, matte charcoal backdrop, specular glaze",
+        "selected": "north-window daylight, cool linen, pale celadon glaze"
+      }
+    },
+    {
+      "id": "n4",
+      "type": "join",
+      "x": 360,
+      "y": 300,
+      "w": 220,
+      "name": "Brief",
+      "fields": {
+        "sep": "\n\nLight: "
+      }
+    },
+    {
+      "id": "n5",
+      "type": "llm",
+      "x": 640,
+      "y": 220,
+      "w": 300,
+      "name": "Structured prompt",
+      "fields": {
+        "model": "z-ai/glm-5.3-flash",
+        "system": "You write one image prompt for a commercially safe editorial product still, in the structured-caption style FIBO was trained on. Combine the product and the lighting into a single vivid photoreal prompt: camera, lens, lighting direction, materials, surface textures, color, and one quiet still-life composition. Name glaze, fabric weave, wood grain, liquid sheen, and focus falloff. No readable text, logos, brand marks, or recognizable commercial products. 80-140 words. Reply with the prompt only."
+      },
+      "sizes": {
+        "system": 160
+      }
+    },
+    {
+      "id": "n6",
+      "type": "image",
+      "x": 1000,
+      "y": 250,
+      "w": 280,
+      "name": "Still",
+      "fields": {
+        "model": "bria/fibo-generate-1.5/text-to-image",
+        "size": "1mp",
+        "variations": "1"
+      }
+    }
+  ],
+  "links": [
+    {
+      "id": "l1",
+      "from": {
+        "node": "n2",
+        "port": "text"
+      },
+      "to": {
+        "node": "n4",
+        "port": "a"
+      }
+    },
+    {
+      "id": "l2",
+      "from": {
+        "node": "n3",
+        "port": "text"
+      },
+      "to": {
+        "node": "n4",
+        "port": "b"
+      }
+    },
+    {
+      "id": "l3",
+      "from": {
+        "node": "n4",
+        "port": "text"
+      },
+      "to": {
+        "node": "n5",
+        "port": "prompt"
+      }
+    },
+    {
+      "id": "l4",
+      "from": {
+        "node": "n5",
+        "port": "text"
+      },
+      "to": {
+        "node": "n6",
+        "port": "prompt"
+      }
+    }
+  ],
+  "nid": 7,
+  "lid": 5,
+  "view": {
+    "panX": 20,
+    "panY": 40,
+    "scale": 0.85
+  }
+}
