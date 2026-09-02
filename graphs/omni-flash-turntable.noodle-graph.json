@@ -1,0 +1,133 @@
+{
+  "v": 1,
+  "nodes": [
+    {
+      "id": "n1",
+      "type": "comment",
+      "x": 40,
+      "y": 20,
+      "w": 320,
+      "name": "Omni Flash turntable",
+      "fields": {
+        "text": "Shareable demo: object + move → GLM 5.3 Flash writes a cinematic t2v prompt → Gemini Omni Flash 1.1.\nPin is google/gemini-omni-flash/v1.1 (not v1 — v1 has no resolution knob and no last_image). Default 8s / 720p / 16:9. No uploads, no last frame. Catalog audio_generation is false. ~$1.04/run at 720p (360p ~$0.31).",
+        "color": "#1a1814"
+      }
+    },
+    {
+      "id": "n2",
+      "type": "text",
+      "x": 40,
+      "y": 220,
+      "w": 260,
+      "name": "Object",
+      "fields": {
+        "text": "Hand-blown amber glass decanter on a raw walnut turntable, no labels or brand marks, thin honey still inside, wet rim catching the key light"
+      }
+    },
+    {
+      "id": "n3",
+      "type": "choice",
+      "x": 40,
+      "y": 480,
+      "w": 260,
+      "name": "Move",
+      "fields": {
+        "options": "slow clockwise orbit, studio key left, soft fill, dust motes\nlazy quarter-turn, north-window daylight, linen behind\nlocked-off, honey slides as the bottle turns, tungsten, specular glaze\npush-in while it rotates, overcast skylight, walnut grain sharp",
+        "selected": "slow clockwise orbit, studio key left, soft fill, dust motes"
+      }
+    },
+    {
+      "id": "n4",
+      "type": "join",
+      "x": 360,
+      "y": 320,
+      "w": 220,
+      "name": "Brief",
+      "fields": {
+        "sep": "\n\nMove: "
+      }
+    },
+    {
+      "id": "n5",
+      "type": "llm",
+      "x": 640,
+      "y": 240,
+      "w": 300,
+      "name": "Video prompt",
+      "fields": {
+        "model": "z-ai/glm-5.3-flash",
+        "system": "You write one text-to-video prompt for Gemini Omni Flash 1.1. Combine the object and the move into a single cinematic prompt: camera, lighting, materials, surface textures, and physical motion (who moves, how, what the camera does). No people, no faces, no readable text, logos, brand marks, or copyrighted characters. 60-120 words. Reply with the prompt only."
+      },
+      "sizes": {
+        "system": 160
+      }
+    },
+    {
+      "id": "n6",
+      "type": "tvideo",
+      "x": 1000,
+      "y": 260,
+      "w": 280,
+      "name": "Clip",
+      "fields": {
+        "model": "google/gemini-omni-flash/v1.1",
+        "duration": "8",
+        "resolution": "720p",
+        "aspect": "16:9"
+      }
+    }
+  ],
+  "links": [
+    {
+      "id": "l1",
+      "from": {
+        "node": "n2",
+        "port": "text"
+      },
+      "to": {
+        "node": "n4",
+        "port": "a"
+      }
+    },
+    {
+      "id": "l2",
+      "from": {
+        "node": "n3",
+        "port": "text"
+      },
+      "to": {
+        "node": "n4",
+        "port": "b"
+      }
+    },
+    {
+      "id": "l3",
+      "from": {
+        "node": "n4",
+        "port": "text"
+      },
+      "to": {
+        "node": "n5",
+        "port": "prompt"
+      }
+    },
+    {
+      "id": "l4",
+      "from": {
+        "node": "n5",
+        "port": "text"
+      },
+      "to": {
+        "node": "n6",
+        "port": "prompt"
+      }
+    }
+  ],
+  "nid": 7,
+  "lid": 5,
+  "view": {
+    "panX": 20,
+    "panY": 40,
+    "scale": 0.85
+  }
+}
