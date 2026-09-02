@@ -1,0 +1,55 @@
+{
+  "v": 1,
+  "nodes": [
+    {
+      "id": "c-intent",
+      "type": "comment",
+      "x": 40,
+      "y": -40,
+      "w": 520,
+      "name": "Fable cold-open",
+      "fields": {
+        "text": "Paste a scene seed. Claude Fable 5.1 writes a 180-word present-tense cold-open — no title, no moral.\nSample is the Keelung harbor switchboard (every call arrives as a smell; tonight one doesn't) so first-click Run has teeth. Swap the seed. One LLM call, reasoning low, ~$0.02.",
+        "color": "yellow"
+      }
+    },
+    {
+      "id": "n1",
+      "type": "text",
+      "x": 40,
+      "y": 180,
+      "w": 420,
+      "name": "Scene seed",
+      "fields": {
+        "text": "The last analog switchboard in Keelung harbor still works. Every incoming call arrives as a smell first: diesel, pomelo peel, rain on hot tar. Tonight a call comes in with no smell at all. The operator is seventy and has never pulled a dead line."
+      }
+    },
+    {
+      "id": "n2",
+      "type": "llm",
+      "x": 520,
+      "y": 160,
+      "w": 420,
+      "name": "Cold-open",
+      "fields": {
+        "model": "anthropic/claude-fable-5.1",
+        "system": "You write cold-opens, not morals. Present tense, close third. 160-200 words. Concrete sensory detail; no title, no preamble, no lesson, no \"once upon a time\". End on an image or a sound, not a summary. Reply with the scene only.",
+        "maxTokens": "512",
+        "reasoningEffort": "low"
+      }
+    }
+  ],
+  "links": [
+    {
+      "id": "l1",
+      "from": {
+        "node": "n1",
+        "port": "text"
+      },
+      "to": {
+        "node": "n2",
+        "port": "prompt"
+      }
+    }
+  ]
+}
