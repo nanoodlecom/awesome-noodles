@@ -1,0 +1,134 @@
+{
+  "v": 1,
+  "nodes": [
+    {
+      "id": "n1",
+      "type": "comment",
+      "x": 40,
+      "y": 20,
+      "w": 300,
+      "name": "Alishan fog dawn",
+      "fields": {
+        "text": "Shareable demo: place + atmosphere → GLM 5.3 Flash writes a 3:2 analog-film still prompt → Muse Image.\nFirst-click is Alishan Forest Railway at 5:47am: empty crimson hinoki carriage, cypress cathedral, sea-of-clouds, oil-lamp windows on wet rails. Edit the place, pick a fog, hit Run. No uploads. No people in floodwater. Cheap models (1x GLM Flash + Muse Image at 3:2).",
+        "color": "#14201c"
+      }
+    },
+    {
+      "id": "n2",
+      "type": "text",
+      "x": 40,
+      "y": 200,
+      "w": 280,
+      "name": "Place",
+      "fields": {
+        "text": "Alishan Forest Railway, Taiwan — 5:47am on the Shenmu line. One empty crimson hinoki carriage waiting on wet narrow-gauge rails. Cypress trunks vanish into a sea-of-clouds. Warm oil-lamp windows. Cedar needles stuck to cold iron. Empty mossy platform, no crowd."
+      }
+    },
+    {
+      "id": "n3",
+      "type": "choice",
+      "x": 40,
+      "y": 460,
+      "w": 280,
+      "name": "Atmosphere",
+      "fields": {
+        "options": "dawn fog, pale gold knifing through blue mist, analog film\nlocomotive breath hanging, tungsten cab glow, wet rails\nlocked-off empty platform, last lantern, cypress cathedral\nanamorphic cinematic, cyan fog bank, warm window spill, 35mm",
+        "selected": "dawn fog, pale gold knifing through blue mist, analog film"
+      }
+    },
+    {
+      "id": "n4",
+      "type": "join",
+      "x": 380,
+      "y": 300,
+      "w": 220,
+      "name": "Spec",
+      "fields": {
+        "sep": "\n\nHard requirements for the prompt: analog film stock, 3:2 landscape (not square), wet narrow-gauge rails, cypress fog, warm carriage-window light, no logos or readable signage, at most one distant standing figure (not kneeling, not in water).\nAtmosphere: "
+      }
+    },
+    {
+      "id": "n5",
+      "type": "llm",
+      "x": 660,
+      "y": 220,
+      "w": 300,
+      "name": "Still prompt",
+      "fields": {
+        "model": "z-ai/glm-5.3-flash",
+        "system": "Write ONE image prompt in the final answer text (not only in hidden reasoning). Cinematic 3:2 landscape still, analog film stock: fine grain, soft highlight roll-off, slightly lifted blacks. Combine place + atmosphere. You MUST name: Alishan Forest Railway, wet narrow-gauge rails, hinoki/cypress trunks, dawn sea-of-clouds fog, oil-lamp or warm carriage-window light, 35–50mm cinematic lens, empty or near-empty platform, subject slightly off-center with breathing room. No logos, no readable signage, no brand names, no neon night-market, no Tokyo, no kneeling figures, no floodwater. At most one distant standing figure. Not square. 90–140 words. Prompt only — no preamble.",
+        "maxTokens": "1024",
+        "reasoningEffort": "low"
+      },
+      "sizes": {
+        "system": 180
+      }
+    },
+    {
+      "id": "n6",
+      "type": "image",
+      "x": 1020,
+      "y": 250,
+      "w": 280,
+      "name": "Still",
+      "fields": {
+        "model": "meta/muse-image/text-to-image",
+        "size": "3:2",
+        "variations": "1"
+      }
+    }
+  ],
+  "links": [
+    {
+      "id": "l1",
+      "from": {
+        "node": "n2",
+        "port": "text"
+      },
+      "to": {
+        "node": "n4",
+        "port": "a"
+      }
+    },
+    {
+      "id": "l2",
+      "from": {
+        "node": "n3",
+        "port": "text"
+      },
+      "to": {
+        "node": "n4",
+        "port": "b"
+      }
+    },
+    {
+      "id": "l3",
+      "from": {
+        "node": "n4",
+        "port": "text"
+      },
+      "to": {
+        "node": "n5",
+        "port": "prompt"
+      }
+    },
+    {
+      "id": "l4",
+      "from": {
+        "node": "n5",
+        "port": "text"
+      },
+      "to": {
+        "node": "n6",
+        "port": "prompt"
+      }
+    }
+  ],
+  "nid": 7,
+  "lid": 5,
+  "view": {
+    "panX": 20,
+    "panY": 40,
+    "scale": 0.85
+  }
+}
