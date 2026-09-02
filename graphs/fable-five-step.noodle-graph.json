@@ -9,7 +9,7 @@
       "w": 520,
       "name": "Fable 5-step plan",
       "fields": {
-        "text": "Paste a messy coding/workflow dump. Claude Fable 5.1 turns it into a clean 5-step plan.\nSample is filled so Run works on first click — swap the dump. One LLM call, reasoning low, ~$0.02.",
+        "text": "Paste a messy coding dump. Claude Fable 5.1 turns it into a clean 5-step plan.\nSample is a Next.js invoices crime scene so first-click Run has something to chew — swap the dump. One LLM call, reasoning low, ~$0.02.",
         "color": "yellow"
       }
     },
@@ -21,7 +21,7 @@
       "w": 420,
       "name": "Messy dump",
       "fields": {
-        "text": "ok so the invoices page in our next.js app router dashboard lists rows but csv export dumps html because that route is a page not a route handler, and the date filter is client-only so db paging ignores it. people want a saved view in localstorage. empty state just says no data. export button does not disable in flight so they double-click. do not rewrite the whole billing module. a test would be nice. i keep mixing this with the other ticket about custom endpoints, those are different files."
+        "text": "ok so invoices in the next.js app-router dashboard is a crime scene. the table renders rows. csv export returns 200 OK of the PAGE html because /invoices/export is still a page.tsx, not a route handler. the date range lives in useState so the server pager has never heard of it and we keep fetching page 3 of the unfiltered universe. PM wants the last filter saved in localStorage like a tarot reading. empty state is the word \"no data\" floating in a void. export button does not disable in flight so finance double-clicks and we email them two html files named invoices.csv. do NOT rewrite billing. a test would be a kindness. also i keep pasting this into the custom-endpoints ticket — those are different files. i am begging you."
       }
     },
     {

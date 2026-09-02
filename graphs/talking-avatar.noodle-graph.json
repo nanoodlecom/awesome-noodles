@@ -8,7 +8,7 @@
       "y": -160,
       "w": 520,
       "fields": {
-        "text": "Muse paints a starter face, TTS speaks your line, Longcat lipsync animates it.\nEdit the look or the line, hit Run (~$0.15\u20130.25 at 480p). Replace the Face image node with an Upload if you want your own portrait.",
+        "text": "Muse paints a rainy neon courier, TTS speaks the dispatch line, Longcat lipsyncs it.\nEdit the look or the line, hit Run (~$0.15–0.25 at 480p). Replace the Face image node with an Upload for your own portrait.",
         "color": "yellow"
       }
     },
@@ -20,7 +20,7 @@
       "w": 280,
       "name": "look",
       "fields": {
-        "text": "friendly young adult with short dark hair, soft daylight studio portrait, neutral gray backdrop, facing camera, shoulders up, photoreal, no text, no watermark"
+        "text": "cinematic film still of a night courier, late 20s, cropped black rain jacket with a reflective stripe, rain beading on a visor, cyan and magenta neon on wet skin, rainy alley bokeh, shoulders-up, facing camera, photoreal, slight jaw set, no stock-studio smile, no text, no watermark"
       }
     },
     {
@@ -46,7 +46,7 @@
       "w": 280,
       "name": "speak",
       "fields": {
-        "text": "Hi there! I used to be a still photo \u2014 then somebody wired three nodes together, and now I won't stop talking."
+        "text": "Last drop of the night. If the alley floods, tell dispatch I swam it — and the package is already on the stoop."
       },
       "sizes": {
         "text": 100
@@ -75,7 +75,7 @@
       "w": 320,
       "name": "movement",
       "fields": {
-        "text": "Natural talking-head performance: gentle nods and slight side-to-side head turns timed to the speech, expressive eyebrows, soft shoulder sway, steady eye contact with the camera, subtle blinks. Keep the face clear and well-lit; no abrupt cuts, no morphing, no extra people."
+        "text": "Natural talking-head: small nods timed to the speech, rain-light catching the visor, slight jaw set, steady camera-facing eyes, subtle blinks, soft shoulder sway. Keep the face readable and well-lit; no extra people, no morphing, no hard cuts."
       }
     },
     {
