@@ -7,7 +7,7 @@
       "x": -317.0012233817421,
       "y": -286.89084847129584,
       "fields": {
-        "text": "Describe your idea, get a favicon — an LLM distills the brand to one bold glyph, an image model renders it, and it comes back as a crisp square (~$0.04/run).",
+        "text": "Describe a brand, get a favicon \u2014 GLM 5.3 Flash distills it to one bold glyph, Muse Image renders a crisp square.\nSample brand is filled so Run works; swap the copy. No uploads. ~$0.02/run (1\u00d7 GLM Flash + Muse).",
         "color": "yellow"
       },
       "w": 606,
@@ -21,7 +21,7 @@
       "x": -240.92969817448912,
       "y": 18.33511504460631,
       "fields": {
-        "text": ""
+        "text": "Lumen \u2014 pocket weather radio. One lighthouse beam as a chevron. Deep navy field, single warm-gold mark. No letters."
       },
       "w": 240,
       "name": "Brand"
@@ -34,7 +34,8 @@
       "fields": {
         "model": "z-ai/glm-5.3-flash"
       },
-      "w": 260
+      "w": 260,
+      "name": "Icon prompt"
     },
     {
       "id": "n3",
@@ -46,7 +47,8 @@
         "size": "1:1",
         "variations": "1"
       },
-      "w": 250
+      "w": 250,
+      "name": "Favicon"
     },
     {
       "id": "n102",
@@ -54,7 +56,7 @@
       "x": -190.7427439660484,
       "y": 348.4505346573076,
       "fields": {
-        "text": "You design one favicon. From the brand name/description, write ONE image prompt for a square app icon: a single bold glyph or symbol that captures the brand, flat vector style, strong silhouette, high contrast, centered on a solid or subtly-gradient background, generous margins, no text, no letters, no photorealism, no drop shadows. It must stay recognizable scaled down to 16 pixels. Reply with the prompt only.",
+        "text": "You design one favicon. From the brand name/description, write ONE image prompt for a square app icon: a single bold glyph or symbol that captures the brand, flat vector style, strong silhouette, high contrast, centered on a solid or subtly-gradient background, generous margins, no text, no letters, no photorealism, no drop shadows, no device mockups, no app-store chrome, no faces. It must stay recognizable scaled down to 16 pixels. Reply with the prompt only.",
         "optional": true
       }
     },
@@ -73,7 +75,7 @@
       "x": -192.33505871368808,
       "y": 609.6261103600914,
       "fields": {
-        "text": "style guide:\n- Reduce the brand to its most distinctive visual idea; prefer a simple metaphor over a literal product depiction.\n- Use one primary glyph only: geometric, abstract, or mascot-like, with clean vector edges and a confident silhouette.\n- Compose on a true square canvas with the glyph centered, occupying roughly 55–70% of the frame and surrounded by ample clear space.\n- Choose a restrained palette: one vivid brand color plus one dark or light supporting background; use high contrast and avoid busy multicolor treatments.\n- Favor flat fills, simple cutouts, or a very subtle gradient. Avoid thin lines, intricate detail, textures, realistic lighting, glossy effects, shadows, borders, mockups, and visual clutter.\n- The icon must read instantly at 16×16 pixels. Do not include words, initials, letters, numbers, logos, or trademarked imagery.",
+        "text": "style guide:\n- Reduce the brand to its most distinctive visual idea; prefer a simple metaphor over a literal product depiction.\n- Use one primary glyph only: geometric, abstract, or mascot-like, with clean vector edges and a confident silhouette.\n- Compose on a true square canvas with the glyph centered, occupying roughly 55\u201370% of the frame and surrounded by ample clear space.\n- Choose a restrained palette: one vivid brand color plus one dark or light supporting background; use high contrast and avoid busy multicolor treatments.\n- Favor flat fills, simple cutouts, or a very subtle gradient. Avoid thin lines, intricate detail, textures, realistic lighting, glossy effects, shadows, borders, device mockups, app-store chrome, and visual clutter.\n- The icon must read instantly at 16\u00d716 pixels. Do not include words, initials, letters, numbers, logos, or trademarked imagery.",
         "optional": true
       }
     }
