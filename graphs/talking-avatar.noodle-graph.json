@@ -1,1 +1,159 @@
-{"v": 1, "nodes": [{"id": "c-intent", "type": "comment", "x": 60, "y": -120, "fields": {"text": "TTS speaks your line, and the lipsync model animates the portrait to match.", "color": "yellow"}, "w": 420}, {"id": "n1", "type": "upload", "x": 60, "y": 60, "fields": {}}, {"id": "n2", "type": "text", "x": 60, "y": 427.272705078125, "fields": {"text": "Hi there! I used to be a still photo — then somebody wired three nodes together, and now I won't stop talking."}, "sizes": {"text": 100}, "name": "speak"}, {"id": "n3", "type": "tts", "x": 400, "y": 360, "fields": {"model": "Minimax-Speech-2.8-HD", "voice": "Deep_Voice_Man", "response_format": "mp3"}, "sizes": {"prompt": 0, "instructions": 0}}, {"id": "n4", "type": "lipsync", "x": 780, "y": 100, "fields": {"model": "wavespeed-ai/longcat-avatar-1.5", "resolution": "480p"}, "sizes": {"prompt": 0}}, {"id": "n5", "type": "text", "x": 66.27273559570312, "y": 692.4545288085938, "fields": {"text": "exaggerated head movement"}, "name": "movement"}], "links": [{"id": "l1", "from": {"node": "n2", "port": "text"}, "to": {"node": "n3", "port": "prompt"}}, {"id": "l2", "from": {"node": "n1", "port": "image"}, "to": {"node": "n4", "port": "image"}}, {"id": "l3", "from": {"node": "n3", "port": "audio"}, "to": {"node": "n4", "port": "audio"}}, {"id": "l4", "from": {"node": "n5", "port": "text"}, "to": {"node": "n4", "port": "prompt"}}], "nid": 6, "lid": 5, "view": {"panX": 139.38169332635772, "panY": 271.9138088229473, "scale": 0.8264462809917359}}
+{
+  "v": 1,
+  "nodes": [
+    {
+      "id": "c-intent",
+      "type": "comment",
+      "x": 60,
+      "y": -160,
+      "w": 520,
+      "fields": {
+        "text": "Muse paints a starter face, TTS speaks your line, Longcat lipsync animates it.\nEdit the look or the line, hit Run (~$0.15\u20130.25 at 480p). Replace the Face image node with an Upload if you want your own portrait.",
+        "color": "yellow"
+      }
+    },
+    {
+      "id": "n0",
+      "type": "text",
+      "x": 60,
+      "y": 40,
+      "w": 280,
+      "name": "look",
+      "fields": {
+        "text": "friendly young adult with short dark hair, soft daylight studio portrait, neutral gray backdrop, facing camera, shoulders up, photoreal, no text, no watermark"
+      }
+    },
+    {
+      "id": "n1",
+      "type": "image",
+      "x": 400,
+      "y": 40,
+      "name": "face",
+      "fields": {
+        "model": "meta/muse-image/text-to-image",
+        "size": "1:1",
+        "variations": "1"
+      },
+      "sizes": {
+        "prompt": 0
+      }
+    },
+    {
+      "id": "n2",
+      "type": "text",
+      "x": 60,
+      "y": 360,
+      "w": 280,
+      "name": "speak",
+      "fields": {
+        "text": "Hi there! I used to be a still photo \u2014 then somebody wired three nodes together, and now I won't stop talking."
+      },
+      "sizes": {
+        "text": 100
+      }
+    },
+    {
+      "id": "n3",
+      "type": "tts",
+      "x": 400,
+      "y": 360,
+      "fields": {
+        "model": "Minimax-Speech-2.8-HD",
+        "voice": "Deep_Voice_Man",
+        "response_format": "mp3"
+      },
+      "sizes": {
+        "prompt": 0,
+        "instructions": 0
+      }
+    },
+    {
+      "id": "n5",
+      "type": "text",
+      "x": 60,
+      "y": 640,
+      "w": 320,
+      "name": "movement",
+      "fields": {
+        "text": "Natural talking-head performance: gentle nods and slight side-to-side head turns timed to the speech, expressive eyebrows, soft shoulder sway, steady eye contact with the camera, subtle blinks. Keep the face clear and well-lit; no abrupt cuts, no morphing, no extra people."
+      }
+    },
+    {
+      "id": "n4",
+      "type": "lipsync",
+      "x": 780,
+      "y": 200,
+      "fields": {
+        "model": "wavespeed-ai/longcat-avatar-1.5",
+        "resolution": "480p"
+      },
+      "sizes": {
+        "prompt": 0
+      }
+    }
+  ],
+  "links": [
+    {
+      "id": "l0",
+      "from": {
+        "node": "n0",
+        "port": "text"
+      },
+      "to": {
+        "node": "n1",
+        "port": "prompt"
+      }
+    },
+    {
+      "id": "l1",
+      "from": {
+        "node": "n2",
+        "port": "text"
+      },
+      "to": {
+        "node": "n3",
+        "port": "prompt"
+      }
+    },
+    {
+      "id": "l2",
+      "from": {
+        "node": "n1",
+        "port": "image"
+      },
+      "to": {
+        "node": "n4",
+        "port": "image"
+      }
+    },
+    {
+      "id": "l3",
+      "from": {
+        "node": "n3",
+        "port": "audio"
+      },
+      "to": {
+        "node": "n4",
+        "port": "audio"
+      }
+    },
+    {
+      "id": "l4",
+      "from": {
+        "node": "n5",
+        "port": "text"
+      },
+      "to": {
+        "node": "n4",
+        "port": "prompt"
+      }
+    }
+  ],
+  "nid": 7,
+  "lid": 5,
+  "view": {
+    "panX": 40,
+    "panY": 220,
+    "scale": 0.8
+  }
+}
