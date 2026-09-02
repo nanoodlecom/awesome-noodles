@@ -7,7 +7,7 @@
       "x": -265,
       "y": -63,
       "fields": {
-        "text": "One idea fans out to three LLMs — lyrics, a matching style, and a negative prompt of what to avoid — then a music model sings it.",
+        "text": "One idea fans out to three LLMs \u2014 lyrics, a matching style, and a negative prompt of what to avoid \u2014 then a music model sings it. The music node is pinned to Mureka v9.5 Generate Song, which needs lyrics (already wired from the songwriter LLM). Do not swap it to Prompt-to-Song ($0.75 and it ignores lyrics).",
         "color": "yellow"
       },
       "w": 460
@@ -29,7 +29,7 @@
       "y": -142.85694158301368,
       "fields": {
         "model": "thinkingmachines/inkling:thinking",
-        "system": "You are an award-winning songwriter. Write only the lyrics — no title, no commentary, no explanations.\nPrinciples:\n- Melody is king: write the singable line first. Favor open vowels, natural word stress, and steady syllable counts so every line lands cleanly on a melody.\n- Keep it simple (KISS): short lines, plain words, one clear emotional idea per song.\n- Build one unforgettable hook and bring it back in every chorus.\n- Show, don't tell: concrete images and sensory detail beat abstract statements.\n- Serve the mood and genre of the request; the lyrics exist to serve the melody, never the other way around.\nFormat: label each section so a music model can sing it — [Verse 1], [Chorus], [Verse 2], [Chorus], [Bridge], [Chorus], [Outro]. Output the labeled lyrics and nothing else."
+        "system": "You are an award-winning songwriter. Write only the lyrics \u2014 no title, no commentary, no explanations.\nPrinciples:\n- Melody is king: write the singable line first. Favor open vowels, natural word stress, and steady syllable counts so every line lands cleanly on a melody.\n- Keep it simple (KISS): short lines, plain words, one clear emotional idea per song.\n- Build one unforgettable hook and bring it back in every chorus.\n- Show, don't tell: concrete images and sensory detail beat abstract statements.\n- Serve the mood and genre of the request; the lyrics exist to serve the melody, never the other way around.\nFormat: label each section so a music model can sing it \u2014 [Verse 1], [Chorus], [Verse 2], [Chorus], [Bridge], [Chorus], [Outro]. Output the labeled lyrics and nothing else."
       },
       "w": 549,
       "sizes": {
@@ -75,7 +75,7 @@
       "x": -711.7791041392409,
       "y": 1154.9439102487288,
       "fields": {
-        "text": "Bands liked:\nSoundgarden, XX",
+        "text": "Bands liked:\nPortishead, Massive Attack, Tricky",
         "optional": false
       },
       "name": "Bands"
@@ -95,7 +95,7 @@
       "x": -245,
       "y": 440,
       "fields": {
-        "text": "You invent a musical style that fits the given lyrics. Reply with only the style, richly descriptive — no commentary.\nDo not mention any band names.",
+        "text": "You invent a musical style that fits the given lyrics. Reply with only the style, richly descriptive \u2014 no commentary.\nDo not mention any band names.",
         "optional": true
       },
       "name": "Style System Prompt"
@@ -107,7 +107,7 @@
       "y": 595.2024252048074,
       "fields": {
         "model": "openai/gpt-5.6-terra",
-        "system": "Negate the style - what would go poorly,  the worst you can imagine. No preamble or postamble."
+        "system": "Negate the style \u2014 what would go poorly, the worst you can imagine. No preamble or postamble."
       },
       "w": 661,
       "sizes": {
