@@ -6,21 +6,22 @@
       "type": "comment",
       "x": 80,
       "y": -60,
+      "w": 380,
       "fields": {
-        "text": "Muse-less still from a prompt, then MiniMax H3 Max turns it into a short clip. First-click is a lone dinghy on a bioluminescent sea — swap the still or the move.",
+        "text": "Still from a prompt, then MiniMax H3 Spicy (open-weights i2v) animates it \u2014 expressive motion, optional last frame, 480p, ~5s. First-click is a red silk dress on a rainy Tokyo fire escape; swap the still or the move. Spicy model, SFW fashion scene.",
         "color": "yellow"
-      },
-      "w": 340
+      }
     },
     {
       "id": "n1",
       "type": "text",
-      "x": -36.63060546098497,
-      "y": 80.63198528663212,
+      "x": -40,
+      "y": 100,
+      "w": 300,
+      "name": "the image being",
       "fields": {
-        "text": "a lone wooden dinghy cutting a bioluminescent wake under a bruised purple sky, the water like spilled galaxies, night, stars, no people"
-      },
-      "name": "the image being"
+        "text": "a woman in a wind-whipped red silk dress on a rainy neon Tokyo fire escape at night, wet metal stairs, magenta and teal signs blooming in puddles, fashion editorial, three-quarter view, face turned away, cinematic 35mm, shallow depth, no logos, no readable text"
+      }
     },
     {
       "id": "n2",
@@ -28,7 +29,7 @@
       "x": 400,
       "y": 100,
       "fields": {
-        "model": "qwen-image-3-pro",
+        "model": "meta/muse-image/text-to-image",
         "size": "1k",
         "variations": "1"
       },
@@ -42,10 +43,9 @@
       "x": 820,
       "y": 100,
       "fields": {
-        "model": "minimax/h3-max",
-        "prompt": "slow push-in, gentle waves, camera drifts forward",
+        "model": "wavespeed-ai/minimax-h3/image-to-video-spicy",
+        "prompt": "silk dress snaps and billows in the rain wind, she turns half a step down the fire escape, camera slow orbit right, neon reflections crawl across wet metal, rain streaks",
         "resolution": "480p",
-        "aspect": "16:9",
         "duration": "5",
         "modelOpts": {},
         "loras": [
@@ -60,47 +60,47 @@
       }
     },
     {
+      "id": "n5",
+      "type": "text",
+      "x": -190,
+      "y": 680,
+      "w": 418,
+      "name": "motion system prompt",
+      "fields": {
+        "text": "You are writing a motion prompt for MiniMax H3 Spicy image-to-video.\nPrompting guide:\n1. Be specific. Name subjects, spatial layout, style, and actions clearly.\n2. Direct the scene \u2014 left vs right, foreground vs background, facing toward vs away.\n3. Describe texture and material: fabric, hair, wet metal, neon glow, rain.\n4. For image-to-video, use verbs. Specify who moves, what moves, how they move, and what the camera does.\n5. Avoid static, photo-like prompts.\n6. Keep motion readable in a short clip (~5s): one clear camera move and one or two subject actions.\n7. Stay SFW fashion/cinematic even on the Spicy model \u2014 no explicit content.\n\nReply with the motion prompt only. No preamble.",
+        "optional": true
+      },
+      "sizes": {
+        "text": 354
+      }
+    },
+    {
+      "id": "n8",
+      "type": "text",
+      "x": -10,
+      "y": 400,
+      "w": 280,
+      "name": "movement",
+      "fields": {
+        "text": "the red silk snaps sideways in a wet gust, she takes one careful step down the fire escape, camera slow orbit right as neon crawls over the puddles"
+      },
+      "sizes": {
+        "text": 98
+      }
+    },
+    {
       "id": "n4",
       "type": "llm",
-      "x": 414.8945610165405,
-      "y": 605.2625832387628,
+      "x": 420,
+      "y": 600,
       "fields": {
-        "model": "openai/gpt-5.6-terra",
+        "model": "z-ai/glm-5.3-flash",
         "prompt": ""
       },
       "sizes": {
         "system": 0,
         "prompt": 0
       }
-    },
-    {
-      "id": "n5",
-      "type": "text",
-      "x": -190.00000305175774,
-      "y": 679.9999633789063,
-      "fields": {
-        "text": "You are writing a motion prompt for MiniMax H3 Max image-to-video.\nPrompting guide:\n1. Be specific. Name subjects, spatial layout, style, and actions clearly.\nInstead of:\nA woman in a café\n\nTry:\nA woman in her 30s sits by the window of a small Parisian café. Rain runs down the glass behind her. Warm tungsten interior lighting. She slowly stirs her coffee while glancing at her phone. Background softly out of focus.\n\n2. Direct the scene — left vs right, foreground vs background, facing toward vs away, distance between subjects.\nInstead of:\nTwo people talking outside\n\nTry:\nTwo people stand facing each other on a quiet suburban sidewalk. The taller man stands on the left, hands in pockets. The woman stands on the right, holding a bicycle. Houses blurred in the background.\n\n3. Describe texture and material: fabric, hair, surface finish, environmental wear, edge detail.\nExample:\nClose-up of wind moving through fine, curly hair. Individual strands visible. Soft afternoon backlight catching edge detail.\n\n4. For image-to-video, use verbs. Motion needs clarity.\nAvoid:\nThe scene comes alive\n\nInstead:\nThe camera slowly pushes forward as the subject turns their head and begins walking toward the street. Cars pass.\nSpecify who moves, what moves, how they move, and what the camera does.\n\n5. Avoid static, photo-like prompts.\nInstead of:\nA dramatic portrait of a man standing\n\nTry:\nA man stands on a windy rooftop. His coat flaps in the wind. He adjusts his collar and steps forward as the camera tracks right.\n\n6. Match the output aspect. If the clip is 16:9, compose for landscape; for portrait, frame vertically on purpose — don't treat vertical as cropped landscape.\n\n7. Keep motion readable in a short clip (about 5s): one clear camera move and one or two subject actions beat a crowded shot list.\n\nNo preamble or postamble",
-        "optional": true
-      },
-      "w": 418,
-      "sizes": {
-        "text": 354
-      },
-      "name": "motion system prompt"
-    },
-    {
-      "id": "n8",
-      "type": "text",
-      "x": -9.368380319129095,
-      "y": 389.52823917260065,
-      "fields": {
-        "text": "the dinghy surges on a sudden swell, camera low over the glowing water, spray, slow push-in as the wake blooms"
-      },
-      "w": 254,
-      "sizes": {
-        "text": 98
-      },
-      "name": "movement"
     }
   ],
   "links": [
@@ -124,17 +124,6 @@
       "to": {
         "node": "n3",
         "port": "image"
-      }
-    },
-    {
-      "id": "l3",
-      "from": {
-        "node": "n2",
-        "port": "image"
-      },
-      "to": {
-        "node": "n4",
-        "port": "img1"
       }
     },
     {
@@ -172,10 +161,5 @@
     }
   ],
   "nid": 9,
-  "lid": 9,
-  "view": {
-    "panX": 206.7787288640572,
-    "panY": 27.32052487753026,
-    "scale": 1.0160530740967995
-  }
+  "lid": 9
 }
