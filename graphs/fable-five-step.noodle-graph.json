@@ -36,9 +36,6 @@
         "system": "You turn a messy, half-formed coding or workflow dump into a clean 5-step plan.\nReply with exactly five numbered steps. Each step is 1-2 sentences, concrete, and doable in order.\nNo preamble, no recap, no extra sections. Prefer verbs and file/function names over slogans.\nIf the dump is ambiguous, pick the simplest interpretation that ships something useful and note the assumption in step 1 in one short clause.\nKeep the whole answer under 180 words.",
         "maxTokens": "512",
         "reasoningEffort": "low"
-      },
-      "sizes": {
-        "system": 200
       }
     }
   ],
