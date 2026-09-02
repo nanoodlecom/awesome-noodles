@@ -7,10 +7,10 @@
       "x": 80,
       "y": -60,
       "fields": {
-        "text": "Repaints an uploaded photo according to an edit described in plain words.",
+        "text": "Upload any photo — Muse rewrites it into one specific typhoon night on Dihua Street, not a hello-world neon filter.",
         "color": "yellow"
       },
-      "w": 340
+      "w": 420
     },
     {
       "id": "n1",
@@ -39,7 +39,7 @@
       "x": -66,
       "y": 479,
       "fields": {
-        "text": "make it night-time, add glowing neon signs and rain reflections"
+        "text": "Rewind this photo into a typhoon night on Taipei's Dihua Street: shuttered Qing-era shophouses, red lanterns thrashing on wet brick, a single scooter headlight knifing through mist, puddles holding shattered neon dragons, teal-orange grade, rain-slick 35mm still"
       }
     }
   ],

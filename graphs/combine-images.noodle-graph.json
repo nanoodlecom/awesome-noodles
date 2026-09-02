@@ -1,1 +1,96 @@
-{"v": 1, "nodes": [{"id": "c-intent", "type": "comment", "x": 80, "y": -60, "fields": {"text": "Combine two images into a scene.", "color": "yellow"}, "w": 340}, {"id": "n1", "type": "upload", "x": 80, "y": 120, "fields": {}}, {"id": "n2", "type": "edit", "x": 338.756906874254, "y": 118.75600679439968, "fields": {"prompt": "", "size": "1:1", "model": "meta/muse-image/edit"}, "w": 378, "sizes": {"prompt": 67}}, {"id": "n3", "type": "upload", "x": 82.8845173758613, "y": 520.182523876953, "fields": {}}, {"id": "n4", "type": "text", "x": -187.48700124113293, "y": 109.29135815599233, "fields": {"text": "Make these two people explore a dungeon together"}}], "links": [{"id": "l1", "from": {"node": "n1", "port": "image"}, "to": {"node": "n2", "port": "image"}}, {"id": "l2", "from": {"node": "n3", "port": "image"}, "to": {"node": "n2", "port": "image2"}}, {"id": "l3", "from": {"node": "n4", "port": "text"}, "to": {"node": "n2", "port": "prompt"}}], "nid": 5, "lid": 4, "view": {"panX": 390.37803235452844, "panY": 280.3894122528005, "scale": 0.9236846128152723}}
+{
+  "v": 1,
+  "nodes": [
+    {
+      "id": "c-intent",
+      "type": "comment",
+      "x": 80,
+      "y": -60,
+      "fields": {
+        "text": "Upload two portraits — Muse drops both people into one flooded Vatican-archives heist still.",
+        "color": "yellow"
+      },
+      "w": 420
+    },
+    {
+      "id": "n1",
+      "type": "upload",
+      "x": 80,
+      "y": 120,
+      "fields": {}
+    },
+    {
+      "id": "n2",
+      "type": "edit",
+      "x": 338.756906874254,
+      "y": 118.75600679439968,
+      "fields": {
+        "prompt": "",
+        "size": "1:1",
+        "model": "meta/muse-image/edit"
+      },
+      "w": 378,
+      "sizes": {
+        "prompt": 67
+      }
+    },
+    {
+      "id": "n3",
+      "type": "upload",
+      "x": 82.8845173758613,
+      "y": 520.182523876953,
+      "fields": {}
+    },
+    {
+      "id": "n4",
+      "type": "text",
+      "x": -187.48700124113293,
+      "y": 109.29135815599233,
+      "fields": {
+        "text": "Composite these two people as rival cartographers knee-deep in the flooded sub-basement of the Vatican Secret Archives: brass diving helmets on a marble desk, a phosphorescent manuscript floating between them, torchlight catching gold leaf and black mold, Rembrandt chiaroscuro, 35mm adventure still"
+      }
+    }
+  ],
+  "links": [
+    {
+      "id": "l1",
+      "from": {
+        "node": "n1",
+        "port": "image"
+      },
+      "to": {
+        "node": "n2",
+        "port": "image"
+      }
+    },
+    {
+      "id": "l2",
+      "from": {
+        "node": "n3",
+        "port": "image"
+      },
+      "to": {
+        "node": "n2",
+        "port": "image2"
+      }
+    },
+    {
+      "id": "l3",
+      "from": {
+        "node": "n4",
+        "port": "text"
+      },
+      "to": {
+        "node": "n2",
+        "port": "prompt"
+      }
+    }
+  ],
+  "nid": 5,
+  "lid": 4,
+  "view": {
+    "panX": 390.37803235452844,
+    "panY": 280.3894122528005,
+    "scale": 0.9236846128152723
+  }
+}
