@@ -58,7 +58,7 @@
       "x": 1240,
       "y": 120,
       "fields": {
-        "model": "minimax/music-3",
+        "model": "mureka-ai/mureka-v9.5/generate-song",
         "instrumental": false,
         "response_format": "mp3"
       },
