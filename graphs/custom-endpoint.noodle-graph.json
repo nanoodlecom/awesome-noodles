@@ -9,7 +9,7 @@
       "w": 440,
       "name": "Custom endpoint",
       "fields": {
-        "text": "First-click Run POSTs the message to a public HTTPS echo (https://httpbingo.org/post) in json mode — no local server, no NanoGPT spend, no upload. The echo returns {data: <body>}; json mode shows that text.\n\nTo try the NanoGPT chat contract instead: set mode to chat, URL to http://127.0.0.1:8787/v1/chat/completions, and start the 20-line mock in the Custom endpoint guide. Chrome may ask once for local-network access.",
+        "text": "First-click is a $0 dare: POST the line below to a public HTTPS echo (https://httpbingo.org/post, json mode). No local server, no NanoGPT spend, no upload. The echo hands back {data: <body>} — if you see the joke, the wire works.\n\nNanoGPT chat contract instead: set mode to chat, URL to http://127.0.0.1:8787/v1/chat/completions, and start the 20-line mock in the Custom endpoint guide. Chrome may ask once for local-network access.",
         "color": "yellow"
       }
     },
@@ -21,7 +21,7 @@
       "w": 280,
       "name": "Message",
       "fields": {
-        "text": "hello from nanoodle"
+        "text": "The graph is the product. This line is just the receipt — echo me so I know the POST wasn't a rumor."
       }
     },
     {
@@ -34,7 +34,7 @@
       "fields": {
         "url": "https://httpbingo.org/post",
         "mode": "json",
-        "prompt": "hello from nanoodle"
+        "prompt": "The graph is the product. This line is just the receipt — echo me so I know the POST wasn't a rumor."
       }
     }
   ],

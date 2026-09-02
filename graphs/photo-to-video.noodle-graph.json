@@ -7,7 +7,7 @@
       "x": 80,
       "y": -60,
       "fields": {
-        "text": "Generates a still image from a prompt, then animates it into a short video clip.",
+        "text": "Muse-less still from a prompt, then MiniMax H3 Max turns it into a short clip. First-click is a lone dinghy on a bioluminescent sea — swap the still or the move.",
         "color": "yellow"
       },
       "w": 340
@@ -18,7 +18,7 @@
       "x": -36.63060546098497,
       "y": 80.63198528663212,
       "fields": {
-        "text": "a tiny sailboat on a glowing bioluminescent sea, night, stars"
+        "text": "a lone wooden dinghy cutting a bioluminescent wake under a bruised purple sky, the water like spilled galaxies, night, stars, no people"
       },
       "name": "the image being"
     },
@@ -79,7 +79,7 @@
       "x": -190.00000305175774,
       "y": 679.9999633789063,
       "fields": {
-        "text": "You are writing a motion prompt for MiniMax H3 Max image-to-video.\nPrompting guide:\n1. Be specific. Name subjects, spatial layout, style, and actions clearly.\nInstead of:\nA woman in a caf\u00e9\n\nTry:\nA woman in her 30s sits by the window of a small Parisian caf\u00e9. Rain runs down the glass behind her. Warm tungsten interior lighting. She slowly stirs her coffee while glancing at her phone. Background softly out of focus.\n\n2. Direct the scene \u2014 left vs right, foreground vs background, facing toward vs away, distance between subjects.\nInstead of:\nTwo people talking outside\n\nTry:\nTwo people stand facing each other on a quiet suburban sidewalk. The taller man stands on the left, hands in pockets. The woman stands on the right, holding a bicycle. Houses blurred in the background.\n\n3. Describe texture and material: fabric, hair, surface finish, environmental wear, edge detail.\nExample:\nClose-up of wind moving through fine, curly hair. Individual strands visible. Soft afternoon backlight catching edge detail.\n\n4. For image-to-video, use verbs. Motion needs clarity.\nAvoid:\nThe scene comes alive\n\nInstead:\nThe camera slowly pushes forward as the subject turns their head and begins walking toward the street. Cars pass.\nSpecify who moves, what moves, how they move, and what the camera does.\n\n5. Avoid static, photo-like prompts.\nInstead of:\nA dramatic portrait of a man standing\n\nTry:\nA man stands on a windy rooftop. His coat flaps in the wind. He adjusts his collar and steps forward as the camera tracks right.\n\n6. Match the output aspect. If the clip is 16:9, compose for landscape; for portrait, frame vertically on purpose \u2014 don't treat vertical as cropped landscape.\n\n7. Keep motion readable in a short clip (about 5s): one clear camera move and one or two subject actions beat a crowded shot list.\n\nNo preamble or postamble",
+        "text": "You are writing a motion prompt for MiniMax H3 Max image-to-video.\nPrompting guide:\n1. Be specific. Name subjects, spatial layout, style, and actions clearly.\nInstead of:\nA woman in a café\n\nTry:\nA woman in her 30s sits by the window of a small Parisian café. Rain runs down the glass behind her. Warm tungsten interior lighting. She slowly stirs her coffee while glancing at her phone. Background softly out of focus.\n\n2. Direct the scene — left vs right, foreground vs background, facing toward vs away, distance between subjects.\nInstead of:\nTwo people talking outside\n\nTry:\nTwo people stand facing each other on a quiet suburban sidewalk. The taller man stands on the left, hands in pockets. The woman stands on the right, holding a bicycle. Houses blurred in the background.\n\n3. Describe texture and material: fabric, hair, surface finish, environmental wear, edge detail.\nExample:\nClose-up of wind moving through fine, curly hair. Individual strands visible. Soft afternoon backlight catching edge detail.\n\n4. For image-to-video, use verbs. Motion needs clarity.\nAvoid:\nThe scene comes alive\n\nInstead:\nThe camera slowly pushes forward as the subject turns their head and begins walking toward the street. Cars pass.\nSpecify who moves, what moves, how they move, and what the camera does.\n\n5. Avoid static, photo-like prompts.\nInstead of:\nA dramatic portrait of a man standing\n\nTry:\nA man stands on a windy rooftop. His coat flaps in the wind. He adjusts his collar and steps forward as the camera tracks right.\n\n6. Match the output aspect. If the clip is 16:9, compose for landscape; for portrait, frame vertically on purpose — don't treat vertical as cropped landscape.\n\n7. Keep motion readable in a short clip (about 5s): one clear camera move and one or two subject actions beat a crowded shot list.\n\nNo preamble or postamble",
         "optional": true
       },
       "w": 418,
@@ -94,7 +94,7 @@
       "x": -9.368380319129095,
       "y": 389.52823917260065,
       "fields": {
-        "text": "sailing very fast in rough seas"
+        "text": "the dinghy surges on a sudden swell, camera low over the glowing water, spray, slow push-in as the wake blooms"
       },
       "w": 254,
       "sizes": {
