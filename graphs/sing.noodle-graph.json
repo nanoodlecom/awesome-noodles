@@ -7,10 +7,10 @@
       "x": -265,
       "y": -63,
       "fields": {
-        "text": "One idea fans out to three LLMs — lyrics, a matching style, and a negative prompt of what to avoid — then a music model sings it. The music node is pinned to Mureka v9.5 Generate Song, which needs lyrics (already wired from the songwriter LLM). Do not swap it to Prompt-to-Song ($0.75 and it ignores lyrics).",
+        "text": "One idea fans out to three LLMs — lyrics, a matching style, and a negative prompt of what to avoid — then a music model sings it. First-click is a Fushimi Inari 3:17am torch song: the rusted snack cabinet under the last lit vermillion torii starts coughing omikuji slips instead of chips. The music node is pinned to Mureka v9.5 Generate Song, which needs lyrics (already wired from the songwriter LLM). Do not swap it to Prompt-to-Song ($0.75 and it ignores lyrics).",
         "color": "yellow"
       },
-      "w": 460
+      "w": 520
     },
     {
       "id": "n1",
@@ -18,7 +18,7 @@
       "x": 58,
       "y": 225,
       "fields": {
-        "text": "Write a late-night 90s trip-hop torch song about a vending machine that starts returning fortunes instead of snacks, and nobody can prove it."
+        "text": "Write a late-night 90s trip-hop torch song set under the last lit vermillion torii at Fushimi Inari, 3:17am. A rusted snack cabinet has started coughing omikuji slips instead of chips. Sodium-vapor and shrine lanterns, moths in the light, wet cedar stairs, incense that will not rise. The night clerk swears she never restocked fortunes. Nobody in the shrine office can prove it."
       },
       "name": "Song Instructions"
     },
