@@ -9,7 +9,7 @@
       "w": 280,
       "name": "Night-market postcard",
       "fields": {
-        "text": "Shareable demo: place + vibe → GLM 5.3 Flash writes a 3:2 landscape postcard prompt → Muse Image.\nEdit the place, pick a vibe, hit Run. No uploads. Cheap models (1x GLM Flash + Muse Image at 3:2).",
+        "text": "Shareable demo: place + vibe \u2192 GLM 5.3 Flash writes a 3:2 film-stock postcard prompt \u2192 Muse Image.\nEdit the place, pick a vibe, hit Run. No uploads. Cheap models (1x GLM Flash + Muse Image at 3:2).",
         "color": "#2a1f14"
       }
     },
@@ -21,7 +21,7 @@
       "w": 260,
       "name": "Place",
       "fields": {
-        "text": "Raohe night market, Taipei — grilled squid smoke, red lanterns, wet asphalt"
+        "text": "Raohe night market, Taipei \u2014 grilled squid smoke, red lanterns, wet asphalt"
       }
     },
     {
@@ -56,10 +56,10 @@
       "name": "Postcard prompt",
       "fields": {
         "model": "z-ai/glm-5.3-flash",
-        "system": "You write one image prompt for a cinematic travel postcard in a 3:2 landscape frame. Combine the place and the vibe into a single vivid prompt: camera (35-50mm street), lighting, materials, weather, time of day, one human figure at most (no readable signage, no logos). Wide stall-row composition with breathing room on the left/right thirds; subject sits slightly off-center. Not square. 80-140 words. Reply with the prompt only."
+        "system": "You write one image prompt for a cinematic travel postcard in a 3:2 landscape frame, shot like analog film stock (fine grain, soft highlight roll-off, slightly lifted blacks). Combine the place and the vibe into a single vivid prompt: camera (35-50mm street), lighting, materials, weather, time of day, one human figure at most (no readable signage, no logos). Wide stall-row composition with breathing room on the left/right thirds; subject sits slightly off-center. Not square. 80-140 words. Reply with the prompt only."
       },
       "sizes": {
-        "system": 160
+        "system": 180
       }
     },
     {
