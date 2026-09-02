@@ -8,7 +8,7 @@
       "y": -60,
       "w": 380,
       "fields": {
-        "text": "Still from a prompt, then MiniMax H3 Spicy (open-weights i2v) animates it \u2014 expressive motion, optional last frame, 480p, ~5s. First-click is a red silk dress on a rainy Tokyo fire escape; swap the still or the move. Spicy model, SFW fashion scene.",
+        "text": "Still from a prompt, then MiniMax H3 Spicy (open-weights i2v) animates it \u2014 expressive motion, optional last frame, 480p, ~5s. First-click is a woman standing in a red silk dress on a rainy Tokyo fire-escape landing (shallow puddles, not kneeling in floodwater); swap the still or the move. Spicy model, SFW fashion scene.",
         "color": "yellow"
       }
     },
@@ -20,7 +20,7 @@
       "w": 300,
       "name": "the image being",
       "fields": {
-        "text": "a woman in a wind-whipped red silk dress on a rainy neon Tokyo fire escape at night, wet metal stairs, magenta and teal signs blooming in puddles, fashion editorial, three-quarter view, face turned away, cinematic 35mm, shallow depth, no logos, no readable text"
+        "text": "photoreal fashion editorial, adult woman STANDING upright full-body three-quarter view on a wet Tokyo fire-escape landing at night, both bare feet planted on metal grate, knees dry and standing not kneeling, body weight on her feet, shallow rain puddles only (no deep floodwater, no submerged legs, water below ankle height), wind-whipped red silk dress billowing sideways but fabric intact not melting, face in sharp profile turned away from camera (no soft mushy frontal AI face), clear readable anatomy and silhouette, rain streaks, magenta and teal neon reflections on wet metal without plastic HDR glow soup, cinematic 35mm, shallow depth of field, no logos, no readable text"
       }
     },
     {
@@ -44,7 +44,7 @@
       "y": 100,
       "fields": {
         "model": "wavespeed-ai/minimax-h3/image-to-video-spicy",
-        "prompt": "silk dress snaps and billows in the rain wind, she turns half a step down the fire escape, camera slow orbit right, neon reflections crawl across wet metal, rain streaks",
+        "prompt": "silk dress snaps and billows in the rain wind, she steps down one fire-escape tread, camera slow orbit right, neon reflections crawl across wet metal grate, rain streaks",
         "resolution": "480p",
         "duration": "5",
         "modelOpts": {},
@@ -82,7 +82,7 @@
       "w": 280,
       "name": "movement",
       "fields": {
-        "text": "the red silk snaps sideways in a wet gust, she takes one careful step down the fire escape, camera slow orbit right as neon crawls over the puddles"
+        "text": "she takes one careful step down the fire-escape grate, red silk billows sideways in a wet gust, camera slow orbit right, neon reflections crawl across shallow puddles on wet metal, rain streaks"
       },
       "sizes": {
         "text": 98
