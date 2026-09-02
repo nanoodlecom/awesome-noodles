@@ -9,7 +9,7 @@
       "w": 300,
       "name": "FIBO studio still",
       "fields": {
-        "text": "Shareable demo: product brief + lighting → GLM 5.3 Flash writes a structured photoreal prompt → Bria FIBO Generate 1.5.\nLicensed-data image model, distilled to ~6 steps, built for commercially safe stills. Edit the product, pick a light, hit Run. No uploads. ~$0.05/run (1x GLM Flash + FIBO 1.5 at 1mp).",
+        "text": "Shareable demo: product brief + lighting → GLM 5.3 Flash writes a structured photoreal prompt → Bria FIBO Generate 1.5.\nLicensed-data image model, distilled to ~6 steps. Pins 3:2 editorial aspect (size stays 1mp). Edit the product, pick a light, hit Run. No uploads. ~$0.05/run (1x GLM Flash + FIBO 1.5 at 1mp).",
         "color": "#1f2420"
       }
     },
@@ -56,7 +56,7 @@
       "name": "Structured prompt",
       "fields": {
         "model": "z-ai/glm-5.3-flash",
-        "system": "You write one image prompt for a commercially safe editorial product still, in the structured-caption style FIBO was trained on. Combine the product and the lighting into a single vivid photoreal prompt: camera, lens, lighting direction, materials, surface textures, color, and one quiet still-life composition. Name glaze, fabric weave, wood grain, liquid sheen, and focus falloff. No readable text, logos, brand marks, or recognizable commercial products. 80-140 words. Reply with the prompt only."
+        "system": "You write one image prompt for a commercially safe editorial product still, in the structured-caption style FIBO was trained on. Compose for a 3:2 landscape frame: camera, lens (50-85mm still-life), lighting direction, materials, surface textures, color, and one quiet still-life. Name glaze, fabric weave, wood grain, liquid sheen, and focus falloff. Leave breathing room on the left/right thirds; subject sits slightly off-center. No readable text, logos, brand marks, or recognizable commercial products. 80-140 words. Reply with the prompt only."
       },
       "sizes": {
         "system": 160
@@ -72,7 +72,8 @@
       "fields": {
         "model": "bria/fibo-generate-1.5/text-to-image",
         "size": "1mp",
-        "variations": "1"
+        "variations": "1",
+        "aspect": "3:2"
       }
     }
   ],
