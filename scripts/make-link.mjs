@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 // Print the "Open in nanoodle" share link for a noodle-graph.json file.
 //
-//   node scripts/make-link.mjs graphs/text-to-image.noodle-graph.json
+//   node scripts/make-link.mjs graphs/deslop.noodle-graph.json
 //
 // Encoding matches the nanoodle editor's decoder exactly:
 //   link = https://nanoodle.com/#g= + base64url( gzip( JSON.stringify(graph) ) )
