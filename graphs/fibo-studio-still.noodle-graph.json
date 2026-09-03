@@ -9,7 +9,7 @@
       "w": 300,
       "name": "FIBO studio still",
       "fields": {
-        "text": "Shareable demo: product brief + lighting → GLM 5.3 Flash writes a structured photoreal prompt → Bria FIBO Generate 1.5.\nLicensed-data image model, distilled to ~6 steps. Pins 3:2 editorial aspect (size stays 1mp). Edit the product, pick a light, hit Run. No uploads. ~$0.05/run (1x GLM Flash + FIBO 1.5 at 1mp).",
+        "text": "First-click is Jinguashi at 4:07am: a dented brass carbide miner's lamp on wet black slate, verdigris, sea-fog, one wet quartz cluster.\nProduct + lighting → GLM 5.3 Flash writes a structured photoreal prompt → Bria FIBO Generate 1.5.\nLicensed-data image model, distilled to ~6 steps. Pins 3:2 editorial aspect (size stays 1mp). Edit the product, pick a light, hit Run. No uploads. ~$0.05/run (1x GLM Flash + FIBO 1.5 at 1mp).",
         "color": "#1f2420"
       }
     },
@@ -21,7 +21,7 @@
       "w": 260,
       "name": "Product",
       "fields": {
-        "text": "Handmade stoneware pour-over dripper and matching cup on raw flax linen, wet coffee grounds in the filter, no logos or brand marks"
+        "text": "Jinguashi gold-mine coast, Taiwan — 4:07am. A dented brass carbide miner's lamp on wet black slate, verdigris crawling the seams, one wet quartz cluster, sea-fog beading on the glass, no logos or brand marks"
       }
     },
     {
@@ -32,8 +32,8 @@
       "w": 260,
       "name": "Light",
       "fields": {
-        "options": "north-window daylight, cool linen, pale celadon glaze\nlate-afternoon tungsten, honey glaze, walnut table\novercast skylight, wet slate, olive-oil sheen\nhard studio key, matte charcoal backdrop, specular glaze",
-        "selected": "north-window daylight, cool linen, pale celadon glaze"
+        "options": "sea-fog tungsten, copper-green water sheen, wet slate\npre-dawn overcast, pale gold through mine-mouth mist, verdigris\nhard carbide flame, specular brass, crushed-quartz glitter\nanalog-film moonlight, lifted blacks, one warm lamp spill",
+        "selected": "sea-fog tungsten, copper-green water sheen, wet slate"
       }
     },
     {
@@ -56,7 +56,9 @@
       "name": "Structured prompt",
       "fields": {
         "model": "z-ai/glm-5.3-flash",
-        "system": "You write one image prompt for a commercially safe editorial product still, in the structured-caption style FIBO was trained on. Compose for a 3:2 landscape frame: camera, lens (50-85mm still-life), lighting direction, materials, surface textures, color, and one quiet still-life. Name glaze, fabric weave, wood grain, liquid sheen, and focus falloff. Leave breathing room on the left/right thirds; subject sits slightly off-center. No readable text, logos, brand marks, or recognizable commercial products. 80-140 words. Reply with the prompt only."
+        "system": "You write one image prompt for a commercially safe editorial product still, in the structured-caption style FIBO was trained on. Compose for a 3:2 landscape frame: camera, lens (50-85mm still-life), lighting direction, materials, surface textures, color, and one quiet still-life. Name dented brass, verdigris, wet black slate, quartz crystal, lamp glass, sea-fog condensation, and focus falloff. Leave breathing room on the left/right thirds; subject sits slightly off-center. No readable text, logos, brand marks, recognizable commercial products, or people. 80-140 words. Reply with the prompt only.",
+        "maxTokens": "1024",
+        "reasoningEffort": "low"
       },
       "sizes": {
         "system": 160
