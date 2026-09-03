@@ -8,7 +8,7 @@
       "y": -160,
       "w": 520,
       "fields": {
-        "text": "Muse paints a rainy neon courier, TTS speaks the dispatch line, Longcat lipsyncs it.\nEdit the look or the line, hit Run (~$0.15–0.25 at 480p). Replace the Face image node with an Upload for your own portrait.",
+        "text": "Muse paints a Hongyadong cliff-walk courier, TTS speaks the last-drop line, Longcat lipsyncs it.\nEdit the look or the line, hit Run (~$0.15–0.25 at 480p). Replace the Face image node with an Upload for your own portrait.",
         "color": "yellow"
       }
     },
@@ -20,7 +20,7 @@
       "w": 280,
       "name": "look",
       "fields": {
-        "text": "cinematic film still of a night courier, late 20s, cropped black rain jacket with a reflective stripe, rain beading on a visor, cyan and magenta neon on wet skin, rainy alley bokeh, shoulders-up, facing camera, photoreal, slight jaw set, no stock-studio smile, no text, no watermark"
+        "text": "cinematic film still of a night courier, late 20s, on the cliff-walk at Hongyadong, Chongqing, 2:11am: cropped black rain jacket with a reflective stripe, rain beading on a visor, stacked timber-and-neon terraces behind, amber lanterns and cyan Jialing-river glow on wet skin, rainy cliff-walk bokeh, shoulders-up, facing camera, photoreal, slight jaw set, no stock-studio smile, no text, no watermark"
       }
     },
     {
@@ -46,7 +46,7 @@
       "w": 280,
       "name": "speak",
       "fields": {
-        "text": "Last drop of the night. If the alley floods, tell dispatch I swam it — and the package is already on the stoop."
+        "text": "Last drop of the night. Hongyadong, cliff side. If the stairs flood, tell dispatch I climbed it — the package is already on the 11th-floor stoop."
       },
       "sizes": {
         "text": 100
@@ -75,7 +75,7 @@
       "w": 320,
       "name": "movement",
       "fields": {
-        "text": "Natural talking-head: small nods timed to the speech, rain-light catching the visor, slight jaw set, steady camera-facing eyes, subtle blinks, soft shoulder sway. Keep the face readable and well-lit; no extra people, no morphing, no hard cuts."
+        "text": "Natural talking-head: small nods timed to the speech, Hongyadong lantern-light catching the visor, slight jaw set, steady camera-facing eyes, subtle blinks, soft shoulder sway. Keep the face readable and well-lit; no extra people, no morphing, no hard cuts."
       }
     },
     {
