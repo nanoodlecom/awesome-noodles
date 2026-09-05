@@ -52,3 +52,9 @@ deep-compares it against your committed graph file. It must pass.
 
 Open an issue. Short of that: if `npm test` passes and the noodle runs, you're
 probably fine.
+
+## Examples that finish a goal
+
+For a skill example, lead with a result someone can try, then show the capability they can give their own agent. [Iron Verdict](https://nanoodle.com/examples/iron-verdict/) is the first model: a character brief becomes reusable animation assets, which a coding agent turns into a playable fighter.
+
+Include the user goal, the exact skill and workflow, the finished artifact, a reproducible invocation, observed cost and validation, and known limits. Distinguish model output, local processing and agent-written application code. Publish the linked skill and graph before or alongside the example. Prefer a useful completed task over an impressive intermediate image; explain what the skill enables without claiming the goal was previously impossible.
