@@ -1,135 +1,135 @@
 {
- "v": 1,
- "nodes": [
-  {
-   "id": "n1",
-   "type": "comment",
-   "x": 40,
-   "y": 20,
-   "w": 340,
-   "name": "Omni Flash turntable",
-   "fields": {
-    "text": "Shareable demo: object + move \u2192 GLM 5.3 Flash writes a cinematic t2v prompt \u2192 Gemini Omni Flash 1.1.\nFirst-click is a barnacled brass diving helmet turning in dock fog (not a clean studio bottle). Pin is google/gemini-omni-flash/v1.1 (not v1 \u2014 v1 has no resolution knob and no last_image). Default 8s / 720p / 16:9. No uploads, no last frame. Catalog audio_generation is false. ~$1.04/run at 720p (360p ~$0.31).",
-    "color": "#1a1814"
-   }
-  },
-  {
-   "id": "n2",
-   "type": "text",
-   "x": 40,
-   "y": 220,
-   "w": 280,
-   "name": "Object",
-   "fields": {
-    "text": "Barnacled brass diving helmet on a rain-slick teak ship's binnacle, visor fogged from inside, no labels or brand marks, salt water sheeting off the rivets as it turns, dock-lamp tungsten"
-   }
-  },
-  {
-   "id": "n3",
-   "type": "choice",
-   "x": 40,
-   "y": 480,
-   "w": 300,
-   "name": "Move",
-   "fields": {
-    "options": "slow clockwise orbit through dock fog, tungsten key left, salt spray, wet teak grain\nlazy quarter-turn, north-window daylight, linen behind\nlocked-off, seawater sheets down the visor as it rotates, specular rivets, tungsten\npush-in while it rotates, overcast skylight, fog rolling, teak grain sharp",
-    "selected": "slow clockwise orbit through dock fog, tungsten key left, salt spray, wet teak grain"
-   }
-  },
-  {
-   "id": "n4",
-   "type": "join",
-   "x": 360,
-   "y": 320,
-   "w": 220,
-   "name": "Brief",
-   "fields": {
-    "sep": "\n\nMove: "
-   }
-  },
-  {
-   "id": "n5",
-   "type": "llm",
-   "x": 640,
-   "y": 240,
-   "w": 300,
-   "name": "Video prompt",
-   "fields": {
-    "model": "z-ai/glm-5.3-flash",
-    "system": "You write one text-to-video prompt for Gemini Omni Flash 1.1. Combine the object and the move into a single cinematic prompt: camera path, lighting, weather, materials, surface textures, and physical motion (what rotates, what liquid does, what the camera does). Name fog or spray, metal, wood grain, and specular highlights. Prefer harbor weather over a clean studio. No people, no faces, no readable text, logos, brand marks, or copyrighted characters. 60-120 words. Reply with the prompt only.",
-    "maxTokens": "1024",
-    "reasoningEffort": "low"
-   },
-   "sizes": {
-    "system": 180
-   }
-  },
-  {
-   "id": "n6",
-   "type": "tvideo",
-   "x": 1000,
-   "y": 260,
-   "w": 280,
-   "name": "Clip",
-   "fields": {
-    "model": "google/gemini-omni-flash/v1.1",
-    "duration": "8",
-    "resolution": "720p",
-    "aspect": "16:9"
-   }
+  "v": 1,
+  "nodes": [
+    {
+      "id": "n1",
+      "type": "comment",
+      "x": 40,
+      "y": 20,
+      "w": 340,
+      "name": "Omni Flash turntable",
+      "fields": {
+        "text": "Create a short product-motion concept from an object and camera move. GLM Flash structures the brief; Omni Flash 1.1 renders 5s at 360p / 16:9 (video step $0.195, plus text). No upload required. Inspect stable object shape and coherent motion. The generated object is a concept, not an exact real product.",
+        "color": "#1a1814"
+      }
+    },
+    {
+      "id": "n2",
+      "type": "text",
+      "x": 40,
+      "y": 220,
+      "w": 280,
+      "name": "Object",
+      "fields": {
+        "text": "One unbranded matte sage-green insulated water bottle with a black screw cap on a stationary pale-gray studio plinth, neutral background, softbox lighting."
+      }
+    },
+    {
+      "id": "n3",
+      "type": "choice",
+      "x": 40,
+      "y": 480,
+      "w": 300,
+      "name": "Move",
+      "fields": {
+        "options": "camera makes a slow quarter-orbit; object stays still\nlocked camera; object rotates slowly clockwise\nslow camera push-in; object stays still",
+        "selected": "camera makes a slow quarter-orbit; object stays still"
+      }
+    },
+    {
+      "id": "n4",
+      "type": "join",
+      "x": 360,
+      "y": 320,
+      "w": 220,
+      "name": "Brief",
+      "fields": {
+        "sep": "\n\nMove: "
+      }
+    },
+    {
+      "id": "n5",
+      "type": "llm",
+      "x": 640,
+      "y": 240,
+      "w": 300,
+      "name": "Video prompt",
+      "fields": {
+        "model": "z-ai/glm-5.3-flash",
+        "system": "Write one text-to-video prompt from the object brief and selected move. Preserve the object, material, color, setting and number of objects. Specify one continuous five-second shot with exactly the selected object and camera motion. Keep object geometry consistent; stable exposure and realistic contact shadows. Do not introduce weather, people, text, extra objects, cuts or additional camera moves. Output prompt only, 60-100 words.",
+        "maxTokens": "1024",
+        "reasoningEffort": "low"
+      },
+      "sizes": {
+        "system": 180
+      }
+    },
+    {
+      "id": "n6",
+      "type": "tvideo",
+      "x": 1000,
+      "y": 260,
+      "w": 280,
+      "name": "Clip",
+      "fields": {
+        "model": "google/gemini-omni-flash/v1.1",
+        "duration": "5",
+        "resolution": "360p",
+        "aspect": "16:9"
+      }
+    }
+  ],
+  "links": [
+    {
+      "id": "l1",
+      "from": {
+        "node": "n2",
+        "port": "text"
+      },
+      "to": {
+        "node": "n4",
+        "port": "a"
+      }
+    },
+    {
+      "id": "l2",
+      "from": {
+        "node": "n3",
+        "port": "text"
+      },
+      "to": {
+        "node": "n4",
+        "port": "b"
+      }
+    },
+    {
+      "id": "l3",
+      "from": {
+        "node": "n4",
+        "port": "text"
+      },
+      "to": {
+        "node": "n5",
+        "port": "prompt"
+      }
+    },
+    {
+      "id": "l4",
+      "from": {
+        "node": "n5",
+        "port": "text"
+      },
+      "to": {
+        "node": "n6",
+        "port": "prompt"
+      }
+    }
+  ],
+  "nid": 7,
+  "lid": 5,
+  "view": {
+    "panX": 20,
+    "panY": 40,
+    "scale": 0.85
   }
- ],
- "links": [
-  {
-   "id": "l1",
-   "from": {
-    "node": "n2",
-    "port": "text"
-   },
-   "to": {
-    "node": "n4",
-    "port": "a"
-   }
-  },
-  {
-   "id": "l2",
-   "from": {
-    "node": "n3",
-    "port": "text"
-   },
-   "to": {
-    "node": "n4",
-    "port": "b"
-   }
-  },
-  {
-   "id": "l3",
-   "from": {
-    "node": "n4",
-    "port": "text"
-   },
-   "to": {
-    "node": "n5",
-    "port": "prompt"
-   }
-  },
-  {
-   "id": "l4",
-   "from": {
-    "node": "n5",
-    "port": "text"
-   },
-   "to": {
-    "node": "n6",
-    "port": "prompt"
-   }
-  }
- ],
- "nid": 7,
- "lid": 5,
- "view": {
-  "panX": 20,
-  "panY": 40,
-  "scale": 0.85
- }
 }

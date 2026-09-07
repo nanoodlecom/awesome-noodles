@@ -7,7 +7,7 @@
       "x": 80,
       "y": -60,
       "fields": {
-        "text": "Upload any photo — Muse rewrites it into one specific typhoon night on Dihua Street, not a hello-world neon filter.",
+        "text": "Upload a product photo and make a clean catalog image. Muse Edit preserves the product while changing the background ($0.01/image). Check logos, small details and color against the original before publication.",
         "color": "yellow"
       },
       "w": 420
@@ -17,7 +17,8 @@
       "type": "upload",
       "x": 80,
       "y": 120,
-      "fields": {}
+      "fields": {},
+      "name": "Product photo"
     },
     {
       "id": "n2",
@@ -26,12 +27,13 @@
       "y": 100,
       "fields": {
         "prompt": "",
-        "size": "1:1",
+        "size": "auto",
         "model": "meta/muse-image/edit"
       },
       "sizes": {
         "prompt": 0
-      }
+      },
+      "name": "Clean product photo"
     },
     {
       "id": "n3",
@@ -39,8 +41,9 @@
       "x": -66,
       "y": 479,
       "fields": {
-        "text": "Rewind this photo into a typhoon night on Taipei's Dihua Street: shuttered Qing-era shophouses, red lanterns thrashing on wet brick, a single scooter headlight knifing through mist, puddles holding shattered neon dragons, teal-orange grade, rain-slick 35mm still"
-      }
+        "text": "Prepare this product photo for a catalog. Preserve the exact product shape, color, materials, markings and visible text. Replace the background with clean warm-white seamless paper, remove unrelated background clutter, and use soft even studio light with a subtle natural contact shadow. Keep the whole product visible and the original camera angle. Add no accessories, props, labels or branding."
+      },
+      "name": "Edit request"
     }
   ],
   "links": [

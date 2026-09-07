@@ -7,9 +7,9 @@
       "x": 40,
       "y": 20,
       "w": 280,
-      "name": "Night-market postcard",
+      "name": "Travel postcard",
       "fields": {
-        "text": "Shareable demo: place + vibe → GLM 5.3 Flash writes a 3:2 film-stock postcard prompt → Muse Image.\nEdit the place, pick a vibe, hit Run. No uploads. Cheap models (1x GLM Flash + Muse Image at 3:2).",
+        "text": "Create a landscape travel postcard illustration from a place and mood. Change both inputs for a new destination. GLM Flash writes the prompt; Muse renders at 3:2 (image step $0.01, plus text). Inspect location details; generated art is not a documentary photograph.",
         "color": "#2a1f14"
       }
     },
@@ -32,8 +32,8 @@
       "w": 260,
       "name": "Vibe",
       "fields": {
-        "options": "humid neon, crowded, reflections in puddles\nrainy analog film, grain, amber sodium lamps\nlate-night steam, quieter alley, one stall still open\ncyberpunk postcard, saturated teal and magenta, still photoreal",
-        "selected": "humid neon, crowded, reflections in puddles"
+        "options": "warm illustrated travel print\nfine-grain analog photograph\nquiet watercolor scene\nbold two-color screenprint",
+        "selected": "warm illustrated travel print"
       }
     },
     {
@@ -44,7 +44,7 @@
       "w": 220,
       "name": "Spec",
       "fields": {
-        "sep": "\n\nHard requirements for the prompt: analog film stock, 3:2 landscape (not square), grilled squid smoke, wet asphalt reflections, no logos or readable signage, at most one figure.\nVibe: "
+        "sep": "\n\nMood: "
       }
     },
     {
@@ -56,7 +56,7 @@
       "name": "Postcard prompt",
       "fields": {
         "model": "z-ai/glm-5.3-flash",
-        "system": "Write ONE image prompt in the final answer text (not only in hidden reasoning). Cinematic 3:2 landscape travel postcard, analog film stock: fine grain, soft highlight roll-off, slightly lifted blacks. Combine place + vibe. You MUST name: grilled squid smoke, wet asphalt, lantern light, 35–50mm street lens, wide stall-row with breathing room on the left/right thirds, subject slightly off-center. No logos, no readable signage, no brand names, at most one human figure. Not square. 90–140 words. Prompt only — no preamble.",
+        "system": "Write one image prompt for a 3:2 landscape travel postcard illustration from the supplied place and mood. Preserve supplied landmarks and local details; do not import scenery, food, weather or architecture from another destination. Pick one clear focal subject, a restrained palette and an uncluttered composition with room for an optional caption added later. No readable text, logos or watermark. Describe only details justified by the brief. Output prompt only, 80-120 words.",
         "maxTokens": "1024",
         "reasoningEffort": "low"
       },

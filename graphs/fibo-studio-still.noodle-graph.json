@@ -9,7 +9,7 @@
       "w": 300,
       "name": "FIBO studio still",
       "fields": {
-        "text": "First-click is Jinguashi at 4:07am: a dented brass carbide miner's lamp on wet black slate, verdigris, sea-fog, one wet quartz cluster.\nProduct + lighting → GLM 5.3 Flash writes a structured photoreal prompt → Bria FIBO Generate 1.5.\nLicensed-data image model, distilled to ~6 steps. Pins 3:2 editorial aspect (size stays 1mp). Edit the product, pick a light, hit Run. No uploads. ~$0.05/run (1x GLM Flash + FIBO 1.5 at 1mp).",
+        "text": "Create an editorial product concept from a description and lighting choice. GLM Flash structures the brief; Bria FIBO renders at 1MP (image step $0.04, plus text). FIBO is offered as a model trained on licensed data; that does not guarantee legal clearance for a generated image. For an exact existing product, use Edit a photo instead.",
         "color": "#1f2420"
       }
     },
@@ -21,7 +21,7 @@
       "w": 260,
       "name": "Product",
       "fields": {
-        "text": "Jinguashi gold-mine coast, Taiwan — 4:07am. A dented brass carbide miner's lamp on wet black slate, verdigris crawling the seams, one wet quartz cluster, sea-fog beading on the glass, no logos or brand marks"
+        "text": "One unbranded amber glass hand-soap bottle with a matte black pump, resting upright on a pale limestone counter. No label, packaging or accessories."
       }
     },
     {
@@ -32,8 +32,8 @@
       "w": 260,
       "name": "Light",
       "fields": {
-        "options": "sea-fog tungsten, copper-green water sheen, wet slate\npre-dawn overcast, pale gold through mine-mouth mist, verdigris\nhard carbide flame, specular brass, crushed-quartz glitter\nanalog-film moonlight, lifted blacks, one warm lamp spill",
-        "selected": "sea-fog tungsten, copper-green water sheen, wet slate"
+        "options": "large softbox left, gentle shadow, neutral backdrop\nwindow daylight, soft shadows, warm stone\nhard side light, crisp silhouette, gray paper\nbacklit translucent glass, soft fill from front",
+        "selected": "large softbox left, gentle shadow, neutral backdrop"
       }
     },
     {
@@ -56,7 +56,7 @@
       "name": "Structured prompt",
       "fields": {
         "model": "z-ai/glm-5.3-flash",
-        "system": "You write one image prompt for a commercially safe editorial product still, in the structured-caption style FIBO was trained on. Compose for a 3:2 landscape frame: camera, lens (50-85mm still-life), lighting direction, materials, surface textures, color, and one quiet still-life. Name dented brass, verdigris, wet black slate, quartz crystal, lamp glass, sea-fog condensation, and focus falloff. Leave breathing room on the left/right thirds; subject sits slightly off-center. No readable text, logos, brand marks, recognizable commercial products, or people. 80-140 words. Reply with the prompt only.",
+        "system": "Write one structured descriptive image prompt for the supplied product and lighting. Preserve its shape, materials and number of objects. Describe the subject, surface, background, camera angle, lighting direction, color and focus in coherent prose, 80-120 words. One restrained editorial still, all of the product visible with breathing room. Do not invent logos, text, accessories, scenery or product features. Output prompt only.",
         "maxTokens": "1024",
         "reasoningEffort": "low"
       },
@@ -74,8 +74,7 @@
       "fields": {
         "model": "bria/fibo-generate-1.5/text-to-image",
         "size": "1mp",
-        "variations": "1",
-        "aspect": "3:2"
+        "variations": "1"
       }
     }
   ],

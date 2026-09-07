@@ -7,7 +7,7 @@
       "x": 80,
       "y": -60,
       "fields": {
-        "text": "Upload two portraits — Muse drops both people into one flooded Vatican-archives heist still.",
+        "text": "Upload a product, then a setting, to preview placement before a photoshoot. Muse Edit uses both reference images ($0.01/image). Inspect product identity, scale and contact shadows; this is a concept, not evidence of a real installation.",
         "color": "yellow"
       },
       "w": 420
@@ -17,7 +17,8 @@
       "type": "upload",
       "x": 80,
       "y": 120,
-      "fields": {}
+      "fields": {},
+      "name": "Product photo"
     },
     {
       "id": "n2",
@@ -26,20 +27,22 @@
       "y": 118.75600679439968,
       "fields": {
         "prompt": "",
-        "size": "1:1",
+        "size": "auto",
         "model": "meta/muse-image/edit"
       },
       "w": 378,
       "sizes": {
         "prompt": 67
-      }
+      },
+      "name": "Product in setting"
     },
     {
       "id": "n3",
       "type": "upload",
       "x": 82.8845173758613,
       "y": 520.182523876953,
-      "fields": {}
+      "fields": {},
+      "name": "Setting photo"
     },
     {
       "id": "n4",
@@ -47,8 +50,9 @@
       "x": -187.48700124113293,
       "y": 109.29135815599233,
       "fields": {
-        "text": "Composite these two people as rival cartographers knee-deep in the flooded sub-basement of the Vatican Secret Archives: brass diving helmets on a marble desk, a phosphorescent manuscript floating between them, torchlight catching gold leaf and black mold, Rembrandt chiaroscuro, 35mm adventure still"
-      }
+        "text": "Place the product from image 1 naturally into the setting from image 2. Preserve the product shape, proportions, materials, color and visible markings. Preserve the setting layout and camera perspective. Place one instance on a plausible supporting surface; match scale, lighting and contact shadows. Remove neither structural elements nor existing furniture. Add no extra products, people, text or decorative props."
+      },
+      "name": "Placement brief"
     }
   ],
   "links": [

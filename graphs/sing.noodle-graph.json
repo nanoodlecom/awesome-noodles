@@ -7,7 +7,7 @@
       "x": -265,
       "y": -63,
       "fields": {
-        "text": "One idea fans out to three LLMs — lyrics, a matching style, and a negative prompt of what to avoid — then a music model sings it. First-click is a Fushimi Inari 3:17am torch song: the rusted snack cabinet under the last lit vermillion torii starts coughing omikuji slips instead of chips. The music node is pinned to Mureka v9.5 Generate Song, which needs lyrics (already wired from the songwriter LLM). Do not swap it to Prompt-to-Song ($0.75 and it ignores lyrics).",
+        "text": "Draft an original closing-credits song. One text model writes lyrics; Mureka Generate Song sings them using the editable musical style. Music step $0.225, plus text. Listen for clear words, melody and fit to the brief; generated duration and precise musical structure can vary.",
         "color": "yellow"
       },
       "w": 520
@@ -18,7 +18,7 @@
       "x": 58,
       "y": 225,
       "fields": {
-        "text": "Write a late-night 90s trip-hop torch song set under the last lit vermillion torii at Fushimi Inari, 3:17am. A rusted snack cabinet has started coughing omikuji slips instead of chips. Sodium-vapor and shrine lanterns, moths in the light, wet cedar stairs, incense that will not rise. The night clerk swears she never restocked fortunes. Nobody in the shrine office can prove it."
+        "text": "Write a short original song for the closing credits of a cozy repair-shop game. Theme: fixing a small thing makes a hard day better. Concrete details: a squeaky wheel, a borrowed wrench, a light left on for the last customer. Warm, understated and hopeful. No brand names."
       },
       "name": "Song Instructions"
     },
@@ -28,29 +28,17 @@
       "x": 402.85812543684335,
       "y": -142.85694158301368,
       "fields": {
-        "model": "thinkingmachines/inkling:thinking",
-        "system": "You are an award-winning songwriter. Write only the lyrics — no title, no commentary, no explanations.\nPrinciples:\n- Melody is king: write the singable line first. Favor open vowels, natural word stress, and steady syllable counts so every line lands cleanly on a melody.\n- Keep it simple (KISS): short lines, plain words, one clear emotional idea per song.\n- Build one unforgettable hook and bring it back in every chorus.\n- Show, don't tell: concrete images and sensory detail beat abstract statements.\n- Serve the mood and genre of the request; the lyrics exist to serve the melody, never the other way around.\nFormat: label each section so a music model can sing it — [Verse 1], [Chorus], [Verse 2], [Chorus], [Bridge], [Chorus], [Outro]. Output the labeled lyrics and nothing else."
+        "model": "z-ai/glm-5.3-flash",
+        "system": "Write original singable lyrics from the brief, maximum 160 words. Plain language, concrete details, natural stresses and a short memorable chorus. Use [Verse 1], [Chorus], [Verse 2], [Chorus], [Outro] labels. Preserve the requested mood and avoid adding named brands or copyrighted lyrics. Output only section labels and lyrics.",
+        "maxTokens": "1024",
+        "reasoningEffort": "low"
       },
       "w": 549,
       "sizes": {
         "system": 178,
         "prompt": 0
-      }
-    },
-    {
-      "id": "n3",
-      "type": "llm",
-      "x": 540.2562409168655,
-      "y": 1176.88322173005,
-      "fields": {
-        "system": "",
-        "model": "openai/gpt-5.6-terra"
       },
-      "w": 611,
-      "sizes": {
-        "prompt": 0,
-        "system": 0
-      }
+      "name": "Lyrics"
     },
     {
       "id": "n4",
@@ -67,7 +55,8 @@
         "prompt": 0,
         "lyrics": 0,
         "negative_prompt": 0
-      }
+      },
+      "name": "Song"
     },
     {
       "id": "n5",
@@ -75,62 +64,10 @@
       "x": -711.7791041392409,
       "y": 1154.9439102487288,
       "fields": {
-        "text": "Bands liked:\nPortishead, Massive Attack, Tricky",
+        "text": "Gentle acoustic folk, relaxed mid-tempo, warm solo vocal, fingerpicked guitar, soft brushed percussion. Clear words and a memorable chorus; no artist imitation.",
         "optional": false
       },
-      "name": "Bands"
-    },
-    {
-      "id": "n6",
-      "type": "join",
-      "x": 39,
-      "y": 699,
-      "fields": {
-        "sep": "\\n"
-      }
-    },
-    {
-      "id": "n7",
-      "type": "text",
-      "x": -245,
-      "y": 440,
-      "fields": {
-        "text": "You invent a musical style that fits the given lyrics. Reply with only the style, richly descriptive — no commentary.\nDo not mention any band names.",
-        "optional": true
-      },
-      "name": "Style System Prompt"
-    },
-    {
-      "id": "n8",
-      "type": "llm",
-      "x": 418.81895306519175,
-      "y": 595.2024252048074,
-      "fields": {
-        "model": "openai/gpt-5.6-terra",
-        "system": "Negate the style — what would go poorly, the worst you can imagine. No preamble or postamble."
-      },
-      "w": 661,
-      "sizes": {
-        "prompt": 0
-      }
-    },
-    {
-      "id": "n9",
-      "type": "join",
-      "x": -470.4256015851791,
-      "y": 676.1315594873846,
-      "fields": {
-        "sep": " \\nOriginal request: "
-      }
-    },
-    {
-      "id": "n10",
-      "type": "join",
-      "x": 137.96798144030808,
-      "y": 1288.5892017365463,
-      "fields": {
-        "sep": "\\nLyrics\\n "
-      }
+      "name": "Musical style"
     }
   ],
   "links": [
@@ -157,124 +94,14 @@
       }
     },
     {
-      "id": "l13",
-      "from": {
-        "node": "n2",
-        "port": "text"
-      },
-      "to": {
-        "node": "n3",
-        "port": "prompt"
-      }
-    },
-    {
-      "id": "l14",
-      "from": {
-        "node": "n3",
-        "port": "text"
-      },
-      "to": {
-        "node": "n4",
-        "port": "prompt"
-      }
-    },
-    {
-      "id": "l15",
-      "from": {
-        "node": "n6",
-        "port": "text"
-      },
-      "to": {
-        "node": "n3",
-        "port": "system"
-      }
-    },
-    {
-      "id": "l16",
-      "from": {
-        "node": "n7",
-        "port": "text"
-      },
-      "to": {
-        "node": "n6",
-        "port": "a"
-      }
-    },
-    {
-      "id": "l19",
-      "from": {
-        "node": "n9",
-        "port": "text"
-      },
-      "to": {
-        "node": "n6",
-        "port": "b"
-      }
-    },
-    {
-      "id": "l21",
+      "id": "style-direct",
       "from": {
         "node": "n5",
         "port": "text"
       },
       "to": {
-        "node": "n9",
-        "port": "a"
-      }
-    },
-    {
-      "id": "l22",
-      "from": {
-        "node": "n1",
-        "port": "text"
-      },
-      "to": {
-        "node": "n9",
-        "port": "b"
-      }
-    },
-    {
-      "id": "l23",
-      "from": {
-        "node": "n6",
-        "port": "text"
-      },
-      "to": {
-        "node": "n10",
-        "port": "a"
-      }
-    },
-    {
-      "id": "l24",
-      "from": {
-        "node": "n2",
-        "port": "text"
-      },
-      "to": {
-        "node": "n10",
-        "port": "b"
-      }
-    },
-    {
-      "id": "l25",
-      "from": {
-        "node": "n10",
-        "port": "text"
-      },
-      "to": {
-        "node": "n8",
-        "port": "prompt"
-      }
-    },
-    {
-      "id": "l26",
-      "from": {
-        "node": "n8",
-        "port": "text"
-      },
-      "to": {
         "node": "n4",
-        "port": "negative_prompt"
+        "port": "prompt"
       }
     }
   ],

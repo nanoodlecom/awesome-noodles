@@ -25,7 +25,7 @@ Either of these produces the same kind of link:
 Put it in the right category section, matching this template:
 
 ```markdown
-- <emoji> **<Name>** — <one line: what it does and why it's neat>. [Open in nanoodle](<share link>) · [graph](graphs/<slug>.noodle-graph.json)
+- <emoji> **<Name>** — <required input → useful output; model choice and rough cost>. [Open in nanoodle](<share link>) · [graph](graphs/<slug>.noodle-graph.json) · [See sample](<saved output or finished application>)
 ```
 
 ## 4. Run the checks
@@ -48,10 +48,19 @@ deep-compares it against your committed graph file. It must pass.
 - **No secrets.** Graph files must not contain API keys, tokens, or personal
   data — remember the whole graph is public in the URL.
 
-## Questions?
+## Curation bar
 
-Open an issue. Short of that: if `npm test` passes and the noodle runs, you're
-probably fine.
+Every example must earn a distinct place in the gallery:
+
+- Name the user, repeatable task, required inputs and usable output. A new setting or model name alone does not justify a duplicate workflow.
+- Changing each advertised input must change the result meaningfully. Keep sample-specific subjects in editable inputs, never in reusable system instructions.
+- Use the least complex graph that meets the output bar. Each paid model call needs a purpose; avoid extra prompt-writing calls that merely restate an already complete brief.
+- Check pinned IDs, modalities, reference counts, supported sizes and meaningful options against the live provider catalog. Record the date and price basis; catalog presence does not establish output quality.
+- Run the default and at least one materially different input. Inspect actual outputs against explicit acceptance criteria, including text/fact preservation, identity, geometry, motion or audio as appropriate. Record which checks passed and any failures; structural tests alone are insufficient.
+- Share a real output or finished application where possible, with its graph/skill and reproducible invocation. Distinguish generated assets from local processing and agent-written code.
+- Remove or archive examples that duplicate a stronger workflow, offer decorative controls, make unsupported quality claims, or cannot meet their stated output bar.
+
+Record the decision, model rationale, output checks and verification evidence in [CURATION.md](CURATION.md).
 
 ## Examples that finish a goal
 

@@ -8,7 +8,7 @@
       "y": -160,
       "w": 520,
       "fields": {
-        "text": "Muse paints a Hongyadong cliff-walk courier, TTS speaks the last-drop line, Longcat lipsyncs it.\nEdit the look or the line, hit Run (~$0.15–0.25 at 480p). Replace the Face image node with an Upload for your own portrait.",
+        "text": "Prototype a short spoken introduction with a fictional presenter. Muse makes the portrait, MiniMax Speech reads the script, and LongCat animates speech at 480p. Keep scripts under 30 seconds. Cost depends on audio length: video $0.03/second, plus image and speech. Inspect lip sync and pronunciation. The sample uses a male presenter to match the selected male voice. Allow several minutes for lipsync generation.",
         "color": "yellow"
       }
     },
@@ -18,9 +18,9 @@
       "x": 60,
       "y": 40,
       "w": 280,
-      "name": "look",
+      "name": "Presenter look",
       "fields": {
-        "text": "cinematic film still of a night courier, late 20s, on the cliff-walk at Hongyadong, Chongqing, 2:11am: cropped black rain jacket with a reflective stripe, rain beading on a visor, stacked timber-and-neon terraces behind, amber lanterns and cyan Jialing-river glow on wet skin, rainy cliff-walk bokeh, shoulders-up, facing camera, photoreal, slight jaw set, no stock-studio smile, no text, no watermark"
+        "text": "A fictional friendly male museum guide in his thirties, wearing a plain navy shirt, shoulders-up front-facing portrait. Relaxed neutral expression, unobstructed face and mouth, eyes toward camera, soft even light, simple warm-gray background. No glasses, hats, text or logos."
       }
     },
     {
@@ -44,9 +44,9 @@
       "x": 60,
       "y": 360,
       "w": 280,
-      "name": "speak",
+      "name": "Spoken script",
       "fields": {
-        "text": "Last drop of the night. Hongyadong, cliff side. If the stairs flood, tell dispatch I climbed it — the package is already on the 11th-floor stoop."
+        "text": "Welcome to the workshop. Start with the blue tray on your table. Inside you will find paper, a pencil, and the parts for your first model."
       },
       "sizes": {
         "text": 100
@@ -73,9 +73,9 @@
       "x": 60,
       "y": 640,
       "w": 320,
-      "name": "movement",
+      "name": "Delivery",
       "fields": {
-        "text": "Natural talking-head: small nods timed to the speech, Hongyadong lantern-light catching the visor, slight jaw set, steady camera-facing eyes, subtle blinks, soft shoulder sway. Keep the face readable and well-lit; no extra people, no morphing, no hard cuts."
+        "text": "Natural calm delivery, subtle blinks and small head movements. Keep the face and mouth visible, eyes toward the camera, body position stable. Locked camera, no cuts or extra people."
       }
     },
     {
@@ -84,7 +84,7 @@
       "x": 780,
       "y": 200,
       "fields": {
-        "model": "wavespeed-ai/longcat-avatar-1.5",
+        "model": "longcat-avatar-1.5",
         "resolution": "480p"
       },
       "sizes": {
