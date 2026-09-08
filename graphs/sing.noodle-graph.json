@@ -6,7 +6,7 @@
       "type": "comment",
       "x": -265,
       "y": -63,
-      "name": "Last stall of the night",
+      "name": "Rooftop getaway",
       "fields": {
         "text": "Write original closing-credits lyrics, then hear them sung. One text model writes [Verse]/[Chorus] lyrics from the brief; Mureka Generate Song sings them in the editable musical style. Music step $0.225, plus text. Listen for clear words, melody and fit to the brief; generated duration and precise musical structure can vary.",
         "color": "yellow"
@@ -19,9 +19,9 @@
       "x": 58,
       "y": 225,
       "fields": {
-        "text": "Write a short original closing-credits song for a night-market game. Last stall of the night: a wok fire dying to coals, red lanterns still lit over wet asphalt, grilled-squid smoke hanging in the lane, one wooden stool left out for the last customer. Theme: packing up is its own kind of care. Warm, cinematic, hopeful — not cute. No brand names, no real artist names."
+        "text": "Write a short original closing-credits song for a night-city chase game. Rooftop getaway: rain on black tar paper, a last leap between two towers, a red neon hotel sign flickering six floors down, one visor catching a billboard. Theme: you made it out, and the city still wants you. Cool, cinematic, electric — not cozy. No brand names, no real artist names."
       },
-      "name": "Song Instructions"
+      "name": "Song brief (theme, not lyrics)"
     },
     {
       "id": "n2",
@@ -39,7 +39,7 @@
         "system": 178,
         "prompt": 0
       },
-      "name": "Lyrics"
+      "name": "Write lyrics"
     },
     {
       "id": "n4",
@@ -65,10 +65,10 @@
       "x": -711.7791041392409,
       "y": 1154.9439102487288,
       "fields": {
-        "text": "Late-night analog folk, slow mid-tempo, close dry vocal, fingerpicked nylon guitar, distant wok hiss and bicycle bells under a soft brushed snare. Clear words and a sticky chorus; no artist imitation.",
+        "text": "Cinematic synthwave, mid-tempo night-drive pulse, dry confident vocal, analog bass, gated snare, rain and neon shimmer. Clear words and a memorable chorus; no artist imitation.",
         "optional": false
       },
-      "name": "Musical style"
+      "name": "Style (instruments & tempo)"
     }
   ],
   "links": [
