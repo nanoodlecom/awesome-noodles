@@ -8,7 +8,7 @@
       "y": -160,
       "w": 520,
       "fields": {
-        "text": "Prototype a short spoken introduction with a fictional presenter. Muse makes the portrait, MiniMax Speech reads the script, and LongCat animates speech at 480p. Keep scripts under 30 seconds. Cost depends on audio length: video $0.03/second, plus image and speech. Inspect lip sync and pronunciation. The sample uses a male presenter to match the selected male voice. Allow several minutes for lipsync generation.",
+        "text": "Prototype a short spoken introduction with a memorable fictional presenter. Muse paints the portrait, MiniMax Speech reads the script, and LongCat animates speech at 480p. Keep scripts under 30 seconds. Cost depends on audio length: video $0.03/second, plus image and speech. Inspect lip sync and pronunciation. The sample uses a male presenter to match the selected male voice. Allow several minutes for lipsync generation.",
         "color": "yellow"
       }
     },
@@ -20,7 +20,7 @@
       "w": 280,
       "name": "Presenter look",
       "fields": {
-        "text": "A fictional friendly male museum guide in his thirties, wearing a plain navy shirt, shoulders-up front-facing portrait. Relaxed neutral expression, unobstructed face and mouth, eyes toward camera, soft even light, simple warm-gray background. No glasses, hats, text or logos."
+        "text": "A fictional grease-stained bike-shop mechanic in his thirties, faded red flannel with the sleeves rolled, a wry almost-smile, short dark hair, light stubble. Shoulders-up, front-facing portrait, unobstructed face and mouth, eyes toward camera. Warm practical shop light, a blurred workstand and one hanging bike behind him. No glasses, hats, text or logos."
       }
     },
     {
@@ -46,7 +46,7 @@
       "w": 280,
       "name": "Spoken script",
       "fields": {
-        "text": "Welcome to the workshop. Start with the blue tray on your table. Inside you will find paper, a pencil, and the parts for your first model."
+        "text": "Leave the seized pedal on the blue tray. I'll heat the crank, crack it free, and have you rolling before the kettle boils."
       },
       "sizes": {
         "text": 100
