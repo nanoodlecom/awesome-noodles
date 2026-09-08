@@ -1,6 +1,6 @@
 # Gallery curation — 2026-09-05
 
-The gallery retains 13 distinct jobs and archives two experiments. The bar is a reusable task with meaningful inputs, an appropriate model and an inspectable output. A different fictional setting does not earn a separate card.
+The gallery retains 14 distinct jobs and archives two experiments. The bar is a reusable task with meaningful inputs, an appropriate model and an inspectable output. A different fictional setting does not earn a separate card.
 
 ## Decisions and acceptance checks
 
@@ -21,6 +21,7 @@ All graph paths below are relative to `graphs/` and end in `.noodle-graph.json`.
 | `talking-avatar` | Improve: useful short workshop introduction with a clear fictional presenter, uncluttered portrait and editable script. | Muse portrait + MiniMax Speech 2.8 HD + LongCat image/audio lipsync. LongCat 480p costs $0.03 per audio second; image and TTS extra. | Spoken text and pronunciation are correct, face remains visible, mouth timing follows speech, and script stays below the 30-second model limit. |
 | `sing` | Improve: original closing-credits song; remove two style/negative-prompt LLMs and artist-name input. | One GLM Flash call writes bounded lyrics; Mureka Generate Song consumes supplied lyrics and style ($0.225 music step). Catalog does not justify a separate negative-prompt writer. | Lyrics are original, intelligible, fit the night-market closing-credits brief and supplied style, and have a usable chorus. Precise duration/section execution is not guaranteed. |
 | `deslop` | Improve: edit a customer notice while retaining facts. Replace purported AI detector/confidence with an editorial comparison that sees both original and rewrite. Remove automatic sentence-cutting rule and inherited x402 budget. | Grok drafts and finalizes; Terra independently checks source preservation. Three text calls earn their place through factual comparison, not invented authorship certainty. | Every date, price, time, contact address and condition survives; filler disappears; no invented claims. Reviewer flags actual discrepancies, never authorship probabilities. |
+| `cinematic-character-still` | Keep: photoreal cinematic character still from a short editable person brief, lighting and frame. Distinct from the travel postcard, FIBO product still, arena poster, talking-avatar presenter and sprite sheet. MiniMax H3 Image Edit (`minimax-h3/image-edit`) was considered for an identity-preserving restyle in the same job; it needs a reference upload and would not earn a second paid node beside a text-to-image still. | Live image catalog 2026-09-08: `minimax-h3/text-to-image` (no `wavespeed-ai/` prefix). Photoreal/cinematic text-to-image; resolutions `1k`/`2k` at $0.02/$0.06. Default `1k`. Catalog also lists fifteen aspect ratios, but nanoodle-js only forwards `fields.aspect` for FIBO, so framing is an editable prompt choice rather than an unsent aspect field. No LLM. | Person, wardrobe, age, tools, selected light and selected frame match the brief; one person; no readable text or invented extras. Changing person, light or frame must change the still. Output review and sample assets are TODO after a cheap QC spend. |
 | `alishan-fog-dawn` | Archive under `experiments/retired-gallery/`: duplicate postcard pipeline with hardcoded destination. | No extra model capability or repeatable task over the retained postcard. | Reconsider only for a distinct useful workflow, not another location. |
 | `custom-endpoint` | Archive under `experiments/retired-gallery/`: HTTP echo wiring tutorial, decorative mode picker, third-party endpoint. | No model task; the picker never selected its advertised endpoint. | A future gallery entry must do useful work with truthful controls and clear data destination. |
 
@@ -52,3 +53,12 @@ The accepted twelve sample runs reported $1.15590 combined, with some avatar pri
 ## Release verification — 2026-09-06
 
 The provider removed the `wavespeed-ai/` prefix from Krea 2 Turbo, MiniMax H3 Spicy image-to-video and LongCat Avatar 1.5. Active graph IDs now match the live catalogs, with unchanged presets. A fresh full arena run succeeded at $0.118; a fresh five-second tea clip succeeded at $0.21 and retained stable objects in sampled frames. The avatar retry stopped for insufficient credit after image/speech preparation; its current catalog capabilities match, but a new full run was not verified today. No top-up was performed. The previously reviewed 5 September outputs remain labeled historical, and their original graphs stay downloadable. The sample page's Open workflow links use separate current graphs so retired aliases do not block new runs.
+
+## MiniMax H3 Image gallery addition — 2026-09-08
+
+Public image catalog IDs (no paid generation this pass):
+
+- `minimax-h3/text-to-image` — MiniMax H3 Image. Text-to-image only. $0.02 at `1k`, $0.06 at `2k`. Resolutions `1k`/`2k`; fifteen aspect ratios listed. `nsfw: false`.
+- `minimax-h3/image-edit` — MiniMax H3 Image Edit. Text+image, up to nine references, identity-preserving restyle. $0.03 at `1k`. Not used in the new graph.
+
+`cinematic-character-still` pins `minimax-h3/text-to-image` at `1k`. README share-link round-trip is the repo test for this addition. Sample gallery assets, nanoodle EXAMPLES sync and a live JS/Python materialize of this fourteenth graph remain a follow-up after a cheap QC spend. Do not treat catalog presence as output-quality evidence.
