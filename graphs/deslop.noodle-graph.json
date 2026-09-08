@@ -6,8 +6,9 @@
       "type": "comment",
       "x": -340,
       "y": -260,
+      "name": "Strip the AI voice without losing a single fact",
       "fields": {
-        "text": "Edit a customer notice without losing prices, dates or caveats. Grok drafts; a second model compares the draft with the source; Grok applies the review. Three paid text calls. The review checks writing and factual preservation, not whether a human or AI wrote it. Verify the final notice before sending.",
+        "text": "Strip the AI voice without losing a single fact. Paste the slop; Grok drafts a human rewrite, Terra fact-checks every price, date and caveat against the source, Grok applies the review. Three paid text calls. The review checks writing and factual preservation — not whether a human or AI wrote it. Verify the final notice before sending.",
         "color": "yellow"
       },
       "w": 520
@@ -18,7 +19,7 @@
       "x": -340,
       "y": -80,
       "fields": {
-        "text": "We are thrilled to announce a game-changing improvement to the repair booking experience. Starting 8 September, customers can book a 30-minute bicycle check online for $15. The fee is credited toward any repair completed within 14 days. Appointments are available Tuesday through Saturday, 9 am to 5 pm. Existing bookings are unchanged. To reschedule, email repairs@example.com at least 24 hours before your appointment. This seamless new offering empowers you to unlock the full potential of your bicycle."
+        "text": "In today's fast-paced world of two-wheeled possibilities, we are absolutely thrilled to announce a truly game-changing, seamless improvement to the repair booking experience — a robust tapestry of care that will unlock the full potential of your bicycle journey. It's not just a booking, it's a testament to next-generation workshop excellence.\n\nStarting 8 September, valued riders can delve into our online portal and book a 30-minute bicycle check for $15. This isn't merely a fee — it's an opportunity to leverage a seamless credit: the $15 is credited toward any repair completed within 14 days. Appointments are available Tuesday through Saturday, 9 am to 5 pm. Existing bookings are unchanged. To reschedule, email repairs@example.com at least 24 hours before your appointment.\n\nAs we all know, it's important to note that this landmark moment underscores our commitment to help you navigate the complexities of modern cycling. Arguably, quite possibly, some might say this is the future. Dive in. Unlock. Thrive."
       },
       "name": "Your draft",
       "w": 470

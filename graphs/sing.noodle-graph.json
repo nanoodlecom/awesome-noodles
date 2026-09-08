@@ -6,8 +6,9 @@
       "type": "comment",
       "x": -265,
       "y": -63,
+      "name": "Last stall of the night",
       "fields": {
-        "text": "Draft an original closing-credits song. One text model writes lyrics; Mureka Generate Song sings them using the editable musical style. Music step $0.225, plus text. Listen for clear words, melody and fit to the brief; generated duration and precise musical structure can vary.",
+        "text": "Write original closing-credits lyrics, then hear them sung. One text model writes [Verse]/[Chorus] lyrics from the brief; Mureka Generate Song sings them in the editable musical style. Music step $0.225, plus text. Listen for clear words, melody and fit to the brief; generated duration and precise musical structure can vary.",
         "color": "yellow"
       },
       "w": 520
@@ -18,7 +19,7 @@
       "x": 58,
       "y": 225,
       "fields": {
-        "text": "Write a short original song for the closing credits of a cozy repair-shop game. Theme: fixing a small thing makes a hard day better. Concrete details: a squeaky wheel, a borrowed wrench, a light left on for the last customer. Warm, understated and hopeful. No brand names."
+        "text": "Write a short original closing-credits song for a night-market game. Last stall of the night: a wok fire dying to coals, red lanterns still lit over wet asphalt, grilled-squid smoke hanging in the lane, one wooden stool left out for the last customer. Theme: packing up is its own kind of care. Warm, cinematic, hopeful — not cute. No brand names, no real artist names."
       },
       "name": "Song Instructions"
     },
@@ -64,7 +65,7 @@
       "x": -711.7791041392409,
       "y": 1154.9439102487288,
       "fields": {
-        "text": "Gentle acoustic folk, relaxed mid-tempo, warm solo vocal, fingerpicked guitar, soft brushed percussion. Clear words and a memorable chorus; no artist imitation.",
+        "text": "Late-night analog folk, slow mid-tempo, close dry vocal, fingerpicked nylon guitar, distant wok hiss and bicycle bells under a soft brushed snare. Clear words and a sticky chorus; no artist imitation.",
         "optional": false
       },
       "name": "Musical style"
