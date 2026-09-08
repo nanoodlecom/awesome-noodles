@@ -9,7 +9,7 @@
       "w": 340,
       "name": "Rim-lit product turntable",
       "fields": {
-        "text": "Create a five-second product-motion concept from an object and one camera move. Default: a matte-black diving watch under a single warm rim light. GLM Flash structures the brief; Omni Flash 1.1 renders 5s at 360p / 16:9 (video step $0.195, plus text). No upload required. Inspect stable object shape and coherent motion. The generated object is a concept, not an exact real product.",
+        "text": "Create a five-second product-motion concept from an object and one camera move. Default: a chrome motorcycle helmet under a single hard rim light. GLM Flash structures the brief; Omni Flash 1.1 renders 5s at 360p / 16:9 (video step $0.195, plus text). No upload required. Inspect stable object shape and coherent motion. The generated object is a concept, not an exact real product.",
         "color": "#1a1814"
       }
     },
@@ -21,7 +21,7 @@
       "w": 280,
       "name": "Object",
       "fields": {
-        "text": "One unbranded matte-black diving watch with a brushed-brass bezel and luminous cream hour markers, resting on a charcoal stone plinth. Single warm rim light from camera-right, deep shadow on the left, dark studio void. No strap branding, extra props or text."
+        "text": "One unbranded chrome motorcycle helmet with a dark visor, resting on a charcoal stone plinth. Single hard rim light from camera-right, deep shadow on the left, dark studio void. No branding, extra props or text."
       }
     },
     {
@@ -32,8 +32,8 @@
       "w": 300,
       "name": "Move",
       "fields": {
-        "options": "camera makes a slow quarter-orbit; the watch stays still as the warm rim light rakes across the brass bezel\nlocked camera; the watch rotates slowly clockwise, luminous markers catching then fading\nslow camera push-in; the watch stays still until the luminous 12 marker fills the frame",
-        "selected": "camera makes a slow quarter-orbit; the watch stays still as the warm rim light rakes across the brass bezel"
+        "options": "camera makes a slow quarter-orbit; the helmet stays still as hard rim light rakes across the chrome shell\nlocked camera; the helmet rotates slowly clockwise, specular highlights sliding around the visor\nslow camera push-in; the helmet stays still until the visor fills the frame",
+        "selected": "camera makes a slow quarter-orbit; the helmet stays still as hard rim light rakes across the chrome shell"
       }
     },
     {
