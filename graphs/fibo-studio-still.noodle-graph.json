@@ -21,7 +21,7 @@
       "w": 260,
       "name": "Product",
       "fields": {
-        "text": "One unbranded amber glass hand-soap bottle with a matte black pump, resting upright on a pale limestone counter. No label, packaging or accessories."
+        "text": "One unbranded Volt pocket night-ride radio: compact matte-charcoal chassis with a single electric-cyan lightning-bolt chevron inlay, resting upright on a dark slate studio table. No label, packaging, letters, or accessories."
       }
     },
     {
@@ -32,8 +32,8 @@
       "w": 260,
       "name": "Light",
       "fields": {
-        "options": "large softbox left, gentle shadow, neutral backdrop\nwindow daylight, soft shadows, warm stone\nhard side light, crisp silhouette, gray paper\nbacklit translucent glass, soft fill from front",
-        "selected": "large softbox left, gentle shadow, neutral backdrop"
+        "options": "hard cyan rim light, crisp silhouette, charcoal seamless\nlarge softbox left, gentle shadow, neutral gray\ncool window light, soft shadows, dark stone\nlow-key side light, deep shadows, black seamless",
+        "selected": "hard cyan rim light, crisp silhouette, charcoal seamless"
       }
     },
     {
