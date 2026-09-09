@@ -5,7 +5,8 @@
 //   3. check the basic graph shape ({ v: 1, nodes: [...], links: [...] }),
 //   4. deep-compare the decoded graph against the committed graphs/ file
 //      linked on the same entry line.
-// Also flags committed graph files that no README entry references.
+// Also requires a (recipes/<slug>.md) run-headless link on the same line,
+// and flags committed graph files that no README entry references.
 //
 //   node scripts/check-links.mjs          # exits non-zero on any problem
 
@@ -19,6 +20,7 @@ const ROOT = join(dirname(fileURLToPath(import.meta.url)), "..");
 
 const LINK_RE = /https:\/\/nanoodle\.com\/#g=([A-Za-z0-9_-]+)/;
 const GRAPH_RE = /\((graphs\/[A-Za-z0-9._-]+\.json)\)/;
+const RECIPE_RE = /\(recipes\/([A-Za-z0-9._-]+)\.md\)/;
 
 export function checkLinks(root = ROOT) {
   const problems = [];
@@ -53,6 +55,13 @@ export function checkLinks(root = ROOT) {
       continue;
     }
     referenced.add(graphRef[1]);
+    const slug = graphRef[1].replace(/^graphs\//, "").replace(/\.noodle-graph\.json$/, "");
+    const recipeRef = line.match(RECIPE_RE);
+    if (!recipeRef) {
+      problems.push(`${where}: entry has a share link but no (recipes/${slug}.md) run-headless link`);
+    } else if (recipeRef[1] !== slug) {
+      problems.push(`${where}: run-headless link is recipes/${recipeRef[1]}.md but graph is ${graphRef[1]}`);
+    }
     let committed;
     try {
       committed = JSON.parse(readFileSync(join(root, graphRef[1]), "utf8"));

@@ -15,6 +15,7 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: ${{ matrix.node }}
-      # Link check only — zero npm deps, fully offline: decodes every README
-      # share link, round-trips it, and compares it to the committed graphs/.
+      # Link + recipe check only — zero npm deps, fully offline: decodes every
+      # README share link, round-trips it, compares it to graphs/, and checks
+      # that recipes/ were generated from those graphs.
       - run: npm test

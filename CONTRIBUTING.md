@@ -20,22 +20,34 @@ Either of these produces the same kind of link:
   canvas — including layout/view extras — so if you use it, save the graph
   file from the same canvas state).
 
-## 3. Add your entry to README.md
+## 3. Generate the run-headless recipe
+
+```bash
+node scripts/make-recipes.mjs
+```
+
+This writes `recipes/<slug>.md` (and the [recipes/](recipes/) index) from
+every committed Keep graph. Do not hand-edit those files. Each recipe has
+offline `inspect` and paid `run` one-liners for `npx nanoodle` and
+`nanoodle-py`, using a share link regenerated from the graph JSON.
+
+## 4. Add your entry to README.md
 
 Put it in the right category section, matching this template:
 
 ```markdown
-- <emoji> **<Name>** — <required input → useful output; model choice and rough cost>. [Open in nanoodle](<share link>) · [graph](graphs/<slug>.noodle-graph.json) · [See sample](<saved output or finished application>)
+- <emoji> **<Name>** — <required input → useful output; model choice and rough cost>. [Open in nanoodle](<share link>) · [run headless](recipes/<slug>.md) · [graph](graphs/<slug>.noodle-graph.json) · [See sample](<saved output or finished application>)
 ```
 
-## 4. Run the checks
+## 5. Run the checks
 
 ```bash
 npm test
 ```
 
-This decodes every share link in the README, round-trips it, and
-deep-compares it against your committed graph file. It must pass.
+This decodes every share link in the README, round-trips it, compares it
+against your committed graph file, and checks that `recipes/` matches
+`node scripts/make-recipes.mjs`. It must pass.
 
 ## Rules
 
