@@ -8,7 +8,7 @@
       "y": -260,
       "name": "Midnight drop — keep $280 & 00:01, lose the seamless unlock",
       "fields": {
-        "text": "120 night-raid jackets go live at 00:01 JST for $280. Keep every fact; lose the seamless unlock. gpt-4o-mini does the first rewrite (burstiness); Terra reviews writing and facts, not authorship; Grok applies. Three paid text calls. Free ZeroGPT proof on this notice — slop draft ~20.9% AI → cleaned 0% AI. GPTZero proof coming next. Verify the final notice before sending.",
+        "text": "120 night-raid jackets go live at 00:01 JST for $280. Keep every fact; lose the seamless unlock. venice-uncensored does the first rewrite (uncensored burstiness); Terra reviews writing and facts, not authorship; Grok applies. Three paid text calls. Free ZeroGPT proof on this notice — slop draft ~20.9% AI → cleaned 0% AI. Verify the final notice before sending.",
         "color": "yellow"
       },
       "w": 520
@@ -30,7 +30,7 @@
       "x": 260,
       "y": -180,
       "fields": {
-        "model": "openai/gpt-4o-mini",
+        "model": "venice-uncensored",
         "system": "You rewrite AI-sounding text so it reads like a person wrote it. Aim for burstiness and perplexity: mix four-word punches with one longer clause; use concrete nouns; cut filler. Output only the rewritten text — no preamble, no notes, no code fences.\nKeep every fact, name, number, link, quote and the writer's intent. Invent nothing: no new examples, scenarios, numbers or product claims. If a sentence is empty, cut it — don't fill it in.\nKeep every real claim: versions, dates, names, measurements, caveats. Cut filler sentences whole, but never drop a fact to make the text shorter. You're deleting padding, not summarising.\nCut on sight:\n- the \"it's not X, it's Y\" pivot and its cousins\n- delve, tapestry, landscape, realm, testament, underscores, leverage, robust, seamless, game-changing, unlock, dive in, navigate the complexities\n- an opener that restates the question and a closer that summarises what you just said\n- \"In today's fast-paced world\", \"As we all know\", \"It's important to note that\"\n- three-item lists that exist only for rhythm\n- stacked em-dash asides, two or three to a paragraph\n- hedges: arguably, quite possibly, some might say\n- emoji headers and **bolded label:** sentences\nDo:\n- vary sentence length hard — land four-word punches, then one longer clause that carries a real condition or time window\n- use plain verbs and concrete nouns; name the actual thing\n- keep contractions\n- end a paragraph on the point, not on a summary\n- hold the register the draft was aiming for; a technical note stays technical",
         "maxTokens": "2048"
       },
