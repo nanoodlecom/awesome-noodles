@@ -48,7 +48,19 @@ function runFlags(inputs) {
   return required.map((i) => `--input ${i.cli}=@${i.kind === "audio" ? "take.mp3" : "photo.jpg"}`).join(" ");
 }
 
-export function renderRecipe({ slug, title, graphRel, shareUrl, inputs }) {
+export function loadRecipeNote(root, slug) {
+  const p = join(root, "graphs", `${slug}.NOTE.txt`);
+  try {
+    const body = readFileSync(p, "utf8");
+    const lines = body.split("\n");
+    if (lines[0].trim() !== "# recipe-note") return "";
+    return lines.slice(1).join("\n").trim();
+  } catch {
+    return "";
+  }
+}
+
+export function renderRecipe({ slug, title, graphRel, shareUrl, inputs, note }) {
   const graphPath = graphRel;
   const flags = runFlags(inputs);
   const runSuffix = flags ? ` ${flags} --out ./out` : " --out ./out";
@@ -73,6 +85,15 @@ export function renderRecipe({ slug, title, graphRel, shareUrl, inputs }) {
       ].join("\n")
     : "\n\n";
 
+  const notesBlock = note
+    ? `
+## Notes
+
+${note}
+
+`
+    : "";
+
   return `# ${title}
 
 Committed graph: [\`${graphPath}\`](../${graphPath}) · [Open in nanoodle](${shareUrl})
@@ -80,7 +101,7 @@ Committed graph: [\`${graphPath}\`](../${graphPath}) · [Open in nanoodle](${sha
 \`inspect\` is **offline and free** (no API key). \`run\` is bring-your-own-key: export \`NANOGPT_API_KEY\` (or pass \`--key\` / \`--env-file\`) and it **spends NanoGPT balance**. Quote share URLs — \`#\` starts a comment in most shells. \`#g=\` / \`#j=\` / \`#a=\` all load via \`Workflow.load\` and the CLI.
 
 Full guide: [Run workflows headlessly](https://nanoodle.com/guide/run-headless).
-
+${notesBlock}
 ## Inputs
 
 ${inputTable}
@@ -150,7 +171,8 @@ export function collectRecipes(root = ROOT) {
     const shareUrl = makeLink(graph);
     const inputs = authorInputs(graph);
     const title = titles.get(graphRel) || slug;
-    entries.push({ slug, title, graphRel, shareUrl, inputs, graph });
+    const note = loadRecipeNote(root, slug);
+    entries.push({ slug, title, graphRel, shareUrl, inputs, graph, note });
   }
   return entries;
 }
