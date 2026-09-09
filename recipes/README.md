@@ -24,6 +24,7 @@ Do not hand-edit these files — run `node scripts/make-recipes.mjs` after chang
 | [P-Image Upscale](p-image-upscale.md) | [`graphs/p-image-upscale.noodle-graph.json`](../graphs/p-image-upscale.noodle-graph.json) | needs Product still |
 | [Animate a product still](photo-to-video.md) | [`graphs/photo-to-video.noodle-graph.json`](../graphs/photo-to-video.noodle-graph.json) | defaults in graph |
 | [Product cutout](product-cutout.md) | [`graphs/product-cutout.noodle-graph.json`](../graphs/product-cutout.noodle-graph.json) | needs Product still |
+| [Remove packaging text](remove-packaging-text.md) | [`graphs/remove-packaging-text.noodle-graph.json`](../graphs/remove-packaging-text.noodle-graph.json) | needs Packaging still |
 | [UI mockup](render-a-mockup.md) | [`graphs/render-a-mockup.noodle-graph.json`](../graphs/render-a-mockup.noodle-graph.json) | defaults in graph |
 | [Text-selected isolate](sam3-isolate.md) | [`graphs/sam3-isolate.noodle-graph.json`](../graphs/sam3-isolate.noodle-graph.json) | needs Scene still |
 | [Closing-credits song](sing.md) | [`graphs/sing.noodle-graph.json`](../graphs/sing.noodle-graph.json) | defaults in graph |
