@@ -20,7 +20,7 @@
       "w": 280,
       "name": "Presenter look",
       "fields": {
-        "text": "A fictional grease-stained bike-shop mechanic in his thirties, faded red flannel with the sleeves rolled, a wry almost-smile, short dark hair, light stubble. Shoulders-up, front-facing portrait, unobstructed face and mouth, eyes toward camera. Warm practical shop light, a blurred workstand and one hanging bike behind him. No glasses, hats, text or logos."
+        "text": "A fictional motorcycle courier night dispatcher, late 20s, charcoal courier jacket with a single electric-cyan lightning-chevron accent, calm almost-smile, short dark hair, light stubble. Shoulders-up, front-facing talking-head portrait, unobstructed face and mouth, eyes toward camera. Cool night key: magenta rim plus cyan bounce on a charcoal void. No helmet, glasses, hats, readable logos or letters."
       }
     },
     {
@@ -46,7 +46,7 @@
       "w": 280,
       "name": "Spoken script",
       "fields": {
-        "text": "Leave the seized pedal on the blue tray. I'll heat the crank, crack it free, and have you rolling before the kettle boils."
+        "text": "This is Volt — pocket night-ride radio for couriers. Dispatch in one ear, city in the other. Stay on channel till the last drop."
       },
       "sizes": {
         "text": 100
