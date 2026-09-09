@@ -28,5 +28,6 @@ Do not hand-edit these files — run `node scripts/make-recipes.mjs` after chang
 | [Text-selected isolate](sam3-isolate.md) | [`graphs/sam3-isolate.noodle-graph.json`](../graphs/sam3-isolate.noodle-graph.json) | needs Scene still |
 | [Closing-credits song](sing.md) | [`graphs/sing.noodle-graph.json`](../graphs/sing.noodle-graph.json) | defaults in graph |
 | [Spoken introduction](talking-avatar.md) | [`graphs/talking-avatar.noodle-graph.json`](../graphs/talking-avatar.noodle-graph.json) | defaults in graph |
+| [Transparent brand sticker](transparent-brand-sticker.md) | [`graphs/transparent-brand-sticker.noodle-graph.json`](../graphs/transparent-brand-sticker.noodle-graph.json) | defaults in graph |
 
 Install: `npm i nanoodle` · `pip install nanoodle`. Run anywhere: [nanoodle-js](https://github.com/nanoodlecom/nanoodle-js) · [nanoodle-py](https://github.com/nanoodlecom/nanoodle-py) · [nanoodle-mcp](https://github.com/nanoodlecom/nanoodle-mcp) · [run-noodle-action](https://github.com/nanoodlecom/run-noodle-action).
