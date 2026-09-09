@@ -5,7 +5,8 @@
   "description": "Curated gallery of nanoodle workflow graphs (noodles) — not published to npm; package.json exists only to run the link checker.",
   "type": "module",
   "scripts": {
-    "test": "node --test"
+    "test": "node --test",
+    "recipes": "node scripts/make-recipes.mjs"
   },
   "engines": {
     "node": ">=20"
