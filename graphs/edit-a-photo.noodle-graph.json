@@ -7,7 +7,7 @@
       "x": 80,
       "y": -60,
       "fields": {
-        "text": "Upload a product photo and make a clean catalog image. Muse Edit preserves the product while changing the background ($0.01/image). Check logos, small details and color against the original before publication.",
+        "text": "Upload a product photo and make a clean catalog image. The first-click Edit request targets a cool night-ride catalog (matte charcoal seamless, hard cyan rim, subtle contact shadow) and still costs $0.01/image with Muse Edit. Check logos, small details and color against the original before publication.",
         "color": "yellow"
       },
       "w": 420
@@ -41,7 +41,7 @@
       "x": -66,
       "y": 479,
       "fields": {
-        "text": "Prepare this product photo for a catalog. Preserve the exact product shape, color, materials, markings and visible text. Replace the background with clean warm-white seamless paper, remove unrelated background clutter, and use soft even studio light with a subtle natural contact shadow. Keep the whole product visible and the original camera angle. Add no accessories, props, labels or branding."
+        "text": "Prepare this product photo for a cool night-ride catalog. Preserve the exact product shape, color, materials, markings and visible text. Replace the background with matte charcoal seamless paper (near-black void, no gradients or fake environment), remove unrelated background clutter, and use hard electric-cyan rim light with a soft magenta bounce fill and a subtle natural contact shadow. Keep the whole product visible and the original camera angle. Add no accessories, props, labels or branding."
       },
       "name": "Edit request"
     }
