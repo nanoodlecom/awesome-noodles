@@ -17,11 +17,14 @@ Do not hand-edit these files — run `node scripts/make-recipes.mjs` after chang
 | [Plan a messy dump](fable-five-step.md) | [`graphs/fable-five-step.noodle-graph.json`](../graphs/fable-five-step.noodle-graph.json) | defaults in graph |
 | [Favicon concept](favicon.md) | [`graphs/favicon.noodle-graph.json`](../graphs/favicon.noodle-graph.json) | defaults in graph |
 | [Product studio concept](fibo-studio-still.md) | [`graphs/fibo-studio-still.noodle-graph.json`](../graphs/fibo-studio-still.noodle-graph.json) | defaults in graph |
+| [frame wakes up](grok-imagine-still.md) | [`graphs/grok-imagine-still.noodle-graph.json`](../graphs/grok-imagine-still.noodle-graph.json) | defaults in graph |
+| [Night-ride identity restyle](h3-identity-restyle.md) | [`graphs/h3-identity-restyle.noodle-graph.json`](../graphs/h3-identity-restyle.noodle-graph.json) | needs Still |
 | [Night-ride radio orbit](h3-max-multi-angle.md) | [`graphs/h3-max-multi-angle.noodle-graph.json`](../graphs/h3-max-multi-angle.noodle-graph.json) | needs Product still |
 | [Volt drop poster](ideogram-v4-instant-poster.md) | [`graphs/ideogram-v4-instant-poster.noodle-graph.json`](../graphs/ideogram-v4-instant-poster.noodle-graph.json) | defaults in graph |
 | [Compare image models](image-model-arena.md) | [`graphs/image-model-arena.noodle-graph.json`](../graphs/image-model-arena.noodle-graph.json) | defaults in graph |
 | [Night-ride radio take](infinitetalk-radio-take.md) | [`graphs/infinitetalk-radio-take.noodle-graph.json`](../graphs/infinitetalk-radio-take.noodle-graph.json) | defaults in graph |
 | [Travel postcard](night-market-postcard.md) | [`graphs/night-market-postcard.noodle-graph.json`](../graphs/night-market-postcard.noodle-graph.json) | defaults in graph |
+| [Night-ride SFX](night-ride-sfx.md) | [`graphs/night-ride-sfx.noodle-graph.json`](../graphs/night-ride-sfx.noodle-graph.json) | defaults in graph |
 | [Product motion concept](omni-flash-turntable.md) | [`graphs/omni-flash-turntable.noodle-graph.json`](../graphs/omni-flash-turntable.noodle-graph.json) | defaults in graph |
 | [P-Image Upscale](p-image-upscale.md) | [`graphs/p-image-upscale.noodle-graph.json`](../graphs/p-image-upscale.noodle-graph.json) | needs Product still |
 | [rewrite the clip](p-video-rewrite.md) | [`graphs/p-video-rewrite.noodle-graph.json`](../graphs/p-video-rewrite.noodle-graph.json) | needs Product clip |
@@ -33,5 +36,7 @@ Do not hand-edit these files — run `node scripts/make-recipes.mjs` after chang
 | [Closing-credits song](sing.md) | [`graphs/sing.noodle-graph.json`](../graphs/sing.noodle-graph.json) | defaults in graph |
 | [Spoken introduction](talking-avatar.md) | [`graphs/talking-avatar.noodle-graph.json`](../graphs/talking-avatar.noodle-graph.json) | defaults in graph |
 | [Transparent brand sticker](transparent-brand-sticker.md) | [`graphs/transparent-brand-sticker.noodle-graph.json`](../graphs/transparent-brand-sticker.noodle-graph.json) | defaults in graph |
+| [Volt dispatch card](volt-dispatch-infographic.md) | [`graphs/volt-dispatch-infographic.noodle-graph.json`](../graphs/volt-dispatch-infographic.noodle-graph.json) | defaults in graph |
+| [editable volt mark](volt-vector-mark.md) | [`graphs/volt-vector-mark.noodle-graph.json`](../graphs/volt-vector-mark.noodle-graph.json) | defaults in graph |
 
 Install: `npm i nanoodle` · `pip install nanoodle`. Run anywhere: [nanoodle-js](https://github.com/nanoodlecom/nanoodle-js) · [nanoodle-py](https://github.com/nanoodlecom/nanoodle-py) · [nanoodle-mcp](https://github.com/nanoodlecom/nanoodle-mcp) · [run-noodle-action](https://github.com/nanoodlecom/run-noodle-action).
