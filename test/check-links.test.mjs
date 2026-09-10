@@ -9,27 +9,27 @@ import { authorInputs } from "../scripts/graph-io.mjs";
 test("every README share link decodes and matches its committed graph", () => {
   const { entries, problems } = checkLinks();
   assert.deepEqual(problems, []);
-  assert.ok(entries >= 6, `expected at least the 6 seed entries, found ${entries}`);
+  assert.equal(entries, 5, "the curated catalog has five workflows");
 });
 
-test("every Keep graph has a generated run-headless recipe that matches its committed graph", () => {
+test("every catalog graph has a generated run-headless recipe that matches its committed graph", () => {
   const { entries, files, problems } = checkRecipes();
   assert.deepEqual(problems, []);
-  assert.ok(entries >= 6, `expected at least the 6 seed graphs, found ${entries}`);
+  assert.equal(entries, 5, "the curated catalog has five workflow recipes");
   assert.ok(files === entries + 1, `expected ${entries} recipes + index, found ${files} files`);
 });
 
 test("author-facing inputs prefer node names the CLI accepts", () => {
-  const favicon = {
+  const graph = {
     v: 1,
     nodes: [
-      { id: "n1", type: "text", name: "Brand", fields: { text: "Volt" } },
+      { id: "n1", type: "text", name: "Brief", fields: { text: "A workshop poster" } },
       { id: "n2", type: "llm", fields: { model: "x" } },
     ],
     links: [{ from: { node: "n1", port: "text" }, to: { node: "n2", port: "prompt" } }],
   };
-  assert.deepEqual(authorInputs(favicon).map((i) => i.cli), ["n1.text"]);
-  assert.equal(authorInputs(favicon)[0].key, "Brand");
+  assert.deepEqual(authorInputs(graph).map((i) => i.cli), ["n1.text"]);
+  assert.equal(authorInputs(graph)[0].key, "Brief");
 });
 
 test("make-link encoding round-trips through the editor's decode steps", () => {

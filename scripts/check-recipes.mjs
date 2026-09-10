@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-// Verify every Keep graph has a generated run-headless recipe whose share
+// Verify every catalog graph has a generated run-headless recipe whose share
 // link still matches the committed graphs/ file.
 //
 //   node scripts/check-recipes.mjs
@@ -31,7 +31,7 @@ export function checkRecipes(root = ROOT) {
   const expectedNames = new Set(Object.keys(files).map((rel) => rel.replace(/^recipes\//, "")));
   for (const f of readdirSync(join(root, "recipes")).filter((n) => n.endsWith(".md")).sort()) {
     if (!expectedNames.has(f)) {
-      problems.push(`recipes/${f}: leftover file with no Keep graph — delete it or regenerate`);
+      problems.push(`recipes/${f}: leftover file with no catalog graph — delete it or regenerate`);
     }
   }
 

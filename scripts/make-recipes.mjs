@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-// Generate recipes/<slug>.md — one run-headless strip per Keep graph.
+// Generate recipes/<slug>.md — one run-headless strip per catalog graph.
 //
 //   node scripts/make-recipes.mjs
 //
@@ -34,12 +34,12 @@ function inputRow(inp) {
   const key = `\`${inp.key}\``;
   const cli = `\`${inp.cli}\``;
   if (inp.kind === "choice") {
-    return `| ${key} | choice | ${cli} | committed first-click; options listed in the graph |`;
+    return `| ${key} | choice | ${cli} | default input; options listed in the graph |`;
   }
   if (inp.required) {
     return `| ${key} | ${inp.kind} | ${cli} | required — pass a local file with \`--input ${inp.cli}=@path\` |`;
   }
-  return `| ${key} | ${inp.kind} | ${cli} | omit \`--input\` to keep the committed first-click |`;
+  return `| ${key} | ${inp.kind} | ${cli} | omit \`--input\` to keep the default input |`;
 }
 
 function runFlags(inputs) {
@@ -144,13 +144,13 @@ export function renderIndex(entries) {
 
   return `# Run headless
 
-One recipe per Keep graph. Each file has offline \`inspect\` and paid \`run\` one-liners for the JavaScript and Python packages, using a share link regenerated from the committed graph.
+One recipe per catalog graph. Each file has offline \`inspect\` and paid \`run\` one-liners for the JavaScript and Python packages, using a share link regenerated from the committed graph.
 
 Do not hand-edit these files — run \`node scripts/make-recipes.mjs\` after changing a graph. \`npm test\` checks each recipe's share link against \`graphs/\`.
 
 \`inspect\` never calls the API. \`run\` needs \`NANOGPT_API_KEY\` and spends NanoGPT balance. Guide: [Run workflows headlessly](https://nanoodle.com/guide/run-headless).
 
-| Recipe | Graph | First-click |
+| Recipe | Graph | Inputs |
 | --- | --- | --- |
 ${rows}
 
