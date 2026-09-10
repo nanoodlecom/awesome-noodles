@@ -32,6 +32,7 @@ Do not hand-edit these files — run `node scripts/make-recipes.mjs` after chang
 | [P-Image Upscale](p-image-upscale.md) | [`graphs/p-image-upscale.noodle-graph.json`](../graphs/p-image-upscale.noodle-graph.json) | needs Product still |
 | [rewrite the clip](p-video-rewrite.md) | [`graphs/p-video-rewrite.noodle-graph.json`](../graphs/p-video-rewrite.noodle-graph.json) | needs Product clip |
 | [Animate a product still](photo-to-video.md) | [`graphs/photo-to-video.noodle-graph.json`](../graphs/photo-to-video.noodle-graph.json) | defaults in graph |
+| [knock the alley off the clip](pixelcut-video-cutout.md) | [`graphs/pixelcut-video-cutout.noodle-graph.json`](../graphs/pixelcut-video-cutout.noodle-graph.json) | needs Product clip |
 | [Product cutout](product-cutout.md) | [`graphs/product-cutout.noodle-graph.json`](../graphs/product-cutout.noodle-graph.json) | needs Product still |
 | [Remove packaging text](remove-packaging-text.md) | [`graphs/remove-packaging-text.noodle-graph.json`](../graphs/remove-packaging-text.noodle-graph.json) | needs Packaging still |
 | [UI mockup](render-a-mockup.md) | [`graphs/render-a-mockup.noodle-graph.json`](../graphs/render-a-mockup.noodle-graph.json) | defaults in graph |
