@@ -11,6 +11,7 @@ Do not hand-edit these files — run `node scripts/make-recipes.mjs` after chang
 | [Character sprites](character-sprites.md) | [`graphs/character-sprites.noodle-graph.json`](../graphs/character-sprites.noodle-graph.json) | defaults in graph |
 | [Cinematic character still](cinematic-character-still.md) | [`graphs/cinematic-character-still.noodle-graph.json`](../graphs/cinematic-character-still.noodle-graph.json) | defaults in graph |
 | [Product in a setting](combine-images.md) | [`graphs/combine-images.noodle-graph.json`](../graphs/combine-images.noodle-graph.json) | needs Product photo, Setting photo |
+| [Crystal video upscale](crystal-video-upscale.md) | [`graphs/crystal-video-upscale.noodle-graph.json`](../graphs/crystal-video-upscale.noodle-graph.json) | needs Product clip |
 | [Midnight drop notice](deslop.md) | [`graphs/deslop.noodle-graph.json`](../graphs/deslop.noodle-graph.json) | defaults in graph |
 | [Clean product photo](edit-a-photo.md) | [`graphs/edit-a-photo.noodle-graph.json`](../graphs/edit-a-photo.noodle-graph.json) | needs Product photo |
 | [Plan a messy dump](fable-five-step.md) | [`graphs/fable-five-step.noodle-graph.json`](../graphs/fable-five-step.noodle-graph.json) | defaults in graph |
