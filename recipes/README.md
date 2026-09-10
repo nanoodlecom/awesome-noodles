@@ -40,5 +40,6 @@ Do not hand-edit these files — run `node scripts/make-recipes.mjs` after chang
 | [Transparent brand sticker](transparent-brand-sticker.md) | [`graphs/transparent-brand-sticker.noodle-graph.json`](../graphs/transparent-brand-sticker.noodle-graph.json) | defaults in graph |
 | [Volt dispatch card](volt-dispatch-infographic.md) | [`graphs/volt-dispatch-infographic.noodle-graph.json`](../graphs/volt-dispatch-infographic.noodle-graph.json) | defaults in graph |
 | [editable volt mark](volt-vector-mark.md) | [`graphs/volt-vector-mark.noodle-graph.json`](../graphs/volt-vector-mark.noodle-graph.json) | defaults in graph |
+| [still breathes with sound](wan-still-audio.md) | [`graphs/wan-still-audio.noodle-graph.json`](../graphs/wan-still-audio.noodle-graph.json) | defaults in graph |
 
 Install: `npm i nanoodle` · `pip install nanoodle`. Run anywhere: [nanoodle-js](https://github.com/nanoodlecom/nanoodle-js) · [nanoodle-py](https://github.com/nanoodlecom/nanoodle-py) · [nanoodle-mcp](https://github.com/nanoodlecom/nanoodle-mcp) · [run-noodle-action](https://github.com/nanoodlecom/run-noodle-action).

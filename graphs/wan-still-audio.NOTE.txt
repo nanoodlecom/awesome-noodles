@@ -1,0 +1,29 @@
+Cover / sample-gallery QC is pending. No paid thumb.
+
+First-click Still brief is a matte-charcoal Volt pocket night-ride radio
+on a rain-slick steel railing above a neon alley (one electric-cyan
+lightning-chevron, magenta rim left, cyan puddle bounce, thin rain).
+Motion brief is locked-cam breath: rain beads crawl, cyan puddle shimmer,
+one soft radio LED pulse, faint alley hum in generated audio. Do not
+treat the graph as having a reviewed clip.
+
+This is still → Wan 3.0 image-to-video with synced audio
+(`alibaba/wan-3.0/image-to-video` at 480p / 2s, enable_audio=true,
+thinking_mode=false). Catalog 2026-09-09: $0.07/s at 480p → 2 × $0.07 =
+$0.14 video; Muse still $0.01. Duration 2 is the catalog minimum (2–30s;
+catalog default 5s / 720p ≈ $0.65). Do not pin 720p. Seedance and Grok
+Imagine stay off this graph.
+
+The live editor duration knob for this number-type param currently lists
+only 5s / 10s (play.html DURATIONS), so the canvas chip may snap to 5s
+and show ~$0.36. The committed pin stays duration 2 in fields +
+modelOpts so headless / runner send 2s ($0.14 video). Do not raise the
+JSON pin to 5 just to match the knob.
+
+Not frame wakes up (`grok-imagine-still`: Muse + Grok Imagine Video 1.5
+rooftop-ledge pulse, 4s / 480p, no Wan audio). Not Animate a product
+still (`photo-to-video`: Muse + MiniMax H3 Spicy locked-camera asphalt
+rain, 5s / 480p / $0.20). Not Night-ride radio orbit (H3 Max Multi
+Angle), Omni Flash text-to-video, Crystal upscale, or InfiniteTalk.
+
+No paid NanoGPT generation was run for this addition.
