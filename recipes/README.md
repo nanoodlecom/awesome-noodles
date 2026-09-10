@@ -24,6 +24,7 @@ Do not hand-edit these files — run `node scripts/make-recipes.mjs` after chang
 | [Compare image models](image-model-arena.md) | [`graphs/image-model-arena.noodle-graph.json`](../graphs/image-model-arena.noodle-graph.json) | defaults in graph |
 | [Night-ride radio take](infinitetalk-radio-take.md) | [`graphs/infinitetalk-radio-take.noodle-graph.json`](../graphs/infinitetalk-radio-take.noodle-graph.json) | defaults in graph |
 | [pack type that sticks](mai-pack-type.md) | [`graphs/mai-pack-type.noodle-graph.json`](../graphs/mai-pack-type.noodle-graph.json) | defaults in graph |
+| [stretch the bed](mirelo-stretch-bed.md) | [`graphs/mirelo-stretch-bed.noodle-graph.json`](../graphs/mirelo-stretch-bed.noodle-graph.json) | needs Short alley bed |
 | [foley the take](mirelo-video-foley.md) | [`graphs/mirelo-video-foley.noodle-graph.json`](../graphs/mirelo-video-foley.noodle-graph.json) | needs Product clip |
 | [Travel postcard](night-market-postcard.md) | [`graphs/night-market-postcard.noodle-graph.json`](../graphs/night-market-postcard.noodle-graph.json) | defaults in graph |
 | [Night-ride radio VO](night-ride-radio-vo.md) | [`graphs/night-ride-radio-vo.noodle-graph.json`](../graphs/night-ride-radio-vo.noodle-graph.json) | defaults in graph |
