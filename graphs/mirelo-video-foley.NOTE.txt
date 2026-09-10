@@ -1,0 +1,15 @@
+Cover / sample-gallery QC is pending.
+
+No Volt radio clip is committed in this repo. First-click is a video-upload
+placeholder: matte-charcoal Volt pocket night-ride radio, charcoal/cyan
+night-ride alley take. Do not treat the graph as having a reviewed foley.
+
+This is video→foley (`mirelo-ai/sfx1.6/video-to-video` at $0.01/s;
+~4s ≈ $0.04). Mirelo writes matching SFX onto the uploaded clip and
+returns the take with a new audio track. Not text→SFX
+(`night-ride-sfx` / `elevenlabs/sound-effects/v2`). Not Night-ride
+radio VO (`night-ride-radio-vo` / `xai-tts`). Not Crystal upscale,
+P-Video rewrite, Sing, InfiniteTalk, or i2v Keeps. Sibling
+`mirelo-ai/sfx1.6/text-to-audio` is not this job.
+
+No paid NanoGPT generation was run for this addition.
