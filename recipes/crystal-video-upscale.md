@@ -1,0 +1,37 @@
+# Crystal video upscale
+
+Committed graph: [`graphs/crystal-video-upscale.noodle-graph.json`](../graphs/crystal-video-upscale.noodle-graph.json) · [Open in nanoodle](https://nanoodle.com/#g=H4sIAAAAAAAAA4WTwW7bMAyGX4UgdkgAOXHSDig87DSgwA5rc-mwYRhWVWITIrJkSExSrzCwh9gT7kkK2U6XtYedDEs_f1Lkx0fcY7VQ6IOlhNW3R2SLFZqCvZAXVChtQ_kk1PVw8IDVeamwxWpZKjxgdX5RKvS6zrIPsU2iHezZUoBdk4x2hArvmZxNWD2i0INghTeNC9qChrQJUcA4bt7BMfpzH30zREeY3BqnI0tbaJ6bQVP0GYoxQ7ydQq23lHpDHRuKCpyOa4og-SNFTWvd8AM5CDtpdjKDFfvx8sfzZXq_APZQB0vuupEEkzflbFHOP63mSUHNHvr_6QwuOSYpjGOzhSQhtsA5e61FqDAbHU3ILwlOoAlmSwKe1xspIluCqC2H_tFwYNlA8ATkyEhkU5hWe3BZ7Nmvi7tsYTa0j8HDn1-_wQfI02ARsoMH-yJSE2ZwFQSSsHPH1sNkVXys9ZqO3ZyC9hZ8ENBgdE1RFyHescCaPEUtBJOrl3UOgjlc157h0um0AdlFL_rO0XSGCk1wIWKFLTkXDth1auTIL_4StN_1I_-HoLMRoeUJQqsY7M4MSJySc-K6PHEly89UjqblYNqbj6bj6-0rV-xHnQH_H2KosImhbjK9qPAZkR7qlxhhteg6hYl_Ui84RpZd912hY7892TaXu3QfQ52VeROPnWtCzNn6OrBTKOFUsXylyN4-W57lHBarpcI906GvQPsvw8o22n8dJjBsZ1XOLt523RMAOD3lCwQAAA)
+
+`inspect` is **offline and free** (no API key). `run` is bring-your-own-key: export `NANOGPT_API_KEY` (or pass `--key` / `--env-file`) and it **spends NanoGPT balance**. Quote share URLs — `#` starts a comment in most shells. `#g=` / `#j=` / `#a=` all load via `Workflow.load` and the CLI.
+
+Full guide: [Run workflows headlessly](https://nanoodle.com/guide/run-headless).
+
+## Inputs
+
+| Input | Kind | Stable key | Notes |
+| --- | --- | --- | --- |
+| `Product clip` | video | `n1.video` | required — pass a local file with `--input n1.video=@path` |
+
+## Inspect (offline, no key)
+
+```bash
+npx nanoodle inspect graphs/crystal-video-upscale.noodle-graph.json
+npx nanoodle inspect "https://nanoodle.com/#g=H4sIAAAAAAAAA4WTwW7bMAyGX4UgdkgAOXHSDig87DSgwA5rc-mwYRhWVWITIrJkSExSrzCwh9gT7kkK2U6XtYedDEs_f1Lkx0fcY7VQ6IOlhNW3R2SLFZqCvZAXVChtQ_kk1PVw8IDVeamwxWpZKjxgdX5RKvS6zrIPsU2iHezZUoBdk4x2hArvmZxNWD2i0INghTeNC9qChrQJUcA4bt7BMfpzH30zREeY3BqnI0tbaJ6bQVP0GYoxQ7ydQq23lHpDHRuKCpyOa4og-SNFTWvd8AM5CDtpdjKDFfvx8sfzZXq_APZQB0vuupEEkzflbFHOP63mSUHNHvr_6QwuOSYpjGOzhSQhtsA5e61FqDAbHU3ILwlOoAlmSwKe1xspIluCqC2H_tFwYNlA8ATkyEhkU5hWe3BZ7Nmvi7tsYTa0j8HDn1-_wQfI02ARsoMH-yJSE2ZwFQSSsHPH1sNkVXys9ZqO3ZyC9hZ8ENBgdE1RFyHescCaPEUtBJOrl3UOgjlc157h0um0AdlFL_rO0XSGCk1wIWKFLTkXDth1auTIL_4StN_1I_-HoLMRoeUJQqsY7M4MSJySc-K6PHEly89UjqblYNqbj6bj6-0rV-xHnQH_H2KosImhbjK9qPAZkR7qlxhhteg6hYl_Ui84RpZd912hY7892TaXu3QfQ52VeROPnWtCzNn6OrBTKOFUsXylyN4-W57lHBarpcI906GvQPsvw8o22n8dJjBsZ1XOLt523RMAOD3lCwQAAA"
+
+nanoodle-py inspect graphs/crystal-video-upscale.noodle-graph.json
+nanoodle-py inspect "https://nanoodle.com/#g=H4sIAAAAAAAAA4WTwW7bMAyGX4UgdkgAOXHSDig87DSgwA5rc-mwYRhWVWITIrJkSExSrzCwh9gT7kkK2U6XtYedDEs_f1Lkx0fcY7VQ6IOlhNW3R2SLFZqCvZAXVChtQ_kk1PVw8IDVeamwxWpZKjxgdX5RKvS6zrIPsU2iHezZUoBdk4x2hArvmZxNWD2i0INghTeNC9qChrQJUcA4bt7BMfpzH30zREeY3BqnI0tbaJ6bQVP0GYoxQ7ydQq23lHpDHRuKCpyOa4og-SNFTWvd8AM5CDtpdjKDFfvx8sfzZXq_APZQB0vuupEEkzflbFHOP63mSUHNHvr_6QwuOSYpjGOzhSQhtsA5e61FqDAbHU3ILwlOoAlmSwKe1xspIluCqC2H_tFwYNlA8ATkyEhkU5hWe3BZ7Nmvi7tsYTa0j8HDn1-_wQfI02ARsoMH-yJSE2ZwFQSSsHPH1sNkVXys9ZqO3ZyC9hZ8ENBgdE1RFyHescCaPEUtBJOrl3UOgjlc157h0um0AdlFL_rO0XSGCk1wIWKFLTkXDth1auTIL_4StN_1I_-HoLMRoeUJQqsY7M4MSJySc-K6PHEly89UjqblYNqbj6bj6-0rV-xHnQH_H2KosImhbjK9qPAZkR7qlxhhteg6hYl_Ui84RpZd912hY7892TaXu3QfQ52VeROPnWtCzNn6OrBTKOFUsXylyN4-W57lHBarpcI906GvQPsvw8o22n8dJjBsZ1XOLt523RMAOD3lCwQAAA"
+# or: python -m nanoodle inspect graphs/crystal-video-upscale.noodle-graph.json
+```
+
+## Run (spends balance)
+
+```bash
+export NANOGPT_API_KEY=...          # nano-gpt.com key; required for run, not inspect
+
+npx nanoodle run "https://nanoodle.com/#g=H4sIAAAAAAAAA4WTwW7bMAyGX4UgdkgAOXHSDig87DSgwA5rc-mwYRhWVWITIrJkSExSrzCwh9gT7kkK2U6XtYedDEs_f1Lkx0fcY7VQ6IOlhNW3R2SLFZqCvZAXVChtQ_kk1PVw8IDVeamwxWpZKjxgdX5RKvS6zrIPsU2iHezZUoBdk4x2hArvmZxNWD2i0INghTeNC9qChrQJUcA4bt7BMfpzH30zREeY3BqnI0tbaJ6bQVP0GYoxQ7ydQq23lHpDHRuKCpyOa4og-SNFTWvd8AM5CDtpdjKDFfvx8sfzZXq_APZQB0vuupEEkzflbFHOP63mSUHNHvr_6QwuOSYpjGOzhSQhtsA5e61FqDAbHU3ILwlOoAlmSwKe1xspIluCqC2H_tFwYNlA8ATkyEhkU5hWe3BZ7Nmvi7tsYTa0j8HDn1-_wQfI02ARsoMH-yJSE2ZwFQSSsHPH1sNkVXys9ZqO3ZyC9hZ8ENBgdE1RFyHescCaPEUtBJOrl3UOgjlc157h0um0AdlFL_rO0XSGCk1wIWKFLTkXDth1auTIL_4StN_1I_-HoLMRoeUJQqsY7M4MSJySc-K6PHEly89UjqblYNqbj6bj6-0rV-xHnQH_H2KosImhbjK9qPAZkR7qlxhhteg6hYl_Ui84RpZd912hY7892TaXu3QfQ52VeROPnWtCzNn6OrBTKOFUsXylyN4-W57lHBarpcI906GvQPsvw8o22n8dJjBsZ1XOLt523RMAOD3lCwQAAA" --input n1.video=@clip.mp4 --out ./out
+nanoodle-py run "https://nanoodle.com/#g=H4sIAAAAAAAAA4WTwW7bMAyGX4UgdkgAOXHSDig87DSgwA5rc-mwYRhWVWITIrJkSExSrzCwh9gT7kkK2U6XtYedDEs_f1Lkx0fcY7VQ6IOlhNW3R2SLFZqCvZAXVChtQ_kk1PVw8IDVeamwxWpZKjxgdX5RKvS6zrIPsU2iHezZUoBdk4x2hArvmZxNWD2i0INghTeNC9qChrQJUcA4bt7BMfpzH30zREeY3BqnI0tbaJ6bQVP0GYoxQ7ydQq23lHpDHRuKCpyOa4og-SNFTWvd8AM5CDtpdjKDFfvx8sfzZXq_APZQB0vuupEEkzflbFHOP63mSUHNHvr_6QwuOSYpjGOzhSQhtsA5e61FqDAbHU3ILwlOoAlmSwKe1xspIluCqC2H_tFwYNlA8ATkyEhkU5hWe3BZ7Nmvi7tsYTa0j8HDn1-_wQfI02ARsoMH-yJSE2ZwFQSSsHPH1sNkVXys9ZqO3ZyC9hZ8ENBgdE1RFyHescCaPEUtBJOrl3UOgjlc157h0um0AdlFL_rO0XSGCk1wIWKFLTkXDth1auTIL_4StN_1I_-HoLMRoeUJQqsY7M4MSJySc-K6PHEly89UjqblYNqbj6bj6-0rV-xHnQH_H2KosImhbjK9qPAZkR7qlxhhteg6hYl_Ui84RpZd912hY7892TaXu3QfQ52VeROPnWtCzNn6OrBTKOFUsXylyN4-W57lHBarpcI906GvQPsvw8o22n8dJjBsZ1XOLt523RMAOD3lCwQAAA" --input n1.video=@clip.mp4 --out ./out
+# or: python -m nanoodle run "https://nanoodle.com/#g=H4sIAAAAAAAAA4WTwW7bMAyGX4UgdkgAOXHSDig87DSgwA5rc-mwYRhWVWITIrJkSExSrzCwh9gT7kkK2U6XtYedDEs_f1Lkx0fcY7VQ6IOlhNW3R2SLFZqCvZAXVChtQ_kk1PVw8IDVeamwxWpZKjxgdX5RKvS6zrIPsU2iHezZUoBdk4x2hArvmZxNWD2i0INghTeNC9qChrQJUcA4bt7BMfpzH30zREeY3BqnI0tbaJ6bQVP0GYoxQ7ydQq23lHpDHRuKCpyOa4og-SNFTWvd8AM5CDtpdjKDFfvx8sfzZXq_APZQB0vuupEEkzflbFHOP63mSUHNHvr_6QwuOSYpjGOzhSQhtsA5e61FqDAbHU3ILwlOoAlmSwKe1xspIluCqC2H_tFwYNlA8ATkyEhkU5hWe3BZ7Nmvi7tsYTa0j8HDn1-_wQfI02ARsoMH-yJSE2ZwFQSSsHPH1sNkVXys9ZqO3ZyC9hZ8ENBgdE1RFyHescCaPEUtBJOrl3UOgjlc157h0um0AdlFL_rO0XSGCk1wIWKFLTkXDth1auTIL_4StN_1I_-HoLMRoeUJQqsY7M4MSJySc-K6PHEly89UjqblYNqbj6bj6-0rV-xHnQH_H2KosImhbjK9qPAZkR7qlxhhteg6hYl_Ui84RpZd912hY7892TaXu3QfQ52VeROPnWtCzNn6OrBTKOFUsXylyN4-W57lHBarpcI906GvQPsvw8o22n8dJjBsZ1XOLt523RMAOD3lCwQAAA" --input n1.video=@clip.mp4 --out ./out
+```
+
+
+Install names: `npm i nanoodle` (not `nanoodle-js`) · `pip install nanoodle`. Same graph, same semantics: [nanoodle-js](https://github.com/nanoodlecom/nanoodle-js) · [nanoodle-py](https://github.com/nanoodlecom/nanoodle-py) · [nanoodle-mcp](https://github.com/nanoodlecom/nanoodle-mcp) · [run-noodle-action](https://github.com/nanoodlecom/run-noodle-action).

@@ -11,6 +11,7 @@ Do not hand-edit these files — run `node scripts/make-recipes.mjs` after chang
 | [Character sprites](character-sprites.md) | [`graphs/character-sprites.noodle-graph.json`](../graphs/character-sprites.noodle-graph.json) | defaults in graph |
 | [Cinematic character still](cinematic-character-still.md) | [`graphs/cinematic-character-still.noodle-graph.json`](../graphs/cinematic-character-still.noodle-graph.json) | defaults in graph |
 | [Product in a setting](combine-images.md) | [`graphs/combine-images.noodle-graph.json`](../graphs/combine-images.noodle-graph.json) | needs Product photo, Setting photo |
+| [Crystal video upscale](crystal-video-upscale.md) | [`graphs/crystal-video-upscale.noodle-graph.json`](../graphs/crystal-video-upscale.noodle-graph.json) | needs Product clip |
 | [Midnight drop notice](deslop.md) | [`graphs/deslop.noodle-graph.json`](../graphs/deslop.noodle-graph.json) | defaults in graph |
 | [Clean product photo](edit-a-photo.md) | [`graphs/edit-a-photo.noodle-graph.json`](../graphs/edit-a-photo.noodle-graph.json) | needs Product photo |
 | [Plan a messy dump](fable-five-step.md) | [`graphs/fable-five-step.noodle-graph.json`](../graphs/fable-five-step.noodle-graph.json) | defaults in graph |
@@ -18,6 +19,7 @@ Do not hand-edit these files — run `node scripts/make-recipes.mjs` after chang
 | [Product studio concept](fibo-studio-still.md) | [`graphs/fibo-studio-still.noodle-graph.json`](../graphs/fibo-studio-still.noodle-graph.json) | defaults in graph |
 | [Night-ride identity restyle](h3-identity-restyle.md) | [`graphs/h3-identity-restyle.noodle-graph.json`](../graphs/h3-identity-restyle.noodle-graph.json) | needs Still |
 | [Night-ride radio orbit](h3-max-multi-angle.md) | [`graphs/h3-max-multi-angle.noodle-graph.json`](../graphs/h3-max-multi-angle.noodle-graph.json) | needs Product still |
+| [Volt drop poster](ideogram-v4-instant-poster.md) | [`graphs/ideogram-v4-instant-poster.noodle-graph.json`](../graphs/ideogram-v4-instant-poster.noodle-graph.json) | defaults in graph |
 | [Compare image models](image-model-arena.md) | [`graphs/image-model-arena.noodle-graph.json`](../graphs/image-model-arena.noodle-graph.json) | defaults in graph |
 | [Night-ride radio take](infinitetalk-radio-take.md) | [`graphs/infinitetalk-radio-take.noodle-graph.json`](../graphs/infinitetalk-radio-take.noodle-graph.json) | defaults in graph |
 | [Travel postcard](night-market-postcard.md) | [`graphs/night-market-postcard.noodle-graph.json`](../graphs/night-market-postcard.noodle-graph.json) | defaults in graph |
