@@ -1,0 +1,16 @@
+Cover / sample-gallery QC is pending.
+
+No Volt radio packaging still is committed in this repo. First-click is a
+flat-graphic upload placeholder: Volt pocket night-ride radio packaging /
+promo card (matte charcoal field, one electric-cyan lightning-bolt chevron)
+with unwanted promotional lettering to strip. Do not treat the graph as
+having a reviewed cleanup.
+
+This is lettering cleanup on a flat design (`ideogram-v3-remove-text` at
+size `auto`, $0.09/image), not a restyle (Clean product photo / Muse Edit),
+not a transparent cutout (Product cutout / BiRefNet V2), not text-selected
+isolate (Text-selected isolate / SAM 3), not resolution upscale (P-Image
+Upscale), and not a text-to-transparent sticker (Transparent brand sticker
+/ `ideogram-v3-generate-transparent`).
+
+No paid NanoGPT / Ideogram generation was run for this addition.
