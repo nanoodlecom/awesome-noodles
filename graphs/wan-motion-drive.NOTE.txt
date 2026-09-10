@@ -1,0 +1,20 @@
+Cover / sample-gallery QC is pending. No paid thumb.
+
+No Volt still or driver clip is committed in this repo. First-click is
+two upload placeholders: a character/product still (matte-charcoal Volt
+pocket night-ride radio or courier, one electric-cyan lightning chevron)
+and a short driver-motion clip (simple hand-wave / turn, ~2–3s). Do not
+treat the graph as having a reviewed transfer.
+
+This is still + driver → Wan 2.2 Animate 2 motion transfer
+(`wan-22-animate-2` at 480p; catalog 2026-09-09 $0.04/s @480p, $0.08/s
+@720p). Short driver ~2–3s ≈ $0.08–0.12. Do not pin 720p. Do not swap
+to `pruna-ai/p-video/animate` or `wan-22-animate` (v1, $0.05/s).
+
+Not still breathes with sound (`wan-still-audio`: Muse + Wan 3.0
+image-to-video prompt-i2v with synced audio). Not frame wakes up
+(`grok-imagine-still`). Not Animate a product still (`photo-to-video`).
+Not InfiniteTalk / talking-avatar lipsync. Not H3 Max multi-angle.
+Not rewrite the clip (`p-video-rewrite`).
+
+No paid NanoGPT generation was run for this addition.
