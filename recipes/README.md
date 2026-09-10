@@ -24,6 +24,7 @@ Do not hand-edit these files — run `node scripts/make-recipes.mjs` after chang
 | [Compare image models](image-model-arena.md) | [`graphs/image-model-arena.noodle-graph.json`](../graphs/image-model-arena.noodle-graph.json) | defaults in graph |
 | [Night-ride radio take](infinitetalk-radio-take.md) | [`graphs/infinitetalk-radio-take.noodle-graph.json`](../graphs/infinitetalk-radio-take.noodle-graph.json) | defaults in graph |
 | [Travel postcard](night-market-postcard.md) | [`graphs/night-market-postcard.noodle-graph.json`](../graphs/night-market-postcard.noodle-graph.json) | defaults in graph |
+| [Night-ride radio VO](night-ride-radio-vo.md) | [`graphs/night-ride-radio-vo.noodle-graph.json`](../graphs/night-ride-radio-vo.noodle-graph.json) | defaults in graph |
 | [Night-ride SFX](night-ride-sfx.md) | [`graphs/night-ride-sfx.noodle-graph.json`](../graphs/night-ride-sfx.noodle-graph.json) | defaults in graph |
 | [Product motion concept](omni-flash-turntable.md) | [`graphs/omni-flash-turntable.noodle-graph.json`](../graphs/omni-flash-turntable.noodle-graph.json) | defaults in graph |
 | [P-Image Upscale](p-image-upscale.md) | [`graphs/p-image-upscale.noodle-graph.json`](../graphs/p-image-upscale.noodle-graph.json) | needs Product still |
