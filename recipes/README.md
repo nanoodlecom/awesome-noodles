@@ -16,6 +16,7 @@ Do not hand-edit these files — run `node scripts/make-recipes.mjs` after chang
 | [Plan a messy dump](fable-five-step.md) | [`graphs/fable-five-step.noodle-graph.json`](../graphs/fable-five-step.noodle-graph.json) | defaults in graph |
 | [Favicon concept](favicon.md) | [`graphs/favicon.noodle-graph.json`](../graphs/favicon.noodle-graph.json) | defaults in graph |
 | [Product studio concept](fibo-studio-still.md) | [`graphs/fibo-studio-still.noodle-graph.json`](../graphs/fibo-studio-still.noodle-graph.json) | defaults in graph |
+| [frame wakes up](grok-imagine-still.md) | [`graphs/grok-imagine-still.noodle-graph.json`](../graphs/grok-imagine-still.noodle-graph.json) | defaults in graph |
 | [Night-ride radio orbit](h3-max-multi-angle.md) | [`graphs/h3-max-multi-angle.noodle-graph.json`](../graphs/h3-max-multi-angle.noodle-graph.json) | needs Product still |
 | [Compare image models](image-model-arena.md) | [`graphs/image-model-arena.noodle-graph.json`](../graphs/image-model-arena.noodle-graph.json) | defaults in graph |
 | [Night-ride radio take](infinitetalk-radio-take.md) | [`graphs/infinitetalk-radio-take.noodle-graph.json`](../graphs/infinitetalk-radio-take.noodle-graph.json) | defaults in graph |

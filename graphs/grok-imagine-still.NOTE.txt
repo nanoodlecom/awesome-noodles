@@ -1,0 +1,19 @@
+Cover / sample-gallery QC is pending. No paid thumb.
+
+First-click Still brief is a matte-charcoal Volt pocket night-ride radio
+on a wet rooftop concrete ledge (one electric-cyan lightning-bolt chevron,
+cyan edge light, night-city skyline below). Motion brief is locked camera,
+subtle rain beads, one cyan chevron pulse. Do not treat the graph as having
+a reviewed clip.
+
+This is still → Grok Imagine Video 1.5 image-to-video
+(`xai/grok-imagine-video/v1.5/image-to-video` at 480p / 4s). Catalog
+2026-09-09: image-mode $0.204/s at 480p + $0.017 image_input_fee ≈ $0.83
+video; Muse still $0.01. Duration 4 is a supported option (1–15s; catalog
+default 6s / 720p). Do not pin older `grok-imagine-video`, Wan, or Seedance.
+
+Not Animate a product still (`photo-to-video`: Muse + MiniMax H3 Spicy
+locked-camera asphalt rain, 5s / 480p / $0.20). Not Night-ride radio orbit
+(H3 Max Multi Angle). Not Omni Flash text-to-video.
+
+No paid NanoGPT generation was run for this addition.
