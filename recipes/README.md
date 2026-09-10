@@ -40,6 +40,7 @@ Do not hand-edit these files — run `node scripts/make-recipes.mjs` after chang
 | [Closing-credits song](sing.md) | [`graphs/sing.noodle-graph.json`](../graphs/sing.noodle-graph.json) | defaults in graph |
 | [Spoken introduction](talking-avatar.md) | [`graphs/talking-avatar.noodle-graph.json`](../graphs/talking-avatar.noodle-graph.json) | defaults in graph |
 | [Transparent brand sticker](transparent-brand-sticker.md) | [`graphs/transparent-brand-sticker.noodle-graph.json`](../graphs/transparent-brand-sticker.noodle-graph.json) | defaults in graph |
+| [Wear the night kit](virtual-try-on.md) | [`graphs/virtual-try-on.noodle-graph.json`](../graphs/virtual-try-on.noodle-graph.json) | needs Person still, Garment still |
 | [Volt dispatch card](volt-dispatch-infographic.md) | [`graphs/volt-dispatch-infographic.noodle-graph.json`](../graphs/volt-dispatch-infographic.noodle-graph.json) | defaults in graph |
 | [editable volt mark](volt-vector-mark.md) | [`graphs/volt-vector-mark.noodle-graph.json`](../graphs/volt-vector-mark.noodle-graph.json) | defaults in graph |
 | [drive the still with motion](wan-motion-drive.md) | [`graphs/wan-motion-drive.noodle-graph.json`](../graphs/wan-motion-drive.noodle-graph.json) | needs Character/product still, Driver motion |

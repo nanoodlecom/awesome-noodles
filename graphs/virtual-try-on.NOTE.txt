@@ -1,0 +1,23 @@
+Cover / sample-gallery QC is pending.
+
+No person still or garment still is committed in this repo. First-click
+uploads are placeholders: a mid-shot Volt night courier / model on dark
+slate (matte charcoal kit energy) and a flat Volt night-ride jacket or
+tee with ONE electric-cyan lightning-bolt chevron. Do not treat the
+graph as having a reviewed try-on.
+
+This is dedicated virtual garment try-on
+(`flux-pro/v1/vto` at size `auto`, catalog $0.0575/image). Live catalog
+2026-09-10: text+image→image; tags image-edit / virtual-try-on;
+exactly two input images — person first (`image`, max 2MP), garment
+second (`image2`, max 1MP). nsfw: false. Max 1 output image.
+
+Not Product in a setting / combine-images (Muse Edit product placement).
+Not Clean product photo / edit-a-photo (Muse Edit catalog cleanup).
+Not Night-ride identity restyle / h3-identity-restyle
+(`minimax-h3/image-edit` — identity-preserving scene/outfit restyle,
+not dedicated garment VTO). Not Product cutout / BiRefNet, Text-selected
+isolate / SAM 3, Transparent brand sticker, Ideogram V4 Instant poster,
+Recraft vector mark, MAI pack type, or SenseNova dispatch infographic.
+
+No paid NanoGPT generation was run for this addition.
