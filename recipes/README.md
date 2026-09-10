@@ -27,6 +27,7 @@ Do not hand-edit these files — run `node scripts/make-recipes.mjs` after chang
 | [Night-ride SFX](night-ride-sfx.md) | [`graphs/night-ride-sfx.noodle-graph.json`](../graphs/night-ride-sfx.noodle-graph.json) | defaults in graph |
 | [Product motion concept](omni-flash-turntable.md) | [`graphs/omni-flash-turntable.noodle-graph.json`](../graphs/omni-flash-turntable.noodle-graph.json) | defaults in graph |
 | [P-Image Upscale](p-image-upscale.md) | [`graphs/p-image-upscale.noodle-graph.json`](../graphs/p-image-upscale.noodle-graph.json) | needs Product still |
+| [rewrite the clip](p-video-rewrite.md) | [`graphs/p-video-rewrite.noodle-graph.json`](../graphs/p-video-rewrite.noodle-graph.json) | needs Product clip |
 | [Animate a product still](photo-to-video.md) | [`graphs/photo-to-video.noodle-graph.json`](../graphs/photo-to-video.noodle-graph.json) | defaults in graph |
 | [Product cutout](product-cutout.md) | [`graphs/product-cutout.noodle-graph.json`](../graphs/product-cutout.noodle-graph.json) | needs Product still |
 | [Remove packaging text](remove-packaging-text.md) | [`graphs/remove-packaging-text.noodle-graph.json`](../graphs/remove-packaging-text.noodle-graph.json) | needs Packaging still |
