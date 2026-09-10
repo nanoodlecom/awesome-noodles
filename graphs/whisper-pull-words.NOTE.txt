@@ -1,0 +1,18 @@
+Cover / sample-gallery QC is pending.
+
+No night-ride VO is committed in this repo. First-click is an audio-upload
+placeholder: Volt charcoal/cyan radio night-channel take. Do not invent a
+transcript thumb. Do not treat the graph as having a reviewed transcript.
+
+This is speech→text via Whisper Large V3 (`Whisper-Large-V3` on a
+`transcribe` node). Catalog 2026-09-09 (rechecked live 2026-09-10):
+category `audio_stt`, `capabilities.speech_to_text`, $0.000495/min
+(≪$0.01 for a short VO). Language auto/blank. Id resolves as-is
+(no prefix strip). Opposite of Night-ride radio VO
+(`night-ride-radio-vo` / `xai-tts` text→speech). Not InfiniteTalk /
+talking-avatar lipsync. Not Night-ride SFX or Mirelo foley. Not
+`gpt-4o-mini-transcribe*`, not `whisper-1`, not ElevenLabs Scribe
+(diarization deferred). No LLM. No TTS. No music. No video. No
+Demucs / Sonilo / stem. Custom-endpoint stays retired.
+
+No paid Whisper / NanoGPT generation was run for this addition.
