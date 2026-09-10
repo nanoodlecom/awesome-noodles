@@ -8,7 +8,10 @@ This is temporal video lengthen (`wan-25-extend` / Wan 2.5 Extend at
 480p / target 3s; live video catalog 2026-09-09 $0.05/s @480p →
 3 × $0.05 = $0.15). Do not swap to `wan-25-extend-fast`,
 `wan-22-spicy-extend`, or Grok Imagine Extend. Catalog Target Length
-is a select (3–10s, default 5); pin duration=3 in vedit modelOpts.
+is a select (3–10s, default 5). Editor knobs read top-level
+resolution/duration — pin `480p` / `"3"` there so the canvas does not
+snap to catalog defaults 720p / 5s (~$0.50). Repeat duration=3 and
+resolution=480p in vedit modelOpts so the runner forwards them.
 enable_prompt_expansion=false. Not Crystal upscale
 (`crystal-video-upscale` / `clarity-ai/crystal-video-upscaler`),
 not P-Video rewrite (`p-video-rewrite` / `pruna-ai/p-video/edit`),

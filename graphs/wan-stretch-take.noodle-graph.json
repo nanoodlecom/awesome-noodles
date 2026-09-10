@@ -32,6 +32,8 @@
       "fields": {
         "model": "wan-25-extend",
         "prompt": "",
+        "resolution": "480p",
+        "duration": "3",
         "modelOpts": {
           "resolution": "480p",
           "duration": 3,
