@@ -17,6 +17,7 @@ Do not hand-edit these files — run `node scripts/make-recipes.mjs` after chang
 | [Plan a messy dump](fable-five-step.md) | [`graphs/fable-five-step.noodle-graph.json`](../graphs/fable-five-step.noodle-graph.json) | defaults in graph |
 | [Favicon concept](favicon.md) | [`graphs/favicon.noodle-graph.json`](../graphs/favicon.noodle-graph.json) | defaults in graph |
 | [Product studio concept](fibo-studio-still.md) | [`graphs/fibo-studio-still.noodle-graph.json`](../graphs/fibo-studio-still.noodle-graph.json) | defaults in graph |
+| [frame wakes up](grok-imagine-still.md) | [`graphs/grok-imagine-still.noodle-graph.json`](../graphs/grok-imagine-still.noodle-graph.json) | defaults in graph |
 | [Night-ride identity restyle](h3-identity-restyle.md) | [`graphs/h3-identity-restyle.noodle-graph.json`](../graphs/h3-identity-restyle.noodle-graph.json) | needs Still |
 | [Night-ride radio orbit](h3-max-multi-angle.md) | [`graphs/h3-max-multi-angle.noodle-graph.json`](../graphs/h3-max-multi-angle.noodle-graph.json) | needs Product still |
 | [Volt drop poster](ideogram-v4-instant-poster.md) | [`graphs/ideogram-v4-instant-poster.noodle-graph.json`](../graphs/ideogram-v4-instant-poster.noodle-graph.json) | defaults in graph |
