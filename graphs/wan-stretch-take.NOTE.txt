@@ -1,0 +1,20 @@
+Cover / sample-gallery QC is pending.
+
+No Volt radio clip is committed in this repo. First-click is a video-upload
+placeholder: matte-charcoal Volt pocket night-ride radio, charcoal/cyan
+night-ride alley take. Do not treat the graph as having a reviewed extend.
+
+This is temporal video lengthen (`wan-25-extend` / Wan 2.5 Extend at
+480p / target 3s; live video catalog 2026-09-09 $0.05/s @480p →
+3 × $0.05 = $0.15). Do not swap to `wan-25-extend-fast`,
+`wan-22-spicy-extend`, or Grok Imagine Extend. Catalog Target Length
+is a select (3–10s, default 5); pin duration=3 in vedit modelOpts.
+enable_prompt_expansion=false. Not Crystal upscale
+(`crystal-video-upscale` / `clarity-ai/crystal-video-upscaler`),
+not P-Video rewrite (`p-video-rewrite` / `pruna-ai/p-video/edit`),
+not Mirelo foley (`mirelo-video-foley` / `mirelo-ai/sfx1.6/video-to-video`),
+not Wan Animate 2 (`wan-motion-drive` / `wan-22-animate-2`),
+not Pixelcut cutout (`pixelcut-video-cutout`), and not still→i2v
+(`wan-still-audio`, `grok-imagine-still`, `photo-to-video`).
+
+No paid NanoGPT generation was run for this addition.

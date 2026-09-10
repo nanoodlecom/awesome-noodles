@@ -45,6 +45,7 @@ Do not hand-edit these files — run `node scripts/make-recipes.mjs` after chang
 | [editable volt mark](volt-vector-mark.md) | [`graphs/volt-vector-mark.noodle-graph.json`](../graphs/volt-vector-mark.noodle-graph.json) | defaults in graph |
 | [drive the still with motion](wan-motion-drive.md) | [`graphs/wan-motion-drive.noodle-graph.json`](../graphs/wan-motion-drive.noodle-graph.json) | needs Character/product still, Driver motion |
 | [still breathes with sound](wan-still-audio.md) | [`graphs/wan-still-audio.noodle-graph.json`](../graphs/wan-still-audio.noodle-graph.json) | defaults in graph |
+| [stretch the take](wan-stretch-take.md) | [`graphs/wan-stretch-take.noodle-graph.json`](../graphs/wan-stretch-take.noodle-graph.json) | needs Product clip |
 | [pull the words off the take](whisper-pull-words.md) | [`graphs/whisper-pull-words.noodle-graph.json`](../graphs/whisper-pull-words.noodle-graph.json) | needs Night-ride VO |
 
 Install: `npm i nanoodle` · `pip install nanoodle`. Run anywhere: [nanoodle-js](https://github.com/nanoodlecom/nanoodle-js) · [nanoodle-py](https://github.com/nanoodlecom/nanoodle-py) · [nanoodle-mcp](https://github.com/nanoodlecom/nanoodle-mcp) · [run-noodle-action](https://github.com/nanoodlecom/run-noodle-action).
