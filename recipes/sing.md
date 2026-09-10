@@ -10,8 +10,8 @@ Full guide: [Run workflows headlessly](https://nanoodle.com/guide/run-headless).
 
 | Input | Kind | Stable key | Notes |
 | --- | --- | --- | --- |
-| `Song brief (theme, not lyrics)` | text | `n1.text` | omit `--input` to keep the committed first-click |
-| `Style (instruments & tempo)` | text | `n5.text` | omit `--input` to keep the committed first-click |
+| `Song brief (theme, not lyrics)` | text | `n1.text` | omit `--input` to keep the default input |
+| `Style (instruments & tempo)` | text | `n5.text` | omit `--input` to keep the default input |
 
 ## Inspect (offline, no key)
 

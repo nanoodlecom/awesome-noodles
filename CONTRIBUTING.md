@@ -27,13 +27,14 @@ node scripts/make-recipes.mjs
 ```
 
 This writes `recipes/<slug>.md` (and the [recipes/](recipes/) index) from
-every committed Keep graph. Do not hand-edit those files. Each recipe has
+every committed catalog graph. Do not hand-edit those files. Each recipe has
 offline `inspect` and paid `run` one-liners for `npx nanoodle` and
 `nanoodle-py`, using a share link regenerated from the graph JSON.
 
 ## 4. Add your entry to README.md
 
-Put it in the right category section, matching this template:
+Add a concise catalog entry, matching this template, then regenerate recipes
+so their titles match the README:
 
 ```markdown
 - <emoji> **<Name>** — <required input → useful output; model choice and rough cost>. [Open in nanoodle](<share link>) · [run headless](recipes/<slug>.md) · [graph](graphs/<slug>.noodle-graph.json) · [See sample](<saved output or finished application>)
@@ -64,6 +65,7 @@ against your committed graph file, and checks that `recipes/` matches
 
 Every example must earn a distinct place in the gallery:
 
+- Show a useful dependency or comparison between model calls. Explain what passing one result onward, combining branches, or comparing outputs accomplishes. Extra input, join or prompt-writing nodes do not turn a single-call wrapper into a workflow worth featuring.
 - Name the user, repeatable task, required inputs and usable output. A new setting or model name alone does not justify a duplicate workflow.
 - Changing each advertised input must change the result meaningfully. Keep sample-specific subjects in editable inputs, never in reusable system instructions.
 - Use the least complex graph that meets the output bar. Each paid model call needs a purpose; avoid extra prompt-writing calls that merely restate an already complete brief.
