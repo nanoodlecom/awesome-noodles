@@ -23,6 +23,7 @@ Do not hand-edit these files — run `node scripts/make-recipes.mjs` after chang
 | [Volt drop poster](ideogram-v4-instant-poster.md) | [`graphs/ideogram-v4-instant-poster.noodle-graph.json`](../graphs/ideogram-v4-instant-poster.noodle-graph.json) | defaults in graph |
 | [Compare image models](image-model-arena.md) | [`graphs/image-model-arena.noodle-graph.json`](../graphs/image-model-arena.noodle-graph.json) | defaults in graph |
 | [Night-ride radio take](infinitetalk-radio-take.md) | [`graphs/infinitetalk-radio-take.noodle-graph.json`](../graphs/infinitetalk-radio-take.noodle-graph.json) | defaults in graph |
+| [pack type that sticks](mai-pack-type.md) | [`graphs/mai-pack-type.noodle-graph.json`](../graphs/mai-pack-type.noodle-graph.json) | defaults in graph |
 | [Travel postcard](night-market-postcard.md) | [`graphs/night-market-postcard.noodle-graph.json`](../graphs/night-market-postcard.noodle-graph.json) | defaults in graph |
 | [Night-ride SFX](night-ride-sfx.md) | [`graphs/night-ride-sfx.noodle-graph.json`](../graphs/night-ride-sfx.noodle-graph.json) | defaults in graph |
 | [Product motion concept](omni-flash-turntable.md) | [`graphs/omni-flash-turntable.noodle-graph.json`](../graphs/omni-flash-turntable.noodle-graph.json) | defaults in graph |
