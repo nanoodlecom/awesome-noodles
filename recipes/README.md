@@ -38,6 +38,7 @@ Do not hand-edit these files — run `node scripts/make-recipes.mjs` after chang
 | [UI mockup](render-a-mockup.md) | [`graphs/render-a-mockup.noodle-graph.json`](../graphs/render-a-mockup.noodle-graph.json) | defaults in graph |
 | [Text-selected isolate](sam3-isolate.md) | [`graphs/sam3-isolate.noodle-graph.json`](../graphs/sam3-isolate.noodle-graph.json) | needs Scene still |
 | [Closing-credits song](sing.md) | [`graphs/sing.noodle-graph.json`](../graphs/sing.noodle-graph.json) | defaults in graph |
+| [score the alley](stable-alley-score.md) | [`graphs/stable-alley-score.noodle-graph.json`](../graphs/stable-alley-score.noodle-graph.json) | defaults in graph |
 | [Spoken introduction](talking-avatar.md) | [`graphs/talking-avatar.noodle-graph.json`](../graphs/talking-avatar.noodle-graph.json) | defaults in graph |
 | [Transparent brand sticker](transparent-brand-sticker.md) | [`graphs/transparent-brand-sticker.noodle-graph.json`](../graphs/transparent-brand-sticker.noodle-graph.json) | defaults in graph |
 | [Wear the night kit](virtual-try-on.md) | [`graphs/virtual-try-on.noodle-graph.json`](../graphs/virtual-try-on.noodle-graph.json) | needs Person still, Garment still |
