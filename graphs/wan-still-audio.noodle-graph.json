@@ -48,10 +48,11 @@
         "model": "alibaba/wan-3.0/image-to-video",
         "prompt": "",
         "resolution": "480p",
-        "duration": "2",
+        "duration": 2,
         "modelOpts": {
           "enable_audio": true,
-          "thinking_mode": false
+          "thinking_mode": false,
+          "duration": 2
         },
         "loras": []
       },
