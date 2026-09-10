@@ -45,7 +45,9 @@ function inputRow(inp) {
 function runFlags(inputs) {
   const required = inputs.filter((i) => i.required);
   if (required.length === 0) return "";
-  return required.map((i) => `--input ${i.cli}=@${i.kind === "audio" ? "take.mp3" : "photo.jpg"}`).join(" ");
+  return required
+    .map((i) => `--input ${i.cli}=@${i.kind === "audio" ? "take.mp3" : i.kind === "video" ? "clip.mp4" : "photo.jpg"}`)
+    .join(" ");
 }
 
 export function loadRecipeNote(root, slug) {
