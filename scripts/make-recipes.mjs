@@ -66,6 +66,23 @@ export function renderRecipe({ slug, title, graphRel, shareUrl, inputs, note }) 
   const graphPath = graphRel;
   const flags = runFlags(inputs);
   const runSuffix = flags ? ` ${flags} --out ./out` : " --out ./out";
+  // Remove this exception once both package releases include explicit music.prompt transport.
+  const needsSourceInstall = slug === "sing";
+  const installBlock = needsSourceInstall
+    ? `
+## Install from source
+
+Sing needs the music prompt fix on GitHub main. Until package releases include it, install the source package for the language you use:
+
+\`\`\`bash
+npm install github:nanoodlecom/nanoodle-js
+python -m pip install git+https://github.com/nanoodlecom/nanoodle-py.git --force-reinstall
+\`\`\`
+`
+    : "";
+  const installSummary = needsSourceInstall
+    ? "Use the source install above for this workflow."
+    : "Install names: `npm i nanoodle` (not `nanoodle-js`) · `pip install nanoodle`.";
   const inputTable =
     inputs.length === 0
       ? "_No author-facing text / upload / choice inputs — `inspect` still lists settings._"
@@ -103,7 +120,7 @@ Committed graph: [\`${graphPath}\`](../${graphPath}) · [Open in nanoodle](${sha
 \`inspect\` is **offline and free** (no API key). \`run\` is bring-your-own-key: export \`NANOGPT_API_KEY\` (or pass \`--key\` / \`--env-file\`) and it **spends NanoGPT balance**. Quote share URLs — \`#\` starts a comment in most shells. \`#g=\` / \`#j=\` / \`#a=\` all load via \`Workflow.load\` and the CLI.
 
 Full guide: [Run workflows headlessly](https://nanoodle.com/guide/run-headless).
-${notesBlock}
+${installBlock}${notesBlock}
 ## Inputs
 
 ${inputTable}
@@ -128,12 +145,15 @@ npx nanoodle run "${shareUrl}"${runSuffix}
 nanoodle-py run "${shareUrl}"${runSuffix}
 # or: python -m nanoodle run "${shareUrl}"${runSuffix}
 \`\`\`
-${overrideHint}Install names: \`npm i nanoodle\` (not \`nanoodle-js\`) · \`pip install nanoodle\`. Same graph, same semantics: [nanoodle-js](https://github.com/nanoodlecom/nanoodle-js) · [nanoodle-py](https://github.com/nanoodlecom/nanoodle-py) · [nanoodle-mcp](https://github.com/nanoodlecom/nanoodle-mcp) · [run-noodle-action](https://github.com/nanoodlecom/run-noodle-action).
+${overrideHint}${installSummary} Same graph, same semantics: [nanoodle-js](https://github.com/nanoodlecom/nanoodle-js) · [nanoodle-py](https://github.com/nanoodlecom/nanoodle-py) · [nanoodle-mcp](https://github.com/nanoodlecom/nanoodle-mcp) · [run-noodle-action](https://github.com/nanoodlecom/run-noodle-action).
 `;
 
 }
 
 export function renderIndex(entries) {
+  const sourceInstallNote = entries.some((e) => e.slug === "sing")
+    ? "\n**[Sing requires a source install](sing.md#install-from-source)** for the music prompt fix on GitHub main until package releases include it. Other workflows use the published packages."
+    : "";
   const rows = entries
     .map((e) => {
       const req = e.inputs.filter((i) => i.required).map((i) => i.key);
@@ -149,6 +169,7 @@ One recipe per catalog graph. Each file has offline \`inspect\` and paid \`run\`
 Do not hand-edit these files — run \`node scripts/make-recipes.mjs\` after changing a graph. \`npm test\` checks each recipe's share link against \`graphs/\`.
 
 \`inspect\` never calls the API. \`run\` needs \`NANOGPT_API_KEY\` and spends NanoGPT balance. Guide: [Run workflows headlessly](https://nanoodle.com/guide/run-headless).
+${sourceInstallNote}
 
 | Recipe | Graph | Inputs |
 | --- | --- | --- |
