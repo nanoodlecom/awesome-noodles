@@ -1,0 +1,22 @@
+{
+  "reviewedOn": "2026-09-12",
+  "case": "alternate",
+  "sourceRun": "run.json",
+  "graphSha256": "71d5381cfb084f7caa7a57478a58dd8eda9f026cacfab222b381662a33c218c8",
+  "decision": "usable short with material drift",
+  "methods": [
+    "agent inspection of frames at 0, 2.5 and 4.5 seconds",
+    "ffprobe stream and duration inspection",
+    "model-assisted audio-only review without scene hint"
+  ],
+  "observations": [
+    "The moth opens and closes its wings above the spool.",
+    "The final file contains H.264 video and AAC audio, 832x480, five seconds.",
+    "The audio reviewer describes rhythmic metallic friction and clicks, without speech or music."
+  ],
+  "limitations": [
+    "Opening wings show orange undersides rather than preserving an entirely brass appearance.",
+    "Audio ends sharply.",
+    "No human listening session, precise synchronization measurement or seamless-loop proof was performed."
+  ]
+}

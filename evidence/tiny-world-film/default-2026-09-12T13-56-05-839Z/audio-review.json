@@ -1,0 +1,9 @@
+{
+  "model": "google/gemini-3.8-flash",
+  "kind": "model-assisted audio review",
+  "source": "sound.wav",
+  "prompt": "Describe only the audible events in this roughly five-second synthetic sound clip. Give a short timeline, whether there is speech or music, and any obvious glitches, clipping or abrupt cut. Do not guess what scene or object produced a sound. If ambiguous, say so. This is an audio review, not a claim of synchronization to unseen video.",
+  "text": "Here is an audio review of the clip:\n\n### Content Overview\n- **Speech:** None.\n- **Music:** None.\n- **Sound Elements:** The clip contains continuous, diffuse broadband noise that resembles rushing, splashing, or heavily modulated water/fluid noise, combined with soft churning or friction sounds.\n\n### Timeline\n- **00:00 – 00:02:** The clip opens with a continuous, mid-to-high-frequency rushing/shushing sound with irregular, watery modulations and low-frequency rumbling beneath.\n- **00:02 – 00:04:** The sound remains consistent, with fluctuating wave-like whooshes and faint, subtle metallic/frictional textures embedded in the noise bed.\n- **00:04 – 00:05:** The rushing texture continues steadily until it ends abruptly at 00:05.1.\n\n### Glitches, Artifacts, and Cuts\n- **Abrupt Cut:** The audio cuts off sharply at the very end (00:05.1) without a fade-out.\n- **Clipping/Artifacts:** No severe digital clipping or harsh pops, though the high frequencies show some phasey, synthetic compression artifacts typical of synthesized or heavily processed noise.",
+  "costUsd": 0.00110865,
+  "costExact": true
+}

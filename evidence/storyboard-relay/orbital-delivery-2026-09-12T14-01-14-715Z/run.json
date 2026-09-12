@@ -1,0 +1,448 @@
+{
+  "slug": "storyboard-relay",
+  "case": "orbital-delivery",
+  "recordedAt": "2026-09-12T14:03:19.918Z",
+  "elapsedMs": 125201,
+  "graphSha256": "26835b6c71dcb4ee1558a01c662e4a6515663d042c914eaaf4f389da0369dea8",
+  "costUsd": 0.0652792625,
+  "costExact": true,
+  "errors": [],
+  "captureErrors": [],
+  "events": [
+    {
+      "type": "node-start",
+      "node": "first-brief"
+    },
+    {
+      "type": "node-start",
+      "node": "next-beat"
+    },
+    {
+      "type": "node-start",
+      "node": "rules"
+    },
+    {
+      "type": "node-done",
+      "node": "first-brief",
+      "ms": 0,
+      "costUsd": null
+    },
+    {
+      "type": "node-done",
+      "node": "next-beat",
+      "ms": 0,
+      "costUsd": null
+    },
+    {
+      "type": "node-done",
+      "node": "rules",
+      "ms": 0,
+      "costUsd": null
+    },
+    {
+      "type": "node-start",
+      "node": "frame-one"
+    },
+    {
+      "type": "node-start",
+      "node": "next-prompt"
+    },
+    {
+      "type": "node-done",
+      "node": "next-prompt",
+      "ms": 0,
+      "costUsd": null
+    },
+    {
+      "type": "node-start",
+      "node": "edit-brief"
+    },
+    {
+      "type": "node-done",
+      "node": "edit-brief",
+      "ms": 0,
+      "costUsd": null
+    },
+    {
+      "type": "node-done",
+      "node": "frame-one",
+      "ms": 32465,
+      "costUsd": 0.01
+    },
+    {
+      "type": "node-start",
+      "node": "export-one"
+    },
+    {
+      "type": "node-start",
+      "node": "frame-two"
+    },
+    {
+      "type": "node-done",
+      "node": "export-one",
+      "ms": 429,
+      "costUsd": null
+    },
+    {
+      "type": "node-done",
+      "node": "frame-two",
+      "ms": 30188,
+      "costUsd": 0.039
+    },
+    {
+      "type": "node-start",
+      "node": "export-draft"
+    },
+    {
+      "type": "node-start",
+      "node": "review"
+    },
+    {
+      "type": "node-done",
+      "node": "export-draft",
+      "ms": 410,
+      "costUsd": null
+    },
+    {
+      "type": "node-done",
+      "node": "review",
+      "ms": 12581,
+      "costUsd": 0.0030366749999999995
+    },
+    {
+      "type": "node-start",
+      "node": "repair-prompt"
+    },
+    {
+      "type": "node-done",
+      "node": "repair-prompt",
+      "ms": 0,
+      "costUsd": null
+    },
+    {
+      "type": "node-start",
+      "node": "repair"
+    },
+    {
+      "type": "node-done",
+      "node": "repair",
+      "ms": 37779,
+      "costUsd": 0.01
+    },
+    {
+      "type": "node-start",
+      "node": "export-two"
+    },
+    {
+      "type": "node-start",
+      "node": "final-review"
+    },
+    {
+      "type": "node-done",
+      "node": "export-two",
+      "ms": 411,
+      "costUsd": null
+    },
+    {
+      "type": "node-done",
+      "node": "final-review",
+      "ms": 12157,
+      "costUsd": 0.0032425875
+    }
+  ],
+  "publicOutputs": [
+    {
+      "key": "Frame 1",
+      "nodeId": "export-one"
+    },
+    {
+      "key": "Draft frame 2",
+      "nodeId": "export-draft"
+    },
+    {
+      "key": "Frame 2",
+      "nodeId": "export-two"
+    },
+    {
+      "key": "Continuity notes",
+      "nodeId": "final-review"
+    }
+  ],
+  "nodes": [
+    {
+      "id": "intent",
+      "name": "Storyboard relay",
+      "type": "comment",
+      "status": "skipped",
+      "costUsd": null,
+      "ms": null,
+      "error": null,
+      "outputs": []
+    },
+    {
+      "id": "first-brief",
+      "name": "First scene",
+      "type": "text",
+      "status": "done",
+      "costUsd": null,
+      "ms": 0,
+      "error": null,
+      "outputs": [
+        {
+          "port": "text",
+          "kind": "text",
+          "file": "first-brief-text.txt",
+          "bytes": 801,
+          "sha256": "33b3fadd92bc95aed122440275bf9125a03a5a0f51371ca56f38b485e13ebb19"
+        }
+      ]
+    },
+    {
+      "id": "next-beat",
+      "name": "Next beat",
+      "type": "text",
+      "status": "done",
+      "costUsd": null,
+      "ms": 0,
+      "error": null,
+      "outputs": [
+        {
+          "port": "text",
+          "kind": "text",
+          "file": "next-beat-text.txt",
+          "bytes": 590,
+          "sha256": "a1aca8320e90311b4799fbf32069591a46c4eebde76f6e5cd75246b315195347"
+        }
+      ]
+    },
+    {
+      "id": "rules",
+      "name": "Continuity rules",
+      "type": "text",
+      "status": "done",
+      "costUsd": null,
+      "ms": 0,
+      "error": null,
+      "outputs": [
+        {
+          "port": "text",
+          "kind": "text",
+          "file": "rules-text.txt",
+          "bytes": 476,
+          "sha256": "97cf03d63b4c41b3f3c28febe3ea58e2033f9f74dafdf5bfdc223d60e09743da"
+        }
+      ]
+    },
+    {
+      "id": "frame-one",
+      "name": "Muse opens the story",
+      "type": "image",
+      "model": "meta/muse-image/text-to-image",
+      "status": "done",
+      "costUsd": 0.01,
+      "ms": 32465,
+      "error": null,
+      "outputs": [
+        {
+          "port": "image",
+          "kind": "image",
+          "file": "frame-one-image.webp",
+          "bytes": 461026,
+          "sha256": "447fafa2601f0a9892c9136cb3fc254178cd1446676173f76a6640ec2eed14b5"
+        },
+        {
+          "port": "images-1",
+          "kind": "image",
+          "file": "frame-one-images-1.webp",
+          "bytes": 461026,
+          "sha256": "447fafa2601f0a9892c9136cb3fc254178cd1446676173f76a6640ec2eed14b5"
+        }
+      ]
+    },
+    {
+      "id": "next-prompt",
+      "name": "Opening brief + next beat",
+      "type": "join",
+      "status": "done",
+      "costUsd": null,
+      "ms": 0,
+      "error": null,
+      "outputs": [
+        {
+          "port": "text",
+          "kind": "text",
+          "file": "next-prompt-text.txt",
+          "bytes": 1753,
+          "sha256": "2e036fe83b52960499332cc86f74a8c4b290004038c4a701f9c79843d154f46e"
+        }
+      ]
+    },
+    {
+      "id": "edit-brief",
+      "name": "Next beat + continuity rules",
+      "type": "join",
+      "status": "done",
+      "costUsd": null,
+      "ms": 0,
+      "error": null,
+      "outputs": [
+        {
+          "port": "text",
+          "kind": "text",
+          "file": "edit-brief-text.txt",
+          "bytes": 2256,
+          "sha256": "1062da121cc9d888457bcd9fd1513bce5de6abf7ac98469fab71c00db192d653"
+        }
+      ]
+    },
+    {
+      "id": "frame-two",
+      "name": "Nano Banana stages the next beat",
+      "type": "edit",
+      "model": "nano-banana-edit",
+      "status": "done",
+      "costUsd": 0.039,
+      "ms": 30188,
+      "error": null,
+      "outputs": [
+        {
+          "port": "image",
+          "kind": "image",
+          "file": "frame-two-image.png",
+          "bytes": 2369996,
+          "sha256": "c5dd79fa98db146bb19a51003d105b1b91c7c49f322f8c4194b5e04deca274a9"
+        }
+      ]
+    },
+    {
+      "id": "review",
+      "name": "Draft continuity check",
+      "type": "llm",
+      "model": "google/gemini-3.8-flash",
+      "status": "done",
+      "costUsd": 0.0030366749999999995,
+      "ms": 12581,
+      "error": null,
+      "outputs": [
+        {
+          "port": "text",
+          "kind": "text",
+          "file": "review-text.txt",
+          "bytes": 1369,
+          "sha256": "c1bddf6658a7939e53165f732827246254a6c92be450716ca392c3e9b5141984"
+        }
+      ]
+    },
+    {
+      "id": "export-one",
+      "name": "Frame 1",
+      "type": "resize",
+      "status": "done",
+      "costUsd": null,
+      "ms": 429,
+      "error": null,
+      "outputs": [
+        {
+          "port": "image",
+          "kind": "image",
+          "file": "export-one-image.jpg",
+          "bytes": 260803,
+          "sha256": "1e408be11f605ce3c2ce04c6b7135e45c8055f2272c33f3139b485d426c2bc3c"
+        }
+      ]
+    },
+    {
+      "id": "export-two",
+      "name": "Frame 2",
+      "type": "resize",
+      "status": "done",
+      "costUsd": null,
+      "ms": 411,
+      "error": null,
+      "outputs": [
+        {
+          "port": "image",
+          "kind": "image",
+          "file": "export-two-image.jpg",
+          "bytes": 224027,
+          "sha256": "57fd50b356e7036dedf05e6ffe4ab15f71d838bdb525950810cd57bae12e4eea"
+        }
+      ]
+    },
+    {
+      "id": "repair-prompt",
+      "name": "Story + observed repair notes",
+      "type": "join",
+      "status": "done",
+      "costUsd": null,
+      "ms": 0,
+      "error": null,
+      "outputs": [
+        {
+          "port": "text",
+          "kind": "text",
+          "file": "repair-prompt-text.txt",
+          "bytes": 4347,
+          "sha256": "5aecb6ccccfc7afd4691aaa212a7612b71f38b4f0bcfacb3bcf73f33244139df"
+        }
+      ]
+    },
+    {
+      "id": "repair",
+      "name": "Muse repairs the continuity",
+      "type": "edit",
+      "model": "meta/muse-image/edit",
+      "status": "done",
+      "costUsd": 0.01,
+      "ms": 37779,
+      "error": null,
+      "outputs": [
+        {
+          "port": "image",
+          "kind": "image",
+          "file": "repair-image.webp",
+          "bytes": 385554,
+          "sha256": "096d2bcdb5bb5ce0f91bf7c8653000d7005481cc5d49b0fd3e5ec3bbde9a6046"
+        }
+      ]
+    },
+    {
+      "id": "final-review",
+      "name": "Continuity notes",
+      "type": "llm",
+      "model": "google/gemini-3.8-flash",
+      "status": "done",
+      "costUsd": 0.0032425875,
+      "ms": 12157,
+      "error": null,
+      "outputs": [
+        {
+          "port": "text",
+          "kind": "text",
+          "file": "final-review-text.txt",
+          "bytes": 1636,
+          "sha256": "40d6e0786ec2fe6f8fd003d81f83e6392e65d5cfce05e279ef9ac2b8bfe7c9a2"
+        }
+      ]
+    },
+    {
+      "id": "export-draft",
+      "name": "Draft frame 2",
+      "type": "resize",
+      "status": "done",
+      "costUsd": null,
+      "ms": 410,
+      "error": null,
+      "outputs": [
+        {
+          "port": "image",
+          "kind": "image",
+          "file": "export-draft-image.png",
+          "bytes": 2604993,
+          "sha256": "125fe83af5de42845030632f4562bb2a739dd421630c1419fc65b1a367076fe4"
+        }
+      ]
+    }
+  ],
+  "review": "Unreviewed. Successful execution and nonempty files do not establish creative quality."
+}

@@ -1,0 +1,15 @@
+**Story beat**  
+In Frame 1, the tiny postal robot approaches the sealed circular hatch from an exterior/corridor space, reaching for the latch while holding a domed capsule containing a seedling. In Frame 2, the hatch is open, and the robot crouches before a circular soil tray containing a newly planted seedling. However, rather than fully advancing the camera inside the greenhouse, the shot stays in the same corridor looking at the open hatch, and the robot still holds a second seedling inside its jar, failing to resolve into an empty capsule.
+
+**Continuity Table**
+
+| Feature | Frame 1 | Frame 2 | Status |
+| :--- | :--- | :--- | :--- |
+| **Robot Design & Props** | Cream enamel body, single glowing amber eye, blue articulated limbs, orange crossbody satchel. | Identical cream body, glowing eye, blue limbs, and orange satchel; proportions preserved. | Consistent |
+| **Capsule & Seedling Count** | One closed glass cloche holding a single green seedling in dirt. | A seedling sits in the soil tray, but the glass jar still contains dirt and a second green seedling. | Changed (prop duplication drift) |
+| **Capsule Orientation / Form** | Upright domed cloche resting flat-bottom/rounded top. | Glass bottle inverted with neck/rim at the top; altered bottle shape. | Changed (prop geometry drift) |
+| **Hatch State** | Closed circular hatch with glass porthole; latch engaged. | Hatch swung wide open inward/toward the viewer. | Consistent (intentional story beat) |
+| **Environment / Camera Position** | Corridor facing the greenhouse door; starfield window to the right. | Same corridor viewpoint; starfield window remains visible on right instead of moving inside. | Changed (partial beat mismatch) |
+
+**Director's Note**  
+Remove the duplicate seedling and soil from the glass container in Frame 2 so the jar is visibly open and empty, honoring the single-seedling narrative continuity.

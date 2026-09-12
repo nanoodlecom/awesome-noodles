@@ -1,0 +1,21 @@
+{
+  "reviewedOn": "2026-09-12",
+  "case": "submarine-bakery",
+  "sourceRun": "run.json",
+  "graphSha256": "5654c4f63902dca10de63ec6c1e9d218c1c4d658b3a87d8ec41dc0647fedcd9e",
+  "decision": "usable illustrated ordering puzzle",
+  "methods": [
+    "agent visual comparison against actual room",
+    "independent reading of rules",
+    "exhaustive enumeration of all six orders"
+  ],
+  "observations": [
+    "The reader grounds the puzzle in the visible brick dome structure, bell on small stand and spiral shell on pedestal.",
+    "Two explicit precedence clues determine one order; the player list is not already in solution order."
+  ],
+  "limitations": [
+    "The facilitator hint gives the middle landmark directly.",
+    "This is a very short ordering activity, without an interactive game engine or an external playtest."
+  ],
+  "deterministicCheck": "puzzle-check.json"
+}

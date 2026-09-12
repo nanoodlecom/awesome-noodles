@@ -1,0 +1,19 @@
+{
+  "id": "moon-menders-attic",
+  "name": "The Moon-Mender's Attic",
+  "useGraphDefaults": true,
+  "inputs": {},
+  "requestedLandmarkHints": [
+    "telescope",
+    "crescent",
+    "sewing machine"
+  ],
+  "manualVisualCriteria": [
+    "Left telescope, central luminous crescent and right red sewing machine remain visibly distinct; assess actual placement rather than assuming prompt compliance.",
+    "The illustration has a warm miniature attic atmosphere and clear shapes; stars and rafters remain scenery rather than mandatory clues."
+  ],
+  "manualTextCriteria": [
+    "Descriptions and the solution refer to what the observer actually found. Landmark hints are not mandatory output tokens if the renderer depicted something different.",
+    "The whimsical premise suits the rendered room; no unobserved key, cabinet, lock, moon inscription or tiny stitch is required."
+  ]
+}

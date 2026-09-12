@@ -1,0 +1,35 @@
+TITLE
+The Attic of the Fallen Moon
+
+PLAYER HANDOUT
+Long ago, the moon's little sister tumbled from the sky and landed in this attic, where a kindly toymaker tried to mend her. Tonight she flickers weakly on her pedestal. To wake her, you must touch three of the toymaker's keepsakes in the order of the old mending ritual — the order in which he repaired her: first soothe, then seek, then stitch.
+
+Landmarks in the room:
+- CRESCENT MOON — a large glowing crescent resting on a dark pedestal, center of the room
+- TELESCOPE — a golden-brown telescope on a wooden stand, lower left, near the round window
+- SEWING MACHINE — a red sewing machine on a small table, lower right
+
+The toymaker's two ritual notes, pinned to the pedestal:
+
+Note of Soothing: "The moon must be calmed before any searching begins — a frightened light points no honest way. So the crescent moon is always tended first of all."
+
+Note of Seeking: "Only after the looking-glass of the sky — the telescope — has had its turn may the needle sing. The sewing machine never comes before the telescope."
+
+Rules of the ritual:
+- Point to each of the three landmarks exactly once.
+- Commit aloud to your complete order of all three before the ritual begins.
+- If the order is wrong, the light simply dims and sighs; nothing is remembered and nothing is lost. Rest a moment and try a fresh order.
+- Any magical effects are narrated fiction — the room itself never changes.
+
+GM ONLY - SPOILERS
+Correct order: CRESCENT MOON → TELESCOPE → SEWING MACHINE.
+
+Deduction: Note 1 forces crescent moon before telescope. Note 2 forces telescope before sewing machine. Chained: moon < telescope < sewing machine — the only one of the six orders satisfying both clues.
+
+Hint (does not state the sequence): "The notes only mention two keepsakes each — figure out which one both notes leave pinned in place by the others."
+
+Gentle feedback for a wrong attempt: "The crescent's glow gutters softly, as if it expected to be greeted differently. Nothing breaks — the attic patiently waits for you to begin again." If the player puts the sewing machine before the telescope, say: "The needle won't turn — it seems it was always meant to follow the telescope." No other partial hints.
+
+Ending: When the correct order is spoken, the crescent flares warm and full-bellied: the toymaker had first soothed her fright, then searched the heavens through his telescope for the piece of sky she'd lost, and finally stitched that scrap of night back onto her chipped tip. Restored, she hums a small silvery lullaby — and every month, the real moon winks a little brighter over this house.
+
+Facilitator check: Before play, verify the three landmarks (telescope lower left, crescent moon on pedestal center, sewing machine lower right) against your illustration, and solve the two clues yourself to confirm the order. This generation is not a playtest.

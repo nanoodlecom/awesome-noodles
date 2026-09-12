@@ -1,0 +1,10 @@
+# recipe-note
+Three model calls turn an invented room into a tiny mystery: Muse draws; Gemini identifies large landmarks in the actual image; GLM authors player clues and a spoiler-marked facilitator solution from those observations. The observer never receives the generation prompt, and the writer never receives unverified requested objects.
+
+Change `Room brief` to invent another single room with three large, distinct landmarks. The intended activity is a short ordering puzzle: point to each landmark once, using two explicit clues. It does not detect hidden objects, implement an interactive game, or guarantee playability.
+
+Outputs: `Room illustration` (local 1024px fit), `Visible landmarks` (model observations), and `Player handout and GM solution` (text). Share only the illustration and PLAYER HANDOUT with players. The GM ONLY - SPOILERS section contains the answer. Magical effects are narrated fiction; the picture does not change.
+
+Before playing, compare the observations to the actual image, check that both clues determine exactly one of the six landmark orders, and confirm the handout supplies every rule. If the model cannot identify three clear landmarks, the writer should return NEEDS ANOTHER ROOM IMAGE; inspect that result instead of calling it a playable puzzle.
+
+Default and alternate cases live in `fixtures/pocket-mystery.cases.json`. The [selected 12 September runs](../evidence/README.md#pocket-mystery) include actual images, observations and handouts. Both have clear anchors, exact clue labels and one solution among all six orders. The attic still describes its visibly glowing moon as dim; that narrative mismatch remains disclosed. The [detailed review](../docs/pocket-mystery-review-notes.md) distinguishes original failures from the final clean captures. These samples do not establish play duration or reliable future outputs.

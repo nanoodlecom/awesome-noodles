@@ -1,0 +1,61 @@
+{
+  "graph": "graphs/pocket-mystery.noodle-graph.json",
+  "purpose": "Two different room briefs exercise the same image -> image-grounded observations -> authored puzzle chain. Expectations describe review criteria, not facts about ungenerated outputs.",
+  "outputs": [
+    "Room illustration",
+    "Visible landmarks",
+    "Player handout and GM solution"
+  ],
+  "modelCallsPerRun": 3,
+  "commonChecks": {
+    "textMustContain": ["TITLE", "PLAYER HANDOUT", "GM ONLY - SPOILERS"],
+    "observationJsonKeys": ["scene", "landmarks", "warnings"],
+    "manualVisualCriteria": [
+      "Inspect the actual saved image: one readable room, three large and distinguishable landmarks, complete silhouettes with separation.",
+      "Each observed landmark label, position and appearance agrees with the image; requested objects absent from the render must not be reported as observed.",
+      "All three landmarks can be identified at an ordinary 512px preview; neither tiny details nor rendered lettering is needed.",
+      "The player handout uses the observed landmarks and provides all rules and clues explicitly. Any magical behavior is identified as authored narration, not visible evidence."
+    ],
+    "manualPuzzleCriteria": [
+      "A reviewer who reads only PLAYER HANDOUT and sees the image can infer a complete order without reading the solution.",
+      "Enumerate all six landmark permutations against the two stated clues; exactly one fits, and it matches the GM solution.",
+      "Each landmark is used once; clues form a complete precedence chain and do not depend on hidden objects, outside knowledge, or unprovided state.",
+      "Player text does not print the final order. The GM section is clearly spoiler-marked and includes an explanation, useful hint, reset behavior and a satisfying ending.",
+      "If fewer than three landmarks are reliably observed, NEEDS ANOTHER ROOM IMAGE is an honest incomplete result, not an accepted playable example."
+    ]
+  },
+  "cases": [
+    {
+      "id": "moon-menders-attic",
+      "name": "The Moon-Mender's Attic",
+      "useGraphDefaults": true,
+      "inputs": {},
+      "requestedLandmarkHints": ["telescope", "crescent", "sewing machine"],
+      "manualVisualCriteria": [
+        "Left telescope, central luminous crescent and right red sewing machine remain visibly distinct; assess actual placement rather than assuming prompt compliance.",
+        "The illustration has a warm miniature attic atmosphere and clear shapes; stars and rafters remain scenery rather than mandatory clues."
+      ],
+      "manualTextCriteria": [
+        "Descriptions and the solution refer to what the observer actually found. Landmark hints are not mandatory output tokens if the renderer depicted something different.",
+        "The whimsical premise suits the rendered room; no unobserved key, cabinet, lock, moon inscription or tiny stitch is required."
+      ]
+    },
+    {
+      "id": "submarine-bakery",
+      "name": "The Submarine Bakery",
+      "inputs": {
+        "Room brief": "The Submarine Bakery: one round-walled bakery room beneath a pale turquoise sea, illustrated as a playful miniature cutaway with thick ink contours and soft chalk pastel colors. View the entire single room from a slightly elevated front angle. Three oversized, widely separated landmarks dominate: LEFT, a squat orange brick oven with one broad dark opening; CENTER, one enormous pearly spiral nautilus shell upright on a low sea-green counter; RIGHT, one bright cherry-red handbell standing alone on a small cream pedestal. Show every complete silhouette and leave clear empty floor between the landmarks. A single large circular window reveals gently waving kelp outside. Sea-glass walls, warm cream floor, orange and red accents; whimsical and tranquil rather than dark or flooded. Exactly one of each landmark. No people, extra rooms, pastries, clutter, tiny clue objects, letters, numbers, labels, signage, puzzle solution, border or watermark."
+      },
+      "requestedLandmarkHints": ["oven", "shell", "bell"],
+      "textMustNotContain": ["telescope", "crescent moon", "sewing machine", "Moon-Mender"],
+      "manualVisualCriteria": [
+        "The actual render depicts a different room and visual palette from the default attic; the oven, large shell and red bell have separated readable silhouettes.",
+        "The window and kelp function as background; no hidden underwater detail or tiny painted text is needed to solve the puzzle."
+      ],
+      "manualTextCriteria": [
+        "The observation and puzzle content follow the new image instead of importing the telescope, moon or sewing-machine story.",
+        "Any invented function of the shell, oven or bell is stated in the player handout and does not depend on a real-world assumption about how a submarine bakery works."
+      ]
+    }
+  ]
+}

@@ -1,0 +1,26 @@
+{
+  "id": "submarine-bakery",
+  "name": "The Submarine Bakery",
+  "inputs": {
+    "Room brief": "The Submarine Bakery: one round-walled bakery room beneath a pale turquoise sea, illustrated as a playful miniature cutaway with thick ink contours and soft chalk pastel colors. View the entire single room from a slightly elevated front angle. Three oversized, widely separated landmarks dominate: LEFT, a squat orange brick oven with one broad dark opening; CENTER, one enormous pearly spiral nautilus shell upright on a low sea-green counter; RIGHT, one bright cherry-red handbell standing alone on a small cream pedestal. Show every complete silhouette and leave clear empty floor between the landmarks. A single large circular window reveals gently waving kelp outside. Sea-glass walls, warm cream floor, orange and red accents; whimsical and tranquil rather than dark or flooded. Exactly one of each landmark. No people, extra rooms, pastries, clutter, tiny clue objects, letters, numbers, labels, signage, puzzle solution, border or watermark."
+  },
+  "requestedLandmarkHints": [
+    "oven",
+    "shell",
+    "bell"
+  ],
+  "textMustNotContain": [
+    "telescope",
+    "crescent moon",
+    "sewing machine",
+    "Moon-Mender"
+  ],
+  "manualVisualCriteria": [
+    "The actual render depicts a different room and visual palette from the default attic; the oven, large shell and red bell have separated readable silhouettes.",
+    "The window and kelp function as background; no hidden underwater detail or tiny painted text is needed to solve the puzzle."
+  ],
+  "manualTextCriteria": [
+    "The observation and puzzle content follow the new image instead of importing the telescope, moon or sewing-machine story.",
+    "Any invented function of the shell, oven or bell is stated in the player handout and does not depend on a real-world assumption about how a submarine bakery works."
+  ]
+}

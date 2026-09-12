@@ -1,0 +1,76 @@
+{
+  "workflow": "storyboard-relay",
+  "purpose": "A two-frame story with an actual Muse to Nano Banana image handoff, Gemini draft critique, one Muse edit repair using both images, and an independent Gemini reading of the repaired frame.",
+  "reviewStatus": "Authored fixtures; no paid run or generated-output acceptance is claimed by this file.",
+  "expectedPaidCalls": 5,
+  "expectedInputs": [
+    "First scene",
+    "Next beat",
+    "Continuity rules",
+    "Draft continuity check",
+    "Continuity notes"
+  ],
+  "expectedRequiredInputs": [
+    "First scene",
+    "Next beat",
+    "Continuity rules"
+  ],
+  "expectedOptionalInputs": [
+    "Draft continuity check",
+    "Continuity notes"
+  ],
+  "expectedOutputs": [
+    "Frame 1",
+    "Draft frame 2",
+    "Frame 2",
+    "Continuity notes"
+  ],
+  "sharedAcceptance": [
+    "Frame 1, Draft frame 2 and Frame 2 all open as images. Each fit export preserves aspect without cropping, stays within 1536 by 1024 and need not upscale to those dimensions.",
+    "Nano Banana receives the actual opening image. Muse repair receives the actual draft as image 1 and the original opening as image 2, plus the actual draft critique and original story/rules.",
+    "The draft and repaired next frame visibly advance the requested story through a new action; a crop, color change or restyle alone is insufficient.",
+    "The first Gemini reading receives opening and draft images. The final reading receives opening and repaired images, independently of the old verdict.",
+    "Compare draft and repair against the concrete critique. Report an unfixed or newly introduced flaw; a completed revision is not proof it improved the image.",
+    "Final continuity notes describe the actual repaired pixels, distinguish intended changes from drift, and mark obscured details unclear.",
+    "All four outputs remain available when the final notes identify a flaw. Exactly one fixed repair runs even if the draft critic finds no mismatch; there is no conditional loop, numeric confidence or automatic acceptance gate.",
+    "Inspect actual outputs against case criteria; successful execution and a model opinion alone do not establish visual acceptance."
+  ],
+  "cases": [
+    {
+      "id": "orbital-delivery",
+      "label": "The last delivery",
+      "useGraphDefaults": true,
+      "inputs": {
+        "First scene": "First frame of an original two-scene story. A tiny postal robot has a rounded cream enamel body, one round amber eye, short dark-blue legs, and an orange mail satchel. It carries one clear glass capsule containing a single bright-green seedling. Outside a locked circular hatch of an abandoned orbital greenhouse, the robot reaches toward the small mechanical latch beside the door with one gripper while holding the capsule securely with the other. Dormant vines are visible through frosted glass; a curved station window reveals a black starfield. Wide 3:2 medium shot with the full robot, capsule and hatch visible. Tactile stop-motion miniature photography, indigo shadows and warm amber practical light. One robot and one capsule. No lettering, captions, split screen, panel borders or watermark.",
+        "Next beat": "Create the next story beat inside the greenhouse. The robot is now crouched beside a circular soil tray, carefully placing the same bright-green seedling into the soil with one gripper; its other gripper holds the opened, now-empty glass capsule. The orange satchel remains visible. The round hatch stands open behind it. Frame the planting action clearly in a new medium shot. This is a visibly different action and location within the same world, not a restyle or wider crop of the doorway scene. Retain the tactile miniature look and indigo/amber light. No lettering or extra characters.",
+        "Continuity rules": "Keep the same robot's rounded cream body, single round amber eye, dark-blue legs, orange satchel and relative proportions. Track the one glass capsule and one green seedling: the closed capsule in frame 1 should be opened and empty during planting in frame 2, with no duplicate seedling or capsule. Keep the miniature materials and indigo/amber lighting recognizable. Frame 1 shows an arrival at a closed hatch; frame 2 must clearly show planting inside after the hatch opens."
+      },
+      "acceptance": [
+        "Opening frame shows one small cream robot with one amber eye, dark-blue legs, orange satchel and a single seedling capsule, arriving at a closed round greenhouse hatch.",
+        "Second frame shows the same robot planting inside the greenhouse, with the hatch open behind it and the glass capsule now open and empty.",
+        "One seedling and one capsule remain accounted for; no duplicate character or unexplained extra arms/grippers appear.",
+        "Robot proportions, enamel materials, satchel and tactile miniature look remain recognizable across the image-model handoff.",
+        "The second frame can be read as a next event without relying on the critic to explain an unchanged picture.",
+        "Compare the draft and repaired delivery: a capsule still containing a second seedling is a concrete continuity failure. The fixed repair should leave one seedling at the planting action and an empty capsule, without changing the intended action."
+      ]
+    },
+    {
+      "id": "salt-lagoon-kite",
+      "label": "A crab catches the wind",
+      "inputs": {
+        "First scene": "First frame of an original two-scene story. A small red crab kite-maker stands on a sun-bleached wooden jetty over a shallow turquoise salt lagoon. It has two large claws, four small walking legs visible, round black eyes, and a floppy straw hat with a violet ribbon. One claw holds a wound white string reel; beside it rests a single yellow diamond kite with exactly two violet tail bows. The crab looks toward a flat pink sandbar across the water. Bold cut-paper collage, crisp torn-paper edges, coral-red, yellow, turquoise and pale pink, bright overhead sun. Wide 3:2 composition; entire crab, reel, kite and jetty visible. No robots, space stations, glass capsules, plants, text, panel borders or watermark.",
+        "Next beat": "Create the next story beat on the pink sandbar across the lagoon. The same crab braces its legs and leans backward as the yellow diamond kite lifts overhead in a strong breeze. The white string visibly connects the kite to the reel in one claw; the other claw keeps the straw hat from blowing away. Exactly two violet bows remain on the kite's tail. Show the kite fully in frame and make the new wind-driven action clear. Retain the crisp cut-paper collage and sunlit coral/yellow/turquoise/pink palette. This is a new story action, not the original jetty picture with a changed background. No extra crabs or kites, lettering or panel borders.",
+        "Continuity rules": "Preserve the red crab's body shape, black eyes, two claws, straw hat and violet ribbon. Keep one yellow diamond kite, two violet tail bows, and the white reel/string. The string should connect reel and kite in frame 2; the kite must be flying rather than resting. The scene moves from a wooden jetty to a pink sandbar. Preserve cut-paper materials, crisp edges and bright sunlit palette; do not inherit any robot, greenhouse or space-scene details."
+      },
+      "acceptance": [
+        "Opening frame shows one red crab in a straw hat, a white reel and one grounded yellow kite with two violet tail bows on a wooden jetty.",
+        "Second frame shows the same crab flying the kite from a pink sandbar, with string visibly connecting the reel to the airborne kite.",
+        "Straw hat and violet ribbon, crab design, kite color and two tail bows survive the handoff.",
+        "Both frames retain crisp cut-paper collage and a coral/yellow/turquoise/pink daytime palette.",
+        "No robot, orbital station, greenhouse, capsule or miniature-night lighting from the default case leaks into this story.",
+        "The reviewer assesses the actual crab/kite images and does not recycle default robot continuity observations.",
+        "Inspect both draft and repaired kite scenes. The repair must retain the flying action, single crab/kite and string connection; the final reviewer must inspect the repaired version rather than repeat an old assessment."
+      ]
+    }
+  ]
+}

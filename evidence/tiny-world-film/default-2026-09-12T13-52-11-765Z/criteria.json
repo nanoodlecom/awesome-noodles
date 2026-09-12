@@ -1,0 +1,11 @@
+{
+  "id": "default",
+  "inputs": {},
+  "acceptance": [
+    "Walnut house and copper wheel are recognizable in the first frame and both clips.",
+    "Wheel moves coherently without a cut or new major objects.",
+    "Final MP4 retains video duration and adds an audible audio stream.",
+    "Sound plausibly relates to running water and wheel movement; no speech or unrelated soundtrack.",
+    "Compare actual frames and audio; completion alone is not sync evidence."
+  ]
+}

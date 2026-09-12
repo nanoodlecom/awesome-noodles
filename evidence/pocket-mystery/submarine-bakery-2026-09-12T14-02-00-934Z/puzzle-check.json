@@ -1,0 +1,22 @@
+{
+  "source": "mystery-text.txt",
+  "method": "enumerate all permutations against the two explicit player clues",
+  "constraints": [
+    [
+      "brick dome structure",
+      "bell on small stand"
+    ],
+    [
+      "bell on small stand",
+      "spiral shell on pedestal"
+    ]
+  ],
+  "ordersChecked": 6,
+  "validOrders": [
+    [
+      "brick dome structure",
+      "bell on small stand",
+      "spiral shell on pedestal"
+    ]
+  ]
+}

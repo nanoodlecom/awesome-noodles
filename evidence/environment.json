@@ -1,0 +1,15 @@
+{
+  "recordedOn": "2026-09-12",
+  "runtime": {
+    "name": "nanoodle-js",
+    "version": "0.8.0",
+    "commit": "81682a1161a162ba8119b97f1c08c1e1deef209c"
+  },
+  "node": "v24.11.1",
+  "ffmpeg": "ffmpeg version 7.1.1-1ubuntu1.3 Copyright (c) 2000-2025 the FFmpeg developers",
+  "sourceBases": {
+    "awesome-noodles": "7661fc7",
+    "nanoodle": "eb57304"
+  },
+  "credentialStorage": "NANOGPT_API_KEY environment variable; no credential or account balance saved in these records"
+}
