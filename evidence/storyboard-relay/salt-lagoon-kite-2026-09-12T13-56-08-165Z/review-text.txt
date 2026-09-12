@@ -1,0 +1,17 @@
+### 1. Story Beat
+- **Image 1:** The red crab stands stationary on a wooden jetty holding a string spool, looking at its grounded yellow diamond kite.
+- **Image 2:** The crab relocates to the pink sandbar, bracing as the kite takes flight overhead in the wind while one claw holds down its straw hat. The second frame successfully advances the narrative action.
+
+### 2. Continuity Features
+
+| Feature | Image 1 | Image 2 | Status |
+| :--- | :--- | :--- | :--- |
+| **Location / Surface** | Sun-bleached wooden jetty over lagoon | Flat pink sandbar foreground | Consistent (intentional story change) |
+| **Crab Character & Pose** | Red cut-paper body, straw hat with purple ribbon; holds spool in raised claw, lower claw resting | Same body and hat; right claw holds hat, left claw raised, spool held against body | Consistent (pose altered per beat) |
+| **Kite State & String** | Yellow diamond kite resting on jetty; loose string to reel | Kite aloft in sky; white string connects reel to kite | Consistent (intentional story change) |
+| **Kite Tail Bows** | Two violet bows attached at the bottom tip | Two violet bows attached along the line/tail | Consistent |
+| **Sun Element** | Faceless layered yellow paper sun at top edge | Yellow paper sun with a cut/drawn smiley face | Changed (unprompted style drift) |
+| **Medium & Palette** | Torn/cut layered paper collage; coral, yellow, turquoise, pale pink | Identical torn paper texture and matching color scheme | Consistent |
+
+### 3. Director's Note
+Remove the smiley face from the sun in Image 2 to match the clean, graphic sun design established in Image 1.

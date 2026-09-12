@@ -1,0 +1,22 @@
+{
+  "reviewedOn": "2026-09-12",
+  "case": "moon-menders-attic",
+  "sourceRun": "run.json",
+  "graphSha256": "5654c4f63902dca10de63ec6c1e9d218c1c4d658b3a87d8ec41dc0647fedcd9e",
+  "decision": "usable with narrative mismatch",
+  "methods": [
+    "agent visual comparison against actual room",
+    "independent reading of rules",
+    "exhaustive enumeration of all six orders"
+  ],
+  "observations": [
+    "The crescent moon sculpture, telescope and sewing machine are large, recognizable landmarks.",
+    "The two explicit precedence clues determine one complete order; all player actions and retry rules are supplied."
+  ],
+  "limitations": [
+    "The story describes a visibly glowing moon as dim and needing relighting.",
+    "The landmark list happens to match the answer order; the procedural hint is awkward.",
+    "No external playtest was conducted."
+  ],
+  "deterministicCheck": "puzzle-check.json"
+}

@@ -1,0 +1,4 @@
+# Captures carry SHA-256 hashes of their original bytes.
+evidence/** -text
+# Model output may contain Markdown hard-break spaces; retain it verbatim.
+evidence/*/*/*.txt -whitespace

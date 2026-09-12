@@ -1,0 +1,41 @@
+TITLE
+The Lullaby of the Sunken Salon
+
+PLAYER HANDOUT
+Long ago, a mer-composer kept a music salon in this glass-walled chamber, where a "tide-lullaby" was played each dusk to coax the seaweed gardens to sleep. The song has gone unsung for a hundred years, and the garden grows restless. You, a tide-restorer, can awaken it — but only if you greet the salon's three wonders in the order the old songbook describes.
+
+Your goal: restore the tide-lullaby by pointing to the three wonders in the correct order.
+
+The three wonders:
+- The brick dome structure — lower left on the sandy floor, a small domed shelter with an arched opening.
+- The spiral shell display — center, resting on a rectangular pedestal against the back wall.
+- The circular porthole — upper right, mounted on the curved tiled wall.
+
+From the recovered songbook:
+- Clue of the Opening: "Greet not the striped shell until the humble domed home has heard your first kind word."
+- Clue of the Light: "The sea first shows her face through the round brown window; only then may you wander to the little brick house."
+
+Rules:
+- Point to each of the three landmarks exactly once.
+- Commit to a complete order of all three before the facilitator responds.
+- If your order is incorrect, you'll receive gentle feedback and may try again fresh — nothing carries over between attempts.
+- Any "magical" results are narrated fiction only; the image never changes.
+
+GM ONLY - SPOILERS
+Correct order (first to last):
+1. The circular porthole
+2. The brick dome structure
+3. The spiral shell display
+
+Deduction: The Clue of the Light forces porthole before brick dome. The Clue of the Opening forces brick dome before spiral shell. Chained together: porthole → brick dome → spiral shell. Checking all six orders, only this one satisfies both clues.
+
+Hint (does not state the sequence): "Begin where you can see the outside sea, and end at the wonder raised up on its pedestal."
+
+Gentle feedback for wrong attempts:
+- If they start with the dome or shell: "A soft voice murmurs: the sea must show her face before anything else."
+- If the shell comes before the dome: "The shell stays silent — it cannot sing until the humble domed home has been greeted."
+- Deliver feedback without referencing any rule not written in the handout, and offer a fresh, clean retry.
+
+Ending: When the order is right, the porthole's seaweed seems to sway in greeting, the dome hums a low bass note, and the great shell spirals the melody together into a slow, cradling lullaby. The restless garden settles, and the salon's hundred-year silence ends at last — the mystery being simply that the composer built the room itself as the song's opening verse.
+
+Facilitator check: Verify the three landmarks — brick dome structure (lower left), spiral shell display (center pedestal), circular porthole (upper right) — appear as described in your illustration, and solve the two clues yourself before running. This generation is not a playtest.

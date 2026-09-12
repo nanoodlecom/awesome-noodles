@@ -1,0 +1,21 @@
+{
+  "reviewedOn": "2026-09-12",
+  "case": "orbital-delivery",
+  "sourceRun": "run.json",
+  "graphSha256": "26835b6c71dcb4ee1558a01c662e4a6515663d042c914eaaf4f389da0369dea8",
+  "decision": "feature the repair and remaining errors",
+  "methods": [
+    "agent visual comparison of opening, draft and repaired frames",
+    "separate model critiques of draft and repaired pairs"
+  ],
+  "observations": [
+    "The opening establishes one cream robot with amber eye, blue limbs and orange satchel.",
+    "The draft duplicates the seedling; the repair leaves one planted seedling and an empty container and improves the crouching pose.",
+    "The fresh final reader flags remaining scene-continuity problems."
+  ],
+  "limitations": [
+    "The hatch remains closed despite the next-beat requirement.",
+    "One fixed repair improves some errors without establishing full continuity.",
+    "A favorable model verdict alone was not used as acceptance."
+  ]
+}

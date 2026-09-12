@@ -1,0 +1,297 @@
+{
+  "v": 1,
+  "nodes": [
+    {
+      "id": "intent",
+      "type": "comment",
+      "name": "Storyboard relay",
+      "x": 40,
+      "y": -260,
+      "w": 590,
+      "fields": {
+        "text": "Make two frames of a story through a handoff between image models. Muse establishes the opening scene. Nano Banana receives that actual image and the next beat, then stages a new action with the same character. Gemini sees both images and writes concrete continuity notes. Three paid calls: $0.049 in image catalog rates on 12 September 2026, plus vision/text. Outputs are both frames and advisory notes; a flagged inconsistency never discards the art. Change the scene, next beat and continuity rules together to tell another story.",
+        "color": "yellow"
+      }
+    },
+    {
+      "id": "first-brief",
+      "type": "text",
+      "name": "First scene",
+      "x": 40,
+      "y": 50,
+      "w": 350,
+      "sizes": {
+        "text": 240
+      },
+      "fields": {
+        "text": "First frame of an original two-scene story. A tiny postal robot has a rounded cream enamel body, one round amber eye, short dark-blue legs, and an orange mail satchel. It carries one clear glass capsule containing a single bright-green seedling. Outside a locked circular hatch of an abandoned orbital greenhouse, the robot reaches toward the small mechanical latch beside the door with one gripper while holding the capsule securely with the other. Dormant vines are visible through frosted glass; a curved station window reveals a black starfield. Wide 3:2 medium shot with the full robot, capsule and hatch visible. Tactile stop-motion miniature photography, indigo shadows and warm amber practical light. One robot and one capsule. No lettering, captions, split screen, panel borders or watermark."
+      }
+    },
+    {
+      "id": "next-beat",
+      "type": "text",
+      "name": "Next beat",
+      "x": 40,
+      "y": 420,
+      "w": 350,
+      "sizes": {
+        "text": 220
+      },
+      "fields": {
+        "text": "Create the next story beat inside the greenhouse. The robot is now crouched beside a circular soil tray, carefully placing the same bright-green seedling into the soil with one gripper; its other gripper holds the opened, now-empty glass capsule. The orange satchel remains visible. The round hatch stands open behind it. Frame the planting action clearly in a new medium shot. This is a visibly different action and location within the same world, not a restyle or wider crop of the doorway scene. Retain the tactile miniature look and indigo/amber light. No lettering or extra characters."
+      }
+    },
+    {
+      "id": "rules",
+      "type": "text",
+      "name": "Continuity rules",
+      "x": 40,
+      "y": 760,
+      "w": 350,
+      "sizes": {
+        "text": 200
+      },
+      "fields": {
+        "text": "Keep the same robot's rounded cream body, single round amber eye, dark-blue legs, orange satchel and relative proportions. Track the one glass capsule and one green seedling: the closed capsule in frame 1 should be opened and empty during planting in frame 2, with no duplicate seedling or capsule. Keep the miniature materials and indigo/amber lighting recognizable. Frame 1 shows an arrival at a closed hatch; frame 2 must clearly show planting inside after the hatch opens."
+      }
+    },
+    {
+      "id": "frame-one",
+      "type": "image",
+      "name": "Muse opens the story",
+      "x": 480,
+      "y": 40,
+      "w": 320,
+      "sizes": {
+        "prompt": 0
+      },
+      "fields": {
+        "model": "meta/muse-image/text-to-image",
+        "size": "3:2",
+        "variations": "1"
+      }
+    },
+    {
+      "id": "next-prompt",
+      "type": "join",
+      "name": "Opening brief + next beat",
+      "x": 470,
+      "y": 480,
+      "w": 330,
+      "fields": {
+        "sep": "\n\nThe text above describes the first scene; the supplied reference image is its actual rendered result. Make ONE new full-frame image that continues that scene. Preserve the reference character and visual style while showing the different action below. Treat the next beat as a change of story state, not a request to repeat the opening composition.\n\nNEXT BEAT:\n"
+      }
+    },
+    {
+      "id": "edit-brief",
+      "type": "join",
+      "name": "Next beat + continuity rules",
+      "x": 870,
+      "y": 600,
+      "w": 330,
+      "fields": {
+        "sep": "\n\nCONTINUITY REQUIREMENTS:\n"
+      }
+    },
+    {
+      "id": "frame-two",
+      "type": "edit",
+      "name": "Nano Banana stages the next beat",
+      "x": 1280,
+      "y": 280,
+      "w": 360,
+      "sizes": {
+        "prompt": 0
+      },
+      "fields": {
+        "model": "nano-banana-edit",
+        "size": "auto"
+      }
+    },
+    {
+      "id": "review",
+      "type": "llm",
+      "name": "Continuity notes",
+      "x": 1720,
+      "y": 580,
+      "w": 390,
+      "sizes": {
+        "system": 190,
+        "prompt": 0
+      },
+      "fields": {
+        "model": "google/gemini-3.8-flash",
+        "reasoningEffort": "low",
+        "maxTokens": "2048",
+        "system": "You are a film continuity reader comparing TWO actual images. Image 1 is the opening frame; image 2 is the subsequent frame. The supplied text contains the opening brief, next beat, and continuity requirements. Inspect the pixels of both images; a requested detail is not evidence that it appeared. In at most 350 words, write: (1) Story beat: what visibly happens in each frame, and whether the second advances the action. (2) A compact table of three to six important continuity features with an observation for each frame and a status of consistent, changed, or unclear. Distinguish intentional story changes from accidental identity, object-count, prop or style drift. (3) Director's note: the single most useful concrete edit if needed, or a specific strength if no meaningful repair is apparent. State when a small or obscured detail cannot be judged. Do not invent measurements, numeric scores, confidence percentages, universal PASS/FAIL, or a guarantee that the frames are ready to publish. This is advisory criticism; preserve the user's ability to use either image."
+      }
+    },
+    {
+      "id": "export-one",
+      "type": "resize",
+      "name": "Frame 1",
+      "x": 1280,
+      "y": -40,
+      "w": 290,
+      "fields": {
+        "mode": "fit",
+        "width": "1536",
+        "height": "1024"
+      }
+    },
+    {
+      "id": "export-two",
+      "type": "resize",
+      "name": "Frame 2",
+      "x": 1720,
+      "y": 230,
+      "w": 290,
+      "fields": {
+        "mode": "fit",
+        "width": "1536",
+        "height": "1024"
+      }
+    }
+  ],
+  "links": [
+    {
+      "id": "opening-render",
+      "from": {
+        "node": "first-brief",
+        "port": "text"
+      },
+      "to": {
+        "node": "frame-one",
+        "port": "prompt"
+      }
+    },
+    {
+      "id": "opening-context",
+      "from": {
+        "node": "first-brief",
+        "port": "text"
+      },
+      "to": {
+        "node": "next-prompt",
+        "port": "a"
+      }
+    },
+    {
+      "id": "next-action",
+      "from": {
+        "node": "next-beat",
+        "port": "text"
+      },
+      "to": {
+        "node": "next-prompt",
+        "port": "b"
+      }
+    },
+    {
+      "id": "edit-story",
+      "from": {
+        "node": "next-prompt",
+        "port": "text"
+      },
+      "to": {
+        "node": "edit-brief",
+        "port": "a"
+      }
+    },
+    {
+      "id": "edit-continuity",
+      "from": {
+        "node": "rules",
+        "port": "text"
+      },
+      "to": {
+        "node": "edit-brief",
+        "port": "b"
+      }
+    },
+    {
+      "id": "direct-next",
+      "from": {
+        "node": "edit-brief",
+        "port": "text"
+      },
+      "to": {
+        "node": "frame-two",
+        "port": "prompt"
+      }
+    },
+    {
+      "id": "actual-reference",
+      "from": {
+        "node": "frame-one",
+        "port": "image"
+      },
+      "to": {
+        "node": "frame-two",
+        "port": "image"
+      }
+    },
+    {
+      "id": "review-brief",
+      "from": {
+        "node": "edit-brief",
+        "port": "text"
+      },
+      "to": {
+        "node": "review",
+        "port": "prompt"
+      }
+    },
+    {
+      "id": "review-first-image",
+      "from": {
+        "node": "frame-one",
+        "port": "image"
+      },
+      "to": {
+        "node": "review",
+        "port": "img1"
+      }
+    },
+    {
+      "id": "review-second-image",
+      "from": {
+        "node": "frame-two",
+        "port": "image"
+      },
+      "to": {
+        "node": "review",
+        "port": "img2"
+      }
+    },
+    {
+      "id": "keep-first-frame",
+      "from": {
+        "node": "frame-one",
+        "port": "image"
+      },
+      "to": {
+        "node": "export-one",
+        "port": "image"
+      }
+    },
+    {
+      "id": "keep-second-frame",
+      "from": {
+        "node": "frame-two",
+        "port": "image"
+      },
+      "to": {
+        "node": "export-two",
+        "port": "image"
+      }
+    }
+  ],
+  "nid": 12,
+  "lid": 13,
+  "view": {
+    "panX": 35,
+    "panY": 200,
+    "scale": 0.6
+  }
+}

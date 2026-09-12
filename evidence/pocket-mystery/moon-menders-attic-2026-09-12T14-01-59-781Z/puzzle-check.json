@@ -1,0 +1,22 @@
+{
+  "source": "mystery-text.txt",
+  "method": "enumerate all permutations against the two explicit player clues",
+  "constraints": [
+    [
+      "crescent moon sculpture",
+      "telescope"
+    ],
+    [
+      "telescope",
+      "sewing machine"
+    ]
+  ],
+  "ordersChecked": 6,
+  "validOrders": [
+    [
+      "crescent moon sculpture",
+      "telescope",
+      "sewing machine"
+    ]
+  ]
+}

@@ -1,0 +1,34 @@
+TITLE: The Moonmender's Last Stitch
+
+PLAYER HANDOUT
+
+The old moonmender's attic holds her three great works: a brass telescope that drank in the night, a glowing crescent moon resting on its pedestal, and the red sewing machine that once stitched moonlight itself. Tonight, the crescent has gone dim, and only the correct Ritual of Rekindling — touching her three treasures in the proper order — will wake it again.
+
+The three landmarks:
+- **The telescope** — lower left, aimed at the circular window
+- **The crescent moon** — center, glowing faintly atop a dark pedestal
+- **The sewing machine** — lower right, set on its wooden table
+
+Clue One — "The Tailor's Truth": The needle must always act before the thing it mends. The sewing machine must come before the crescent moon.
+
+Clue Two — "The Watcher's Way": The moon, once mended, must be seen by the eye that first found it in the sky. The crescent moon must come before the telescope.
+
+Rules of the Ritual:
+- Point to each of the three landmarks exactly once, in the order you choose.
+- Commit to your complete order of all three before the facilitator responds.
+- If your order is wrong, the facilitator will gently say the ritual fizzles, and you may try a fresh order — nothing carries over between attempts.
+- Any magical effects are narrated fiction only; the illustration never changes.
+
+GM ONLY - SPOILERS
+
+Correct order: **Sewing machine → Crescent moon → Telescope**
+
+Deduction: Clue One forces sewing machine before crescent moon (C < B). Clue Two forces crescent moon before telescope (B < A). Together: C < B < A. Checking all six orders, only Sewing machine → Moon → Telescope satisfies both clues; every other order violates at least one constraint.
+
+Hint (does not state the sequence): Every clue names a pair — figure out which landmark each clue places first, then chain them together.
+
+Gentle feedback for a wrong order: Say "The ritual fizzles — a soft puff of silvery dust settles on the floorboards." Do not reveal which clue was broken; simply invite a fresh attempt with no carryover.
+
+Ending: The player touches the sewing machine, and its wheel turns on its own, spinning a thread of pale light that sews up a worn seam on the crescent — the little tear the moonmender never finished. The moon flares back to brightness, and as the telescope turns toward it, the player glimpses, through the lens, a tiny embroidered signature stitched inside the crescent's glow: the moonmender's farewell.
+
+Facilitator check: Before play, verify that the illustration actually shows all three landmarks — telescope (lower left), crescent moon (center), sewing machine (lower right) — and solve the two clues yourself so the intended order is clear to you. This generation has not been playtested.

@@ -1,0 +1,24 @@
+First frame of an original two-scene story. A small red crab kite-maker stands on a sun-bleached wooden jetty over a shallow turquoise salt lagoon. It has two large claws, four small walking legs visible, round black eyes, and a floppy straw hat with a violet ribbon. One claw holds a wound white string reel; beside it rests a single yellow diamond kite with exactly two violet tail bows. The crab looks toward a flat pink sandbar across the water. Bold cut-paper collage, crisp torn-paper edges, coral-red, yellow, turquoise and pale pink, bright overhead sun. Wide 3:2 composition; entire crab, reel, kite and jetty visible. No robots, space stations, glass capsules, plants, text, panel borders or watermark.
+
+The text above describes the first scene; the supplied reference image is its actual rendered result. Make ONE new full-frame image that continues that scene. Preserve the reference character and visual style while showing the different action below. Treat the next beat as a change of story state, not a request to repeat the opening composition.
+
+NEXT BEAT:
+Create the next story beat on the pink sandbar across the lagoon. The same crab braces its legs and leans backward as the yellow diamond kite lifts overhead in a strong breeze. The white string visibly connects the kite to the reel in one claw; the other claw keeps the straw hat from blowing away. Exactly two violet bows remain on the kite's tail. Show the kite fully in frame and make the new wind-driven action clear. Retain the crisp cut-paper collage and sunlit coral/yellow/turquoise/pink palette. This is a new story action, not the original jetty picture with a changed background. No extra crabs or kites, lettering or panel borders.
+
+CONTINUITY REQUIREMENTS:
+Preserve the red crab's body shape, black eyes, two claws, straw hat and violet ribbon. Keep one yellow diamond kite, two violet tail bows, and the white reel/string. The string should connect reel and kite in frame 2; the kite must be flying rather than resting. The scene moves from a wooden jetty to a pink sandbar. Preserve cut-paper materials, crisp edges and bright sunlit palette; do not inherit any robot, greenhouse or space-scene details.
+
+REVISE THE ATTACHED DRAFT ONCE. Image 1 is the DRAFT NEXT FRAME to correct; image 2 is the ORIGINAL OPENING FRAME used only as an identity and style anchor. Preserve image 1's intended new action and story state. Keep its staging unless a specific continuity requirement makes a change necessary. Use the story and continuity requirements above plus the observed draft notes below. Fix only supported mismatches; do not invent a new scene, duplicate subjects or props, merge frames, add labels, or copy the opening action. If the notes report no meaningful mismatch, preserve the draft with minimal change. Produce one complete next-frame image, not a collage or before/after comparison.
+
+ACTUAL DRAFT CONTINUITY NOTES:
+**Visible Story Action**  
+- **Frame 1:** On a sunlit wooden jetty, a red crab in a straw hat holds a white string reel with one claw, standing beside a resting yellow kite with loose violet bows, gazing toward a distant pink sandbar.  
+- **Frame 2:** Relocated to the pink sandbar, the crab flies the yellow kite in the sky, holding its hat with its left claw while the kite string leads down toward its body/right side.
+
+**Continuity Mismatches**  
+1. **String Reel Missing / Improper Attachment:** Frame 1 features a prominent spool reel held in the claw. In Frame 2, the reel has vanished entirely; the kite string disappears behind the crab’s body rather than connecting to a held reel.  
+2. **Kite Bow Count / Placement:** In Frame 1, two large violet bows lie detached (with one small purple attachment at the kite's top edge). In Frame 2, the kite has three purple bows (two at opposite side points, one on the tail ribbon) instead of exactly two tail bows.  
+3. **Environment/Sky Color:** Frame 1 has a pale pink sky with a yellow torn-paper sun. Frame 2 completely changes the sky to solid cyan/turquoise with no sun visible.
+
+**Smallest Specific Correction**  
+Place the wooden string reel into the crab's raised right claw so the flying line visibly spools from it, and adjust the kite to have exactly two violet bows on its tail.

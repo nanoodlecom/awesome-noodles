@@ -1,0 +1,249 @@
+{
+  "slug": "tiny-world-film",
+  "case": "alternate",
+  "recordedAt": "2026-09-12T13:54:42.307Z",
+  "elapsedMs": 106459,
+  "graphSha256": "6bf28694753722f8d7cb78a119d55d7c3380ffdc69f10aac7bdabe6d43711093",
+  "costUsd": 0.18176470588235294,
+  "costExact": true,
+  "executionError": "run failed — \"Silent take\": wire at least two clips to combine",
+  "errors": [
+    {
+      "nodeId": "n7",
+      "name": "Silent take",
+      "message": "wire at least two clips to combine"
+    }
+  ],
+  "captureErrors": [
+    "n3.images: url.startsWith is not a function",
+    "Missing promised output: Silent take"
+  ],
+  "events": [
+    {
+      "type": "node-start",
+      "node": "n1"
+    },
+    {
+      "type": "node-start",
+      "node": "n2"
+    },
+    {
+      "type": "node-done",
+      "node": "n1",
+      "ms": 0,
+      "costUsd": null
+    },
+    {
+      "type": "node-done",
+      "node": "n2",
+      "ms": 0,
+      "costUsd": null
+    },
+    {
+      "type": "node-start",
+      "node": "n3"
+    },
+    {
+      "type": "node-done",
+      "node": "n3",
+      "ms": 18988,
+      "costUsd": 0.01
+    },
+    {
+      "type": "node-start",
+      "node": "n6"
+    },
+    {
+      "type": "node-start",
+      "node": "n4"
+    },
+    {
+      "type": "node-done",
+      "node": "n6",
+      "ms": 353,
+      "costUsd": null
+    },
+    {
+      "type": "node-done",
+      "node": "n4",
+      "ms": 65354,
+      "costUsd": 0.11176470588235295
+    },
+    {
+      "type": "node-start",
+      "node": "n5"
+    },
+    {
+      "type": "node-start",
+      "node": "n7"
+    },
+    {
+      "type": "node-error",
+      "node": "n7"
+    },
+    {
+      "type": "node-done",
+      "node": "n5",
+      "ms": 20655,
+      "costUsd": 0.06
+    }
+  ],
+  "publicOutputs": [
+    {
+      "key": "First frame",
+      "nodeId": "n6"
+    },
+    {
+      "key": "Film with foley",
+      "nodeId": "n5"
+    },
+    {
+      "key": "Silent take",
+      "nodeId": "n7"
+    }
+  ],
+  "nodes": [
+    {
+      "id": "c1",
+      "name": "A world, then motion, then sound",
+      "type": "comment",
+      "status": "skipped",
+      "costUsd": null,
+      "ms": null,
+      "error": null,
+      "outputs": []
+    },
+    {
+      "id": "n1",
+      "name": "World",
+      "type": "text",
+      "status": "done",
+      "costUsd": null,
+      "ms": 0,
+      "error": null,
+      "outputs": [
+        {
+          "port": "text",
+          "kind": "text",
+          "file": "n1-text.txt",
+          "bytes": 371,
+          "sha256": "a2f213d71331cf3b61b7d163dc342d9b07bc83eedc0f199b0ae1b5aa7a8a548a"
+        }
+      ]
+    },
+    {
+      "id": "n2",
+      "name": "Motion",
+      "type": "text",
+      "status": "done",
+      "costUsd": null,
+      "ms": 0,
+      "error": null,
+      "outputs": [
+        {
+          "port": "text",
+          "kind": "text",
+          "file": "n2-text.txt",
+          "bytes": 273,
+          "sha256": "49d839b285371afd1602e1576a9ea4ae3f9fe6a86bb8baa1dd010e1c604fd6c1"
+        }
+      ]
+    },
+    {
+      "id": "n3",
+      "name": "Build the miniature",
+      "type": "image",
+      "model": "meta/muse-image/text-to-image",
+      "status": "done",
+      "costUsd": 0.01,
+      "ms": 18988,
+      "error": null,
+      "outputs": [
+        {
+          "port": "image",
+          "kind": "image",
+          "file": "n3-image.webp",
+          "bytes": 412356,
+          "sha256": "11bbdfb75d85e95ecbc2cfa7968bdf0425acfea8e1b539b85b6d80b92468b722"
+        }
+      ]
+    },
+    {
+      "id": "n4",
+      "name": "Animate the still",
+      "type": "ivideo",
+      "model": "wan-video-image-to-video",
+      "status": "done",
+      "costUsd": 0.11176470588235295,
+      "ms": 65354,
+      "error": null,
+      "outputs": [
+        {
+          "port": "video",
+          "kind": "video",
+          "file": "n4-video.mp4",
+          "bytes": 975363,
+          "sha256": "e86f3a99305ace1f92902575b7be03734513b34eff02c196b744a3dceaca3760"
+        }
+      ]
+    },
+    {
+      "id": "n5",
+      "name": "Film with foley",
+      "type": "vedit",
+      "model": "mirelo-ai/sfx1.6/video-to-video",
+      "status": "done",
+      "costUsd": 0.06,
+      "ms": 20655,
+      "error": null,
+      "outputs": [
+        {
+          "port": "video",
+          "kind": "video",
+          "file": "n5-video.mp4",
+          "bytes": 852007,
+          "sha256": "158ad3b6ccb65fd070317c0453146c67afb65099cde97481518f818c25605935"
+        }
+      ]
+    },
+    {
+      "id": "n6",
+      "name": "First frame",
+      "type": "resize",
+      "status": "done",
+      "costUsd": null,
+      "ms": 353,
+      "error": null,
+      "outputs": [
+        {
+          "port": "image",
+          "kind": "image",
+          "file": "n6-image.jpg",
+          "bytes": 154444,
+          "sha256": "1b8ea7b4cf0b8a69e835eb40a316936d27fe688f57383cece7c0fb63062bc356"
+        }
+      ]
+    },
+    {
+      "id": "n7",
+      "name": "Silent take",
+      "type": "combine",
+      "status": "error",
+      "costUsd": null,
+      "ms": null,
+      "error": "wire at least two clips to combine",
+      "outputs": []
+    },
+    {
+      "id": "c2",
+      "name": "What the connection proves",
+      "type": "comment",
+      "status": "skipped",
+      "costUsd": null,
+      "ms": null,
+      "error": null,
+      "outputs": []
+    }
+  ],
+  "review": "Unreviewed. Successful execution and nonempty files do not establish creative quality."
+}

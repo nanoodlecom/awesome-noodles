@@ -1,0 +1,22 @@
+{
+  "reviewedOn": "2026-09-12",
+  "case": "default",
+  "sourceRun": "run.json",
+  "graphSha256": "71d5381cfb084f7caa7a57478a58dd8eda9f026cacfab222b381662a33c218c8",
+  "decision": "usable short with disclosed audio limits",
+  "methods": [
+    "agent inspection of sampled frames",
+    "ffprobe stream and duration inspection",
+    "model-assisted audio-only review without scene hint"
+  ],
+  "observations": [
+    "Sampled frames retain the walnut mill and show the copper wheel moving.",
+    "The silent source contains video only; the final file contains H.264 video and AAC audio, 832x480, five seconds.",
+    "The audio reviewer describes rushing and splashing water with friction, without speech or music."
+  ],
+  "limitations": [
+    "Audio ends sharply and the reviewer notes synthetic high-frequency texture.",
+    "No human listening session or precise audiovisual synchronization measurement was performed.",
+    "A seamless loop is not established."
+  ]
+}

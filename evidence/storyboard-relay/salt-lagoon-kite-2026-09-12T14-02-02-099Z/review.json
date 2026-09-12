@@ -1,0 +1,19 @@
+{
+  "reviewedOn": "2026-09-12",
+  "case": "salt-lagoon-kite",
+  "sourceRun": "run.json",
+  "graphSha256": "26835b6c71dcb4ee1558a01c662e4a6515663d042c914eaaf4f389da0369dea8",
+  "decision": "feature the repair and remaining errors",
+  "methods": [
+    "agent visual comparison of opening, draft and repaired frames",
+    "separate model critiques of draft and repaired pairs"
+  ],
+  "observations": [
+    "The cut-paper crab advances from holding a grounded kite to flying it.",
+    "The draft loses the reel; the repaired frame restores a reel and the pink sky/sun."
+  ],
+  "limitations": [
+    "Bow count and placement still conflict with the requested two bows.",
+    "The repair can restore details while leaving other continuity errors."
+  ]
+}

@@ -1,0 +1,25 @@
+First frame of an original two-scene story. A tiny postal robot has a rounded cream enamel body, one round amber eye, short dark-blue legs, and an orange mail satchel. It carries one clear glass capsule containing a single bright-green seedling. Outside a locked circular hatch of an abandoned orbital greenhouse, the robot reaches toward the small mechanical latch beside the door with one gripper while holding the capsule securely with the other. Dormant vines are visible through frosted glass; a curved station window reveals a black starfield. Wide 3:2 medium shot with the full robot, capsule and hatch visible. Tactile stop-motion miniature photography, indigo shadows and warm amber practical light. One robot and one capsule. No lettering, captions, split screen, panel borders or watermark.
+
+The text above describes the first scene; the supplied reference image is its actual rendered result. Make ONE new full-frame image that continues that scene. Preserve the reference character and visual style while showing the different action below. Treat the next beat as a change of story state, not a request to repeat the opening composition.
+
+NEXT BEAT:
+Create the next story beat inside the greenhouse. The robot is now crouched beside a circular soil tray, carefully placing the same bright-green seedling into the soil with one gripper; its other gripper holds the opened, now-empty glass capsule. The orange satchel remains visible. The round hatch stands open behind it. Frame the planting action clearly in a new medium shot. This is a visibly different action and location within the same world, not a restyle or wider crop of the doorway scene. Retain the tactile miniature look and indigo/amber light. No lettering or extra characters.
+
+CONTINUITY REQUIREMENTS:
+Keep the same robot's rounded cream body, single round amber eye, dark-blue legs, orange satchel and relative proportions. Track the one glass capsule and one green seedling: the closed capsule in frame 1 should be opened and empty during planting in frame 2, with no duplicate seedling or capsule. Keep the miniature materials and indigo/amber lighting recognizable. Frame 1 shows an arrival at a closed hatch; frame 2 must clearly show planting inside after the hatch opens.
+
+REVISE THE ATTACHED DRAFT ONCE. Image 1 is the DRAFT NEXT FRAME to correct; image 2 is the ORIGINAL OPENING FRAME used only as an identity and style anchor. Preserve image 1's intended new action and story state. Keep its staging unless a specific continuity requirement makes a change necessary. Use the story and continuity requirements above plus the observed draft notes below. Fix only supported mismatches; do not invent a new scene, duplicate subjects or props, merge frames, add labels, or copy the opening action. If the notes report no meaningful mismatch, preserve the draft with minimal change. Produce one complete next-frame image, not a collage or before/after comparison.
+
+ACTUAL DRAFT CONTINUITY NOTES:
+**Visible Story Action:**
+- **Frame 1:** Outside the greenhouse, the robot stands holding a sealed seedling capsule while reaching for the locked circular hatch.
+- **Frame 2:** The robot stands over a circular soil tray containing a planted seedling, reaching toward it with an empty gripper while holding a capsule containing a second seedling.
+
+**Mismatches:**
+1. **Prop Duplication (Seedling):** Frame 1 has one seedling inside the capsule. Frame 2 shows two seedlings simultaneously—one planted in the tray and an identical duplicate still inside the glass capsule.
+2. **Capsule State:** Frame 1 shows a sealed capsule. Frame 2 requires an opened, empty capsule, but it remains sealed with soil and a plant inside.
+3. **Location / Hatch State:** Frame 1 shows the circular hatch closed from the exterior. Frame 2 keeps the robot in the same hallway with the circular hatch still closed, rather than inside the greenhouse with the hatch standing open behind it.
+4. **Robot Pose:** The robot is upright and standing in Frame 2, rather than crouched beside the soil tray.
+
+**Smallest Specific Correction:**
+Remove the duplicate seedling and dirt from inside the glass capsule so it is visibly open and empty, swing open the circular hatch behind the robot to show it has entered the greenhouse, and adjust the robot into a lower crouching posture over the soil tray.

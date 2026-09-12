@@ -1,0 +1,40 @@
+{
+  "date": "2026-09-12",
+  "method": "Playwright Chromium; fresh contexts; provider catalog GETs mocked locally; all other external requests blocked",
+  "records": [
+    {
+      "viewport": "1440x1000",
+      "gallerySections": 8,
+      "newGuides": 3,
+      "newGraphsOpened": 3,
+      "alternateRunsInspected": 3,
+      "featuredOrder": [
+        "storyboard-relay",
+        "tiny-world-film",
+        "pocket-mystery"
+      ],
+      "spoilers": "closed by default; reveal works",
+      "videoPlayback": "all four default/alternate silent and sounded clips played",
+      "overflow": false,
+      "pageErrors": [],
+      "unexpectedExternalRequests": []
+    },
+    {
+      "viewport": "390x1000",
+      "gallerySections": 8,
+      "newGuides": 3,
+      "newGraphsOpened": 3,
+      "alternateRunsInspected": 3,
+      "featuredOrder": [
+        "storyboard-relay",
+        "tiny-world-film",
+        "pocket-mystery"
+      ],
+      "spoilers": "closed by default; reveal works",
+      "videoPlayback": "all four default/alternate silent and sounded clips played",
+      "overflow": false,
+      "pageErrors": [],
+      "unexpectedExternalRequests": []
+    }
+  ]
+}

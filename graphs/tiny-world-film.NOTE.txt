@@ -1,0 +1,10 @@
+# recipe-note
+Three models make one finished short: Muse generates a miniature world, Wan animates the actual image, and Mirelo generates foley from the actual video. The final stage is a recovered component from the removed `mirelo-video-foley` wrapper, now doing a job inside a complete workflow.
+
+Change **World** and **Motion** together. The graph exports **First frame** and **Film with foley**. **Silent take** is the intermediate animation, visible on the canvas and retained by the evidence runner. Compare both clips: the sound model does not receive the original scene description, and its sounds need to fit the motion that was actually generated.
+
+Defaults request 81 frames at 16 fps and 480p (about five seconds). On the 12 September 2026 catalog, the image is $0.01, animation $0.20, and foley approximately $0.05. These are estimates, not caps; the provider may round duration. Higher settings and reruns cost extra. No music, speech or exact synchronization is promised.
+
+The graph uses the existing image, image-to-video, video-edit and resize nodes. Node >=20 and `ffmpeg` on PATH cover headless media conversion; the Python executor needs `ffmpeg` for local media. The evidence runner saves intermediate video as well as final outputs. Models are pinned for reproducibility; inspect the live catalogs before refreshing them.
+
+Default and alternate briefs with acceptance criteria: `fixtures/tiny-world-film.cases.json`. The [selected runs and review notes](../evidence/README.md#tiny-world-film) include the actual stills, silent takes and sounded films. Both final films are five-second H.264 at 832×480 with AAC. Two model-assisted audio reviews describe fitting sounds without speech or music; this is not human listening sign-off or a precise synchronization test. The moth's orange underside changes the intended material. The final generation runs each reported about $0.18176 on this account, before the separate audio review; future charges may differ from these observed costs and the catalog estimates above.

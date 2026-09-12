@@ -13,7 +13,10 @@ Do not hand-edit these files — run `node scripts/make-recipes.mjs` after chang
 | [Game character kit](character-sprites.md) | [`graphs/character-sprites.noodle-graph.json`](../graphs/character-sprites.noodle-graph.json) | defaults in graph |
 | [Compare image models](image-model-arena.md) | [`graphs/image-model-arena.noodle-graph.json`](../graphs/image-model-arena.noodle-graph.json) | defaults in graph |
 | [Still to short clip](photo-to-video.md) | [`graphs/photo-to-video.noodle-graph.json`](../graphs/photo-to-video.noodle-graph.json) | defaults in graph |
+| [Pocket mystery](pocket-mystery.md) | [`graphs/pocket-mystery.noodle-graph.json`](../graphs/pocket-mystery.noodle-graph.json) | defaults in graph |
 | [Sing](sing.md) | [`graphs/sing.noodle-graph.json`](../graphs/sing.noodle-graph.json) | defaults in graph |
+| [Storyboard relay](storyboard-relay.md) | [`graphs/storyboard-relay.noodle-graph.json`](../graphs/storyboard-relay.noodle-graph.json) | defaults in graph |
 | [Spoken introduction](talking-avatar.md) | [`graphs/talking-avatar.noodle-graph.json`](../graphs/talking-avatar.noodle-graph.json) | defaults in graph |
+| [Tiny world film](tiny-world-film.md) | [`graphs/tiny-world-film.noodle-graph.json`](../graphs/tiny-world-film.noodle-graph.json) | defaults in graph |
 
 Install: `npm i nanoodle` · `pip install nanoodle`. Run anywhere: [nanoodle-js](https://github.com/nanoodlecom/nanoodle-js) · [nanoodle-py](https://github.com/nanoodlecom/nanoodle-py) · [nanoodle-mcp](https://github.com/nanoodlecom/nanoodle-mcp) · [run-noodle-action](https://github.com/nanoodlecom/run-noodle-action).

@@ -1,0 +1,66 @@
+# recipe-note
+Storyboard relay — a story handoff, critique, and one visible repair
+Authored 12 September 2026. This file describes the graph; inspect the separate
+run evidence for observed outputs and whether a particular repair helped.
+
+Opening scene -> Muse image -> Nano Banana next scene -> Gemini draft critique
+-> Muse edit repair -> fresh Gemini reading of opening and repaired frame.
+
+The first edit receives the actual opening image and an independent next beat.
+The repair receives the actual draft as image 1 and the original opening as
+image 2, plus the original story/rules and actual critique. It preserves the new
+action while fixing supported continuity problems. Exactly one revision runs,
+even if the draft critic reports no mismatch. This is not a conditional loop.
+The final reader sees the repaired pixels and original requirements; it does
+not receive or recycle the previous verdict.
+
+Why a repair stage was added: the first live draft duplicated the delivered
+seedling, leaving one in its capsule while planting another. The draft reader
+identified that concrete continuity error. In the selected new run, the repair
+removed the duplicate and improved the pose, but the hatch remained closed.
+The alternate restored the spool and pink sky while failing the kite-bow count
+and placement. These are visible improvements with remaining errors.
+
+Main inputs: First scene; Next beat; Continuity rules.
+The executor also exposes the two system prompts as optional inputs named
+Draft continuity check and Continuity notes. Keep those defaults for the
+documented behavior.
+Outputs: Frame 1; Draft frame 2; Frame 2; Continuity notes.
+The local fit exports preserve all three images independently of the final
+advisory notes. Each fits within 1536x1024 without cropping; small sources are
+not necessarily upscaled. Headless JPEG/WebP resizing may require ffmpeg.
+
+Exactly five paid calls, with no prompt-writing call:
+1. meta/muse-image/text-to-image, size 3:2, one opening image ($0.01 catalog).
+2. nano-banana-edit, size auto, one original image as reference ($0.039 catalog).
+3. google/gemini-3.8-flash, draft img1=opening, img2=draft; 1400-token budget.
+4. meta/muse-image/edit, size 3:2, image=draft, image2=opening ($0.01 catalog).
+5. google/gemini-3.8-flash, final img1=opening, img2=repaired; 2200-token budget.
+
+Public catalog snapshot checked 12 September 2026: Muse supports these ratios
+and multiple image references; Nano Banana Edit lists auto at $0.039/image and
+up to four references, of which this graph uses one. Gemini supports image
+input, with $0.75/M input and $3.75/M output tokens in the snapshot.
+Image subtotal is $0.059 plus two vision/text calls. These are estimates,
+not a spending cap, observed run price or proof of future model availability.
+
+Visible acceptance:
+- Opening, draft and repaired next frame have readable story actions.
+- Identity and story-critical props survive the intended change of scene.
+- Compare the repair against the actual draft criticism. Report unfixed or new
+  errors; retaining the draft lets a visitor decide whether the revision helped.
+- Final notes describe repaired pixels, acknowledge unclear evidence and never
+  claim an old draft assessment validates the repair.
+- All artwork stays downloadable even if final continuity remains imperfect.
+
+fixtures/storyboard-relay.cases.json contains two cases. The first delivers a
+seedling to an orbital greenhouse; the second is a cut-paper crab flying a kite
+over a salt lagoon. The briefs are unchanged from the original three-call graph
+so the fixed revision can be assessed on the same stories. World details live
+in editable inputs, not reusable reviewer instructions. The [selected runs and
+review](../evidence/README.md#storyboard-relay) preserve opening, draft, repaired
+frame and fresh criticism for both stories; they do not claim full continuity.
+
+Catalog sources:
+https://nano-gpt.com/api/v1/image-models
+https://nano-gpt.com/api/v1/models?detailed=true

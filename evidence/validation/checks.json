@@ -1,0 +1,338 @@
+{
+  "date": "2026-09-12",
+  "scope": "Local worktrees only; no deployment or external user adoption verified.",
+  "sourceTests": {
+    "command": "npm test",
+    "passed": 14,
+    "failed": 0,
+    "skipped": 3,
+    "skipReason": "Optional installed executor absent in default test discovery; explicit source-executor invocation separately ran all six routing cases."
+  },
+  "offlineRouting": {
+    "casesPassed": 6,
+    "casesFailed": 0,
+    "providerRequests": "mocked",
+    "checks": [
+      "case input overrides",
+      "real image and video handoffs",
+      "original reference retained through repair",
+      "final reviewer gets repaired image without previous verdict",
+      "480p / 81 frames / 16 fps without injected catalog",
+      "image sizes and one output per image request"
+    ],
+    "mutationChecksRejected": 5
+  },
+  "interfaceParity": "JavaScript and Python inspect agree for all three new graphs, default inputs and output keys. No paid Python generation was performed.",
+  "siteChecks": [
+    {
+      "script": "scripts/check-app-settings.mjs",
+      "exit": 0
+    },
+    {
+      "script": "scripts/check-apps-storage.mjs",
+      "exit": 0
+    },
+    {
+      "script": "scripts/check-audio-newest-sort.mjs",
+      "exit": 0
+    },
+    {
+      "script": "scripts/check-audio-resume.mjs",
+      "exit": 0
+    },
+    {
+      "script": "scripts/check-auth-lifecycle.mjs",
+      "exit": 0
+    },
+    {
+      "script": "scripts/check-bridge-consent.mjs",
+      "exit": 0
+    },
+    {
+      "script": "scripts/check-catalog-fallback.mjs",
+      "exit": 0
+    },
+    {
+      "script": "scripts/check-changelog.mjs",
+      "exit": 0
+    },
+    {
+      "script": "scripts/check-combine.mjs",
+      "exit": 0
+    },
+    {
+      "script": "scripts/check-connect-wires.mjs",
+      "exit": 0
+    },
+    {
+      "script": "scripts/check-cost-accrue.mjs",
+      "exit": 0
+    },
+    {
+      "script": "scripts/check-create-app.mjs",
+      "exit": 0
+    },
+    {
+      "script": "scripts/check-deploy-config.mjs",
+      "exit": 0
+    },
+    {
+      "script": "scripts/check-describe-apply.mjs",
+      "exit": 0
+    },
+    {
+      "script": "scripts/check-drifted-model.mjs",
+      "exit": 0
+    },
+    {
+      "script": "scripts/check-editor-ports.mjs",
+      "exit": 0
+    },
+    {
+      "script": "scripts/check-endpoint.mjs",
+      "exit": 0
+    },
+    {
+      "script": "scripts/check-example-models-offline.mjs",
+      "exit": 0
+    },
+    {
+      "script": "scripts/check-example-models.mjs",
+      "exit": 0
+    },
+    {
+      "script": "scripts/check-example-models.test.mjs",
+      "exit": 0
+    },
+    {
+      "script": "scripts/check-example-results.mjs",
+      "exit": 0,
+      "rerunAfterFinalEdits": true
+    },
+    {
+      "script": "scripts/check-export.mjs",
+      "exit": 0
+    },
+    {
+      "script": "scripts/check-fibo-aspect.mjs",
+      "exit": 0
+    },
+    {
+      "script": "scripts/check-graph-persistence.mjs",
+      "exit": 0
+    },
+    {
+      "script": "scripts/check-graph-sigs.mjs",
+      "exit": 0
+    },
+    {
+      "script": "scripts/check-guide-examples.mjs",
+      "exit": 0,
+      "rerunAfterFinalEdits": true
+    },
+    {
+      "script": "scripts/check-hidden-css.mjs",
+      "exit": 0,
+      "rerunAfterFinalEdits": true
+    },
+    {
+      "script": "scripts/check-html-js.mjs",
+      "exit": 0,
+      "rerunAfterFinalEdits": true
+    },
+    {
+      "script": "scripts/check-i18n-coverage.mjs",
+      "exit": 0,
+      "rerunAfterFinalEdits": true
+    },
+    {
+      "script": "scripts/check-image-ports.mjs",
+      "exit": 0
+    },
+    {
+      "script": "scripts/check-import-pacing.mjs",
+      "exit": 0
+    },
+    {
+      "script": "scripts/check-js-parity.mjs",
+      "exit": 0
+    },
+    {
+      "script": "scripts/check-lang-pages.mjs",
+      "exit": 0
+    },
+    {
+      "script": "scripts/check-launch-facts.mjs",
+      "exit": 0,
+      "rerunAfterFinalEdits": true
+    },
+    {
+      "script": "scripts/check-linkerr.mjs",
+      "exit": 0
+    },
+    {
+      "script": "scripts/check-lipsync-retry.mjs",
+      "exit": 0
+    },
+    {
+      "script": "scripts/check-llm-capability-gates.mjs",
+      "exit": 0
+    },
+    {
+      "script": "scripts/check-llms-full.mjs",
+      "exit": 0,
+      "rerunAfterFinalEdits": true
+    },
+    {
+      "script": "scripts/check-login-state.mjs",
+      "exit": 0
+    },
+    {
+      "script": "scripts/check-lora-models.mjs",
+      "exit": 0
+    },
+    {
+      "script": "scripts/check-media-privacy.mjs",
+      "exit": 0
+    },
+    {
+      "script": "scripts/check-model-knob-clamp.mjs",
+      "exit": 0
+    },
+    {
+      "script": "scripts/check-mureka-lyrics.mjs",
+      "exit": 0
+    },
+    {
+      "script": "scripts/check-njs-delegation.mjs",
+      "exit": 0
+    },
+    {
+      "script": "scripts/check-njs-editor-delegation.mjs",
+      "exit": 0
+    },
+    {
+      "script": "scripts/check-picker-matches.mjs",
+      "exit": 0
+    },
+    {
+      "script": "scripts/check-play-stale-input.mjs",
+      "exit": 0
+    },
+    {
+      "script": "scripts/check-policy.mjs",
+      "exit": 0,
+      "rerunAfterFinalEdits": true
+    },
+    {
+      "script": "scripts/check-pricing.mjs",
+      "exit": 0
+    },
+    {
+      "script": "scripts/check-prompt-caps.mjs",
+      "exit": 0
+    },
+    {
+      "script": "scripts/check-quickadd.mjs",
+      "exit": 0
+    },
+    {
+      "script": "scripts/check-resize-plan.mjs",
+      "exit": 0
+    },
+    {
+      "script": "scripts/check-run-compat.mjs",
+      "exit": 0
+    },
+    {
+      "script": "scripts/check-run-gating.mjs",
+      "exit": 0
+    },
+    {
+      "script": "scripts/check-seed-cache.mjs",
+      "exit": 0
+    },
+    {
+      "script": "scripts/check-share-link.mjs",
+      "exit": 0
+    },
+    {
+      "script": "scripts/check-share-samples.mjs",
+      "exit": 0
+    },
+    {
+      "script": "scripts/check-stale-input-charge.mjs",
+      "exit": 0
+    },
+    {
+      "script": "scripts/check-sw-routing.mjs",
+      "exit": 0
+    },
+    {
+      "script": "scripts/check-sync-nanogpt-model-updates.mjs",
+      "exit": 0
+    },
+    {
+      "script": "scripts/check-twin-drift-cases.mjs",
+      "exit": 0
+    },
+    {
+      "script": "scripts/check-twin-drift.mjs",
+      "exit": 0
+    },
+    {
+      "script": "scripts/check-undo-history.mjs",
+      "exit": 0
+    },
+    {
+      "script": "scripts/check-updates.mjs",
+      "exit": 0
+    },
+    {
+      "script": "scripts/check-upscale.mjs",
+      "exit": 0
+    },
+    {
+      "script": "scripts/check-version-history.mjs",
+      "exit": 0
+    },
+    {
+      "script": "scripts/check-video-image-roles.mjs",
+      "exit": 0
+    },
+    {
+      "script": "scripts/check-video-mode-gate.mjs",
+      "exit": 0
+    },
+    {
+      "script": "scripts/check-video-resume.mjs",
+      "exit": 0
+    },
+    {
+      "script": "scripts/check-workflow-compat.mjs",
+      "exit": 0
+    }
+  ],
+  "generatedFiles": [
+    "gallery",
+    "guide examples",
+    "README share links",
+    "headless recipes",
+    "llms-full.txt including sibling library READMEs",
+    "changelog/feed"
+  ],
+  "existingBrowserSmoke": {
+    "desktop": "passed",
+    "mobileRetiredModel": "passed",
+    "journey": "sample → standalone app → share/export → recipient OAuth",
+    "providerRequests": "mocked; no paid calls"
+  },
+  "newBrowserChecks": "browser.json",
+  "diffReview": "Independent curator, product and runtime agents reviewed artifacts, source and provenance. Findings fixed: published media hashes now checked, moon narrative mismatch disclosed, video request options guarded.",
+  "privacy": "Configured credential value absent from new text/JSON/HTML files; published graph and sample checks also reject credential fields and remote media.",
+  "limitations": [
+    "Live MCP deployment/version check is skipped without a sibling checkout; no MCP catalog parity is claimed.",
+    "Audio was reviewed by a model; playback smoke was muted and is not human listening.",
+    "Model success does not establish all creative criteria; selected review.json files preserve remaining failures."
+  ]
+}
