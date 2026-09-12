@@ -1,0 +1,311 @@
+{
+  "date": "2026-09-12",
+  "siteCheckScripts": [
+    {
+      "script": "scripts/check-app-settings.mjs",
+      "exit": 0
+    },
+    {
+      "script": "scripts/check-apps-storage.mjs",
+      "exit": 0
+    },
+    {
+      "script": "scripts/check-audio-newest-sort.mjs",
+      "exit": 0
+    },
+    {
+      "script": "scripts/check-audio-resume.mjs",
+      "exit": 0
+    },
+    {
+      "script": "scripts/check-auth-lifecycle.mjs",
+      "exit": 0
+    },
+    {
+      "script": "scripts/check-bridge-consent.mjs",
+      "exit": 0
+    },
+    {
+      "script": "scripts/check-catalog-fallback.mjs",
+      "exit": 0
+    },
+    {
+      "script": "scripts/check-changelog.mjs",
+      "exit": 0
+    },
+    {
+      "script": "scripts/check-combine.mjs",
+      "exit": 0
+    },
+    {
+      "script": "scripts/check-connect-wires.mjs",
+      "exit": 0
+    },
+    {
+      "script": "scripts/check-cost-accrue.mjs",
+      "exit": 0
+    },
+    {
+      "script": "scripts/check-create-app.mjs",
+      "exit": 0
+    },
+    {
+      "script": "scripts/check-deploy-config.mjs",
+      "exit": 0
+    },
+    {
+      "script": "scripts/check-describe-apply.mjs",
+      "exit": 0
+    },
+    {
+      "script": "scripts/check-drifted-model.mjs",
+      "exit": 0
+    },
+    {
+      "script": "scripts/check-editor-ports.mjs",
+      "exit": 0
+    },
+    {
+      "script": "scripts/check-endpoint.mjs",
+      "exit": 0
+    },
+    {
+      "script": "scripts/check-example-alternates.mjs",
+      "exit": 0
+    },
+    {
+      "script": "scripts/check-example-models-offline.mjs",
+      "exit": 0
+    },
+    {
+      "script": "scripts/check-example-models.mjs",
+      "exit": 0
+    },
+    {
+      "script": "scripts/check-example-models.test.mjs",
+      "exit": 0
+    },
+    {
+      "script": "scripts/check-example-results.mjs",
+      "exit": 0
+    },
+    {
+      "script": "scripts/check-export.mjs",
+      "exit": 0
+    },
+    {
+      "script": "scripts/check-fibo-aspect.mjs",
+      "exit": 0
+    },
+    {
+      "script": "scripts/check-graph-persistence.mjs",
+      "exit": 0
+    },
+    {
+      "script": "scripts/check-graph-sigs.mjs",
+      "exit": 0
+    },
+    {
+      "script": "scripts/check-guide-examples.mjs",
+      "exit": 0
+    },
+    {
+      "script": "scripts/check-hidden-css.mjs",
+      "exit": 0
+    },
+    {
+      "script": "scripts/check-html-js.mjs",
+      "exit": 0
+    },
+    {
+      "script": "scripts/check-i18n-coverage.mjs",
+      "exit": 0
+    },
+    {
+      "script": "scripts/check-image-ports.mjs",
+      "exit": 0
+    },
+    {
+      "script": "scripts/check-import-pacing.mjs",
+      "exit": 0
+    },
+    {
+      "script": "scripts/check-js-parity.mjs",
+      "exit": 0
+    },
+    {
+      "script": "scripts/check-lang-pages.mjs",
+      "exit": 0
+    },
+    {
+      "script": "scripts/check-launch-facts.mjs",
+      "exit": 0
+    },
+    {
+      "script": "scripts/check-linkerr.mjs",
+      "exit": 0
+    },
+    {
+      "script": "scripts/check-lipsync-retry.mjs",
+      "exit": 0
+    },
+    {
+      "script": "scripts/check-llm-capability-gates.mjs",
+      "exit": 0
+    },
+    {
+      "script": "scripts/check-llms-full.mjs",
+      "exit": 0
+    },
+    {
+      "script": "scripts/check-login-state.mjs",
+      "exit": 0
+    },
+    {
+      "script": "scripts/check-lora-models.mjs",
+      "exit": 0
+    },
+    {
+      "script": "scripts/check-media-privacy.mjs",
+      "exit": 0
+    },
+    {
+      "script": "scripts/check-model-knob-clamp.mjs",
+      "exit": 0
+    },
+    {
+      "script": "scripts/check-mureka-lyrics.mjs",
+      "exit": 0
+    },
+    {
+      "script": "scripts/check-njs-delegation.mjs",
+      "exit": 0
+    },
+    {
+      "script": "scripts/check-njs-editor-delegation.mjs",
+      "exit": 0
+    },
+    {
+      "script": "scripts/check-picker-matches.mjs",
+      "exit": 0
+    },
+    {
+      "script": "scripts/check-play-stale-input.mjs",
+      "exit": 0
+    },
+    {
+      "script": "scripts/check-policy.mjs",
+      "exit": 0
+    },
+    {
+      "script": "scripts/check-pricing.mjs",
+      "exit": 0
+    },
+    {
+      "script": "scripts/check-prompt-caps.mjs",
+      "exit": 0
+    },
+    {
+      "script": "scripts/check-quickadd.mjs",
+      "exit": 0
+    },
+    {
+      "script": "scripts/check-resize-plan.mjs",
+      "exit": 0
+    },
+    {
+      "script": "scripts/check-run-compat.mjs",
+      "exit": 0
+    },
+    {
+      "script": "scripts/check-run-gating.mjs",
+      "exit": 0
+    },
+    {
+      "script": "scripts/check-seed-cache.mjs",
+      "exit": 0
+    },
+    {
+      "script": "scripts/check-share-link.mjs",
+      "exit": 0
+    },
+    {
+      "script": "scripts/check-share-samples.mjs",
+      "exit": 0
+    },
+    {
+      "script": "scripts/check-stale-input-charge.mjs",
+      "exit": 0
+    },
+    {
+      "script": "scripts/check-sw-routing.mjs",
+      "exit": 0
+    },
+    {
+      "script": "scripts/check-sync-nanogpt-model-updates.mjs",
+      "exit": 0
+    },
+    {
+      "script": "scripts/check-twin-drift-cases.mjs",
+      "exit": 0
+    },
+    {
+      "script": "scripts/check-twin-drift.mjs",
+      "exit": 0
+    },
+    {
+      "script": "scripts/check-undo-history.mjs",
+      "exit": 0
+    },
+    {
+      "script": "scripts/check-updates.mjs",
+      "exit": 0
+    },
+    {
+      "script": "scripts/check-upscale.mjs",
+      "exit": 0
+    },
+    {
+      "script": "scripts/check-version-history.mjs",
+      "exit": 0
+    },
+    {
+      "script": "scripts/check-video-image-roles.mjs",
+      "exit": 0
+    },
+    {
+      "script": "scripts/check-video-mode-gate.mjs",
+      "exit": 0
+    },
+    {
+      "script": "scripts/check-video-resume.mjs",
+      "exit": 0
+    },
+    {
+      "script": "scripts/check-workflow-compat.mjs",
+      "exit": 0
+    }
+  ],
+  "sourceTests": {
+    "pass": 14,
+    "fail": 0,
+    "optionalExecutorSkipped": 3,
+    "explicitSourceExecutorCasesPassed": 6
+  },
+  "alternateProvenance": {
+    "passed": 3,
+    "rejectedMutationCases": 6,
+    "checks": [
+      "captured bytes and input overrides",
+      "shown cost, date and models",
+      "exact puzzle text split",
+      "model-assisted audio review text",
+      "share links import effective alternate inputs",
+      "GM spoilers hidden by default"
+    ]
+  },
+  "browserReport": "showcase-browser.json",
+  "existingFirstVisitorSmoke": "desktop and mobile-retired-model passed with mocked requests",
+  "additionalPaidCalls": 0,
+  "delivery": "Draft pull requests; no production deployment or external activation verified."
+}
