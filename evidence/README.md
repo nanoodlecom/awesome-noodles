@@ -1,4 +1,6 @@
-# Three compositions, with the work visible
+# Compositions, with the work visible
+
+> Pocket mystery was retired from the public catalog (slop). Its archived runs below remain for audit history; it is no longer a gallery card or recipe.
 
 These September 12, 2026 runs test whether a combination makes something worth exploring: an illustrated puzzle, a story that goes through an actual revision, and a miniature film with sound generated from its motion. The [exploration report](../docs/examples-rebuild-2026-09-12.md) explains the historical choices and how the gallery, executors, skills and finished apps fit together.
 

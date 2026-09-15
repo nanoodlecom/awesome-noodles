@@ -9,7 +9,7 @@ import { dirname, join, resolve } from 'node:path';
 import { fileURLToPath, pathToFileURL } from 'node:url';
 
 export const root = resolve(dirname(fileURLToPath(import.meta.url)), '..');
-export const slugs = ['pocket-mystery', 'storyboard-relay', 'tiny-world-film'];
+export const slugs = ['storyboard-relay', 'tiny-world-film'];
 const MOCK_ORIGIN = 'https://composition.invalid';
 const NETWORK_TYPES = new Set(['llm', 'vision', 'image', 'edit', 'inpaint', 'tvideo', 'ivideo', 'vedit', 'lipsync', 'music', 'remix', 'tts', 'transcribe']);
 const MUSE = 'meta/muse-image/text-to-image';
@@ -24,25 +24,6 @@ const IMAGE = '/v1/images/generations';
 const VIDEO = '/api/generate-video';
 
 const contracts = {
-  'pocket-mystery': {
-    models: [['room', 'image', MUSE], ['observe', 'llm', GEMINI], ['mystery', 'llm', GLM]],
-    inputs: [
-      ['Room brief', 'brief', 'text', false],
-      ['Read the actual room', 'observe', 'prompt', false],
-      ['System prompt', 'observe', 'system', true],
-      ['Player handout and GM solution', 'mystery', 'system', true],
-    ],
-    outputs: [
-      ['Room illustration', 'illustration', 'resize', 'image:image'],
-      ['Visible landmarks', 'observations', 'join', 'text:text'],
-      ['Player handout and GM solution', 'mystery', 'llm', 'text:text'],
-    ],
-    wires: [
-      ['brief', 'text', 'room', 'prompt'], ['room', 'image', 'observe', 'img1'],
-      ['observe', 'text', 'mystery', 'prompt'], ['room', 'image', 'illustration', 'image'],
-      ['observe', 'text', 'observations', 'a'],
-    ],
-  },
   'storyboard-relay': {
     models: [['frame-one', 'image', MUSE], ['frame-two', 'edit', BANANA],
       ['review', 'llm', GEMINI], ['repair', 'edit', MUSE_EDIT], ['final-review', 'llm', GEMINI]],
@@ -136,12 +117,6 @@ export function checkCompositionSource(slug, graph) {
   }
   assert.deepEqual(sorted(graph.links.map(wire)), sorted(contract.wires),
     slug + ': changed composition wiring, including media order and output preservation');
-  if (slug === 'pocket-mystery') {
-    assert.deepEqual(graph.links.filter(l => l.to.node === 'observe').map(wire),
-      [['room', 'image', 'observe', 'img1']], 'Observer must receive pixels without a room-brief shortcut');
-    assert.deepEqual(graph.links.filter(l => l.to.node === 'mystery').map(wire),
-      [['observe', 'text', 'mystery', 'prompt']], 'Puzzle writer must receive actual observations only');
-  }
   if (slug === 'storyboard-relay') {
     assert(!graph.links.some(l => l.from.node === 'review' && l.to.node === 'final-review'),
       'Final critic must inspect repaired pixels, not recycle the old verdict');
@@ -225,8 +200,6 @@ async function makeMock(slug, caseId, variant, draftHasIssue) {
       }
       if (url.pathname === CHAT) {
         chatCount++;
-        if (slug === 'pocket-mystery' && body.model === GEMINI) return textResponse(observation);
-        if (slug === 'pocket-mystery' && body.model === GLM) return textResponse(puzzle);
         if (slug === 'storyboard-relay' && body.model === GEMINI) return textResponse(chatCount === 1 ? draftReview : finalReview);
       }
       if (url.pathname === VIDEO && slug === 'tiny-world-film') {
@@ -289,20 +262,6 @@ async function verifyRun(api, slug, graph, fixture, variant) {
       assert.equal(api.sniffMime(bytes), output.ports[0].type === 'image' ? 'image/png' : 'video/mp4',
         output.key + ': wrong media container');
     }
-  }
-
-  if (slug === 'pocket-mystery') {
-    const brief = effectiveInput(wf, inputs, 'Room brief');
-    assert.equal(request(mock, MUSE).prompt, brief, 'Room input must reach image generation');
-    assert.equal(request(mock, MUSE).size, '1:1', 'Room illustration must retain its square size');
-    const observer = request(mock, GEMINI), writer = request(mock, GLM);
-    assert.deepEqual(imageParts(observer), [mock.images[0]], 'Observer must receive the actual generated image');
-    assert(!allText(observer).includes(brief), 'Generation brief leaked into the pixel observer');
-    assert.equal(userText(writer), mock.observation, 'Puzzle writer must use the returned observations verbatim');
-    assert(!allText(writer).includes(brief), 'Generation brief leaked into puzzle writer');
-    assert.equal(imageParts(writer).length, 0, 'Text author receives observations rather than an unadvertised image shortcut');
-    assert.equal(result.get('Visible landmarks'), mock.observation, 'Observed evidence must remain inspectable');
-    assert.equal(result.get('Player handout and GM solution'), mock.puzzle);
   }
 
   if (slug === 'storyboard-relay') {

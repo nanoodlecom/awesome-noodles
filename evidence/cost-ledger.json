@@ -33,7 +33,7 @@
     {
       "run": "pocket-mystery/moon-menders-attic-2026-09-12T14-01-59-781Z/run.json",
       "case": "moon-menders-attic",
-      "selected": true,
+      "selected": false,
       "costUsd": 0.0115618,
       "costExact": true,
       "completedModelCalls": 3,
@@ -53,7 +53,7 @@
     {
       "run": "pocket-mystery/submarine-bakery-2026-09-12T14-02-00-934Z/run.json",
       "case": "submarine-bakery",
-      "selected": true,
+      "selected": false,
       "costUsd": 0.011462762500000001,
       "costExact": true,
       "completedModelCalls": 3,
