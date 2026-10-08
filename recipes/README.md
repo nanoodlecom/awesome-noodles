@@ -11,6 +11,7 @@ Do not hand-edit these files — run `node scripts/make-recipes.mjs` after chang
 | Recipe | Graph | Inputs |
 | --- | --- | --- |
 | [Game character kit](character-sprites.md) | [`graphs/character-sprites.noodle-graph.json`](../graphs/character-sprites.noodle-graph.json) | defaults in graph |
+| [One idea, three shots, one short film](idea-to-short-film.md) | [`graphs/idea-to-short-film.noodle-graph.json`](../graphs/idea-to-short-film.noodle-graph.json) | defaults in graph |
 | [Compare image models](image-model-arena.md) | [`graphs/image-model-arena.noodle-graph.json`](../graphs/image-model-arena.noodle-graph.json) | defaults in graph |
 | [Neon shrine duel](neon-shrine-duel.md) | [`graphs/neon-shrine-duel.noodle-graph.json`](../graphs/neon-shrine-duel.noodle-graph.json) | defaults in graph |
 | [Still to short clip](photo-to-video.md) | [`graphs/photo-to-video.noodle-graph.json`](../graphs/photo-to-video.noodle-graph.json) | defaults in graph |
