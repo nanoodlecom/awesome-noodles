@@ -1,0 +1,8 @@
+# recipe-note
+One sentence becomes a three-shot, 15-second film. GLM 5.3 Flash plans the film once, writing a HERO line, a STYLE line and three shots (setup, journey, payoff). Three shot writers copy the hero and style into one text-to-video prompt each, so three separate Seedance 1.5 Pro calls draw the same subject. The existing Combine videos node joins the clips in order. Inspired by ComfyUI-MiniMaxH3-Studio by @aiaicreate (https://x.com/aiaicreate/status/2107279553609830408). Only the idea is used.
+
+Change **Film idea**: one sentence with a clear hero and a beginning, middle and end. The graph exports **Short film**. The planner's text and the three clips are intermediates you can see on the canvas.
+
+Defaults are 720p, 5 s, 16:9, Generate Audio off. On 8 October 2026 the saved run reported $0.39: $0.13 per Seedance clip and about $0.0001 per GLM call. The editor's catalog estimate is lower (about $0.08 per clip). Prices are observations, not caps. Combine runs locally; headless runs need `ffmpeg` on PATH.
+
+The saved run is in the nanoodle gallery (https://nanoodle.com/examples/gallery/#idea-to-short-film). The same folded yellow paper boat appears in all three shots. Shot 2 repeats the launch beat before it drifts down the gutter, the cuts are hard, and the film is silent.
