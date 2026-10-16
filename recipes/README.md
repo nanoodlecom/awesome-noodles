@@ -13,6 +13,7 @@ Do not hand-edit these files — run `node scripts/make-recipes.mjs` after chang
 | [Game character kit](character-sprites.md) | [`graphs/character-sprites.noodle-graph.json`](../graphs/character-sprites.noodle-graph.json) | defaults in graph |
 | [Idea to 3D model](idea-to-3d-model.md) | [`graphs/idea-to-3d-model.noodle-graph.json`](../graphs/idea-to-3d-model.noodle-graph.json) | defaults in graph |
 | [Compare image models](image-model-arena.md) | [`graphs/image-model-arena.noodle-graph.json`](../graphs/image-model-arena.noodle-graph.json) | defaults in graph |
+| [Mix the references](mix-the-references.md) | [`graphs/mix-the-references.noodle-graph.json`](../graphs/mix-the-references.noodle-graph.json) | defaults in graph |
 | [Neon shrine duel](neon-shrine-duel.md) | [`graphs/neon-shrine-duel.noodle-graph.json`](../graphs/neon-shrine-duel.noodle-graph.json) | defaults in graph |
 | [Still to short clip](photo-to-video.md) | [`graphs/photo-to-video.noodle-graph.json`](../graphs/photo-to-video.noodle-graph.json) | defaults in graph |
 | [Sing](sing.md) | [`graphs/sing.noodle-graph.json`](../graphs/sing.noodle-graph.json) | defaults in graph |
