@@ -4,8 +4,6 @@
     {
       "id": "note",
       "type": "comment",
-      "x": 40,
-      "y": -200,
       "name": "humanize-comment",
       "fields": {
         "text": "Draft + Context + Guidance → 4 writers (3 community anti-slop finetunes + Gemini Flash) rewrite in Nano Maxi's voice → GLM-5.3 judge picks the most human rewrite that keeps every fact, or ORIGINAL. v2.3. Output: judge JSON {winner, disqualified, why, text}. Text only, no media. Client re-checks facts before posting."
@@ -14,8 +12,6 @@
     {
       "id": "draft",
       "type": "text",
-      "x": 40,
-      "y": 560,
       "name": "Draft",
       "fields": {
         "text": ""
@@ -24,8 +20,6 @@
     {
       "id": "context",
       "type": "text",
-      "x": 40,
-      "y": 40,
       "name": "Context",
       "fields": {
         "text": ""
@@ -34,8 +28,6 @@
     {
       "id": "guidance",
       "type": "text",
-      "x": 40,
-      "y": 300,
       "name": "Guidance",
       "fields": {
         "text": "a friendly, specific reply"
@@ -44,8 +36,6 @@
     {
       "id": "j-cg",
       "type": "join",
-      "x": 400,
-      "y": 120,
       "name": "Context+Guidance",
       "fields": {
         "sep": "\n\n=====\n\n"
@@ -54,8 +44,6 @@
     {
       "id": "j-in",
       "type": "join",
-      "x": 400,
-      "y": 420,
       "name": "Writer input",
       "fields": {
         "sep": "\n\n=====\n\n"
@@ -64,8 +52,6 @@
     {
       "id": "w-a",
       "type": "llm",
-      "x": 760,
-      "y": 0,
       "name": "Writer A (Qwen3.8-27B antislop)",
       "fields": {
         "model": "qwen/qwen3.8-27b-antislop",
@@ -77,8 +63,6 @@
     {
       "id": "w-b",
       "type": "llm",
-      "x": 760,
-      "y": 300,
       "name": "Writer B (Gemma-4-31B StyleTune)",
       "fields": {
         "model": "Gemma-4-31B-StyleTune",
@@ -90,8 +74,6 @@
     {
       "id": "w-c",
       "type": "llm",
-      "x": 760,
-      "y": 600,
       "name": "Writer C (Orion 26B-A4B v1.1)",
       "fields": {
         "model": "thedrummer/orion-26b-a4b-v1.1",
@@ -103,8 +85,6 @@
     {
       "id": "w-d",
       "type": "llm",
-      "x": 760,
-      "y": 900,
       "name": "Writer D (Gemini 3.8 Flash)",
       "fields": {
         "model": "google/gemini-3.8-flash",
@@ -116,8 +96,6 @@
     {
       "id": "lab-ORIGINAL",
       "type": "text",
-      "x": 1120,
-      "y": -300,
       "name": "Label ORIGINAL",
       "fields": {
         "text": "[ORIGINAL]"
@@ -126,8 +104,6 @@
     {
       "id": "c-ORIGINAL",
       "type": "join",
-      "x": 1400,
-      "y": -300,
       "name": "Labelled ORIGINAL",
       "fields": {
         "sep": "\n"
@@ -136,8 +112,6 @@
     {
       "id": "lab-A",
       "type": "text",
-      "x": 1120,
-      "y": 0,
       "name": "Label A",
       "fields": {
         "text": "[A]"
@@ -146,8 +120,6 @@
     {
       "id": "c-A",
       "type": "join",
-      "x": 1400,
-      "y": 0,
       "name": "Labelled A",
       "fields": {
         "sep": "\n"
@@ -156,8 +128,6 @@
     {
       "id": "lab-B",
       "type": "text",
-      "x": 1120,
-      "y": 300,
       "name": "Label B",
       "fields": {
         "text": "[B]"
@@ -166,8 +136,6 @@
     {
       "id": "c-B",
       "type": "join",
-      "x": 1400,
-      "y": 300,
       "name": "Labelled B",
       "fields": {
         "sep": "\n"
@@ -176,8 +144,6 @@
     {
       "id": "lab-C",
       "type": "text",
-      "x": 1120,
-      "y": 600,
       "name": "Label C",
       "fields": {
         "text": "[C]"
@@ -186,8 +152,6 @@
     {
       "id": "c-C",
       "type": "join",
-      "x": 1400,
-      "y": 600,
       "name": "Labelled C",
       "fields": {
         "sep": "\n"
@@ -196,8 +160,6 @@
     {
       "id": "lab-D",
       "type": "text",
-      "x": 1120,
-      "y": 900,
       "name": "Label D",
       "fields": {
         "text": "[D]"
@@ -206,8 +168,6 @@
     {
       "id": "c-D",
       "type": "join",
-      "x": 1400,
-      "y": 900,
       "name": "Labelled D",
       "fields": {
         "sep": "\n"
@@ -216,8 +176,6 @@
     {
       "id": "k1",
       "type": "join",
-      "x": 1700,
-      "y": -300,
       "name": "Judge: context+original",
       "fields": {
         "sep": "\n\n=====\n\n"
@@ -226,8 +184,6 @@
     {
       "id": "k2",
       "type": "join",
-      "x": 1700,
-      "y": 0,
       "name": "Judge: +A",
       "fields": {
         "sep": "\n\n=====\n\n"
@@ -236,8 +192,6 @@
     {
       "id": "k3",
       "type": "join",
-      "x": 1700,
-      "y": 300,
       "name": "Judge: +B",
       "fields": {
         "sep": "\n\n=====\n\n"
@@ -246,8 +200,6 @@
     {
       "id": "k4",
       "type": "join",
-      "x": 1700,
-      "y": 600,
       "name": "Judge: +C",
       "fields": {
         "sep": "\n\n=====\n\n"
@@ -256,8 +208,6 @@
     {
       "id": "k5",
       "type": "join",
-      "x": 1700,
-      "y": 900,
       "name": "Judge: +D",
       "fields": {
         "sep": "\n\n=====\n\n"
@@ -266,8 +216,6 @@
     {
       "id": "judge",
       "type": "llm",
-      "x": 2000,
-      "y": 300,
       "name": "Decider (GLM-5.3)",
       "fields": {
         "model": "z-ai/glm-5.3",
@@ -599,6 +547,6 @@
     }
   ],
   "x402": {
-    "usd": 0.0168
+    "usd": 0.010003379
   }
 }
