@@ -1,6 +1,6 @@
 # State machine audit — 6 November 2026
 
-Scope: all 14 current catalog graphs, all eight authoring/check/capture scripts,
+Scope: all 14 current catalog graphs, all seven authoring/check/capture scripts,
 the test workflow, generated recipes, and retained evidence. The reviewed source
 baseline is `0ca1cdc` (main, PR #104). The optional executor reference is
 `nanoodle-js@7734e7f6209f153a634b37bd1a691b67cc276817`.
