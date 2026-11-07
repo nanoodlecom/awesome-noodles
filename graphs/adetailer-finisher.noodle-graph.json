@@ -162,11 +162,11 @@
       "x": 3360,
       "y": 280,
       "fields": {
-        "model": "clarity-upscaler",
+        "model": "topaz-image-upscale",
         "prompt": ""
       },
       "w": 260,
-      "name": "Finished portrait - Clarity Upscaler"
+      "name": "Finished portrait - Topaz Image Upscale"
     }
   ],
   "links": [
