@@ -1,0 +1,237 @@
+{
+  "v": 1,
+  "nodes": [
+    {
+      "id": "c1",
+      "type": "comment",
+      "x": 60,
+      "y": 30,
+      "fields": {
+        "text": "The ComfyUI regional-prompting / masked-inpaint pattern: repaint one region at a time, each pass protected by its own mask, so finished regions are never re-rolled by the next pass. Every pass uses Nano Banana Edit, which the editor's own mask verification (proof/inpaint-mask-verification.md in the nanoodle repo) measured honouring a mask: the masked region changes, pixels outside stay put. Masks are white = repaint, black = keep, at the photo's full size. In the editor you can delete a Mask input and brush the mask straight onto its Inpaint node instead. See recipes/regional-inpaint-passes.md."
+      },
+      "w": 860,
+      "name": "Regional inpaint passes - three masks, three repaints, nothing else moves"
+    },
+    {
+      "id": "src",
+      "type": "upload",
+      "x": 60,
+      "y": 300,
+      "fields": {
+        "image": ""
+      },
+      "w": 240,
+      "name": "Photo"
+    },
+    {
+      "id": "m1",
+      "type": "upload",
+      "x": 60,
+      "y": 520,
+      "fields": {
+        "image": ""
+      },
+      "w": 240,
+      "name": "Mask 1"
+    },
+    {
+      "id": "t1",
+      "type": "text",
+      "x": 380,
+      "y": 520,
+      "fields": {
+        "text": "a large framed abstract painting in warm orange and teal, hanging straight"
+      },
+      "w": 260,
+      "name": "Region 1 - paint this"
+    },
+    {
+      "id": "i1",
+      "type": "inpaint",
+      "x": 380,
+      "y": 280,
+      "fields": {
+        "model": "nano-banana-edit",
+        "size": "auto"
+      },
+      "w": 260,
+      "name": "Region 1 repaint - Nano Banana Edit"
+    },
+    {
+      "id": "m2",
+      "type": "upload",
+      "x": 720,
+      "y": 520,
+      "fields": {
+        "image": ""
+      },
+      "w": 240,
+      "name": "Mask 2"
+    },
+    {
+      "id": "t2",
+      "type": "text",
+      "x": 1040,
+      "y": 520,
+      "fields": {
+        "text": "a tall green houseplant in a terracotta pot"
+      },
+      "w": 260,
+      "name": "Region 2 - paint this"
+    },
+    {
+      "id": "i2",
+      "type": "inpaint",
+      "x": 720,
+      "y": 280,
+      "fields": {
+        "model": "nano-banana-edit",
+        "size": "auto"
+      },
+      "w": 260,
+      "name": "Region 2 repaint - Nano Banana Edit"
+    },
+    {
+      "id": "m3",
+      "type": "upload",
+      "x": 1380,
+      "y": 520,
+      "fields": {
+        "image": ""
+      },
+      "w": 240,
+      "name": "Mask 3"
+    },
+    {
+      "id": "t3",
+      "type": "text",
+      "x": 1700,
+      "y": 520,
+      "fields": {
+        "text": "a small wooden side table with a stack of two books and a mug on it"
+      },
+      "w": 260,
+      "name": "Region 3 - paint this"
+    },
+    {
+      "id": "i3",
+      "type": "inpaint",
+      "x": 1380,
+      "y": 280,
+      "fields": {
+        "model": "nano-banana-edit",
+        "size": "auto"
+      },
+      "w": 260,
+      "name": "Finished photo - three regions repainted"
+    }
+  ],
+  "links": [
+    {
+      "id": "l1",
+      "from": {
+        "node": "src",
+        "port": "image"
+      },
+      "to": {
+        "node": "i1",
+        "port": "image"
+      }
+    },
+    {
+      "id": "l2",
+      "from": {
+        "node": "m1",
+        "port": "image"
+      },
+      "to": {
+        "node": "i1",
+        "port": "mask"
+      }
+    },
+    {
+      "id": "l3",
+      "from": {
+        "node": "t1",
+        "port": "text"
+      },
+      "to": {
+        "node": "i1",
+        "port": "prompt"
+      }
+    },
+    {
+      "id": "l4",
+      "from": {
+        "node": "i1",
+        "port": "image"
+      },
+      "to": {
+        "node": "i2",
+        "port": "image"
+      }
+    },
+    {
+      "id": "l5",
+      "from": {
+        "node": "m2",
+        "port": "image"
+      },
+      "to": {
+        "node": "i2",
+        "port": "mask"
+      }
+    },
+    {
+      "id": "l6",
+      "from": {
+        "node": "t2",
+        "port": "text"
+      },
+      "to": {
+        "node": "i2",
+        "port": "prompt"
+      }
+    },
+    {
+      "id": "l7",
+      "from": {
+        "node": "i2",
+        "port": "image"
+      },
+      "to": {
+        "node": "i3",
+        "port": "image"
+      }
+    },
+    {
+      "id": "l8",
+      "from": {
+        "node": "m3",
+        "port": "image"
+      },
+      "to": {
+        "node": "i3",
+        "port": "mask"
+      }
+    },
+    {
+      "id": "l9",
+      "from": {
+        "node": "t3",
+        "port": "text"
+      },
+      "to": {
+        "node": "i3",
+        "port": "prompt"
+      }
+    }
+  ],
+  "nid": 12,
+  "lid": 10,
+  "view": {
+    "panX": 40,
+    "panY": 40,
+    "scale": 0.7
+  }
+}
