@@ -18,6 +18,7 @@ Do not hand-edit these files — run `node scripts/make-recipes.mjs` after chang
 | [Mix the references](mix-the-references.md) | [`graphs/mix-the-references.noodle-graph.json`](../graphs/mix-the-references.noodle-graph.json) | defaults in graph |
 | [Neon shrine duel](neon-shrine-duel.md) | [`graphs/neon-shrine-duel.noodle-graph.json`](../graphs/neon-shrine-duel.noodle-graph.json) | defaults in graph |
 | [Still to short clip](photo-to-video.md) | [`graphs/photo-to-video.noodle-graph.json`](../graphs/photo-to-video.noodle-graph.json) | defaults in graph |
+| [Rain window loop](rain-window-loop.md) | [`graphs/rain-window-loop.noodle-graph.json`](../graphs/rain-window-loop.noodle-graph.json) | defaults in graph |
 | [Sing](sing.md) | [`graphs/sing.noodle-graph.json`](../graphs/sing.noodle-graph.json) | defaults in graph |
 | [Prompt to an editable SVG sticker](sketch-to-svg.md) | [`graphs/sketch-to-svg.noodle-graph.json`](../graphs/sketch-to-svg.noodle-graph.json) | defaults in graph |
 | [Song in, music video out](song-to-music-video.md) | [`graphs/song-to-music-video.noodle-graph.json`](../graphs/song-to-music-video.noodle-graph.json) | defaults in graph |
