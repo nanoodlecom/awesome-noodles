@@ -1,0 +1,379 @@
+{
+  "v": 1,
+  "nodes": [
+    {
+      "id": "c1",
+      "type": "comment",
+      "x": 60,
+      "y": 30,
+      "fields": {
+        "text": "The ComfyUI ADetailer pattern, rebuilt from Nanoodle parts: a vision model does the detector's job, an LLM turns its defect list into a surgical edit instruction, and two different edit models do the refine passes a crop-and-inpaint loop would do in ComfyUI. A Decide pick then chooses between the original and both passes - a bad fix can lose to the untouched image - and the winner is upscaled. Nanoodle has no crop, mask or paste-back node, so the passes are whole-frame: the localisation lives in the instruction, not in a bounding box. See recipes/adetailer-finisher.md."
+      },
+      "w": 860,
+      "name": "ADetailer finisher - detect, fix twice, pick the cleanest, upscale"
+    },
+    {
+      "id": "focus",
+      "type": "text",
+      "x": 700,
+      "y": 110,
+      "fields": {
+        "text": "faces and hands first; also eyes, teeth, ears, hairlines, jewellery, glasses, and any text or logos"
+      },
+      "w": 240,
+      "name": "Watch for"
+    },
+    {
+      "id": "src",
+      "type": "upload",
+      "x": 60,
+      "y": 300,
+      "fields": {
+        "image": ""
+      },
+      "w": 240,
+      "name": "Portrait"
+    },
+    {
+      "id": "detect",
+      "type": "vision",
+      "x": 380,
+      "y": 300,
+      "fields": {
+        "model": "google/gemini-3.8-flash",
+        "q": "You are the defect detector in an image-finishing pipeline (the ADetailer role). Inspect this image closely, especially every face and hand. List ONLY concrete, visible defects a retoucher could fix, one per line, each with its location: warped or asymmetric eyes, extra, fused or missing fingers, melted or duplicated jewellery, broken teeth, a smeared hairline, waxy or blotchy skin, garbled text or logos, distorted ears or glasses. Do not comment on style, composition, or anything a local edit cannot fix. Skip any category that is clean. If the whole image is clean, reply with exactly: CLEAN"
+      },
+      "w": 260,
+      "name": "Detect defects - Gemini",
+      "sizes": {
+        "q": 150
+      }
+    },
+    {
+      "id": "j1",
+      "type": "join",
+      "x": 720,
+      "y": 300,
+      "fields": {
+        "sep": "\n\n"
+      },
+      "w": 200,
+      "name": "Focus + defects"
+    },
+    {
+      "id": "brief1",
+      "type": "llm",
+      "x": 1000,
+      "y": 280,
+      "fields": {
+        "model": "z-ai/glm-5.3-flash",
+        "system": "You write ONE edit instruction for an image editor, from a defect list. Rules: name each defect and its fix, in the order given; demand surgical, local changes only - the person's identity, face shape, expression, pose, clothing, composition, lighting and background must stay exactly as they are; no beautifying, slimming, age changes or restyling; keep it under 120 words; output the instruction only, no preamble. The input starts with what to watch for, then the observed defects. If the defects say CLEAN, output exactly: Make no changes to the subject; apply only an extremely subtle, faithful polish to skin texture and fine detail, preserving everything else exactly."
+      },
+      "w": 280,
+      "name": "Fix brief - GLM",
+      "sizes": {
+        "system": 150
+      }
+    },
+    {
+      "id": "pass1",
+      "type": "edit",
+      "x": 1360,
+      "y": 280,
+      "fields": {
+        "model": "meta/muse-image/edit",
+        "size": "auto"
+      },
+      "w": 260,
+      "name": "Detail pass 1 - Muse Edit"
+    },
+    {
+      "id": "recheck",
+      "type": "vision",
+      "x": 1700,
+      "y": 300,
+      "fields": {
+        "model": "google/gemini-3.8-flash",
+        "q": "You are the second defect detector in an image-finishing pipeline. This image has already had one detail-fix pass. Inspect it closely, especially every face and hand, and list ONLY the defects that REMAIN, one per line, each with its location: warped or asymmetric eyes, extra, fused or missing fingers, melted or duplicated jewellery, broken teeth, a smeared hairline, waxy or blotchy skin, garbled text or logos, distorted ears or glasses. Also flag anything the first pass made WORSE or changed that it should not have (identity, expression, pose, clothing, background). If nothing remains, reply with exactly: CLEAN"
+      },
+      "w": 260,
+      "name": "Re-check - Gemini",
+      "sizes": {
+        "q": 150
+      }
+    },
+    {
+      "id": "j2",
+      "type": "join",
+      "x": 2040,
+      "y": 300,
+      "fields": {
+        "sep": "\n\n"
+      },
+      "w": 200,
+      "name": "Focus + remaining"
+    },
+    {
+      "id": "brief2",
+      "type": "llm",
+      "x": 2320,
+      "y": 280,
+      "fields": {
+        "model": "z-ai/glm-5.3-flash",
+        "system": "You write ONE edit instruction for an image editor, from a remaining-defect list. The editor receives TWO images: Image 1 is the current refined version - that is the one to edit. Image 2 is the untouched original - use it only as the identity and composition reference; the result must keep Image 2's person, pose and framing while carrying Image 1's fixes. Fix only the remaining defects listed, surgically and locally; change nothing else. Keep it under 120 words; output the instruction only, no preamble. If the list says CLEAN, output exactly: Make no changes; return Image 1 essentially unchanged, with at most an extremely subtle, faithful polish to fine detail."
+      },
+      "w": 280,
+      "name": "Second fix brief - GLM",
+      "sizes": {
+        "system": 150
+      }
+    },
+    {
+      "id": "pass2",
+      "type": "edit",
+      "x": 2680,
+      "y": 280,
+      "fields": {
+        "model": "nano-banana-edit",
+        "size": "auto"
+      },
+      "w": 260,
+      "name": "Detail pass 2 - Nano Banana Edit"
+    },
+    {
+      "id": "pick",
+      "type": "decide",
+      "x": 3020,
+      "y": 280,
+      "fields": {
+        "model": "perplexity/pplx-decider-v1.1-27b",
+        "mode": "pick",
+        "question": "Which image has the most natural, artifact-free faces and hands while best preserving the original person - same identity, expression, pose, clothing, composition and background? Penalise extra or fused fingers, warped eyes, melted jewellery, garbled text and waxy, over-smoothed skin. The candidates are the original and two refined versions of it; if a refined version changed the person's identity or the scene, prefer the version that stayed faithful, even if that is the original."
+      },
+      "w": 260,
+      "name": "Pick the cleanest - Decide",
+      "sizes": {
+        "question": 130
+      }
+    },
+    {
+      "id": "up",
+      "type": "edit",
+      "x": 3360,
+      "y": 280,
+      "fields": {
+        "model": "clarity-upscaler",
+        "prompt": ""
+      },
+      "w": 260,
+      "name": "Finished portrait - Clarity Upscaler"
+    }
+  ],
+  "links": [
+    {
+      "id": "l1",
+      "from": {
+        "node": "src",
+        "port": "image"
+      },
+      "to": {
+        "node": "detect",
+        "port": "image"
+      }
+    },
+    {
+      "id": "l2",
+      "from": {
+        "node": "focus",
+        "port": "text"
+      },
+      "to": {
+        "node": "j1",
+        "port": "a"
+      }
+    },
+    {
+      "id": "l3",
+      "from": {
+        "node": "detect",
+        "port": "text"
+      },
+      "to": {
+        "node": "j1",
+        "port": "b"
+      }
+    },
+    {
+      "id": "l4",
+      "from": {
+        "node": "j1",
+        "port": "text"
+      },
+      "to": {
+        "node": "brief1",
+        "port": "prompt"
+      }
+    },
+    {
+      "id": "l5",
+      "from": {
+        "node": "src",
+        "port": "image"
+      },
+      "to": {
+        "node": "pass1",
+        "port": "image"
+      }
+    },
+    {
+      "id": "l6",
+      "from": {
+        "node": "brief1",
+        "port": "text"
+      },
+      "to": {
+        "node": "pass1",
+        "port": "prompt"
+      }
+    },
+    {
+      "id": "l7",
+      "from": {
+        "node": "pass1",
+        "port": "image"
+      },
+      "to": {
+        "node": "recheck",
+        "port": "image"
+      }
+    },
+    {
+      "id": "l8",
+      "from": {
+        "node": "focus",
+        "port": "text"
+      },
+      "to": {
+        "node": "j2",
+        "port": "a"
+      }
+    },
+    {
+      "id": "l9",
+      "from": {
+        "node": "recheck",
+        "port": "text"
+      },
+      "to": {
+        "node": "j2",
+        "port": "b"
+      }
+    },
+    {
+      "id": "l10",
+      "from": {
+        "node": "j2",
+        "port": "text"
+      },
+      "to": {
+        "node": "brief2",
+        "port": "prompt"
+      }
+    },
+    {
+      "id": "l11",
+      "from": {
+        "node": "pass1",
+        "port": "image"
+      },
+      "to": {
+        "node": "pass2",
+        "port": "image"
+      }
+    },
+    {
+      "id": "l12",
+      "from": {
+        "node": "src",
+        "port": "image"
+      },
+      "to": {
+        "node": "pass2",
+        "port": "image2"
+      }
+    },
+    {
+      "id": "l13",
+      "from": {
+        "node": "brief2",
+        "port": "text"
+      },
+      "to": {
+        "node": "pass2",
+        "port": "prompt"
+      }
+    },
+    {
+      "id": "l14",
+      "from": {
+        "node": "detect",
+        "port": "text"
+      },
+      "to": {
+        "node": "pick",
+        "port": "text"
+      }
+    },
+    {
+      "id": "l15",
+      "from": {
+        "node": "src",
+        "port": "image"
+      },
+      "to": {
+        "node": "pick",
+        "port": "img1"
+      }
+    },
+    {
+      "id": "l16",
+      "from": {
+        "node": "pass1",
+        "port": "image"
+      },
+      "to": {
+        "node": "pick",
+        "port": "img2"
+      }
+    },
+    {
+      "id": "l17",
+      "from": {
+        "node": "pass2",
+        "port": "image"
+      },
+      "to": {
+        "node": "pick",
+        "port": "img3"
+      }
+    },
+    {
+      "id": "l18",
+      "from": {
+        "node": "pick",
+        "port": "image"
+      },
+      "to": {
+        "node": "up",
+        "port": "image"
+      }
+    }
+  ],
+  "nid": 14,
+  "lid": 19,
+  "view": {
+    "panX": 40,
+    "panY": 40,
+    "scale": 0.55
+  }
+}
