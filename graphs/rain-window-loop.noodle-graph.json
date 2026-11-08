@@ -1,0 +1,19 @@
+{
+ "v": 1,
+ "nodes": [
+  {"id":"c-intent","type":"comment","x":40,"y":-260,"w":1200,"fields":{"color":"yellow","text":"Loop with sound. FLUX.3 Klein paints a rainy shop window. Pixelcut Looping Video (motion: subtle) brings it to life in a 5 s clip that starts and ends on the same picture. ElevenLabs Sound Effects V3 with its Seamless loop switch ON makes 5 s of rain ambience that also wraps with no click. Soundtrack (loop on) joins them: picture AND sound loop forever, for an ambient screen, a shop-page hero or a background tab. Change the scene + sound text and ▶ Run."}},
+  {"id":"scene","type":"text","x":40,"y":40,"w":360,"name":"Scene","fields":{"text":"Cozy little bookshop window at night seen from inside, rain streaking down the glass, blurred warm street lights outside, on the wooden windowsill a stack of old books, a brass reading lamp glowing amber and a white teacup with a thin wisp of steam. Cinematic, warm and cool contrast, photoreal, still camera, no people, no text, no logos."}},
+  {"id":"picture","type":"image","x":440,"y":40,"w":300,"name":"Still · FLUX.3 Klein","fields":{"model":"blackforestlabs/flux-3/klein/text-to-image","size":"1024x1024","variations":"1"}},
+  {"id":"loop","type":"ivideo","x":780,"y":40,"w":340,"name":"Seamless picture loop · Pixelcut (subtle)","fields":{"model":"pixelcut/looping-video","prompt":"Raindrops trickle down the window glass, the steam from the teacup curls gently, the street lights outside shimmer softly. Camera locked, lighting steady.","resolution":"480p","duration":"5","modelOpts":{"motion":"subtle","include_audio":false}}},
+  {"id":"sound","type":"text","x":440,"y":300,"w":300,"name":"Sound","fields":{"text":"Steady gentle rain pattering on a window pane, soft drips, a calm cozy indoor room tone, no thunder, no music, no voices."}},
+  {"id":"ambience","type":"music","x":780,"y":300,"w":340,"name":"Seamless sound loop · ElevenLabs SFX V3 (loop)","fields":{"model":"elevenlabs/sound-effects/v3","duration":"5","extraJson":"{\"loop\": true}"}},
+  {"id":"mix","type":"soundtrack","x":1160,"y":160,"w":260,"name":"Soundtrack (loop on)","fields":{"loop":true}}
+ ],
+ "links": [
+  {"id":"l1","from":{"node":"scene","port":"text"},"to":{"node":"picture","port":"prompt"}},
+  {"id":"l2","from":{"node":"picture","port":"image"},"to":{"node":"loop","port":"image"}},
+  {"id":"l3","from":{"node":"sound","port":"text"},"to":{"node":"ambience","port":"prompt"}},
+  {"id":"l4","from":{"node":"loop","port":"video"},"to":{"node":"mix","port":"video"}},
+  {"id":"l5","from":{"node":"ambience","port":"audio"},"to":{"node":"mix","port":"audio"}}
+ ]
+}
