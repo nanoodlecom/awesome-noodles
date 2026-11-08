@@ -1,0 +1,236 @@
+{
+  "v": 1,
+  "nodes": [
+    {
+      "id": "c1",
+      "type": "comment",
+      "x": 60,
+      "y": 30,
+      "fields": {
+        "text": "An LLM packer writes a 12-item carry-on list from a trip brief, a second LLM turns the list into a flat-lay photo brief, and Muse renders the lay-out. Then the loop closes: a Gemini vision checker inventories only what is actually visible in the render, a GLM auditor ticks the packing list off against that inventory - present, missing, extra - and a Decide judge labels the lay-out packed exactly, one item missing, several missing or extras snuck in. The render has to answer to the list. Four model families, four different jobs. See recipes/pack-the-bag-checked.md."
+      },
+      "w": 900,
+      "name": "Pack the bag, checked - list, lay out, read back, tick off"
+    },
+    {
+      "id": "brief",
+      "type": "text",
+      "x": 60,
+      "y": 300,
+      "fields": {
+        "text": "Four days in a rainy coastal city in late autumn, one carry-on bag only. Days spent walking and visiting museums, one smart-casual dinner, two early-morning runs along the shore, and a laptop for two work sessions. The traveller runs cold, hates bulk, and the hotel provides no umbrella."
+      },
+      "w": 300,
+      "name": "Trip brief"
+    },
+    {
+      "id": "packer",
+      "type": "llm",
+      "x": 440,
+      "y": 280,
+      "fields": {
+        "model": "z-ai/glm-5.3-flash",
+        "system": "You are a meticulous travel packer. The input is a trip brief. Write ONE packing list for a single carry-on bag in this exact shape: exactly 12 items, one per line, numbered 1 to 12, each item specific enough to recognise in a photo - quantity, colour or material, and what it is (for example '1. navy merino crew-neck sweater'). Cover clothing, footwear, weather gear, tech and toiletries as the brief demands. Every item must be a distinct physical object that can be laid out flat and seen from above - nothing worn, nothing in a pocket, no documents, no liquids decanted into unmarked bottles. Favour the items this traveller is most likely to forget. Output the list only, no preamble, no closing remarks."
+      },
+      "w": 280,
+      "name": "Packing list - GLM packs the bag",
+      "sizes": {
+        "system": 150
+      }
+    },
+    {
+      "id": "stylist",
+      "type": "llm",
+      "x": 800,
+      "y": 280,
+      "fields": {
+        "model": "z-ai/glm-5.3-flash",
+        "system": "You direct flat-lay photography. The input is a numbered packing list of 12 items. Output ONE image prompt, under 110 words, for a top-down flat-lay photograph: name every one of the 12 items exactly once with its colour or material, arranged in neat un-overlapping rows on a plain light-grey bedsheet, soft daylight, each item fully visible and separate from the others, no bag, no people, no hands, no text, no labels, nothing in the frame that is not on the list. Output the prompt only."
+      },
+      "w": 280,
+      "name": "Flat-lay brief - GLM art-directs",
+      "sizes": {
+        "system": 150
+      }
+    },
+    {
+      "id": "lay",
+      "type": "image",
+      "x": 1160,
+      "y": 280,
+      "fields": {
+        "model": "meta/muse-image/text-to-image",
+        "size": "1:1",
+        "variations": "1"
+      },
+      "w": 260,
+      "name": "Flat lay - Muse renders the lay-out"
+    },
+    {
+      "id": "audit",
+      "type": "decide",
+      "x": 1500,
+      "y": 280,
+      "fields": {
+        "model": "perplexity/pplx-decider-v1.1-27b",
+        "mode": "choose",
+        "question": "The text is a packing list of 12 items for one trip. The image is a rendered flat lay that claims to show exactly those items, each once. Which verdict fits? 'packed exactly' means every listed item is visible and nothing unlisted appears. 'one item missing' means exactly one listed item cannot be found and there are no unlisted items. 'several missing' means two or more listed items cannot be found. 'extras snuck in' means every listed item is visible but one or more unlisted items also appear. Judge the items, not the photography.",
+        "options": "packed exactly\none item missing\nseveral missing\nextras snuck in"
+      },
+      "w": 280,
+      "name": "Flat lay - audited",
+      "sizes": {
+        "question": 130
+      }
+    },
+    {
+      "id": "look",
+      "type": "vision",
+      "x": 1160,
+      "y": 580,
+      "fields": {
+        "model": "google/gemini-3.8-flash",
+        "q": "You are the floor checker in a packing pipeline. Look at this top-down flat lay of travel items and list ONLY the items you can actually see, one per line, each with its colour or material and a count if there is more than one. Do not guess at anything hidden, folded inside something else, or partly out of frame - if you are unsure of an item, give your best guess and mark it '(?)'. Do not compare it to any list; just report what is visibly there."
+      },
+      "w": 260,
+      "name": "Floor check - Gemini reads the lay-out",
+      "sizes": {
+        "q": 150
+      }
+    },
+    {
+      "id": "j1",
+      "type": "join",
+      "x": 1500,
+      "y": 580,
+      "fields": {
+        "sep": "\n\nVISIBLE IN THE FLAT LAY:\n"
+      },
+      "w": 200,
+      "name": "List + floor check"
+    },
+    {
+      "id": "checker",
+      "type": "llm",
+      "x": 1780,
+      "y": 560,
+      "fields": {
+        "model": "z-ai/glm-5.3-flash",
+        "system": "You are a packing auditor. The input gives a numbered packing list of 12 items, then the marker 'VISIBLE IN THE FLAT LAY:' and an inventory of what a checker could actually see in the rendered flat lay. Compare the two, item by item. Output one line per packed item, in list order, starting 'PRESENT - ' if a matching item is visible or 'MISSING - ' if it is not, followed by the item's short name. Then one 'EXTRA - ' line for each visible item that is not on the packing list, if any. End with one line 'Summary: X of 12 present.' Judge by item identity, colour and count; a close colour match counts as present. Output the audit only, no preamble."
+      },
+      "w": 280,
+      "name": "Tick-off - GLM audits the list",
+      "sizes": {
+        "system": 150
+      }
+    }
+  ],
+  "links": [
+    {
+      "id": "l1",
+      "from": {
+        "node": "brief",
+        "port": "text"
+      },
+      "to": {
+        "node": "packer",
+        "port": "prompt"
+      }
+    },
+    {
+      "id": "l2",
+      "from": {
+        "node": "packer",
+        "port": "text"
+      },
+      "to": {
+        "node": "stylist",
+        "port": "prompt"
+      }
+    },
+    {
+      "id": "l3",
+      "from": {
+        "node": "stylist",
+        "port": "text"
+      },
+      "to": {
+        "node": "lay",
+        "port": "prompt"
+      }
+    },
+    {
+      "id": "l4",
+      "from": {
+        "node": "packer",
+        "port": "text"
+      },
+      "to": {
+        "node": "audit",
+        "port": "text"
+      }
+    },
+    {
+      "id": "l5",
+      "from": {
+        "node": "lay",
+        "port": "image"
+      },
+      "to": {
+        "node": "audit",
+        "port": "img1"
+      }
+    },
+    {
+      "id": "l6",
+      "from": {
+        "node": "lay",
+        "port": "image"
+      },
+      "to": {
+        "node": "look",
+        "port": "image"
+      }
+    },
+    {
+      "id": "l7",
+      "from": {
+        "node": "packer",
+        "port": "text"
+      },
+      "to": {
+        "node": "j1",
+        "port": "a"
+      }
+    },
+    {
+      "id": "l8",
+      "from": {
+        "node": "look",
+        "port": "text"
+      },
+      "to": {
+        "node": "j1",
+        "port": "b"
+      }
+    },
+    {
+      "id": "l9",
+      "from": {
+        "node": "j1",
+        "port": "text"
+      },
+      "to": {
+        "node": "checker",
+        "port": "prompt"
+      }
+    }
+  ],
+  "nid": 10,
+  "lid": 10,
+  "view": {
+    "panX": 40,
+    "panY": 40,
+    "scale": 0.6
+  }
+}
