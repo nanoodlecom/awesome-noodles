@@ -1,0 +1,221 @@
+{
+  "v": 1,
+  "nodes": [
+    {
+      "id": "c1",
+      "type": "comment",
+      "x": 60,
+      "y": 30,
+      "fields": {
+        "text": "A vision model inventories a real fridge photo, an LLM chef invents a no-shopping recipe from only what is there, a second LLM turns the recipe into a food-styling brief, and a different image model renders the plate. A Decide judge then audits the render against the recipe and labels it faithful, minor liberties, phantom ingredient or wrong dish - the render has to answer to the inventory. Four model families, four different jobs. See recipes/fridge-to-feast.md."
+      },
+      "w": 860,
+      "name": "Fridge to feast - inventory, invent, render, audit"
+    },
+    {
+      "id": "src",
+      "type": "upload",
+      "x": 60,
+      "y": 300,
+      "fields": {
+        "image": ""
+      },
+      "w": 240,
+      "name": "Fridge photo"
+    },
+    {
+      "id": "prefs",
+      "type": "text",
+      "x": 380,
+      "y": 560,
+      "fields": {
+        "text": "Dinner for two, ready in about 25 minutes, one pan or one pot, no special equipment. Staples on hand: salt, black pepper, cooking oil, dried herbs. Nothing may be bought - cook only from the inventory below."
+      },
+      "w": 300,
+      "name": "Constraints"
+    },
+    {
+      "id": "inv",
+      "type": "vision",
+      "x": 380,
+      "y": 300,
+      "fields": {
+        "model": "google/gemini-3.8-flash",
+        "q": "You are the inventory clerk in a cooking pipeline. Look at this photo of an open fridge (or of groceries laid out) and list ONLY the edible ingredients you can actually see, one per line, each with a rough quantity (for example 'eggs - about 6', 'cheddar - half a block', 'spinach - one bag, wilting'). Include produce, dairy, proteins, jars, condiments and leftovers you can identify. If you are unsure of an item, give your best guess and mark it '(?)'. Do not invent anything that is not visible, do not suggest dishes, and do not comment on freshness or safety - you cannot judge that from a photo."
+      },
+      "w": 260,
+      "name": "Inventory - Gemini reads the fridge",
+      "sizes": {
+        "q": 150
+      }
+    },
+    {
+      "id": "j1",
+      "type": "join",
+      "x": 720,
+      "y": 300,
+      "fields": {
+        "sep": "\n\n"
+      },
+      "w": 200,
+      "name": "Constraints + inventory"
+    },
+    {
+      "id": "chef",
+      "type": "llm",
+      "x": 1000,
+      "y": 280,
+      "fields": {
+        "model": "z-ai/glm-5.3-flash",
+        "system": "You are a resourceful home chef. The input gives cooking constraints first, then a fridge inventory. Invent ONE main dish that uses ONLY inventoried ingredients plus salt, black pepper, cooking oil and dried herbs - nothing else may be shopped for. Favour the most perishable items first. Write the recipe in this exact shape: a title line; a 'Uses:' line listing the inventoried ingredients you use; then numbered steps a home cook can follow inside the time allowed, with quantities drawn from the inventory. Output the recipe only, no preamble."
+      },
+      "w": 280,
+      "name": "Chef - GLM writes the recipe",
+      "sizes": {
+        "system": 150
+      }
+    },
+    {
+      "id": "brief",
+      "type": "llm",
+      "x": 1360,
+      "y": 280,
+      "fields": {
+        "model": "z-ai/glm-5.3-flash",
+        "system": "You are the food stylist for a recipe shoot. The input is a recipe. Output ONE image prompt, under 90 words, describing exactly that finished dish as an overhead food photograph: name the dish, list its visible key ingredients and colours, put it on a plain ceramic plate or bowl on a wooden kitchen table, soft window light, gentle steam if the dish is hot, no people, no hands, no text, no packaging. Describe only what should be visible in the photo. Output the prompt only."
+      },
+      "w": 280,
+      "name": "Plating brief - GLM art-directs",
+      "sizes": {
+        "system": 150
+      }
+    },
+    {
+      "id": "dish",
+      "type": "image",
+      "x": 1720,
+      "y": 280,
+      "fields": {
+        "model": "meta/muse-image/text-to-image",
+        "size": "1:1",
+        "variations": "1"
+      },
+      "w": 260,
+      "name": "Plated dish - Muse renders it"
+    },
+    {
+      "id": "audit",
+      "type": "decide",
+      "x": 2060,
+      "y": 280,
+      "fields": {
+        "model": "perplexity/pplx-decider-v1.1-27b",
+        "mode": "choose",
+        "question": "The text is a recipe a chef wrote from a fridge inventory. The image is a rendered plate that claims to be that recipe. Which verdict fits? 'faithful plate' means it is that dish and every main ingredient visible in it appears in the recipe. 'minor liberties' means it is that dish with only garnish-level or styling differences. 'phantom ingredient' means a main ingredient is clearly visible that the recipe never had. 'wrong dish' means it is a different dish altogether. Judge the food, not the photography.",
+        "options": "faithful plate\nminor liberties\nphantom ingredient\nwrong dish"
+      },
+      "w": 280,
+      "name": "Plated dish - audited",
+      "sizes": {
+        "question": 130
+      }
+    }
+  ],
+  "links": [
+    {
+      "id": "l1",
+      "from": {
+        "node": "src",
+        "port": "image"
+      },
+      "to": {
+        "node": "inv",
+        "port": "image"
+      }
+    },
+    {
+      "id": "l2",
+      "from": {
+        "node": "prefs",
+        "port": "text"
+      },
+      "to": {
+        "node": "j1",
+        "port": "a"
+      }
+    },
+    {
+      "id": "l3",
+      "from": {
+        "node": "inv",
+        "port": "text"
+      },
+      "to": {
+        "node": "j1",
+        "port": "b"
+      }
+    },
+    {
+      "id": "l4",
+      "from": {
+        "node": "j1",
+        "port": "text"
+      },
+      "to": {
+        "node": "chef",
+        "port": "prompt"
+      }
+    },
+    {
+      "id": "l5",
+      "from": {
+        "node": "chef",
+        "port": "text"
+      },
+      "to": {
+        "node": "brief",
+        "port": "prompt"
+      }
+    },
+    {
+      "id": "l6",
+      "from": {
+        "node": "brief",
+        "port": "text"
+      },
+      "to": {
+        "node": "dish",
+        "port": "prompt"
+      }
+    },
+    {
+      "id": "l7",
+      "from": {
+        "node": "chef",
+        "port": "text"
+      },
+      "to": {
+        "node": "audit",
+        "port": "text"
+      }
+    },
+    {
+      "id": "l8",
+      "from": {
+        "node": "dish",
+        "port": "image"
+      },
+      "to": {
+        "node": "audit",
+        "port": "img1"
+      }
+    }
+  ],
+  "nid": 10,
+  "lid": 9,
+  "view": {
+    "panX": 40,
+    "panY": 40,
+    "scale": 0.6
+  }
+}
