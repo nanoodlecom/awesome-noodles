@@ -22,6 +22,7 @@ Do not hand-edit these files — run `node scripts/make-recipes.mjs` after chang
 | [Still to short clip](photo-to-video.md) | [`graphs/photo-to-video.noodle-graph.json`](../graphs/photo-to-video.noodle-graph.json) | defaults in graph |
 | [Rain window loop](rain-window-loop.md) | [`graphs/rain-window-loop.noodle-graph.json`](../graphs/rain-window-loop.noodle-graph.json) | defaults in graph |
 | [Regional inpaint passes](regional-inpaint-passes.md) | [`graphs/regional-inpaint-passes.noodle-graph.json`](../graphs/regional-inpaint-passes.noodle-graph.json) | needs Photo, Mask 1, Mask 2, Mask 3 |
+| [Room makeover, audited](room-makeover-audit.md) | [`graphs/room-makeover-audit.noodle-graph.json`](../graphs/room-makeover-audit.noodle-graph.json) | needs Room photo |
 | [Sing](sing.md) | [`graphs/sing.noodle-graph.json`](../graphs/sing.noodle-graph.json) | defaults in graph |
 | [Prompt to an editable SVG sticker](sketch-to-svg.md) | [`graphs/sketch-to-svg.noodle-graph.json`](../graphs/sketch-to-svg.noodle-graph.json) | defaults in graph |
 | [Song in, music video out](song-to-music-video.md) | [`graphs/song-to-music-video.noodle-graph.json`](../graphs/song-to-music-video.noodle-graph.json) | defaults in graph |
