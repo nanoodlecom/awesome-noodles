@@ -10,6 +10,7 @@ Do not hand-edit these files — run `node scripts/make-recipes.mjs` after chang
 
 | Recipe | Graph | Inputs |
 | --- | --- | --- |
+| [ADetailer finisher](adetailer-finisher.md) | [`graphs/adetailer-finisher.noodle-graph.json`](../graphs/adetailer-finisher.noodle-graph.json) | needs Portrait |
 | [Game character kit](character-sprites.md) | [`graphs/character-sprites.noodle-graph.json`](../graphs/character-sprites.noodle-graph.json) | defaults in graph |
 | [A composer that watches your film](composer-watches-your-film.md) | [`graphs/composer-watches-your-film.noodle-graph.json`](../graphs/composer-watches-your-film.noodle-graph.json) | defaults in graph |
 | [Humanize a comment](humanize-comment.md) | [`graphs/humanize-comment.noodle-graph.json`](../graphs/humanize-comment.noodle-graph.json) | defaults in graph |
@@ -19,6 +20,7 @@ Do not hand-edit these files — run `node scripts/make-recipes.mjs` after chang
 | [Neon shrine duel](neon-shrine-duel.md) | [`graphs/neon-shrine-duel.noodle-graph.json`](../graphs/neon-shrine-duel.noodle-graph.json) | defaults in graph |
 | [Still to short clip](photo-to-video.md) | [`graphs/photo-to-video.noodle-graph.json`](../graphs/photo-to-video.noodle-graph.json) | defaults in graph |
 | [Rain window loop](rain-window-loop.md) | [`graphs/rain-window-loop.noodle-graph.json`](../graphs/rain-window-loop.noodle-graph.json) | defaults in graph |
+| [Regional inpaint passes](regional-inpaint-passes.md) | [`graphs/regional-inpaint-passes.noodle-graph.json`](../graphs/regional-inpaint-passes.noodle-graph.json) | needs Photo, Mask 1, Mask 2, Mask 3 |
 | [Sing](sing.md) | [`graphs/sing.noodle-graph.json`](../graphs/sing.noodle-graph.json) | defaults in graph |
 | [Prompt to an editable SVG sticker](sketch-to-svg.md) | [`graphs/sketch-to-svg.noodle-graph.json`](../graphs/sketch-to-svg.noodle-graph.json) | defaults in graph |
 | [Song in, music video out](song-to-music-video.md) | [`graphs/song-to-music-video.noodle-graph.json`](../graphs/song-to-music-video.noodle-graph.json) | defaults in graph |

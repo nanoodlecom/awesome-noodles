@@ -1,0 +1,333 @@
+{
+  "v": 1,
+  "nodes": [
+    {
+      "id": "c1",
+      "type": "comment",
+      "x": 60,
+      "y": 30,
+      "fields": {
+        "text": "The ComfyUI regional-prompting / masked-inpaint pattern: repaint one region at a time, each pass protected by its own mask, so finished regions are never re-rolled by the next pass. Every pass uses Nano Banana Edit, which the editor's own mask verification (proof/inpaint-mask-verification.md in the nanoodle repo) measured honouring a mask: the masked region changes, pixels outside stay put. Masks are white = repaint, black = keep, at the photo's full size. In the editor you can delete a Mask input and brush the mask straight onto its Inpaint node instead. See recipes/regional-inpaint-passes.md. Every upload first passes a free local Resize (fit inside 1024x1024) and every pass is pinned to 1024x1024 out: a 1600x1600 PNG photo is ~3.4 MB, its base64 data URL plus the mask pushed the first live attempt's request body past NanoGPT's edge limit (413 FUNCTION_PAYLOAD_TOO_LARGE at Region 1, $0 billed, diagnosed 2026-11-07) \u2014 the caps keep each request small and keep every pass's output exactly the size the next mask was resized to. Photo and masks get the same fit, so registration holds."
+      },
+      "w": 860,
+      "name": "Regional inpaint passes - three masks, three repaints, nothing else moves"
+    },
+    {
+      "id": "src",
+      "type": "upload",
+      "x": 60,
+      "y": 300,
+      "fields": {
+        "image": ""
+      },
+      "w": 240,
+      "name": "Photo"
+    },
+    {
+      "id": "r0",
+      "type": "resize",
+      "x": 380,
+      "y": 300,
+      "fields": {
+        "mode": "fit",
+        "width": "1024",
+        "height": "1024"
+      },
+      "w": 260,
+      "name": "Photo - capped at 1024 (Resize)"
+    },
+    {
+      "id": "m1",
+      "type": "upload",
+      "x": 700,
+      "y": 560,
+      "fields": {
+        "image": ""
+      },
+      "w": 240,
+      "name": "Mask 1"
+    },
+    {
+      "id": "rm1",
+      "type": "resize",
+      "x": 1020,
+      "y": 560,
+      "fields": {
+        "mode": "fit",
+        "width": "1024",
+        "height": "1024"
+      },
+      "w": 260,
+      "name": "Mask 1 - capped at 1024 (Resize)"
+    },
+    {
+      "id": "t1",
+      "type": "text",
+      "x": 700,
+      "y": 820,
+      "fields": {
+        "text": "a large framed abstract painting in warm orange and teal, hanging straight"
+      },
+      "w": 260,
+      "name": "Region 1 - paint this"
+    },
+    {
+      "id": "i1",
+      "type": "inpaint",
+      "x": 700,
+      "y": 280,
+      "fields": {
+        "model": "nano-banana-edit",
+        "size": "1024x1024"
+      },
+      "w": 260,
+      "name": "Region 1 repaint - Nano Banana Edit"
+    },
+    {
+      "id": "m2",
+      "type": "upload",
+      "x": 1340,
+      "y": 560,
+      "fields": {
+        "image": ""
+      },
+      "w": 240,
+      "name": "Mask 2"
+    },
+    {
+      "id": "rm2",
+      "type": "resize",
+      "x": 1660,
+      "y": 560,
+      "fields": {
+        "mode": "fit",
+        "width": "1024",
+        "height": "1024"
+      },
+      "w": 260,
+      "name": "Mask 2 - capped at 1024 (Resize)"
+    },
+    {
+      "id": "t2",
+      "type": "text",
+      "x": 1340,
+      "y": 820,
+      "fields": {
+        "text": "a tall green houseplant in a terracotta pot"
+      },
+      "w": 260,
+      "name": "Region 2 - paint this"
+    },
+    {
+      "id": "i2",
+      "type": "inpaint",
+      "x": 1340,
+      "y": 280,
+      "fields": {
+        "model": "nano-banana-edit",
+        "size": "1024x1024"
+      },
+      "w": 260,
+      "name": "Region 2 repaint - Nano Banana Edit"
+    },
+    {
+      "id": "m3",
+      "type": "upload",
+      "x": 1980,
+      "y": 560,
+      "fields": {
+        "image": ""
+      },
+      "w": 240,
+      "name": "Mask 3"
+    },
+    {
+      "id": "rm3",
+      "type": "resize",
+      "x": 2300,
+      "y": 560,
+      "fields": {
+        "mode": "fit",
+        "width": "1024",
+        "height": "1024"
+      },
+      "w": 260,
+      "name": "Mask 3 - capped at 1024 (Resize)"
+    },
+    {
+      "id": "t3",
+      "type": "text",
+      "x": 1980,
+      "y": 820,
+      "fields": {
+        "text": "a small wooden side table with a stack of two books and a mug on it"
+      },
+      "w": 260,
+      "name": "Region 3 - paint this"
+    },
+    {
+      "id": "i3",
+      "type": "inpaint",
+      "x": 1980,
+      "y": 280,
+      "fields": {
+        "model": "nano-banana-edit",
+        "size": "1024x1024"
+      },
+      "w": 260,
+      "name": "Finished photo - three regions repainted"
+    }
+  ],
+  "links": [
+    {
+      "id": "l1",
+      "from": {
+        "node": "src",
+        "port": "image"
+      },
+      "to": {
+        "node": "r0",
+        "port": "image"
+      }
+    },
+    {
+      "id": "l2",
+      "from": {
+        "node": "r0",
+        "port": "image"
+      },
+      "to": {
+        "node": "i1",
+        "port": "image"
+      }
+    },
+    {
+      "id": "l3",
+      "from": {
+        "node": "m1",
+        "port": "image"
+      },
+      "to": {
+        "node": "rm1",
+        "port": "image"
+      }
+    },
+    {
+      "id": "l4",
+      "from": {
+        "node": "rm1",
+        "port": "image"
+      },
+      "to": {
+        "node": "i1",
+        "port": "mask"
+      }
+    },
+    {
+      "id": "l5",
+      "from": {
+        "node": "t1",
+        "port": "text"
+      },
+      "to": {
+        "node": "i1",
+        "port": "prompt"
+      }
+    },
+    {
+      "id": "l6",
+      "from": {
+        "node": "i1",
+        "port": "image"
+      },
+      "to": {
+        "node": "i2",
+        "port": "image"
+      }
+    },
+    {
+      "id": "l7",
+      "from": {
+        "node": "m2",
+        "port": "image"
+      },
+      "to": {
+        "node": "rm2",
+        "port": "image"
+      }
+    },
+    {
+      "id": "l8",
+      "from": {
+        "node": "rm2",
+        "port": "image"
+      },
+      "to": {
+        "node": "i2",
+        "port": "mask"
+      }
+    },
+    {
+      "id": "l9",
+      "from": {
+        "node": "t2",
+        "port": "text"
+      },
+      "to": {
+        "node": "i2",
+        "port": "prompt"
+      }
+    },
+    {
+      "id": "l10",
+      "from": {
+        "node": "i2",
+        "port": "image"
+      },
+      "to": {
+        "node": "i3",
+        "port": "image"
+      }
+    },
+    {
+      "id": "l11",
+      "from": {
+        "node": "m3",
+        "port": "image"
+      },
+      "to": {
+        "node": "rm3",
+        "port": "image"
+      }
+    },
+    {
+      "id": "l12",
+      "from": {
+        "node": "rm3",
+        "port": "image"
+      },
+      "to": {
+        "node": "i3",
+        "port": "mask"
+      }
+    },
+    {
+      "id": "l13",
+      "from": {
+        "node": "t3",
+        "port": "text"
+      },
+      "to": {
+        "node": "i3",
+        "port": "prompt"
+      }
+    }
+  ],
+  "nid": 16,
+  "lid": 14,
+  "view": {
+    "panX": 40,
+    "panY": 40,
+    "scale": 0.7
+  }
+}
