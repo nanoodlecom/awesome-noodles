@@ -20,6 +20,7 @@ Do not hand-edit these files — run `node scripts/make-recipes.mjs` after chang
 | [Mix the references](mix-the-references.md) | [`graphs/mix-the-references.noodle-graph.json`](../graphs/mix-the-references.noodle-graph.json) | defaults in graph |
 | [Neon shrine duel](neon-shrine-duel.md) | [`graphs/neon-shrine-duel.noodle-graph.json`](../graphs/neon-shrine-duel.noodle-graph.json) | defaults in graph |
 | [Pack the bag, checked](pack-the-bag-checked.md) | [`graphs/pack-the-bag-checked.noodle-graph.json`](../graphs/pack-the-bag-checked.noodle-graph.json) | defaults in graph |
+| [Pet portrait, likeness-checked](pet-portrait-studio.md) | [`graphs/pet-portrait-studio.noodle-graph.json`](../graphs/pet-portrait-studio.noodle-graph.json) | needs Pet photo |
 | [Still to short clip](photo-to-video.md) | [`graphs/photo-to-video.noodle-graph.json`](../graphs/photo-to-video.noodle-graph.json) | defaults in graph |
 | [Rain window loop](rain-window-loop.md) | [`graphs/rain-window-loop.noodle-graph.json`](../graphs/rain-window-loop.noodle-graph.json) | defaults in graph |
 | [Regional inpaint passes](regional-inpaint-passes.md) | [`graphs/regional-inpaint-passes.noodle-graph.json`](../graphs/regional-inpaint-passes.noodle-graph.json) | needs Photo, Mask 1, Mask 2, Mask 3 |
