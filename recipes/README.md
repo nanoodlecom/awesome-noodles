@@ -11,6 +11,7 @@ Do not hand-edit these files — run `node scripts/make-recipes.mjs` after chang
 | Recipe | Graph | Inputs |
 | --- | --- | --- |
 | [ADetailer finisher](adetailer-finisher.md) | [`graphs/adetailer-finisher.noodle-graph.json`](../graphs/adetailer-finisher.noodle-graph.json) | needs Portrait |
+| [Bookshelf next-read, phantom-checked](bookshelf-next-read.md) | [`graphs/bookshelf-next-read.noodle-graph.json`](../graphs/bookshelf-next-read.noodle-graph.json) | needs Shelf photo |
 | [Game character kit](character-sprites.md) | [`graphs/character-sprites.noodle-graph.json`](../graphs/character-sprites.noodle-graph.json) | defaults in graph |
 | [Closet capsule, phantom-checked](closet-capsule-audit.md) | [`graphs/closet-capsule-audit.noodle-graph.json`](../graphs/closet-capsule-audit.noodle-graph.json) | needs Closet photo |
 | [A composer that watches your film](composer-watches-your-film.md) | [`graphs/composer-watches-your-film.noodle-graph.json`](../graphs/composer-watches-your-film.noodle-graph.json) | defaults in graph |
