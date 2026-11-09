@@ -1,0 +1,339 @@
+{
+  "v": 1,
+  "nodes": [
+    {
+      "id": "c1",
+      "type": "comment",
+      "x": 60,
+      "y": 30,
+      "fields": {
+        "text": "A vision model reads your bookshelf spine by spine and writes a numbered inventory - title, author, colour, detail, nothing it cannot actually read. An LLM librarian picks ONE next read for your brief from that inventory only, citing the inventory number, defending the pick against two runners-up, and copying the book's cover colour onto the slip. A second LLM turns the slip into a still-life prompt and Muse renders the pick as a cosy reading scene with the title and author on the cover. Then the loop closes twice: a second vision read transcribes the rendered cover letter by letter, and a GLM phantom auditor checks both directions - the slip against the inventory line it cites (a librarian inventing a book is a phantom), and the rendered lettering against the slip (image models garble cover text more than any other detail) - while a Decide judge gives the headline verdict. The inventory is written before any picking happens, so nobody downstream can quietly expand your shelf. See recipes/bookshelf-next-read.md."
+      },
+      "w": 900,
+      "name": "Bookshelf next-read, phantom-checked - read the spines, pick one, render it, audit the lettering"
+    },
+    {
+      "id": "src",
+      "type": "upload",
+      "x": 60,
+      "y": 300,
+      "fields": {
+        "image": ""
+      },
+      "w": 240,
+      "name": "Shelf photo"
+    },
+    {
+      "id": "prefs",
+      "type": "text",
+      "x": 380,
+      "y": 620,
+      "fields": {
+        "text": "Rainy weekend ahead. I just finished a long, dense history book and my brain is tired. Pick ONE book from my shelf for this weekend: absorbing but not heavy, standalone (no series homework), and short enough that I can actually finish it in two days. Show me the book in its first-evening scene."
+      },
+      "w": 300,
+      "name": "Reading brief"
+    },
+    {
+      "id": "shelf",
+      "type": "vision",
+      "x": 380,
+      "y": 300,
+      "fields": {
+        "model": "google/gemini-3.8-flash",
+        "q": "You are the shelf clerk in a reading pipeline. Look at this photo of a bookshelf and write a SHELF INVENTORY in this exact shape: a first line 'Shelf:' with what you can see (how many shelves or rows, anything else on them); then a numbered list of EVERY book whose spine you can read, in reading order - top shelf first, left to right within a shelf. Each line gives the title exactly as printed, the author exactly as printed, the spine colour, and one distinguishing detail (band, emblem, worn or leaning). List ONLY spines you can actually read - do not guess a book from its colour or size; if part of a title or author is unreadable, give your best guess for that part and mark it '(?)'. No recommendations, no summaries of the books."
+      },
+      "w": 260,
+      "name": "Shelf inventory - Gemini reads the spines",
+      "sizes": {
+        "q": 150
+      }
+    },
+    {
+      "id": "j1",
+      "type": "join",
+      "x": 720,
+      "y": 300,
+      "fields": {
+        "sep": "\n\n"
+      },
+      "w": 200,
+      "name": "Brief + inventory"
+    },
+    {
+      "id": "librarian",
+      "type": "llm",
+      "x": 1000,
+      "y": 280,
+      "fields": {
+        "model": "z-ai/glm-5.3-flash",
+        "system": "You are a librarian picking the next read. The input gives a reading brief first, then a shelf inventory: a numbered list of the ONLY books that exist. Write a NEXT-READ SLIP in this exact shape: a title line 'Next read:' plus the chosen book's title and author copied word for word from the inventory, ending with its inventory number in parentheses, like '(inventory #3)'. Then a 'Why:' line of at most 30 words tied to the brief, including why this book is finishable in the brief's time window - if no book fully fits, pick the closest and say so on this line. Then a 'Cover:' line copying the chosen book's spine colour and distinguishing detail from its inventory line, word for word as closely as you can. Then a 'First evening:' line describing one reading scene for the first sitting (where to sit, one drink or snack, and how far to read - a chapter or page goal). Then an 'Also considered:' line naming two other inventory numbers and the short reason each lost. You may ONLY pick a book on the inventory: inventing a title, changing a title's wording or an author's name, or assuming a sequel or edition the inventory does not list is a phantom and forbidden. Output the slip only, no preamble."
+      },
+      "w": 280,
+      "name": "Next-read slip - GLM librarian picks from the shelf only",
+      "sizes": {
+        "system": 150
+      }
+    },
+    {
+      "id": "brief",
+      "type": "llm",
+      "x": 1360,
+      "y": 280,
+      "fields": {
+        "model": "z-ai/glm-5.3-flash",
+        "system": "You write ONE still-life photo prompt for an image model, from a next-read slip. The slip names one chosen book with its title and author, a 'Cover:' line with its colour, and a 'First evening:' scene. Your prompt must: start with 'Show exactly this book:' followed by the title in capitals and the author's full name, both printed large, clear and perfectly legible on the front cover, the cover in the colour the slip's Cover line gives; place the book in the slip's first-evening scene (the seat, the one drink or snack) as a cosy reading still life; end with 'Photorealistic reading still life, soft warm light, no people, no other books with visible titles, no extra text anywhere.' Keep it under 110 words. Output the prompt only, no preamble."
+      },
+      "w": 280,
+      "name": "Still-life brief - GLM art-directs",
+      "sizes": {
+        "system": 150
+      }
+    },
+    {
+      "id": "scene",
+      "type": "image",
+      "x": 1720,
+      "y": 280,
+      "fields": {
+        "model": "meta/muse-image/text-to-image",
+        "size": "1:1",
+        "variations": "1"
+      },
+      "w": 260,
+      "name": "Reading still life - Muse renders the pick"
+    },
+    {
+      "id": "j0",
+      "type": "join",
+      "x": 1360,
+      "y": 620,
+      "fields": {
+        "sep": "\n\nNEXT-READ SLIP:\n"
+      },
+      "w": 200,
+      "name": "Inventory + slip"
+    },
+    {
+      "id": "audit",
+      "type": "decide",
+      "x": 2060,
+      "y": 280,
+      "fields": {
+        "model": "perplexity/pplx-decider-v1.1-27b",
+        "mode": "choose",
+        "question": "The text is a shelf inventory followed by a next-read slip picking ONE book from it, cited by inventory number, with a 'Cover:' line. The image claims to show that picked book in a reading still life. Which verdict fits? 'right book, legible' means the cover shows the slip's exact title and author, spelled correctly and readable. 'right book, garbled' means it is clearly meant to be the slip's book but the title or author lettering is misspelled, jumbled or unreadable. 'wrong book' means the cover shows a different title or author than the slip's pick, or a book the inventory never listed. 'no book visible' means there is no book with a readable cover in the picture at all. Judge the lettering, not the scene's beauty.",
+        "options": "right book, legible\nright book, garbled\nwrong book\nno book visible"
+      },
+      "w": 280,
+      "name": "Still life - audited",
+      "sizes": {
+        "question": 130
+      }
+    },
+    {
+      "id": "look",
+      "type": "vision",
+      "x": 1720,
+      "y": 580,
+      "fields": {
+        "model": "google/gemini-3.8-flash",
+        "q": "You are the still-life reader in a reading pipeline. Look at this picture and report ONLY what you can actually see, in this exact shape: a line 'Title as read:' transcribing the book cover's title exactly as printed, letter by letter as best you can - if the lettering is jumbled or partly unreadable, transcribe what you see and mark the uncertain part '(?)'; a line 'Author as read:' doing the same for the author's name; a line 'Cover:' with the cover's colour and any design you can see; then one line per other object in the scene (furniture, drink, light, setting). If there is no book, say so on the Title line. Do not compare it to any list; just report what is visibly there."
+      },
+      "w": 260,
+      "name": "Still-life read-back - Gemini transcribes the cover",
+      "sizes": {
+        "q": 150
+      }
+    },
+    {
+      "id": "j2",
+      "type": "join",
+      "x": 2060,
+      "y": 580,
+      "fields": {
+        "sep": "\n\nSTILL-LIFE READ-BACK:\n"
+      },
+      "w": 200,
+      "name": "Slip bundle + read-back"
+    },
+    {
+      "id": "checker",
+      "type": "llm",
+      "x": 2340,
+      "y": 560,
+      "fields": {
+        "model": "z-ai/glm-5.3-flash",
+        "system": "You are a phantom auditor. The input gives three texts in order: a shelf inventory (numbered books), then the marker 'NEXT-READ SLIP:' and a slip picking one book by inventory number, then the marker 'STILL-LIFE READ-BACK:' and a reader's report of a rendered still life, including 'Title as read:' and 'Author as read:' transcriptions. Audit in two passes. PASS 1, the plan: check the slip's cited inventory number exists and its title and author match that inventory line - if either is absent or contradicted, output a line starting 'PHANTOM - ' naming the invented or altered book. PASS 2, the render: output one line starting 'TITLE - CORRECT - ', 'TITLE - GARBLED - ' or 'TITLE - WRONG - ' followed by the picked title, judging the read-back transcription against the slip (GARBLED means recognisably the same title with letters misspelled or jumbled); then one line starting 'AUTHOR - CORRECT - ', 'AUTHOR - GARBLED - ' or 'AUTHOR - WRONG - ' followed by the picked author, judged the same way. Then one line starting 'PHANTOM - ' for any prominent second book with a visible title in the read-back that is on neither the slip nor the inventory. End with one line 'Summary: X of 2 identity marks correct, Z phantoms.' Judge by the texts only. Output the audit only, no preamble."
+      },
+      "w": 280,
+      "name": "Phantom audit - GLM scores both passes",
+      "sizes": {
+        "system": 150
+      }
+    }
+  ],
+  "links": [
+    {
+      "id": "l1",
+      "from": {
+        "node": "src",
+        "port": "image"
+      },
+      "to": {
+        "node": "shelf",
+        "port": "image"
+      }
+    },
+    {
+      "id": "l2",
+      "from": {
+        "node": "prefs",
+        "port": "text"
+      },
+      "to": {
+        "node": "j1",
+        "port": "a"
+      }
+    },
+    {
+      "id": "l3",
+      "from": {
+        "node": "shelf",
+        "port": "text"
+      },
+      "to": {
+        "node": "j1",
+        "port": "b"
+      }
+    },
+    {
+      "id": "l4",
+      "from": {
+        "node": "j1",
+        "port": "text"
+      },
+      "to": {
+        "node": "librarian",
+        "port": "prompt"
+      }
+    },
+    {
+      "id": "l5",
+      "from": {
+        "node": "librarian",
+        "port": "text"
+      },
+      "to": {
+        "node": "brief",
+        "port": "prompt"
+      }
+    },
+    {
+      "id": "l6",
+      "from": {
+        "node": "brief",
+        "port": "text"
+      },
+      "to": {
+        "node": "scene",
+        "port": "prompt"
+      }
+    },
+    {
+      "id": "l7",
+      "from": {
+        "node": "shelf",
+        "port": "text"
+      },
+      "to": {
+        "node": "j0",
+        "port": "a"
+      }
+    },
+    {
+      "id": "l8",
+      "from": {
+        "node": "librarian",
+        "port": "text"
+      },
+      "to": {
+        "node": "j0",
+        "port": "b"
+      }
+    },
+    {
+      "id": "l9",
+      "from": {
+        "node": "j0",
+        "port": "text"
+      },
+      "to": {
+        "node": "audit",
+        "port": "text"
+      }
+    },
+    {
+      "id": "l10",
+      "from": {
+        "node": "scene",
+        "port": "image"
+      },
+      "to": {
+        "node": "audit",
+        "port": "img1"
+      }
+    },
+    {
+      "id": "l11",
+      "from": {
+        "node": "scene",
+        "port": "image"
+      },
+      "to": {
+        "node": "look",
+        "port": "image"
+      }
+    },
+    {
+      "id": "l12",
+      "from": {
+        "node": "j0",
+        "port": "text"
+      },
+      "to": {
+        "node": "j2",
+        "port": "a"
+      }
+    },
+    {
+      "id": "l13",
+      "from": {
+        "node": "look",
+        "port": "text"
+      },
+      "to": {
+        "node": "j2",
+        "port": "b"
+      }
+    },
+    {
+      "id": "l14",
+      "from": {
+        "node": "j2",
+        "port": "text"
+      },
+      "to": {
+        "node": "checker",
+        "port": "prompt"
+      }
+    }
+  ],
+  "nid": 15,
+  "lid": 15,
+  "view": {
+    "panX": 40,
+    "panY": 40,
+    "scale": 0.6
+  }
+}
