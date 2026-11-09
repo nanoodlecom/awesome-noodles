@@ -1,0 +1,316 @@
+{
+  "v": 1,
+  "nodes": [
+    {
+      "id": "c1",
+      "type": "comment",
+      "x": 60,
+      "y": 30,
+      "fields": {
+        "text": "A vision model writes your plant's symptom card - the numbered list of everything visibly wrong, leaf by leaf. An LLM clinician turns that card into a recovery plan: likely causes marked as visual guesses, timed home-care steps, and a Keep-exactly line for the plant's identity anchors. A second LLM compresses the plan into a surgical edit instruction, and Muse Edit renders a simulation of the same plant after the plan has worked - a goal picture, not a prediction. Then the loop closes: a second vision read inventories only the health signs visible in the simulation, a GLM auditor scores the original symptom card against that read-back symptom by symptom - resolved, improved, still present - and a Decide judge labels the picture recovered same plant, healthier but drifted, still unwell or different plant. The diagnostician, the clinician, the renderer and the auditors are four different models, and the renderer does not get to grade its own recovery. See recipes/plant-doctor.md."
+      },
+      "w": 900,
+      "name": "Plant doctor - diagnose, plan, simulate recovery, audit the symptoms"
+    },
+    {
+      "id": "src",
+      "type": "upload",
+      "x": 60,
+      "y": 300,
+      "fields": {
+        "image": ""
+      },
+      "w": 240,
+      "name": "Plant photo"
+    },
+    {
+      "id": "prefs",
+      "type": "text",
+      "x": 380,
+      "y": 620,
+      "fields": {
+        "text": "Bring this houseplant back to vigorous health over the next six weeks using only home care - water, light, pruning, soil, feeding. No new plant, no new pot. The recovery picture must still be recognisably this same plant in this same pot and setting."
+      },
+      "w": 300,
+      "name": "Care brief"
+    },
+    {
+      "id": "diagnose",
+      "type": "vision",
+      "x": 380,
+      "y": 300,
+      "fields": {
+        "model": "google/gemini-3.8-flash",
+        "q": "You are the diagnostician in a houseplant care pipeline. Look at this plant photo and write a SYMPTOM CARD in this exact shape: a first line 'Plant:' with your best species or type guess and the pot and setting you can see; then a numbered list of 5 to 8 visible symptoms - each one naming the problem and where it is on the plant: yellowing or pale leaves and which ones, brown or crispy edges or tips, drooping or wilting and which stems, leggy or sparse growth, spots, dry or cracked soil surface, anything else clearly wrong. Then a last line 'Overall:' with one word for severity (mild, moderate or serious) plus a few words on whether the plant looks saveable. List ONLY what you can actually see; if you are unsure of a symptom, give your best guess and mark it '(?)'. No treatments, no care advice, no causes."
+      },
+      "w": 260,
+      "name": "Symptom card - Gemini diagnoses",
+      "sizes": {
+        "q": 150
+      }
+    },
+    {
+      "id": "j1",
+      "type": "join",
+      "x": 720,
+      "y": 300,
+      "fields": {
+        "sep": "\n\n"
+      },
+      "w": 200,
+      "name": "Brief + symptom card"
+    },
+    {
+      "id": "planner",
+      "type": "llm",
+      "x": 1000,
+      "y": 280,
+      "fields": {
+        "model": "z-ai/glm-5.3-flash",
+        "system": "You are a houseplant clinician writing a recovery plan. The input gives a care brief first, then a symptom card: a plant line, a numbered list of visible symptoms, and an overall line. Write ONE recovery plan in this exact shape: a title line 'Recovery plan:' plus a short name for the programme (for example 'Six-week reset'); a 'Likely causes:' list of at most 3 causes, each tied to specific numbered symptoms and marked as a visual guess, never a certainty; a 'Care steps:' numbered list of 4 to 6 concrete home-care steps in order (water, light, pruning, soil or repotting, feeding) each with a timing; a 'Keep exactly:' line naming the plant's identity anchors that must survive recovery - species and growth habit, the pot, the viewpoint and the setting; and a 'Recovered look:' line describing, symptom by symptom, what healthy looks like for this plant. No step may require buying a new plant or changing the pot. Output the plan only, no preamble."
+      },
+      "w": 280,
+      "name": "Care plan - GLM clinician",
+      "sizes": {
+        "system": 150
+      }
+    },
+    {
+      "id": "brief",
+      "type": "llm",
+      "x": 1360,
+      "y": 280,
+      "fields": {
+        "model": "z-ai/glm-5.3-flash",
+        "system": "You write ONE edit instruction for an image editor, from a houseplant recovery plan. The editor receives the original plant photo and renders a SIMULATION of the plant after the plan has worked - a goal picture, not a prediction. Your instruction must: start with 'Keep exactly:' followed by the plan's identity anchors in compressed form (same species and growth habit, same pot, same viewpoint and setting); then describe the recovered plant concretely, symptom by symptom from the plan's Recovered look line (which leaves are deep green and firm, what new growth appears, what is pruned away); end with 'Photorealistic, same plant recovered, no other plants, no people, no text.' Keep it under 110 words. Output the instruction only, no preamble."
+      },
+      "w": 280,
+      "name": "Edit brief - GLM art-directs",
+      "sizes": {
+        "system": 150
+      }
+    },
+    {
+      "id": "heal",
+      "type": "edit",
+      "x": 1720,
+      "y": 280,
+      "fields": {
+        "model": "meta/muse-image/edit",
+        "size": "auto"
+      },
+      "w": 260,
+      "name": "Recovered plant - Muse Edit simulates"
+    },
+    {
+      "id": "audit",
+      "type": "decide",
+      "x": 2060,
+      "y": 280,
+      "fields": {
+        "model": "perplexity/pplx-decider-v1.1-27b",
+        "mode": "choose",
+        "question": "The text is a houseplant's symptom card: a numbered list of the visible problems found in the original photo. The image is a simulated recovery picture that claims to show that same plant fully recovered. Which verdict fits? 'recovered, same plant' means the picture shows the same species in the same pot and setting, and the listed symptoms are visibly gone - leaves green and firm, no yellowing, browning or droop remaining. 'healthier but drifted' means the plant looks healthier but the species, pot, viewpoint or setting changed, or it reads as a different individual plant. 'still unwell' means it is recognisably the same plant and setting but several listed symptoms are still clearly visible. 'different plant' means the picture contradicts the card on species or shows a clearly unrelated plant. Judge the symptoms and the identity anchors, not the picture's beauty.",
+        "options": "recovered, same plant\nhealthier but drifted\nstill unwell\ndifferent plant"
+      },
+      "w": 280,
+      "name": "Recovery - audited",
+      "sizes": {
+        "question": 130
+      }
+    },
+    {
+      "id": "look",
+      "type": "vision",
+      "x": 1720,
+      "y": 580,
+      "fields": {
+        "model": "google/gemini-3.8-flash",
+        "q": "You are the recovery reader in a houseplant care pipeline. Look at this picture of a plant and list ONLY the health signs you can actually see, one per line: leaf colour and which leaves, any yellowing, brown edges or tips, drooping or firm upright growth, new growth, spots, and the soil surface if visible. Also name the species or type you see, the pot and the setting in one line each. Do not guess at anything hidden or cropped out - if you are unsure of a sign, give your best guess and mark it '(?)'. Do not compare it to any other picture; just report what is visibly there."
+      },
+      "w": 260,
+      "name": "Recovery read-back - Gemini reads the simulation",
+      "sizes": {
+        "q": 150
+      }
+    },
+    {
+      "id": "j2",
+      "type": "join",
+      "x": 2060,
+      "y": 580,
+      "fields": {
+        "sep": "\n\nRECOVERY READ-BACK:\n"
+      },
+      "w": 200,
+      "name": "Card + read-back"
+    },
+    {
+      "id": "checker",
+      "type": "llm",
+      "x": 2340,
+      "y": 560,
+      "fields": {
+        "model": "z-ai/glm-5.3-flash",
+        "system": "You are a recovery auditor. The input gives a plant's symptom card - a plant line, a numbered list of visible symptoms, and an overall line - then the marker 'RECOVERY READ-BACK:' and a reader's inventory of the health signs visible in the simulated recovery picture. Compare the two, numbered symptom by numbered symptom. Output one line per numbered symptom, in card order, starting 'RESOLVED - ' if the read-back shows that symptom gone, 'IMPROVED - ' if it is partly better, or 'STILL PRESENT - ' if it is still clearly there, followed by the symptom's short name. Ignore the plant and overall lines. End with one line 'Summary: X of Y symptoms resolved or improved.' Judge by the read-back text only, not by what a recovered plant ought to show. Output the audit only, no preamble."
+      },
+      "w": 280,
+      "name": "Recovery audit - GLM scores the symptoms",
+      "sizes": {
+        "system": 150
+      }
+    }
+  ],
+  "links": [
+    {
+      "id": "l1",
+      "from": {
+        "node": "src",
+        "port": "image"
+      },
+      "to": {
+        "node": "diagnose",
+        "port": "image"
+      }
+    },
+    {
+      "id": "l2",
+      "from": {
+        "node": "prefs",
+        "port": "text"
+      },
+      "to": {
+        "node": "j1",
+        "port": "a"
+      }
+    },
+    {
+      "id": "l3",
+      "from": {
+        "node": "diagnose",
+        "port": "text"
+      },
+      "to": {
+        "node": "j1",
+        "port": "b"
+      }
+    },
+    {
+      "id": "l4",
+      "from": {
+        "node": "j1",
+        "port": "text"
+      },
+      "to": {
+        "node": "planner",
+        "port": "prompt"
+      }
+    },
+    {
+      "id": "l5",
+      "from": {
+        "node": "planner",
+        "port": "text"
+      },
+      "to": {
+        "node": "brief",
+        "port": "prompt"
+      }
+    },
+    {
+      "id": "l6",
+      "from": {
+        "node": "src",
+        "port": "image"
+      },
+      "to": {
+        "node": "heal",
+        "port": "image"
+      }
+    },
+    {
+      "id": "l7",
+      "from": {
+        "node": "brief",
+        "port": "text"
+      },
+      "to": {
+        "node": "heal",
+        "port": "prompt"
+      }
+    },
+    {
+      "id": "l8",
+      "from": {
+        "node": "diagnose",
+        "port": "text"
+      },
+      "to": {
+        "node": "audit",
+        "port": "text"
+      }
+    },
+    {
+      "id": "l9",
+      "from": {
+        "node": "heal",
+        "port": "image"
+      },
+      "to": {
+        "node": "audit",
+        "port": "img1"
+      }
+    },
+    {
+      "id": "l10",
+      "from": {
+        "node": "heal",
+        "port": "image"
+      },
+      "to": {
+        "node": "look",
+        "port": "image"
+      }
+    },
+    {
+      "id": "l11",
+      "from": {
+        "node": "diagnose",
+        "port": "text"
+      },
+      "to": {
+        "node": "j2",
+        "port": "a"
+      }
+    },
+    {
+      "id": "l12",
+      "from": {
+        "node": "look",
+        "port": "text"
+      },
+      "to": {
+        "node": "j2",
+        "port": "b"
+      }
+    },
+    {
+      "id": "l13",
+      "from": {
+        "node": "j2",
+        "port": "text"
+      },
+      "to": {
+        "node": "checker",
+        "port": "prompt"
+      }
+    }
+  ],
+  "nid": 13,
+  "lid": 14,
+  "view": {
+    "panX": 40,
+    "panY": 40,
+    "scale": 0.6
+  }
+}
