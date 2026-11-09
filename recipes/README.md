@@ -32,6 +32,7 @@ Do not hand-edit these files — run `node scripts/make-recipes.mjs` after chang
 | [Room makeover, audited](room-makeover-audit.md) | [`graphs/room-makeover-audit.noodle-graph.json`](../graphs/room-makeover-audit.noodle-graph.json) | needs Room photo |
 | [Sing](sing.md) | [`graphs/sing.noodle-graph.json`](../graphs/sing.noodle-graph.json) | defaults in graph |
 | [Prompt to an editable SVG sticker](sketch-to-svg.md) | [`graphs/sketch-to-svg.noodle-graph.json`](../graphs/sketch-to-svg.noodle-graph.json) | defaults in graph |
+| [Sneaker colorway, part-checked](sneaker-colorway-audit.md) | [`graphs/sneaker-colorway-audit.noodle-graph.json`](../graphs/sneaker-colorway-audit.noodle-graph.json) | needs Sneaker photo |
 | [Song in, music video out](song-to-music-video.md) | [`graphs/song-to-music-video.noodle-graph.json`](../graphs/song-to-music-video.noodle-graph.json) | defaults in graph |
 | [Storyboard relay](storyboard-relay.md) | [`graphs/storyboard-relay.noodle-graph.json`](../graphs/storyboard-relay.noodle-graph.json) | defaults in graph |
 | [Spoken introduction](talking-avatar.md) | [`graphs/talking-avatar.noodle-graph.json`](../graphs/talking-avatar.noodle-graph.json) | defaults in graph |
