@@ -1,0 +1,306 @@
+{
+  "v": 1,
+  "nodes": [
+    {
+      "id": "c1",
+      "type": "comment",
+      "x": 60,
+      "y": 30,
+      "fields": {
+        "text": "Photograph a menu you cannot read and get back the dish itself, checked. A vision model transcribes and translates the whole menu into a numbered menu card - every dish, every promised component, nothing invented. An LLM diner picks one dish against your dining brief and writes an order slip: the choice, why it fits, the exact components the menu promises on the plate, and a Not-promised line of tempting extras that must not appear. A second LLM turns the slip into a photo prompt and Muse renders the plate. Then the loop closes: a second vision read inventories only the components visible in the render, a GLM auditor scores the slip against that read-back component by component - present, missing, extra - and a Decide judge labels the picture faithful plate, plausible but drifted, phantom ingredients or wrong dish. The reader, the diner, the renderer and the auditors are four different models, and the renderer does not get to grade its own cooking. See recipes/menu-to-plate.md."
+      },
+      "w": 900,
+      "name": "Menu to plate - read the menu, choose, render the dish, audit the plate"
+    },
+    {
+      "id": "src",
+      "type": "upload",
+      "x": 60,
+      "y": 300,
+      "fields": {
+        "image": ""
+      },
+      "w": 240,
+      "name": "Menu photo"
+    },
+    {
+      "id": "prefs",
+      "type": "text",
+      "x": 380,
+      "y": 620,
+      "fields": {
+        "text": "I am vegetarian and I avoid very spicy food. Pick the single most interesting vegetarian main course on this menu and show me exactly what it will look like plated. If no vegetarian main exists, pick the dish closest to vegetarian and say so."
+      },
+      "w": 300,
+      "name": "Dining brief"
+    },
+    {
+      "id": "read",
+      "type": "vision",
+      "x": 380,
+      "y": 300,
+      "fields": {
+        "model": "google/gemini-3.8-flash",
+        "q": "You are the menu reader in a restaurant pipeline. Look at this photo of a menu and write a MENU CARD in this exact shape: a first line 'Menu:' with the restaurant name and cuisine if shown; then EVERY dish on the menu as a numbered list in menu order, each entry in the form 'N. Original name - English translation: the dish description translated into English, component by component, exactly as the menu lists it (price at the end if shown)'. Translate faithfully; do not add ingredients the menu does not list and do not drop any. If a word is unreadable, give your best guess and mark it '(?)'. No recommendations, no commentary."
+      },
+      "w": 260,
+      "name": "Menu card - Gemini transcribes and translates",
+      "sizes": {
+        "q": 150
+      }
+    },
+    {
+      "id": "j1",
+      "type": "join",
+      "x": 720,
+      "y": 300,
+      "fields": {
+        "sep": "\n\n"
+      },
+      "w": 200,
+      "name": "Brief + menu card"
+    },
+    {
+      "id": "chooser",
+      "type": "llm",
+      "x": 1000,
+      "y": 280,
+      "fields": {
+        "model": "z-ai/glm-5.3-flash",
+        "system": "You are a diner choosing from a translated menu. The input gives a dining brief first, then a menu card: a numbered list of dishes with English translations and their menu-described components. Write ONE order slip in this exact shape: a title line 'Order:' plus the chosen dish's number, original name and English translation; a 'Why:' line of at most 20 words tied to the dining brief; an 'On the plate:' numbered list of 4 to 7 components - ONLY the components the menu description promises for that dish, in plain visual terms a cook could plate (name each component and its obvious form, e.g. 'sliced zucchini rounds'); and a 'Not promised:' line naming 2 or 3 tempting things the menu does NOT list for this dish, which must not appear. You must respect the brief's hard constraints (dietary, spice); if no dish fully fits, pick the closest and say so on the Why line. Output the order slip only, no preamble."
+      },
+      "w": 280,
+      "name": "Order slip - GLM diner chooses",
+      "sizes": {
+        "system": 150
+      }
+    },
+    {
+      "id": "brief",
+      "type": "llm",
+      "x": 1360,
+      "y": 280,
+      "fields": {
+        "model": "z-ai/glm-5.3-flash",
+        "system": "You write ONE image prompt for a food photographer-generator, from an order slip. The slip names a chosen dish and an 'On the plate:' numbered list of the exact components the menu promises. Your prompt must: start with 'Plate exactly:' followed by those components and nothing else edible; describe one restaurant serving on a plain ceramic plate, overhead three-quarter view, soft bistro light, shallow depth of field; end with 'Photorealistic food photography, no text, no menu, no people, no cutlery in frame, no extra garnish or ingredients beyond the list.' Keep it under 110 words. Output the prompt only, no preamble."
+      },
+      "w": 280,
+      "name": "Photo brief - GLM art-directs",
+      "sizes": {
+        "system": 150
+      }
+    },
+    {
+      "id": "dish",
+      "type": "image",
+      "x": 1720,
+      "y": 280,
+      "fields": {
+        "model": "meta/muse-image/text-to-image",
+        "size": "1:1",
+        "variations": "1"
+      },
+      "w": 260,
+      "name": "Plated dish - Muse renders it"
+    },
+    {
+      "id": "audit",
+      "type": "decide",
+      "x": 2060,
+      "y": 280,
+      "fields": {
+        "model": "perplexity/pplx-decider-v1.1-27b",
+        "mode": "choose",
+        "question": "The text is an order slip for one dish chosen from a menu: it lists the components the menu promises on an 'On the plate:' line list, and a 'Not promised:' line of things that must not appear. The image claims to be that dish plated. Which verdict fits? 'faithful plate' means the picture shows that dish with the promised components visible and nothing from the Not promised line. 'plausible but drifted' means it is recognisably the right dish family but a promised component is missing, swapped or hard to find. 'phantom ingredients' means the right dish is there but the picture adds a prominent ingredient the menu never promised. 'wrong dish' means the picture is a different dish altogether. Judge the components, not the picture's beauty.",
+        "options": "faithful plate\nplausible but drifted\nphantom ingredients\nwrong dish"
+      },
+      "w": 280,
+      "name": "Plated dish - audited",
+      "sizes": {
+        "question": 130
+      }
+    },
+    {
+      "id": "look",
+      "type": "vision",
+      "x": 1720,
+      "y": 580,
+      "fields": {
+        "model": "google/gemini-3.8-flash",
+        "q": "You are the plate reader in a restaurant pipeline. Look at this picture of a plated dish and list ONLY the food components you can actually see, one per line, in plain visual terms (e.g. 'sliced zucchini rounds', 'red tomato chunks', 'glossy olive-oil sheen'). Also give one line naming the dish it most resembles and one line for the plate and setting. Do not guess at anything hidden; if you are unsure of a component, give your best guess and mark it '(?)'. Do not compare it to any menu or other picture; just report what is visibly there."
+      },
+      "w": 260,
+      "name": "Plate read-back - Gemini reads the render",
+      "sizes": {
+        "q": 150
+      }
+    },
+    {
+      "id": "j2",
+      "type": "join",
+      "x": 2060,
+      "y": 580,
+      "fields": {
+        "sep": "\n\nPLATE READ-BACK:\n"
+      },
+      "w": 200,
+      "name": "Slip + read-back"
+    },
+    {
+      "id": "checker",
+      "type": "llm",
+      "x": 2340,
+      "y": 560,
+      "fields": {
+        "model": "z-ai/glm-5.3-flash",
+        "system": "You are a plate auditor. The input gives an order slip - a chosen dish, an 'On the plate:' numbered list of the components the menu promises, and a 'Not promised:' line - then the marker 'PLATE READ-BACK:' and a reader's inventory of the components visible in the rendered plate picture. Compare the two. Output one line per numbered On-the-plate component, in order, starting 'PRESENT - ' if the read-back shows it, or 'MISSING - ' if it does not, followed by the component's short name. Then one line per extra: 'EXTRA - ' plus the name, for each prominent read-back component that is neither promised nor a generic part of the promised ones (ignore plate, table and lighting). End with one line 'Summary: X of Y promised components present, Z extras.' Judge by the read-back text only. Output the audit only, no preamble."
+      },
+      "w": 280,
+      "name": "Plate audit - GLM scores the components",
+      "sizes": {
+        "system": 150
+      }
+    }
+  ],
+  "links": [
+    {
+      "id": "l1",
+      "from": {
+        "node": "src",
+        "port": "image"
+      },
+      "to": {
+        "node": "read",
+        "port": "image"
+      }
+    },
+    {
+      "id": "l2",
+      "from": {
+        "node": "prefs",
+        "port": "text"
+      },
+      "to": {
+        "node": "j1",
+        "port": "a"
+      }
+    },
+    {
+      "id": "l3",
+      "from": {
+        "node": "read",
+        "port": "text"
+      },
+      "to": {
+        "node": "j1",
+        "port": "b"
+      }
+    },
+    {
+      "id": "l4",
+      "from": {
+        "node": "j1",
+        "port": "text"
+      },
+      "to": {
+        "node": "chooser",
+        "port": "prompt"
+      }
+    },
+    {
+      "id": "l5",
+      "from": {
+        "node": "chooser",
+        "port": "text"
+      },
+      "to": {
+        "node": "brief",
+        "port": "prompt"
+      }
+    },
+    {
+      "id": "l6",
+      "from": {
+        "node": "brief",
+        "port": "text"
+      },
+      "to": {
+        "node": "dish",
+        "port": "prompt"
+      }
+    },
+    {
+      "id": "l7",
+      "from": {
+        "node": "chooser",
+        "port": "text"
+      },
+      "to": {
+        "node": "audit",
+        "port": "text"
+      }
+    },
+    {
+      "id": "l8",
+      "from": {
+        "node": "dish",
+        "port": "image"
+      },
+      "to": {
+        "node": "audit",
+        "port": "img1"
+      }
+    },
+    {
+      "id": "l9",
+      "from": {
+        "node": "dish",
+        "port": "image"
+      },
+      "to": {
+        "node": "look",
+        "port": "image"
+      }
+    },
+    {
+      "id": "l10",
+      "from": {
+        "node": "chooser",
+        "port": "text"
+      },
+      "to": {
+        "node": "j2",
+        "port": "a"
+      }
+    },
+    {
+      "id": "l11",
+      "from": {
+        "node": "look",
+        "port": "text"
+      },
+      "to": {
+        "node": "j2",
+        "port": "b"
+      }
+    },
+    {
+      "id": "l12",
+      "from": {
+        "node": "j2",
+        "port": "text"
+      },
+      "to": {
+        "node": "checker",
+        "port": "prompt"
+      }
+    }
+  ],
+  "nid": 12,
+  "lid": 13,
+  "view": {
+    "panX": 40,
+    "panY": 40,
+    "scale": 0.6
+  }
+}
