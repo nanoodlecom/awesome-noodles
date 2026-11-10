@@ -1,0 +1,349 @@
+{
+  "v": 1,
+  "nodes": [
+    {
+      "id": "c1",
+      "type": "comment",
+      "x": 60,
+      "y": 30,
+      "fields": {
+        "text": "A vision model writes your cake card - five numbered zones from the top surface centre to the plate, each with what is (usually: is not) on it, and a Fixed line for the cake's shape, tiers and smooth base frosting that must not move. An LLM decorator plans ONE scheme citing those zone numbers - at least three zones get new decoration, every countable item carries an exact count, and the brief's hard constraints (no lettering, no candles) beat its taste. A second LLM compresses the plan into a surgical edit instruction and Muse Edit decorates the original photo itself. Then the loop closes twice: a second vision read counts the render back zone by zone, a GLM auditor scores the plan against that read-back - applied, wrong count, wrong zone, missing - plus the fixed list, and a Decide judge labels the render faithfully decorated, counts drifted, barely decorated or different cake. The card is written before any piping is chosen, so the decorator cannot invent a sixth zone and the editor does not get to grade its own rosettes. See recipes/cake-decoration-audit.md."
+      },
+      "w": 900,
+      "name": "Cake decoration, count-checked - read the zones, plan the piping, render, count it back"
+    },
+    {
+      "id": "src",
+      "type": "upload",
+      "x": 60,
+      "y": 300,
+      "fields": {
+        "image": ""
+      },
+      "w": 240,
+      "name": "Cake photo"
+    },
+    {
+      "id": "prefs",
+      "type": "text",
+      "x": 380,
+      "y": 620,
+      "fields": {
+        "text": "Decorate this plain cake for a small garden-party birthday: soft spring colours, buttercream piping, a few fresh-looking berries and edible flowers, pretty enough to photograph before it is cut. No lettering or text of any kind, no candles, no plastic figures, no fondant covering - the smooth ivory base frosting stays the base. Do not change the cake itself - only add decoration on it."
+      },
+      "w": 300,
+      "name": "Decoration brief"
+    },
+    {
+      "id": "card",
+      "type": "vision",
+      "x": 380,
+      "y": 300,
+      "fields": {
+        "model": "google/gemini-3.8-flash",
+        "q": "You are the cake clerk in a cake-decorating pipeline. Look at this photo of a single cake and write a CAKE CARD in this exact shape: a first line 'Cake:' with the cake's shape, tiers and size, its base frosting colour and finish, the camera angle, the plate or stand, the surface and background, and the lighting; then a numbered list of exactly these 5 ZONES, in this order - 1 top surface centre, 2 top edge ring, 3 side wall, 4 base edge where the cake meets the plate, 5 plate and setting around the cake - each line describing what is currently in that zone (for an undecorated cake, say 'bare smooth frosting, nothing on it' or the equivalent, zone by zone). Then a line 'Fixed:' listing what must NOT change: the cake's shape, tier count and size, the smooth base frosting and its colour everywhere decoration does not sit, the plate, the camera angle, the background and the lighting. Then a last line 'Decoration now:' with a few words on what decoration the cake already carries - this is what may be added to. List ONLY what you can actually see; if you are unsure of a zone, give your best guess and mark it '(?)'. No decorating suggestions, no design advice."
+      },
+      "w": 260,
+      "name": "Cake card - Gemini reads the zones",
+      "sizes": {
+        "q": 150
+      }
+    },
+    {
+      "id": "j1",
+      "type": "join",
+      "x": 720,
+      "y": 300,
+      "fields": {
+        "sep": "\n\n"
+      },
+      "w": 200,
+      "name": "Brief + cake card"
+    },
+    {
+      "id": "designer",
+      "type": "llm",
+      "x": 1000,
+      "y": 280,
+      "fields": {
+        "model": "z-ai/glm-5.3-flash",
+        "system": "You are a cake decorator planning ONE decoration scheme. The input gives a decoration brief first, then a cake card: a cake line, a numbered list of 5 zones with their current state, a Fixed line, and a decoration-now line. Write ONE plan in this exact shape: a title line naming ONE specific scheme, chosen because it suits the brief (say why in a few words on the same line); a 'Keep fixed:' line that repeats the card's Fixed line, shortened if needed but never dropped or altered; then a 'Decorations:' list with one line per zone, citing its card number, in the shape '#2 top edge ring - 8 raspberry-pink buttercream rosettes, evenly spaced' or '#5 plate and setting - KEEP'. Rules: at least 3 zones must get NEW decoration; every zone must appear exactly once; zone 5 (plate and setting) must always be KEEP; every countable item (rosettes, berries, flowers, pearls, dots) must carry an exact count between 3 and 12, and non-countable work (stripes, drips, borders) must name its colour and technique. The brief's hard constraints win over everything: if it forbids lettering, candles or figures, none may appear. No change of cake shape, tiers, size, base frosting colour, plate, angle or background is allowed. Output the plan only, no preamble."
+      },
+      "w": 280,
+      "name": "Decoration plan - GLM designs by zone number",
+      "sizes": {
+        "system": 150
+      }
+    },
+    {
+      "id": "brief",
+      "type": "llm",
+      "x": 1360,
+      "y": 280,
+      "fields": {
+        "model": "z-ai/glm-5.3-flash",
+        "system": "You write ONE edit instruction for an image editor, from a cake decoration plan. The editor receives the original cake photo. Your instruction must: start with 'Keep fixed:' followed by the plan's fixed items in compressed form; then list the decoration for each zone the plan decorates, zone by zone, repeating every count exactly as planned; name the zones the plan says KEEP as unchanged; end with 'Same cake, same shape and base frosting, same plate, angle and background, photorealistic bakery photo, no text, no lettering, no candles.' Keep it under 110 words. Output the instruction only, no preamble."
+      },
+      "w": 280,
+      "name": "Edit brief - GLM art-directs",
+      "sizes": {
+        "system": 150
+      }
+    },
+    {
+      "id": "paint",
+      "type": "edit",
+      "x": 1720,
+      "y": 280,
+      "fields": {
+        "model": "meta/muse-image/edit",
+        "size": "auto"
+      },
+      "w": 260,
+      "name": "Decorate - Muse Edit pipes the scheme"
+    },
+    {
+      "id": "j0",
+      "type": "join",
+      "x": 1360,
+      "y": 620,
+      "fields": {
+        "sep": "\n\nDECORATION PLAN:\n"
+      },
+      "w": 200,
+      "name": "Card + plan"
+    },
+    {
+      "id": "audit",
+      "type": "decide",
+      "x": 2060,
+      "y": 280,
+      "fields": {
+        "model": "perplexity/pplx-decider-v1.1-27b",
+        "mode": "choose",
+        "question": "The text is a cake card - a numbered list of 5 zones with their current state and a Fixed line - followed by a DECORATION PLAN listing the decoration planned for each zone, with exact counts for countable items. The image is a decorated render that claims to apply that plan to that cake. Which verdict fits? 'faithfully decorated' means the render shows the planned decoration in the planned zones, the countable items match their planned counts, AND everything on the Fixed line - cake shape, tiers, base frosting, plate, angle, background - is unchanged. 'counts drifted' means it is plausibly the same cake and most of the scheme landed, but one or two counts or zones are off, or a fixed item moved. 'barely decorated' means the cake is intact but most zones still show the card's undecorated state - the plan essentially did not happen. 'different cake' means the render contradicts the card on shape, tiers, base frosting or several zones. Judge the zones, the counts and the fixed list, not the photo's beauty.",
+        "options": "faithfully decorated\ncounts drifted\nbarely decorated\ndifferent cake"
+      },
+      "w": 280,
+      "name": "Decoration - audited",
+      "sizes": {
+        "question": 130
+      }
+    },
+    {
+      "id": "look",
+      "type": "vision",
+      "x": 1720,
+      "y": 580,
+      "fields": {
+        "model": "google/gemini-3.8-flash",
+        "q": "You are the render reader in a cake-decorating pipeline. Look at this cake photo and list ONLY what you can actually see, one line per zone, in this order: top surface centre, top edge ring, side wall, base edge, plate and setting - each line describing the decoration actually visible in that zone, and for every countable item (rosettes, berries, flowers, pearls, dots, candles) giving its exact count as 'count: N'. End with one line starting 'Fixed:' describing the cake's shape, tiers and size, the base frosting colour and finish, the plate, the camera angle, the background and the lighting, as you see them. Do not guess at anything hidden - if you are unsure of a count or a zone, give your best count and mark it '(?)'. Do not compare it to any other picture; just report what is visibly there."
+      },
+      "w": 260,
+      "name": "Render read-back - Gemini counts the render",
+      "sizes": {
+        "q": 150
+      }
+    },
+    {
+      "id": "j2",
+      "type": "join",
+      "x": 2060,
+      "y": 580,
+      "fields": {
+        "sep": "\n\nRENDER READ-BACK:\n"
+      },
+      "w": 200,
+      "name": "Card + plan + read-back"
+    },
+    {
+      "id": "checker",
+      "type": "llm",
+      "x": 2340,
+      "y": 560,
+      "fields": {
+        "model": "z-ai/glm-5.3-flash",
+        "system": "You are a decoration auditor. The input gives a cake card - a cake line, a numbered list of 5 zones with their current state, a Fixed line and a decoration-now line - then the marker 'DECORATION PLAN:' and a decorator plan with a Decorations list citing zone numbers, then the marker 'RENDER READ-BACK:' and a reader's inventory of the decoration visible in the render, zone by zone with counts. Run TWO passes. Pass 1, decorations: one line per planned Decorations line, in plan order, starting 'APPLIED - ' if the read-back shows that zone with the planned decoration (for a countable item the read-back count must equal the planned count exactly), 'WRONG COUNT - ' if the item is there in that zone but the count differs, 'WRONG ZONE - ' if the decoration appears but in a different zone, or 'MISSING - ' if the zone still shows the card's undecorated state (a zone the plan marks KEEP counts as APPLIED when the read-back shows it unchanged), followed by the zone's short name and the planned decoration with its count. Pass 2, fixed: one line starting 'Fixed:' comparing the card's Fixed line to the read-back's Fixed line - KEPT if every fixed item matches, CHANGED naming what moved. End with one line 'Summary: X of Y planned zones applied, counts A of B exact, fixed list kept/changed.' Judge by the read-back text only, not by what a render ought to show. Output the audit only, no preamble."
+      },
+      "w": 280,
+      "name": "Decoration audit - GLM scores zones and counts",
+      "sizes": {
+        "system": 150
+      }
+    }
+  ],
+  "links": [
+    {
+      "id": "l1",
+      "from": {
+        "node": "src",
+        "port": "image"
+      },
+      "to": {
+        "node": "card",
+        "port": "image"
+      }
+    },
+    {
+      "id": "l2",
+      "from": {
+        "node": "prefs",
+        "port": "text"
+      },
+      "to": {
+        "node": "j1",
+        "port": "a"
+      }
+    },
+    {
+      "id": "l3",
+      "from": {
+        "node": "card",
+        "port": "text"
+      },
+      "to": {
+        "node": "j1",
+        "port": "b"
+      }
+    },
+    {
+      "id": "l4",
+      "from": {
+        "node": "j1",
+        "port": "text"
+      },
+      "to": {
+        "node": "designer",
+        "port": "prompt"
+      }
+    },
+    {
+      "id": "l5",
+      "from": {
+        "node": "designer",
+        "port": "text"
+      },
+      "to": {
+        "node": "brief",
+        "port": "prompt"
+      }
+    },
+    {
+      "id": "l6",
+      "from": {
+        "node": "src",
+        "port": "image"
+      },
+      "to": {
+        "node": "paint",
+        "port": "image"
+      }
+    },
+    {
+      "id": "l7",
+      "from": {
+        "node": "brief",
+        "port": "text"
+      },
+      "to": {
+        "node": "paint",
+        "port": "prompt"
+      }
+    },
+    {
+      "id": "l8",
+      "from": {
+        "node": "card",
+        "port": "text"
+      },
+      "to": {
+        "node": "j0",
+        "port": "a"
+      }
+    },
+    {
+      "id": "l9",
+      "from": {
+        "node": "designer",
+        "port": "text"
+      },
+      "to": {
+        "node": "j0",
+        "port": "b"
+      }
+    },
+    {
+      "id": "l10",
+      "from": {
+        "node": "j0",
+        "port": "text"
+      },
+      "to": {
+        "node": "audit",
+        "port": "text"
+      }
+    },
+    {
+      "id": "l11",
+      "from": {
+        "node": "paint",
+        "port": "image"
+      },
+      "to": {
+        "node": "audit",
+        "port": "img1"
+      }
+    },
+    {
+      "id": "l12",
+      "from": {
+        "node": "paint",
+        "port": "image"
+      },
+      "to": {
+        "node": "look",
+        "port": "image"
+      }
+    },
+    {
+      "id": "l13",
+      "from": {
+        "node": "j0",
+        "port": "text"
+      },
+      "to": {
+        "node": "j2",
+        "port": "a"
+      }
+    },
+    {
+      "id": "l14",
+      "from": {
+        "node": "look",
+        "port": "text"
+      },
+      "to": {
+        "node": "j2",
+        "port": "b"
+      }
+    },
+    {
+      "id": "l15",
+      "from": {
+        "node": "j2",
+        "port": "text"
+      },
+      "to": {
+        "node": "checker",
+        "port": "prompt"
+      }
+    }
+  ],
+  "nid": 16,
+  "lid": 16,
+  "view": {
+    "panX": 40,
+    "panY": 40,
+    "scale": 0.6
+  }
+}
