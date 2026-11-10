@@ -1,0 +1,236 @@
+{
+  "v": 1,
+  "nodes": [
+    {
+      "id": "c1",
+      "type": "comment",
+      "x": 60,
+      "y": 30,
+      "fields": {
+        "text": "A GLM florist writes a 7-line bouquet recipe from a brief - 6 flowers and 1 foliage, each with a colour and an exact stem count - a second GLM turns the recipe into a photo brief, and Muse renders the finished bouquet in a vase. Then the loop closes: a Gemini vision checker counts only what is actually visible, head by head and stem by stem, a GLM auditor scores the recipe against that count - present at the exact count, wrong count, missing, extra - and a Decide judge labels the bouquet built to recipe, counts drifted, stems missing or extras snuck in. The render has to answer to the recipe. Four model families, four different jobs. See recipes/bouquet-recipe-audit.md."
+      },
+      "w": 900,
+      "name": "Bouquet recipe, count-checked - plan, render, read back, audit"
+    },
+    {
+      "id": "brief",
+      "type": "text",
+      "x": 60,
+      "y": 300,
+      "fields": {
+        "text": "A cheerful early-summer birthday bouquet in a warm sunset palette - coral, apricot and butter yellow - with ONE cool-contrast flower for lift. Loose, garden-gathered feel, nothing formal or symmetrical. Hard constraints: no lilies of any kind (there is a cat in the house), no roses, no dyed or painted flowers, no baby's breath, and no glitter or decorations - flowers and one greenery only."
+      },
+      "w": 300,
+      "name": "Bouquet brief"
+    },
+    {
+      "id": "florist",
+      "type": "llm",
+      "x": 440,
+      "y": 280,
+      "fields": {
+        "model": "z-ai/glm-5.3-flash",
+        "system": "You are a meticulous florist writing a bouquet recipe. The input is a brief for one bouquet. Write ONE recipe in this exact shape: exactly 7 lines, numbered 1 to 7. Each line names ONE kind of flower or foliage, its colour, and an exact stem count between 2 and 6 (for example '1. Stems: 5 coral garden roses'). Lines 1 to 6 are flowers; line 7 is the one foliage or greenery. Every flower must be visually distinct from the others in shape or colour so each can be counted in a photograph, and every line must be a distinct physical thing that can be seen in a photograph - no scents, no ribbons as a counted line, no text, no cards. Honour every hard constraint in the brief, including any banned flowers. Output the recipe only, no preamble, no closing remarks."
+      },
+      "w": 280,
+      "name": "Recipe - GLM designs the bouquet",
+      "sizes": {
+        "system": 150
+      }
+    },
+    {
+      "id": "stylist",
+      "type": "llm",
+      "x": 800,
+      "y": 280,
+      "fields": {
+        "model": "z-ai/glm-5.3-flash",
+        "system": "You direct product photography. The input is a numbered bouquet recipe of 7 lines, each with a flower or foliage kind, a colour and an exact stem count. Output ONE image prompt, under 120 words, for a photograph of the finished bouquet standing in one plain clear glass cylinder vase on a pale linen tablecloth: name every one of the 7 lines exactly once with its exact count and colour, arrange the bouquet open and spread out so every flower head is separately visible and countable from the front, soft window daylight, no people, no hands, no animals, no text, no card, no loose flowers on the table, nothing in the frame that is not in the recipe except the vase, the tablecloth and the light. Output the prompt only."
+      },
+      "w": 280,
+      "name": "Photo brief - GLM art-directs",
+      "sizes": {
+        "system": 150
+      }
+    },
+    {
+      "id": "vase",
+      "type": "image",
+      "x": 1160,
+      "y": 280,
+      "fields": {
+        "model": "meta/muse-image/text-to-image",
+        "size": "1:1",
+        "variations": "1"
+      },
+      "w": 260,
+      "name": "Bouquet - Muse renders the recipe"
+    },
+    {
+      "id": "audit",
+      "type": "decide",
+      "x": 1500,
+      "y": 280,
+      "fields": {
+        "model": "perplexity/pplx-decider-v1.1-27b",
+        "mode": "choose",
+        "question": "The text is a 7-line bouquet recipe: each line is one flower or foliage kind with a colour and an exact stem count. The image is a rendered bouquet that claims to follow exactly that recipe. Which verdict fits? 'built to recipe' means every one of the 7 lines is visible at its exact planned count, with nothing unplanned added. 'counts drifted' means every planned kind is visible but at least one is at the wrong count. 'stems missing' means at least one planned kind cannot be found at all. 'extras snuck in' means everything planned is visible at its exact count but one or more unplanned kinds of flower or foliage also appear. Judge the bouquet, not the photography.",
+        "options": "built to recipe\ncounts drifted\nstems missing\nextras snuck in"
+      },
+      "w": 280,
+      "name": "Bouquet - audited",
+      "sizes": {
+        "question": 130
+      }
+    },
+    {
+      "id": "look",
+      "type": "vision",
+      "x": 1160,
+      "y": 580,
+      "fields": {
+        "model": "google/gemini-3.8-flash",
+        "q": "You are the bench checker in a florist pipeline. Look at this photograph of a bouquet in a vase and report ONLY what you can actually see. List every visible kind of flower, one per line, each with its colour and the exact number of flower heads you can count. Then list the visible foliage or greenery, one line, with its colour and the exact number of stems or sprigs you can count. Do not guess at heads hidden behind other flowers - if you are unsure of a count, give your best count and mark it '(?)'. Do not compare it to any recipe; just report what is visibly there."
+      },
+      "w": 260,
+      "name": "Bench check - Gemini counts the bouquet",
+      "sizes": {
+        "q": 150
+      }
+    },
+    {
+      "id": "j1",
+      "type": "join",
+      "x": 1500,
+      "y": 580,
+      "fields": {
+        "sep": "\n\nVISIBLE IN THE BOUQUET:\n"
+      },
+      "w": 200,
+      "name": "Recipe + bench check"
+    },
+    {
+      "id": "checker",
+      "type": "llm",
+      "x": 1780,
+      "y": 560,
+      "fields": {
+        "model": "z-ai/glm-5.3-flash",
+        "system": "You are a bouquet auditor. The input gives a numbered recipe of 7 lines (each with a flower or foliage kind, a colour and an exact stem count), then the marker 'VISIBLE IN THE BOUQUET:' and an inventory of what a checker could actually see in the rendered bouquet. Compare the two, line by line. Output one line per recipe line, in recipe order, starting 'PRESENT - ' if a matching flower is visible AND the read-back count equals the recipe count exactly, or 'WRONG COUNT - ' if it is visible at a different count, or 'MISSING - ' if it is not visible at all, followed by the line's short name and both counts. Then one 'EXTRA - ' line for each visible kind of flower or foliage that is not in the recipe, if any. End with one line 'Summary: X of 7 exact.' Judge by identity, colour and count; a close colour match counts as the same colour. Output the audit only, no preamble."
+      },
+      "w": 280,
+      "name": "Audit - GLM scores the counts",
+      "sizes": {
+        "system": 150
+      }
+    }
+  ],
+  "links": [
+    {
+      "id": "l1",
+      "from": {
+        "node": "brief",
+        "port": "text"
+      },
+      "to": {
+        "node": "florist",
+        "port": "prompt"
+      }
+    },
+    {
+      "id": "l2",
+      "from": {
+        "node": "florist",
+        "port": "text"
+      },
+      "to": {
+        "node": "stylist",
+        "port": "prompt"
+      }
+    },
+    {
+      "id": "l3",
+      "from": {
+        "node": "stylist",
+        "port": "text"
+      },
+      "to": {
+        "node": "vase",
+        "port": "prompt"
+      }
+    },
+    {
+      "id": "l4",
+      "from": {
+        "node": "florist",
+        "port": "text"
+      },
+      "to": {
+        "node": "audit",
+        "port": "text"
+      }
+    },
+    {
+      "id": "l5",
+      "from": {
+        "node": "vase",
+        "port": "image"
+      },
+      "to": {
+        "node": "audit",
+        "port": "img1"
+      }
+    },
+    {
+      "id": "l6",
+      "from": {
+        "node": "vase",
+        "port": "image"
+      },
+      "to": {
+        "node": "look",
+        "port": "image"
+      }
+    },
+    {
+      "id": "l7",
+      "from": {
+        "node": "florist",
+        "port": "text"
+      },
+      "to": {
+        "node": "j1",
+        "port": "a"
+      }
+    },
+    {
+      "id": "l8",
+      "from": {
+        "node": "look",
+        "port": "text"
+      },
+      "to": {
+        "node": "j1",
+        "port": "b"
+      }
+    },
+    {
+      "id": "l9",
+      "from": {
+        "node": "j1",
+        "port": "text"
+      },
+      "to": {
+        "node": "checker",
+        "port": "prompt"
+      }
+    }
+  ],
+  "nid": 10,
+  "lid": 10,
+  "view": {
+    "panX": 40,
+    "panY": 40,
+    "scale": 0.6
+  }
+}
