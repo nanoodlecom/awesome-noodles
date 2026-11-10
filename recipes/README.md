@@ -37,6 +37,7 @@ Do not hand-edit these files — run `node scripts/make-recipes.mjs` after chang
 | [Song in, music video out](song-to-music-video.md) | [`graphs/song-to-music-video.noodle-graph.json`](../graphs/song-to-music-video.noodle-graph.json) | defaults in graph |
 | [Storyboard relay](storyboard-relay.md) | [`graphs/storyboard-relay.noodle-graph.json`](../graphs/storyboard-relay.noodle-graph.json) | defaults in graph |
 | [Spoken introduction](talking-avatar.md) | [`graphs/talking-avatar.noodle-graph.json`](../graphs/talking-avatar.noodle-graph.json) | defaults in graph |
+| [Tattoo placement, anchor-checked](tattoo-placement-audit.md) | [`graphs/tattoo-placement-audit.noodle-graph.json`](../graphs/tattoo-placement-audit.noodle-graph.json) | needs Forearm photo |
 | [Tiny world film](tiny-world-film.md) | [`graphs/tiny-world-film.noodle-graph.json`](../graphs/tiny-world-film.noodle-graph.json) | defaults in graph |
 
 Install: `npm i nanoodle` · `pip install nanoodle`. Run anywhere: [nanoodle-js](https://github.com/nanoodlecom/nanoodle-js) · [nanoodle-py](https://github.com/nanoodlecom/nanoodle-py) · [nanoodle-mcp](https://github.com/nanoodlecom/nanoodle-mcp) · [run-noodle-action](https://github.com/nanoodlecom/run-noodle-action).
