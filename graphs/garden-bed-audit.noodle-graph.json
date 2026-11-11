@@ -1,0 +1,238 @@
+{
+  "v": 1,
+  "nodes": [
+    {
+      "id": "c1",
+      "type": "comment",
+      "x": 60,
+      "y": 30,
+      "fields": {
+        "text": "A GLM planter writes a 6-line planting plan from a brief - two plants per row in a three-row bed (tall BACK against the fence, medium MIDDLE, low FRONT edging), each with an exact count - a second GLM turns the plan into a photo brief, and Muse renders the finished bed in full bloom. Then the loop closes: a Gemini vision checker inventories only what is actually visible, row by row with counts, a GLM auditor scores the plan against that inventory - planted, wrong row, wrong count, missing, extra - and a Decide judge labels the bed planted to plan, counts drifted, rows drifted or plants missing. The render has to answer to the plan, row by row. Four model families, four different jobs. See recipes/garden-bed-audit.md."
+      },
+      "w": 900,
+      "name": "Garden bed, row-checked - plan, render, read back, audit"
+    },
+    {
+      "id": "brief",
+      "type": "text",
+      "x": 60,
+      "y": 300,
+      "fields": {
+        "text": "One rectangular cottage-garden flower bed, about 4 metres wide, against a plain wooden fence, in full summer bloom, pollinator-friendly, photographed from the front at standing height so the back, middle and front rows are all visible at once. Hard constraints: every plant a real flowering perennial suited to a temperate climate, nothing invasive, no vegetables, no shrubs or trees, back-row plants tall (over 90 cm), front-row plants low (under 40 cm), and a colour story of purples, pinks and whites only - no red, orange or yellow flowers."
+      },
+      "w": 300,
+      "name": "Garden brief"
+    },
+    {
+      "id": "builder",
+      "type": "llm",
+      "x": 440,
+      "y": 280,
+      "fields": {
+        "model": "z-ai/glm-5.3-flash",
+        "system": "You are a meticulous cottage-garden planter. The input is a brief for one rectangular flower bed planted in three rows by height: a BACK row of tall plants against the boundary, a MIDDLE row of medium plants, and a FRONT row of low edging plants. Write ONE planting plan in this exact shape: exactly 6 lines, numbered 1 to 6, in this order - line 1 BACK, line 2 BACK (a different plant from line 1), line 3 MIDDLE, line 4 MIDDLE (a different plant from line 3), line 5 FRONT, line 6 FRONT (a different plant from line 5). Each line starts with its row word (BACK, MIDDLE or FRONT), then names ONE real flowering plant with an exact count and a flower colour (for example '1. BACK: 5 purple coneflowers, magenta-purple'). BACK plants must be tall kinds that grow over 90 cm, MIDDLE plants medium kinds 40 to 90 cm, FRONT plants low kinds under 40 cm. Every line carries an exact count between 3 and 7 individual plants. The six lines must be six different plants, all real, all suited to the brief's climate, and no plant may be invasive. Honour every hard constraint in the brief. Output the plan only, no preamble, no closing remarks."
+      },
+      "w": 280,
+      "name": "Planting plan - GLM plants the bed",
+      "sizes": {
+        "system": 150
+      }
+    },
+    {
+      "id": "stylist",
+      "type": "llm",
+      "x": 800,
+      "y": 280,
+      "fields": {
+        "model": "z-ai/glm-5.3-flash",
+        "system": "You direct garden photography. The input is a numbered 6-line planting plan: each line names a row (BACK, MIDDLE or FRONT), one flowering plant and an exact count. Output ONE image prompt, under 120 words, for a photograph of the finished bed in full bloom taken from the front at standing height, slightly elevated so all three rows are visible: name every one of the 6 lines in plan order with its row, plant, exact count and colour, inside one rectangular soil bed with a low stone edge, a plain wooden fence behind the back row, green lawn in front, bright daylight, no people, no tools, no pots, no text, no labels, and no plant in the bed that is not in the plan. Output the prompt only.",
+        "maxTokens": "300",
+        "reasoningEffort": "low"
+      },
+      "w": 280,
+      "name": "Photo brief - GLM art-directs",
+      "sizes": {
+        "system": 150
+      }
+    },
+    {
+      "id": "bed",
+      "type": "image",
+      "x": 1160,
+      "y": 280,
+      "fields": {
+        "model": "meta/muse-image/text-to-image",
+        "size": "16:9",
+        "variations": "1"
+      },
+      "w": 260,
+      "name": "Garden bed - Muse renders the bed"
+    },
+    {
+      "id": "audit",
+      "type": "decide",
+      "x": 1500,
+      "y": 280,
+      "fields": {
+        "model": "perplexity/pplx-decider-v1.1-27b",
+        "mode": "choose",
+        "question": "The text is a 6-line garden planting plan: each line names a row (back, middle or front), one flowering plant with an exact count. The image is a rendered flower bed that claims to follow exactly that plan. Which verdict fits? 'planted to plan' means every line is visible in its planned row at its planned count, with nothing unplanned added. 'counts drifted' means everything is in its planned row but at least one count is off. 'rows drifted' means every planned plant is present at its planned count but at least one is in the wrong row. 'plants missing' means at least one planned plant cannot be found anywhere in the bed. Judge the planting, not the photography.",
+        "options": "planted to plan\ncounts drifted\nrows drifted\nplants missing"
+      },
+      "w": 280,
+      "name": "Garden bed - audited",
+      "sizes": {
+        "question": 130
+      }
+    },
+    {
+      "id": "look",
+      "type": "vision",
+      "x": 1160,
+      "y": 580,
+      "fields": {
+        "model": "google/gemini-3.8-flash",
+        "q": "You are the bed checker in a garden pipeline. Look at this photograph of a planted flower bed and report ONLY what you can actually see. List what is visible row by row in this order - BACK ROW (the tallest plants, against the fence), MIDDLE ROW, FRONT ROW (the lowest plants, at the bed's front edge) - one item per line, each with the plant you see and an exact count of individual plants. Then list any plant you can see in the bed that does not belong to any of those rows, if any. Do not guess at anything hidden behind another plant - if you are unsure of a plant, give your best guess and mark it '(?)'. Do not compare it to any plan; just report what is visibly there."
+      },
+      "w": 260,
+      "name": "Bed check - Gemini reads the bed",
+      "sizes": {
+        "q": 150
+      }
+    },
+    {
+      "id": "j1",
+      "type": "join",
+      "x": 1500,
+      "y": 580,
+      "fields": {
+        "sep": "\n\nVISIBLE IN THE BED:\n"
+      },
+      "w": 200,
+      "name": "Plan + bed check"
+    },
+    {
+      "id": "checker",
+      "type": "llm",
+      "x": 1780,
+      "y": 560,
+      "fields": {
+        "model": "z-ai/glm-5.3-flash",
+        "system": "You are a garden auditor. The input gives a numbered planting plan of 6 lines, each naming a row (BACK, MIDDLE or FRONT), one plant and an exact count, then the marker 'VISIBLE IN THE BED:' and an inventory of what a checker could actually see in the rendered bed, row by row. Compare the two, line by line. Output one line per planned line, in plan order, starting 'PLANTED - ' if the plant is visible in its planned row at exactly the planned count, 'WRONG ROW - ' if it is visible at the planned count but in a different row (name the row it was seen in), 'WRONG COUNT - ' if it is in the planned row but the read-back count differs (give the seen count), or 'MISSING - ' if it cannot be found anywhere, followed by the line's short name. Then one 'EXTRA - ' line for each visible plant that is not in the plan, if any. End with one line 'Summary: X of 6 planted.' Judge by identity, colour, count and row; a close colour match counts as the same plant. Output the audit only, no preamble."
+      },
+      "w": 280,
+      "name": "Audit - GLM scores the bed",
+      "sizes": {
+        "system": 150
+      }
+    }
+  ],
+  "links": [
+    {
+      "id": "l1",
+      "from": {
+        "node": "brief",
+        "port": "text"
+      },
+      "to": {
+        "node": "builder",
+        "port": "prompt"
+      }
+    },
+    {
+      "id": "l2",
+      "from": {
+        "node": "builder",
+        "port": "text"
+      },
+      "to": {
+        "node": "stylist",
+        "port": "prompt"
+      }
+    },
+    {
+      "id": "l3",
+      "from": {
+        "node": "stylist",
+        "port": "text"
+      },
+      "to": {
+        "node": "bed",
+        "port": "prompt"
+      }
+    },
+    {
+      "id": "l4",
+      "from": {
+        "node": "builder",
+        "port": "text"
+      },
+      "to": {
+        "node": "audit",
+        "port": "text"
+      }
+    },
+    {
+      "id": "l5",
+      "from": {
+        "node": "bed",
+        "port": "image"
+      },
+      "to": {
+        "node": "audit",
+        "port": "img1"
+      }
+    },
+    {
+      "id": "l6",
+      "from": {
+        "node": "bed",
+        "port": "image"
+      },
+      "to": {
+        "node": "look",
+        "port": "image"
+      }
+    },
+    {
+      "id": "l7",
+      "from": {
+        "node": "builder",
+        "port": "text"
+      },
+      "to": {
+        "node": "j1",
+        "port": "a"
+      }
+    },
+    {
+      "id": "l8",
+      "from": {
+        "node": "look",
+        "port": "text"
+      },
+      "to": {
+        "node": "j1",
+        "port": "b"
+      }
+    },
+    {
+      "id": "l9",
+      "from": {
+        "node": "j1",
+        "port": "text"
+      },
+      "to": {
+        "node": "checker",
+        "port": "prompt"
+      }
+    }
+  ],
+  "nid": 10,
+  "lid": 10,
+  "view": {
+    "panX": 40,
+    "panY": 40,
+    "scale": 0.6
+  }
+}
