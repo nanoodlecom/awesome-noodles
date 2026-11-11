@@ -27,6 +27,7 @@ Do not hand-edit these files — run `node scripts/make-recipes.mjs` after chang
 | [Idea to 3D model](idea-to-3d-model.md) | [`graphs/idea-to-3d-model.noodle-graph.json`](../graphs/idea-to-3d-model.noodle-graph.json) | defaults in graph |
 | [Compare image models](image-model-arena.md) | [`graphs/image-model-arena.noodle-graph.json`](../graphs/image-model-arena.noodle-graph.json) | defaults in graph |
 | [Menu to plate, checked](menu-to-plate.md) | [`graphs/menu-to-plate.noodle-graph.json`](../graphs/menu-to-plate.noodle-graph.json) | needs Menu photo |
+| [Metro map, station-checked](metro-map-audit.md) | [`graphs/metro-map-audit.noodle-graph.json`](../graphs/metro-map-audit.noodle-graph.json) | defaults in graph |
 | [Mix the references](mix-the-references.md) | [`graphs/mix-the-references.noodle-graph.json`](../graphs/mix-the-references.noodle-graph.json) | defaults in graph |
 | [Mural wall, fixture-checked](mural-wall-audit.md) | [`graphs/mural-wall-audit.noodle-graph.json`](../graphs/mural-wall-audit.noodle-graph.json) | needs Wall photo |
 | [Neon shrine duel](neon-shrine-duel.md) | [`graphs/neon-shrine-duel.noodle-graph.json`](../graphs/neon-shrine-duel.noodle-graph.json) | defaults in graph |

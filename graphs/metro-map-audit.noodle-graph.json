@@ -1,0 +1,238 @@
+{
+  "v": 1,
+  "nodes": [
+    {
+      "id": "c1",
+      "type": "comment",
+      "x": 60,
+      "y": 30,
+      "fields": {
+        "text": "A GLM transit planner writes a two-line metro network spec from a brief - Line A west to east, Line B north to south, five stations each, one shared interchange as stop 3 on both lines - a second GLM turns it into a map-design brief, and Muse renders a clean schematic metro map from it. Then the loop closes: a Gemini vision checker traces each rendered line and reads the station labels back in order, a GLM auditor scores the spec against that read-back listing by listing - mapped, wrong order, wrong line, missing, extra - plus a separate interchange check, and a Decide judge labels the map mapped to spec, order drifted, stations missing or wrong network. The map has to answer to the network, station by station. Four model families, four different jobs. See recipes/metro-map-audit.md."
+      },
+      "w": 900,
+      "name": "Metro map, station-checked - plan, render, read back, audit"
+    },
+    {
+      "id": "brief",
+      "type": "text",
+      "x": 60,
+      "y": 300,
+      "fields": {
+        "text": "One clean flat schematic metro map poster for a fictional city's metro, with exactly two lines and no others. Line A runs west to east, Line B runs north to south, each with exactly five stations. The two lines cross exactly once, at one shared interchange station that is stop 3 on both lines. Hard constraints: every station name invented, one or two words, easy to spell, no two names sharing their first word, the interchange name identical on both lines, every station name printed clearly beside its dot, and no text anywhere except the map title, the ten station listings and the two line names."
+      },
+      "w": 300,
+      "name": "Metro brief"
+    },
+    {
+      "id": "builder",
+      "type": "llm",
+      "x": 440,
+      "y": 280,
+      "fields": {
+        "model": "z-ai/glm-5.3-flash",
+        "system": "You are a meticulous transit planner for a fictional city. The input is a brief for ONE schematic metro map with exactly two lines. Write ONE network spec in this exact shape. First line: 'Title: <invented city name> Metro'. Then a block headed 'Line A (crimson, west to east):' followed by exactly 5 numbered station lines. Then a block headed 'Line B (teal, north to south):' followed by exactly 5 numbered station lines. Last line: 'Interchange: <name> (Line A stop 3, Line B stop 3)'. The interchange station is stop 3 on BOTH lines and those two stop-3 lines must name the exact same station. Every other station name appears on one line only. All station names are invented, one or two words, easy to spell and easy to tell apart - no two names may share their first word. Honour every hard constraint in the brief. Output the spec only, no preamble, no closing remarks."
+      },
+      "w": 280,
+      "name": "Network spec - GLM planner lays out the lines",
+      "sizes": {
+        "system": 150
+      }
+    },
+    {
+      "id": "stylist",
+      "type": "llm",
+      "x": 800,
+      "y": 280,
+      "fields": {
+        "model": "z-ai/glm-5.3-flash",
+        "system": "You direct transit-map design. The input is a two-line metro network spec with a title line, two headed blocks of 5 numbered stations each, and an interchange line. Output ONE image prompt, under 130 words, for a clean flat schematic metro map poster: the title printed across the top, one straight horizontal crimson line for Line A running west to east with its 5 stations as white dots in spec order, one straight vertical teal line for Line B running north to south with its 5 stations as white dots in spec order, the two lines crossing only at the shared interchange station, drawn as a larger double-ring dot where both lines' stop 3 meet, every station's name printed in clear type beside its dot, the line names 'Line A' and 'Line B' printed at the line ends, white background, no other lines, stations, text or numbers, no photographs, no trains, no people. Repeat every station name exactly as spelled in the spec. Output the prompt only.",
+        "maxTokens": "300",
+        "reasoningEffort": "low"
+      },
+      "w": 280,
+      "name": "Map brief - GLM art-directs",
+      "sizes": {
+        "system": 150
+      }
+    },
+    {
+      "id": "map",
+      "type": "image",
+      "x": 1160,
+      "y": 280,
+      "fields": {
+        "model": "meta/muse-image/text-to-image",
+        "size": "16:9",
+        "variations": "1"
+      },
+      "w": 260,
+      "name": "Metro map - Muse renders the network"
+    },
+    {
+      "id": "audit",
+      "type": "decide",
+      "x": 1500,
+      "y": 280,
+      "fields": {
+        "model": "perplexity/pplx-decider-v1.1-27b",
+        "mode": "choose",
+        "question": "The text is a two-line metro network spec: Line A with 5 stations west to east, Line B with 5 stations north to south, and one interchange station that is stop 3 on both lines. The image is a rendered schematic metro map that claims to show exactly that network. Which verdict fits? 'mapped to spec' means every station stands on its planned line in its planned order and the two lines cross only at the shared interchange station. 'order drifted' means all stations are present on the right lines but at least one is out of order, or the crossing is at the wrong station. 'stations missing' means at least one planned station cannot be found anywhere on the map. 'wrong network' means the image is not a two-line metro map of this spec at all. Judge the network, not the styling.",
+        "options": "mapped to spec\norder drifted\nstations missing\nwrong network"
+      },
+      "w": 280,
+      "name": "Metro map - audited",
+      "sizes": {
+        "question": 130
+      }
+    },
+    {
+      "id": "look",
+      "type": "vision",
+      "x": 1160,
+      "y": 580,
+      "fields": {
+        "model": "google/gemini-3.8-flash",
+        "q": "You are the map checker in a transit pipeline. Look at this schematic metro map and report ONLY what you can actually see. First give the map's title exactly as printed. Then, for the horizontal line, list its stations in order from west to east, one per line, exactly as labelled beside their dots. Then, for the vertical line, list its stations in order from north to south the same way. Then state which station sits at the crossing of the two lines, if the lines cross. Then list any other text, lines or stations visible anywhere in the image, if any. Do not guess at anything you cannot read - if you are unsure of a name, give your best reading and mark it '(?)'. Do not compare it to any plan; just report what is visibly there."
+      },
+      "w": 260,
+      "name": "Map check - Gemini traces the lines",
+      "sizes": {
+        "q": 150
+      }
+    },
+    {
+      "id": "j1",
+      "type": "join",
+      "x": 1500,
+      "y": 580,
+      "fields": {
+        "sep": "\n\nVISIBLE ON THE MAP:\n"
+      },
+      "w": 200,
+      "name": "Spec + map check"
+    },
+    {
+      "id": "checker",
+      "type": "llm",
+      "x": 1780,
+      "y": 560,
+      "fields": {
+        "model": "z-ai/glm-5.3-flash",
+        "system": "You are a metro map auditor. The input gives a network spec (a title line, Line A with 5 numbered stations west to east, Line B with 5 numbered stations north to south, and an interchange line naming the station that is stop 3 on both lines), then the marker 'VISIBLE ON THE MAP:' and a read-back of what a checker could actually see on the rendered map. Compare the two, listing by listing. Output one line per spec listing, in spec order (Line A stops 1 to 5, then Line B stops 1 to 5), starting 'MAPPED - ' if that station is visible on the same line in the same position, 'WRONG ORDER - ' if it is on the right line but in a different position, 'WRONG LINE - ' if it appears only on the other line, or 'MISSING - ' if it cannot be found anywhere, followed by the station's name and its listing (for example 'Line A stop 2'). Then one line 'INTERCHANGE - CORRECT' if the station at the crossing is the spec's interchange station and it is stop 3 on both lines in the read-back, or 'INTERCHANGE - WRONG' followed by what the read-back shows at the crossing. Then one 'EXTRA - ' line for each visible station that is not in the spec, if any. End with one line 'Summary: X of 10 mapped.' Judge by station name, line and position; a close spelling of the same name counts as the same station. Output the audit only, no preamble."
+      },
+      "w": 280,
+      "name": "Audit - GLM scores the map",
+      "sizes": {
+        "system": 150
+      }
+    }
+  ],
+  "links": [
+    {
+      "id": "l1",
+      "from": {
+        "node": "brief",
+        "port": "text"
+      },
+      "to": {
+        "node": "builder",
+        "port": "prompt"
+      }
+    },
+    {
+      "id": "l2",
+      "from": {
+        "node": "builder",
+        "port": "text"
+      },
+      "to": {
+        "node": "stylist",
+        "port": "prompt"
+      }
+    },
+    {
+      "id": "l3",
+      "from": {
+        "node": "stylist",
+        "port": "text"
+      },
+      "to": {
+        "node": "map",
+        "port": "prompt"
+      }
+    },
+    {
+      "id": "l4",
+      "from": {
+        "node": "builder",
+        "port": "text"
+      },
+      "to": {
+        "node": "audit",
+        "port": "text"
+      }
+    },
+    {
+      "id": "l5",
+      "from": {
+        "node": "map",
+        "port": "image"
+      },
+      "to": {
+        "node": "audit",
+        "port": "img1"
+      }
+    },
+    {
+      "id": "l6",
+      "from": {
+        "node": "map",
+        "port": "image"
+      },
+      "to": {
+        "node": "look",
+        "port": "image"
+      }
+    },
+    {
+      "id": "l7",
+      "from": {
+        "node": "builder",
+        "port": "text"
+      },
+      "to": {
+        "node": "j1",
+        "port": "a"
+      }
+    },
+    {
+      "id": "l8",
+      "from": {
+        "node": "look",
+        "port": "text"
+      },
+      "to": {
+        "node": "j1",
+        "port": "b"
+      }
+    },
+    {
+      "id": "l9",
+      "from": {
+        "node": "j1",
+        "port": "text"
+      },
+      "to": {
+        "node": "checker",
+        "port": "prompt"
+      }
+    }
+  ],
+  "nid": 10,
+  "lid": 10,
+  "view": {
+    "panX": 40,
+    "panY": 40,
+    "scale": 0.6
+  }
+}
