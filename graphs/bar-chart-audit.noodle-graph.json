@@ -1,0 +1,238 @@
+{
+  "v": 1,
+  "nodes": [
+    {
+      "id": "c1",
+      "type": "comment",
+      "x": 60,
+      "y": 30,
+      "fields": {
+        "text": "A GLM data clerk writes a 5-line dataset from a brief - five cafe drinks, each with an exact number of cups sold and its own bar colour - a second GLM turns it into a chart-design brief, and Muse renders a clean bar chart poster from it. Then the loop closes: a Gemini vision checker reads only what is actually printed in the chart, bar by bar, a GLM auditor scores the dataset against that read-back - charted, wrong number, wrong order, missing, extra - and a Decide judge labels the chart charted to data, numbers drifted, bars missing or wrong chart. The render has to answer to the dataset, number by number. Four model families, four different jobs. See recipes/bar-chart-audit.md."
+      },
+      "w": 900,
+      "name": "Bar chart, number-checked - plan, render, read back, audit"
+    },
+    {
+      "id": "brief",
+      "type": "text",
+      "x": 60,
+      "y": 300,
+      "fields": {
+        "text": "One clean flat-design vertical bar chart poster for a fictional neighbourhood cafe, titled 'Saturday in Cups', showing cups sold last Saturday for exactly five drinks. Hard constraints: every drink a real cafe drink, every number a whole number of cups between 20 and 90, all five numbers different, bars in dataset order on one shared baseline with heights proportional to the numbers, the drink's name printed under each bar and its exact number printed in large type above it, and no text or numbers anywhere in the poster except the title, the five drink names, the five numbers and a 0-to-100 axis."
+      },
+      "w": 300,
+      "name": "Chart brief"
+    },
+    {
+      "id": "builder",
+      "type": "llm",
+      "x": 440,
+      "y": 280,
+      "fields": {
+        "model": "z-ai/glm-5.3-flash",
+        "system": "You are a meticulous data clerk for a small cafe. The input is a brief for ONE vertical bar chart poster. Write ONE dataset in this exact shape: exactly 5 lines, numbered 1 to 5. Each line names ONE real cafe drink, then an exact whole number of cups sold between 20 and 90, then one bar colour, in this form: '1. Espresso: 42 cups, deep brown'. The five drinks must be five different drinks, the five numbers must all be different, and the five colours must all be different and easy to tell apart on a chart. Honour every hard constraint in the brief. Output the dataset only, no preamble, no closing remarks."
+      },
+      "w": 280,
+      "name": "Dataset - GLM clerk writes the numbers",
+      "sizes": {
+        "system": 150
+      }
+    },
+    {
+      "id": "stylist",
+      "type": "llm",
+      "x": 800,
+      "y": 280,
+      "fields": {
+        "model": "z-ai/glm-5.3-flash",
+        "system": "You direct chart design. The input is a numbered 5-line dataset: each line names one cafe drink, an exact number of cups and one bar colour. Output ONE image prompt, under 120 words, for a clean flat-design vertical bar chart poster: a bold title across the top, exactly 5 vertical bars standing on one shared baseline in dataset order, each bar in its line's colour with height proportional to its number, the drink's name printed under its bar and its exact number printed in large type directly above its bar, a plain y-axis on the left running 0 to 100, white background, no legend, no other text, no other numbers, no photographs, no people, and no bar, drink or number that is not in the dataset. Output the prompt only.",
+        "maxTokens": "300",
+        "reasoningEffort": "low"
+      },
+      "w": 280,
+      "name": "Chart brief - GLM art-directs",
+      "sizes": {
+        "system": 150
+      }
+    },
+    {
+      "id": "chart",
+      "type": "image",
+      "x": 1160,
+      "y": 280,
+      "fields": {
+        "model": "meta/muse-image/text-to-image",
+        "size": "16:9",
+        "variations": "1"
+      },
+      "w": 260,
+      "name": "Bar chart - Muse renders the chart"
+    },
+    {
+      "id": "audit",
+      "type": "decide",
+      "x": 1500,
+      "y": 280,
+      "fields": {
+        "model": "perplexity/pplx-decider-v1.1-27b",
+        "mode": "choose",
+        "question": "The text is a 5-line dataset: each line names one cafe drink with an exact number of cups sold. The image is a rendered bar chart that claims to show exactly that dataset. Which verdict fits? 'charted to data' means every drink's bar stands in dataset order with exactly its planned number printed above it, and nothing else was added. 'numbers drifted' means all five drinks are charted in order but at least one printed number is wrong. 'bars missing' means at least one planned drink cannot be found anywhere in the chart. 'wrong chart' means the image is not a bar chart of this dataset at all. Judge the data, not the design.",
+        "options": "charted to data\nnumbers drifted\nbars missing\nwrong chart"
+      },
+      "w": 280,
+      "name": "Bar chart - audited",
+      "sizes": {
+        "question": 130
+      }
+    },
+    {
+      "id": "look",
+      "type": "vision",
+      "x": 1160,
+      "y": 580,
+      "fields": {
+        "model": "google/gemini-3.8-flash",
+        "q": "You are the chart checker in a data pipeline. Look at this bar chart poster and report ONLY what you can actually see. First give the chart's title exactly as printed. Then list the bars left to right, one per line, each with the label printed under the bar and the exact number printed above the bar; if a bar has no number printed above it, write 'no number printed' for that bar. Then list any other text or numbers visible anywhere in the image, if any. Do not guess at anything you cannot read - if you are unsure of a label or number, give your best reading and mark it '(?)'. Do not compare it to any dataset; just report what is visibly there."
+      },
+      "w": 260,
+      "name": "Chart check - Gemini reads the chart",
+      "sizes": {
+        "q": 150
+      }
+    },
+    {
+      "id": "j1",
+      "type": "join",
+      "x": 1500,
+      "y": 580,
+      "fields": {
+        "sep": "\n\nVISIBLE IN THE CHART:\n"
+      },
+      "w": 200,
+      "name": "Dataset + chart check"
+    },
+    {
+      "id": "checker",
+      "type": "llm",
+      "x": 1780,
+      "y": 560,
+      "fields": {
+        "model": "z-ai/glm-5.3-flash",
+        "system": "You are a chart auditor. The input gives a numbered dataset of 5 lines, each naming one drink, an exact number of cups and a bar colour, then the marker 'VISIBLE IN THE CHART:' and a read-back of what a checker could actually see in the rendered chart, bar by bar. Compare the two, line by line. Output one line per dataset line, in dataset order, starting 'CHARTED - ' if that drink's bar is visible in the same left-to-right position with exactly the planned number printed above it, 'WRONG NUMBER - ' if the bar is in the right position but the printed number differs (give the seen number), 'WRONG ORDER - ' if the bar and its number are both right but it stands in a different position, or 'MISSING - ' if that drink cannot be found anywhere, followed by the line's short name. Then one 'EXTRA - ' line for each visible bar that is not in the dataset, if any. End with one line 'Summary: X of 5 charted.' Judge by drink name, position and the printed number; a close spelling of the same drink counts as the same drink. Output the audit only, no preamble."
+      },
+      "w": 280,
+      "name": "Audit - GLM scores the chart",
+      "sizes": {
+        "system": 150
+      }
+    }
+  ],
+  "links": [
+    {
+      "id": "l1",
+      "from": {
+        "node": "brief",
+        "port": "text"
+      },
+      "to": {
+        "node": "builder",
+        "port": "prompt"
+      }
+    },
+    {
+      "id": "l2",
+      "from": {
+        "node": "builder",
+        "port": "text"
+      },
+      "to": {
+        "node": "stylist",
+        "port": "prompt"
+      }
+    },
+    {
+      "id": "l3",
+      "from": {
+        "node": "stylist",
+        "port": "text"
+      },
+      "to": {
+        "node": "chart",
+        "port": "prompt"
+      }
+    },
+    {
+      "id": "l4",
+      "from": {
+        "node": "builder",
+        "port": "text"
+      },
+      "to": {
+        "node": "audit",
+        "port": "text"
+      }
+    },
+    {
+      "id": "l5",
+      "from": {
+        "node": "chart",
+        "port": "image"
+      },
+      "to": {
+        "node": "audit",
+        "port": "img1"
+      }
+    },
+    {
+      "id": "l6",
+      "from": {
+        "node": "chart",
+        "port": "image"
+      },
+      "to": {
+        "node": "look",
+        "port": "image"
+      }
+    },
+    {
+      "id": "l7",
+      "from": {
+        "node": "builder",
+        "port": "text"
+      },
+      "to": {
+        "node": "j1",
+        "port": "a"
+      }
+    },
+    {
+      "id": "l8",
+      "from": {
+        "node": "look",
+        "port": "text"
+      },
+      "to": {
+        "node": "j1",
+        "port": "b"
+      }
+    },
+    {
+      "id": "l9",
+      "from": {
+        "node": "j1",
+        "port": "text"
+      },
+      "to": {
+        "node": "checker",
+        "port": "prompt"
+      }
+    }
+  ],
+  "nid": 10,
+  "lid": 10,
+  "view": {
+    "panX": 40,
+    "panY": 40,
+    "scale": 0.6
+  }
+}
