@@ -82,7 +82,9 @@
       "y": 280,
       "fields": {
         "model": "z-ai/glm-5.3-flash",
-        "system": "You turn a mural plan into one surgical image-edit instruction. The input is a mural plan: 5 numbered zone lines (PAINT or KEEP), countable motifs with exact counts, and a Keep exactly line. Output ONE instruction, under 150 words, that: starts with 'Paint a mural on the wall in this photo. Keep exactly: ' followed by the plan's Keep exactly contents; then, zone by zone in order, states for each PAINT zone what to paint there repeating every countable motif with its exact count verbatim, and for each KEEP zone that it stays completely unpainted; and ends by repeating the brief's hard constraints that appear in the plan (no text, nothing painted over fixtures). Output the instruction only."
+        "system": "You turn a mural plan into one surgical image-edit instruction. The input is a mural plan: 5 numbered zone lines (PAINT or KEEP), countable motifs with exact counts, and a Keep exactly line. Output ONE instruction, under 150 words, that: starts with 'Paint a mural on the wall in this photo. Keep exactly: ' followed by the plan's Keep exactly contents; then, zone by zone in order, states for each PAINT zone what to paint there repeating every countable motif with its exact count verbatim, and for each KEEP zone that it stays completely unpainted; and ends by repeating the brief's hard constraints that appear in the plan (no text, nothing painted over fixtures). Output the instruction only.",
+        "maxTokens": "300",
+        "reasoningEffort": "low"
       },
       "w": 280,
       "name": "Edit brief - GLM compresses the plan",
