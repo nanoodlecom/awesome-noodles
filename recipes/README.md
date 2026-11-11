@@ -20,6 +20,7 @@ Do not hand-edit these files — run `node scripts/make-recipes.mjs` after chang
 | [Closet capsule, phantom-checked](closet-capsule-audit.md) | [`graphs/closet-capsule-audit.noodle-graph.json`](../graphs/closet-capsule-audit.noodle-graph.json) | needs Closet photo |
 | [A composer that watches your film](composer-watches-your-film.md) | [`graphs/composer-watches-your-film.noodle-graph.json`](../graphs/composer-watches-your-film.noodle-graph.json) | defaults in graph |
 | [Fridge to feast](fridge-to-feast.md) | [`graphs/fridge-to-feast.noodle-graph.json`](../graphs/fridge-to-feast.noodle-graph.json) | needs Fridge photo |
+| [Garden bed, row-checked](garden-bed-audit.md) | [`graphs/garden-bed-audit.noodle-graph.json`](../graphs/garden-bed-audit.noodle-graph.json) | defaults in graph |
 | [Haircut preview, identity-checked](haircut-preview.md) | [`graphs/haircut-preview.noodle-graph.json`](../graphs/haircut-preview.noodle-graph.json) | needs Portrait photo |
 | [Humanize a comment](humanize-comment.md) | [`graphs/humanize-comment.noodle-graph.json`](../graphs/humanize-comment.noodle-graph.json) | defaults in graph |
 | [Idea to 3D model](idea-to-3d-model.md) | [`graphs/idea-to-3d-model.noodle-graph.json`](../graphs/idea-to-3d-model.noodle-graph.json) | defaults in graph |
