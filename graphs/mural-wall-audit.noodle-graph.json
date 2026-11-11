@@ -1,0 +1,351 @@
+{
+  "v": 1,
+  "nodes": [
+    {
+      "id": "c1",
+      "type": "comment",
+      "x": 60,
+      "y": 30,
+      "fields": {
+        "text": "A Gemini surveyor cards a wall photo into 5 numbered zones and names the ones that are completely blank; a GLM designer may paint ONLY those zones, planning one coherent mural zone by zone with countable motifs at exact counts, while the window, door and everything else sit on a keep-exactly list. A second GLM compresses the plan into a surgical edit instruction, Muse Edit paints the mural onto the original photo, a second Gemini read-back inventories the rendered wall zone by zone, a GLM auditor scores zones and counts against the plan, and a Decide judge labels it faithful mural, motifs drifted, fixtures painted over or barely a mural. Mural previews normally paint the whole rectangle and eat the window; here the wall itself sets the canvas. See recipes/mural-wall-audit.md."
+      },
+      "w": 900,
+      "name": "Mural wall, fixture-checked - survey the wall, plan by zone, paint, audit"
+    },
+    {
+      "id": "src",
+      "type": "upload",
+      "x": 60,
+      "y": 300,
+      "fields": {
+        "image": ""
+      },
+      "w": 240,
+      "name": "Wall photo"
+    },
+    {
+      "id": "prefs",
+      "type": "text",
+      "x": 60,
+      "y": 560,
+      "fields": {
+        "text": "Paint a mural on the blank middle of this small bookshop's back wall: a sunrise over rolling green hills, a winding river running down to the foreground, wildflowers along the bottom edge and birds crossing the dawn sky. Warm dawn palette - coral and gold sky, fresh greens below. Painted, hand-made feel, flat and matte like real wall paint. Hard constraints: paint only completely blank wall; the window and the door stay completely unpainted, as do the floor, the ceiling and the light fitting; no text, no letters, no people, no painted frame or border around the mural."
+      },
+      "w": 300,
+      "name": "Mural brief"
+    },
+    {
+      "id": "card",
+      "type": "vision",
+      "x": 400,
+      "y": 280,
+      "fields": {
+        "model": "google/gemini-3.8-flash",
+        "q": "You are a wall surveyor in a mural pipeline. Look at this photograph of a wall and write a WALL CARD in this exact shape. First, divide the wall into exactly 5 equal vertical zones, numbered 1 to 5 from left to right, and write one line per zone: 'Zone N: ' followed by what is there - completely blank wall (say so, with the wall colour and surface), or the fixture that occupies it (a window, a door, a sign, a light, a shelf, furniture against it) with its position, size and colours. Then one line starting 'Fixed: ' listing everything that is not paintable wall and must not change: the window and door if any, the floor or ground, the ceiling or skyline, any furniture, the lighting and the camera viewpoint. Then one line starting 'Paintable: ' listing the numbers of the zones that are completely blank wall, or 'none'. Report only what you can see; do not invent fixtures. Output the card only."
+      },
+      "w": 280,
+      "name": "Wall card - Gemini surveys the zones",
+      "sizes": {
+        "q": 150
+      }
+    },
+    {
+      "id": "j1",
+      "type": "join",
+      "x": 760,
+      "y": 300,
+      "fields": {
+        "sep": "\n\nWALL CARD:\n"
+      },
+      "w": 200,
+      "name": "Brief + wall card"
+    },
+    {
+      "id": "designer",
+      "type": "llm",
+      "x": 1040,
+      "y": 280,
+      "fields": {
+        "model": "z-ai/glm-5.3-flash",
+        "system": "You are a mural designer. The input is a mural brief followed by a WALL CARD: exactly 5 numbered wall zones, a Fixed line, and a Paintable line listing the completely blank zones. Write ONE mural plan in this exact shape: exactly 5 lines, numbered 1 to 5, one per zone, in zone order. A zone may be painted ONLY if the card's Paintable line lists it; every other zone's line starts 'KEEP - ' and names what stays unpainted there. Every Paintable zone MUST be painted, and its line starts 'PAINT - ' followed by the mural element belonging in that zone, its main colours, and at least one countable motif with an exact count between 2 and 8 (for example 'exactly 4 black swallows'). Across the painted zones the elements must join into the single coherent scene the brief asks for, and there must be at least 3 countable motifs in total across the plan. Then one final line starting 'Keep exactly: ' repeating the card's Fixed line contents. Honour every hard constraint in the brief, including no text and no painting over fixtures. Output the plan only, no preamble."
+      },
+      "w": 280,
+      "name": "Mural plan - GLM designs by zone number",
+      "sizes": {
+        "system": 150
+      }
+    },
+    {
+      "id": "brief",
+      "type": "llm",
+      "x": 1400,
+      "y": 280,
+      "fields": {
+        "model": "z-ai/glm-5.3-flash",
+        "system": "You turn a mural plan into one surgical image-edit instruction. The input is a mural plan: 5 numbered zone lines (PAINT or KEEP), countable motifs with exact counts, and a Keep exactly line. Output ONE instruction, under 150 words, that: starts with 'Paint a mural on the wall in this photo. Keep exactly: ' followed by the plan's Keep exactly contents; then, zone by zone in order, states for each PAINT zone what to paint there repeating every countable motif with its exact count verbatim, and for each KEEP zone that it stays completely unpainted; and ends by repeating the brief's hard constraints that appear in the plan (no text, nothing painted over fixtures). Output the instruction only.",
+        "maxTokens": "300",
+        "reasoningEffort": "low"
+      },
+      "w": 280,
+      "name": "Edit brief - GLM compresses the plan",
+      "sizes": {
+        "system": 150
+      }
+    },
+    {
+      "id": "paint",
+      "type": "edit",
+      "x": 1760,
+      "y": 280,
+      "fields": {
+        "model": "meta/muse-image/edit",
+        "size": "auto"
+      },
+      "w": 260,
+      "name": "Mural - Muse Edit paints the wall"
+    },
+    {
+      "id": "j0",
+      "type": "join",
+      "x": 1040,
+      "y": 580,
+      "fields": {
+        "sep": "\n\nMURAL PLAN:\n"
+      },
+      "w": 200,
+      "name": "Card + plan"
+    },
+    {
+      "id": "audit",
+      "type": "decide",
+      "x": 1760,
+      "y": 580,
+      "fields": {
+        "model": "perplexity/pplx-decider-v1.1-27b",
+        "mode": "choose",
+        "question": "The text is a wall card plus a mural plan: 5 numbered zones, some PAINT with countable motifs at exact counts, the rest KEEP unpainted, plus a keep-exactly list of fixtures. The image is a rendered wall that claims to follow exactly that plan. Which verdict fits? 'faithful mural' means every painted zone carries its planned elements at their exact counts, every keep zone and fixture is untouched, and nothing outside the paintable zones is painted. 'motifs drifted' means the mural is in the right zones and the fixtures are untouched, but at least one motif is at the wrong count or a planned element is missing. 'fixtures painted over' means paint covers a keep zone, a window, a door or anything on the keep-exactly list, or a fixture moved or vanished. 'barely a mural' means a planned paint zone is still blank or the mural is a faint wash with its motifs unrecognisable. Judge the wall, not the painting style.",
+        "options": "faithful mural\nmotifs drifted\nfixtures painted over\nbarely a mural"
+      },
+      "w": 280,
+      "name": "Mural - audited",
+      "sizes": {
+        "question": 130
+      }
+    },
+    {
+      "id": "look",
+      "type": "vision",
+      "x": 1400,
+      "y": 580,
+      "fields": {
+        "model": "google/gemini-3.8-flash",
+        "q": "You are the site checker in a mural pipeline. Look at this photograph of a wall with a painted mural and report ONLY what you can actually see. Divide the wall into exactly 5 equal vertical zones, numbered 1 to 5 from left to right, and write one line per zone: 'Zone N: ' followed by either 'unpainted' (with what fixture or blank wall is there) or the mural elements visible in that zone, each countable motif with the exact number you can count - if you are unsure of a count, give your best count and mark it '(?)'. Then one line starting 'Fixed: ' listing the state of everything that is not painted wall: the window and door if any, the floor or ground, the ceiling or skyline, any furniture, and whether any of them appears painted over or moved. Do not compare the wall to any plan; just report what is visibly there."
+      },
+      "w": 260,
+      "name": "Render read-back - Gemini reads the mural",
+      "sizes": {
+        "q": 150
+      }
+    },
+    {
+      "id": "j2",
+      "type": "join",
+      "x": 2120,
+      "y": 580,
+      "fields": {
+        "sep": "\n\nRENDER READ-BACK:\n"
+      },
+      "w": 200,
+      "name": "Card + plan + read-back"
+    },
+    {
+      "id": "checker",
+      "type": "llm",
+      "x": 2400,
+      "y": 560,
+      "fields": {
+        "model": "z-ai/glm-5.3-flash",
+        "system": "You are a mural auditor. The input gives a WALL CARD (5 numbered zones and a Fixed line), then a MURAL PLAN (5 numbered zone lines, PAINT or KEEP, with countable motifs and exact counts, and a Keep exactly line), then the marker 'RENDER READ-BACK:' and a site checker's inventory of the rendered wall. Compare them and output exactly this: PASS 1, one line per plan zone in order, starting 'APPLIED - ' if the zone's treatment matches the plan (a PAINT zone painted with its named elements, a KEEP zone still unpainted), or 'WRONG ZONE - ', 'PAINTED OVER - ' (a KEEP zone or fixture got painted), 'WRONG COUNT - ' or 'MISSING - ' as fits, followed by the zone's short name and the detail. PASS 2, one line starting 'Fixed list: KEPT' or 'Fixed list: CHANGED' followed by what differs between the card's Fixed line and the read-back's Fixed line, if anything. End with one line 'Summary: X of 5 zones applied, counts A of B exact.' where B is the number of countable motifs in the plan and A is how many the read-back counts at exactly the planned number. Judge by what the read-back reports; a close colour match counts as the same colour. Output the audit only, no preamble."
+      },
+      "w": 280,
+      "name": "Mural audit - GLM scores the zones",
+      "sizes": {
+        "system": 150
+      }
+    }
+  ],
+  "links": [
+    {
+      "id": "l1",
+      "from": {
+        "node": "src",
+        "port": "image"
+      },
+      "to": {
+        "node": "card",
+        "port": "image"
+      }
+    },
+    {
+      "id": "l2",
+      "from": {
+        "node": "prefs",
+        "port": "text"
+      },
+      "to": {
+        "node": "j1",
+        "port": "a"
+      }
+    },
+    {
+      "id": "l3",
+      "from": {
+        "node": "card",
+        "port": "text"
+      },
+      "to": {
+        "node": "j1",
+        "port": "b"
+      }
+    },
+    {
+      "id": "l4",
+      "from": {
+        "node": "j1",
+        "port": "text"
+      },
+      "to": {
+        "node": "designer",
+        "port": "prompt"
+      }
+    },
+    {
+      "id": "l5",
+      "from": {
+        "node": "designer",
+        "port": "text"
+      },
+      "to": {
+        "node": "brief",
+        "port": "prompt"
+      }
+    },
+    {
+      "id": "l6",
+      "from": {
+        "node": "src",
+        "port": "image"
+      },
+      "to": {
+        "node": "paint",
+        "port": "image"
+      }
+    },
+    {
+      "id": "l7",
+      "from": {
+        "node": "brief",
+        "port": "text"
+      },
+      "to": {
+        "node": "paint",
+        "port": "prompt"
+      }
+    },
+    {
+      "id": "l8",
+      "from": {
+        "node": "card",
+        "port": "text"
+      },
+      "to": {
+        "node": "j0",
+        "port": "a"
+      }
+    },
+    {
+      "id": "l9",
+      "from": {
+        "node": "designer",
+        "port": "text"
+      },
+      "to": {
+        "node": "j0",
+        "port": "b"
+      }
+    },
+    {
+      "id": "l10",
+      "from": {
+        "node": "j0",
+        "port": "text"
+      },
+      "to": {
+        "node": "audit",
+        "port": "text"
+      }
+    },
+    {
+      "id": "l11",
+      "from": {
+        "node": "paint",
+        "port": "image"
+      },
+      "to": {
+        "node": "audit",
+        "port": "img1"
+      }
+    },
+    {
+      "id": "l12",
+      "from": {
+        "node": "paint",
+        "port": "image"
+      },
+      "to": {
+        "node": "look",
+        "port": "image"
+      }
+    },
+    {
+      "id": "l13",
+      "from": {
+        "node": "j0",
+        "port": "text"
+      },
+      "to": {
+        "node": "j2",
+        "port": "a"
+      }
+    },
+    {
+      "id": "l14",
+      "from": {
+        "node": "look",
+        "port": "text"
+      },
+      "to": {
+        "node": "j2",
+        "port": "b"
+      }
+    },
+    {
+      "id": "l15",
+      "from": {
+        "node": "j2",
+        "port": "text"
+      },
+      "to": {
+        "node": "checker",
+        "port": "prompt"
+      }
+    }
+  ],
+  "nid": 16,
+  "lid": 16,
+  "view": {
+    "panX": 40,
+    "panY": 40,
+    "scale": 0.6
+  }
+}
