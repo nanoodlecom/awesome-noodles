@@ -11,6 +11,7 @@ Do not hand-edit these files — run `node scripts/make-recipes.mjs` after chang
 | Recipe | Graph | Inputs |
 | --- | --- | --- |
 | [ADetailer finisher](adetailer-finisher.md) | [`graphs/adetailer-finisher.noodle-graph.json`](../graphs/adetailer-finisher.noodle-graph.json) | needs Portrait |
+| [Bento box, compartment-checked](bento-box-audit.md) | [`graphs/bento-box-audit.noodle-graph.json`](../graphs/bento-box-audit.noodle-graph.json) | defaults in graph |
 | [Bookshelf next-read, phantom-checked](bookshelf-next-read.md) | [`graphs/bookshelf-next-read.noodle-graph.json`](../graphs/bookshelf-next-read.noodle-graph.json) | needs Shelf photo |
 | [Bouquet recipe, count-checked](bouquet-recipe-audit.md) | [`graphs/bouquet-recipe-audit.noodle-graph.json`](../graphs/bouquet-recipe-audit.noodle-graph.json) | defaults in graph |
 | [Cake decoration, count-checked](cake-decoration-audit.md) | [`graphs/cake-decoration-audit.noodle-graph.json`](../graphs/cake-decoration-audit.noodle-graph.json) | needs Cake photo |
