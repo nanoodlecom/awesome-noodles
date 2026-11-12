@@ -1,0 +1,238 @@
+{
+  "v": 1,
+  "nodes": [
+    {
+      "id": "c1",
+      "type": "comment",
+      "x": 60,
+      "y": 30,
+      "fields": {
+        "text": "A GLM astronomer invents a fictional star system from a brief - one named star and exactly six planets, innermost orbit first, each with its own dominant colour and signature feature - a second GLM turns it into a poster-design brief, and Muse renders a flat astronomy poster: the star at the centre, six concentric orbit circles, one planet per orbit. Then the loop closes: a Gemini vision checker reads the planets back from the innermost orbit out, with colours and features, a GLM auditor scores the spec against that read-back planet by planet - placed, wrong order, missing, detail drift, extras - and a Decide judge labels the poster charted to spec, order drifted, planets missing or wrong system. The poster has to answer to the system, orbit by orbit. Four model families, four different jobs. See recipes/star-system-audit.md."
+      },
+      "w": 900,
+      "name": "Star system poster, orbit-checked - plan, render, read back, audit"
+    },
+    {
+      "id": "brief",
+      "type": "text",
+      "x": 60,
+      "y": 300,
+      "fields": {
+        "text": "One clean flat astronomy poster for a fictional star system, with exactly one star and exactly six planets and no others. The planets sit one per orbit on six concentric orbits, numbered from orbit 1 innermost to orbit 6 outermost. Hard constraints: every planet name invented, one or two words, easy to spell, no two names sharing their first word; the six dominant colours all different; the six signature features all different and drawable on a poster; every planet name printed clearly beside its planet; and no text anywhere except the system title and the six planet names."
+      },
+      "w": 300,
+      "name": "Star system brief"
+    },
+    {
+      "id": "builder",
+      "type": "llm",
+      "x": 440,
+      "y": 280,
+      "fields": {
+        "model": "z-ai/glm-5.3-flash",
+        "system": "You are a meticulous astronomer inventing a fictional star system. The input is a brief for ONE star-system poster with exactly six planets. Write ONE system spec in this exact shape. First line: 'System: <invented star name> System'. Then exactly 6 numbered planet lines, innermost orbit first (orbit 1) to outermost (orbit 6), each in this shape: '<n>. <planet name> - <one dominant colour> - <one signature feature>'. Planet names are invented, one or two words, easy to spell and easy to tell apart - no two names may share their first word. The six dominant colours must all be different. The six signature features must all be different, chosen from things a poster can show: a wide ring, one large moon, bold stripes, a white ice cap, a red storm spot, many craters, a green continent, golden clouds, a dark volcano cone, thin twin rings. Honour every hard constraint in the brief. Output the spec only, no preamble, no closing remarks."
+      },
+      "w": 280,
+      "name": "System spec - GLM astronomer lays out the orbits",
+      "sizes": {
+        "system": 150
+      }
+    },
+    {
+      "id": "stylist",
+      "type": "llm",
+      "x": 800,
+      "y": 280,
+      "fields": {
+        "model": "z-ai/glm-5.3-flash",
+        "system": "You direct astronomy-poster design. The input is a star-system spec: a system title line and 6 numbered planets, innermost orbit first, each with a dominant colour and a signature feature. Output ONE image prompt, under 130 words, for a clean flat astronomy poster: a dark navy background, one glowing star at the centre named by the title printed across the top, six thin concentric orbit circles around the star, exactly one planet on each orbit circle in spec order - orbit 1 innermost, orbit 6 outermost - each planet drawn in its dominant colour showing its signature feature, every planet's name printed in clear white type beside its planet, no other planets, moons (except a planet whose feature is a moon), text or numbers, no photographs, no people, no spacecraft. Repeat every planet name exactly as spelled in the spec. Output the prompt only.",
+        "maxTokens": "300",
+        "reasoningEffort": "low"
+      },
+      "w": 280,
+      "name": "Poster brief - GLM art-directs",
+      "sizes": {
+        "system": 150
+      }
+    },
+    {
+      "id": "poster",
+      "type": "image",
+      "x": 1160,
+      "y": 280,
+      "fields": {
+        "model": "meta/muse-image/text-to-image",
+        "size": "1:1",
+        "variations": "1"
+      },
+      "w": 260,
+      "name": "Star system poster - Muse renders the system"
+    },
+    {
+      "id": "audit",
+      "type": "decide",
+      "x": 1500,
+      "y": 280,
+      "fields": {
+        "model": "perplexity/pplx-decider-v1.1-27b",
+        "mode": "choose",
+        "question": "The text is a star-system spec: six planets numbered from orbit 1 (innermost) to orbit 6 (outermost), each with a dominant colour and a signature feature. The image is a rendered star-system poster that claims to show exactly that system. Which verdict fits? 'charted to spec' means every planet stands on its planned orbit in its planned colour with its planned feature. 'order drifted' means all six planets are present but at least one is on the wrong orbit, or a colour or feature is clearly wrong. 'planets missing' means at least one planned planet cannot be found anywhere on the poster. 'wrong system' means the image is not a six-planet star-system poster of this spec at all. Judge the system, not the styling.",
+        "options": "charted to spec\norder drifted\nplanets missing\nwrong system"
+      },
+      "w": 280,
+      "name": "Star system poster - audited",
+      "sizes": {
+        "question": 130
+      }
+    },
+    {
+      "id": "look",
+      "type": "vision",
+      "x": 1160,
+      "y": 580,
+      "fields": {
+        "model": "google/gemini-3.8-flash",
+        "q": "You are the poster checker in an astronomy pipeline. Look at this star-system poster and report ONLY what you can actually see. First give the poster title exactly as printed. Then list the planets in orbit order from the innermost orbit (closest to the central star) to the outermost, one per line, each with its name exactly as labelled, its dominant colour, and any signature feature you can see on it (for example a ring, a large moon, stripes, an ice cap, a storm spot, craters). Then list any other text, planets or objects visible anywhere in the image, if any. Do not guess at anything you cannot see - if you are unsure of a name, give your best reading and mark it '(?)'. Do not compare it to any plan; just report what is visibly there."
+      },
+      "w": 260,
+      "name": "Poster check - Gemini reads the orbits",
+      "sizes": {
+        "q": 150
+      }
+    },
+    {
+      "id": "j1",
+      "type": "join",
+      "x": 1500,
+      "y": 580,
+      "fields": {
+        "sep": "\n\nVISIBLE ON THE POSTER:\n"
+      },
+      "w": 200,
+      "name": "Spec + poster check"
+    },
+    {
+      "id": "checker",
+      "type": "llm",
+      "x": 1780,
+      "y": 560,
+      "fields": {
+        "model": "z-ai/glm-5.3-flash",
+        "system": "You are a star-system poster auditor. The input gives a system spec (a title line and 6 numbered planets, orbit 1 innermost to orbit 6 outermost, each with a dominant colour and a signature feature), then the marker 'VISIBLE ON THE POSTER:' and a read-back of what a checker could actually see on the rendered poster. Compare the two, listing by listing. Output one line per spec planet, in spec order (orbits 1 to 6), starting 'PLACED - ' if that planet is visible on the same orbit position, 'WRONG ORDER - ' if it is visible but on a different orbit position, or 'MISSING - ' if it cannot be found anywhere, followed by the planet's name and its orbit (for example 'orbit 2'). After each planet line, if the read-back gives its colour or feature differently from the spec, add one line starting 'DETAIL - ' naming the planet and what differs. Then one 'EXTRA - ' line for each visible planet that is not in the spec, if any. End with one line 'Summary: X of 6 placed.' Judge by planet name and orbit position; a close spelling of the same name counts as the same planet. Output the audit only, no preamble."
+      },
+      "w": 280,
+      "name": "Audit - GLM scores the poster",
+      "sizes": {
+        "system": 150
+      }
+    }
+  ],
+  "links": [
+    {
+      "id": "l1",
+      "from": {
+        "node": "brief",
+        "port": "text"
+      },
+      "to": {
+        "node": "builder",
+        "port": "prompt"
+      }
+    },
+    {
+      "id": "l2",
+      "from": {
+        "node": "builder",
+        "port": "text"
+      },
+      "to": {
+        "node": "stylist",
+        "port": "prompt"
+      }
+    },
+    {
+      "id": "l3",
+      "from": {
+        "node": "stylist",
+        "port": "text"
+      },
+      "to": {
+        "node": "poster",
+        "port": "prompt"
+      }
+    },
+    {
+      "id": "l4",
+      "from": {
+        "node": "builder",
+        "port": "text"
+      },
+      "to": {
+        "node": "audit",
+        "port": "text"
+      }
+    },
+    {
+      "id": "l5",
+      "from": {
+        "node": "poster",
+        "port": "image"
+      },
+      "to": {
+        "node": "audit",
+        "port": "img1"
+      }
+    },
+    {
+      "id": "l6",
+      "from": {
+        "node": "poster",
+        "port": "image"
+      },
+      "to": {
+        "node": "look",
+        "port": "image"
+      }
+    },
+    {
+      "id": "l7",
+      "from": {
+        "node": "builder",
+        "port": "text"
+      },
+      "to": {
+        "node": "j1",
+        "port": "a"
+      }
+    },
+    {
+      "id": "l8",
+      "from": {
+        "node": "look",
+        "port": "text"
+      },
+      "to": {
+        "node": "j1",
+        "port": "b"
+      }
+    },
+    {
+      "id": "l9",
+      "from": {
+        "node": "j1",
+        "port": "text"
+      },
+      "to": {
+        "node": "checker",
+        "port": "prompt"
+      }
+    }
+  ],
+  "nid": 10,
+  "lid": 10,
+  "view": {
+    "panX": 40,
+    "panY": 40,
+    "scale": 0.6
+  }
+}
