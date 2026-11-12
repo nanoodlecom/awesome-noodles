@@ -20,6 +20,7 @@ Do not hand-edit these files — run `node scripts/make-recipes.mjs` after chang
 | [Game character kit](character-sprites.md) | [`graphs/character-sprites.noodle-graph.json`](../graphs/character-sprites.noodle-graph.json) | defaults in graph |
 | [Closet capsule, phantom-checked](closet-capsule-audit.md) | [`graphs/closet-capsule-audit.noodle-graph.json`](../graphs/closet-capsule-audit.noodle-graph.json) | needs Closet photo |
 | [A composer that watches your film](composer-watches-your-film.md) | [`graphs/composer-watches-your-film.noodle-graph.json`](../graphs/composer-watches-your-film.noodle-graph.json) | defaults in graph |
+| [Floor plan, room-checked](floor-plan-audit.md) | [`graphs/floor-plan-audit.noodle-graph.json`](../graphs/floor-plan-audit.noodle-graph.json) | defaults in graph |
 | [Fridge to feast](fridge-to-feast.md) | [`graphs/fridge-to-feast.noodle-graph.json`](../graphs/fridge-to-feast.noodle-graph.json) | needs Fridge photo |
 | [Garden bed, row-checked](garden-bed-audit.md) | [`graphs/garden-bed-audit.noodle-graph.json`](../graphs/garden-bed-audit.noodle-graph.json) | defaults in graph |
 | [Haircut preview, identity-checked](haircut-preview.md) | [`graphs/haircut-preview.noodle-graph.json`](../graphs/haircut-preview.noodle-graph.json) | needs Portrait photo |
