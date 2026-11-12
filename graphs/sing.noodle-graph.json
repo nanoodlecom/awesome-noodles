@@ -9,7 +9,7 @@
       "y": -200,
       "w": 560,
       "fields": {
-        "text": "Start with a song idea and the bands you like. Three text calls write lyrics, arrange them, and identify what would clash with that arrangement. The arrangement and avoid-list become one musical direction for MiniMax Music 3; the lyrics use its separate lyrics input. Change the idea or references to take the song somewhere else. Check the estimate before running; listen for the hook, instrumentation and vocal delivery. Exact duration and arrangement can vary.",
+        "text": "Start with a song idea and the bands you like; Mureka 9.5 sings the result (about $0.23 a song). Three text calls write lyrics, arrange them, and identify what would clash with that arrangement. The arrangement and avoid-list become one musical direction for Mureka 9.5 (mureka-ai/mureka-v9.5/generate-song); the lyrics use its separate lyrics input. Change the idea or references to take the song somewhere else. Check the estimate before running; listen for the hook, instrumentation and vocal delivery. Mureka takes no length setting, so duration and arrangement vary.",
         "color": "yellow"
       }
     },
@@ -134,7 +134,7 @@
         "lyrics": 0
       },
       "fields": {
-        "model": "minimax/music-3",
+        "model": "mureka-ai/mureka-v9.5/generate-song",
         "instrumental": false,
         "response_format": "mp3"
       }
