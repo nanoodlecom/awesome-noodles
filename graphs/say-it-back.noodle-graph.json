@@ -1,0 +1,203 @@
+{
+  "v": 1,
+  "nodes": [
+    {
+      "id": "c1",
+      "type": "comment",
+      "x": 60,
+      "y": 30,
+      "fields": {
+        "text": "A GLM writer turns a fact-carrying brief into a short spoken announcement script, copying every name, date, time, number, price and place exactly. MiniMax Speech reads the script aloud. Then the loop closes through the ear: Whisper transcribes the audio back to text - it never sees the script - a GLM auditor scores the script against that transcript fact by fact (HEARD / GARBLED / DROPPED, INVENTED lines for anything the listener hears that was never written), and a Decide judge labels the take broadcast-ready, facts garbled, facts dropped or barely intelligible. The script has to answer to what was actually heard. Four model families, four different jobs. See recipes/say-it-back.md."
+      },
+      "w": 900,
+      "name": "Say it back - write it, voice it, transcribe it, audit the facts"
+    },
+    {
+      "id": "brief",
+      "type": "text",
+      "x": 60,
+      "y": 300,
+      "fields": {
+        "text": "A spoken announcement for the Willow Lane Repair Cafe's winter opening, warm and clear, like a community radio spot. Facts that must be heard exactly: it opens on Saturday 21 November; doors open at 9:30 in the morning; you will find it in Hall 2 at 418 Willow Lane; your host is Marta Ellison; each visitor may bring up to 3 broken items; entry costs 5 dollars; the morning session ends at 12:45; questions go to the front desk."
+      },
+      "w": 300,
+      "name": "Announcement brief"
+    },
+    {
+      "id": "writer",
+      "type": "llm",
+      "x": 440,
+      "y": 280,
+      "fields": {
+        "model": "z-ai/glm-5.3-flash",
+        "system": "You write short spoken announcements for a community radio station. The input is a brief carrying exact facts. Write ONE announcement script, 55 to 70 words, in plain spoken sentences a presenter can read in one breath at a time. Use ONLY facts from the brief: copy every name, date, time, number, price and place exactly as written - do not change, round, spell out or add to any of them, and invent nothing. Keep the brief's tone. Output the script only: no heading, no speaker label, no stage directions, no quotation marks around the whole script.",
+        "maxTokens": "300",
+        "reasoningEffort": "low"
+      },
+      "w": 280,
+      "name": "Script - GLM writes for the ear",
+      "sizes": {
+        "system": 150
+      }
+    },
+    {
+      "id": "voice",
+      "type": "tts",
+      "x": 800,
+      "y": 280,
+      "fields": {
+        "model": "Minimax-Speech-2.8-HD",
+        "voice": "Deep_Voice_Man",
+        "response_format": "mp3"
+      },
+      "w": 280,
+      "name": "Announcement - MiniMax Speech reads it",
+      "sizes": {
+        "prompt": 0
+      }
+    },
+    {
+      "id": "hearback",
+      "type": "transcribe",
+      "x": 1160,
+      "y": 280,
+      "fields": {
+        "model": "whisper-1",
+        "language": "auto"
+      },
+      "w": 280,
+      "name": "Heard back - Whisper transcribes the audio"
+    },
+    {
+      "id": "audit",
+      "type": "decide",
+      "x": 1500,
+      "y": 280,
+      "fields": {
+        "model": "perplexity/pplx-decider-v1.2",
+        "mode": "choose",
+        "question": "The text is the script of a spoken announcement, then after the marker 'HEARD BACK (TRANSCRIPT):' a transcript of a speech model reading that script aloud, written by a listening model. Which verdict fits what a listener actually heard? 'broadcast-ready' means every name, date, time, number, price and place in the script is heard with the same value and nothing was invented. 'facts garbled' means every fact is present but at least one name or value is heard wrong. 'facts dropped' means at least one scripted fact never reaches the listener at all. 'barely intelligible' means the transcript is too broken to match the script fact by fact. Judge the facts a listener receives, not the writing.",
+        "options": "broadcast-ready\nfacts garbled\nfacts dropped\nbarely intelligible"
+      },
+      "w": 280,
+      "name": "Announcement - audited",
+      "sizes": {
+        "question": 130
+      }
+    },
+    {
+      "id": "j1",
+      "type": "join",
+      "x": 1160,
+      "y": 580,
+      "fields": {
+        "sep": "\n\nHEARD BACK (TRANSCRIPT):\n"
+      },
+      "w": 200,
+      "name": "Script + transcript"
+    },
+    {
+      "id": "checker",
+      "type": "llm",
+      "x": 1500,
+      "y": 580,
+      "fields": {
+        "model": "z-ai/glm-5.3-flash",
+        "system": "You are a broadcast fact auditor. The input gives the SCRIPT of a spoken announcement, then the marker 'HEARD BACK (TRANSCRIPT):' and a transcript of that announcement actually being read aloud by a speech model, written by a separate listening model that never saw the script. Compare the two fact by fact. First list every checkable fact in the SCRIPT - every name, date, time, number, price, count and place - one per line, in script order, starting 'HEARD - ' if the transcript carries that fact with the same value, 'GARBLED - ' if the fact is there but its value or name differs (add what was heard instead), or 'DROPPED - ' if the fact cannot be found in the transcript at all, followed by the fact in a few words. Then one 'INVENTED - ' line for each fact the transcript states that the script never said, if any. Ignore punctuation, capitalisation and harmless wording differences: a number heard as words counts as the same value, and 'in the morning' for 'a.m.' counts as heard. End with one line 'Summary: X of Y facts heard.' Output the audit only, no preamble.",
+        "maxTokens": "400",
+        "reasoningEffort": "low"
+      },
+      "w": 280,
+      "name": "Fact audit - GLM scores what was heard",
+      "sizes": {
+        "system": 150
+      }
+    }
+  ],
+  "links": [
+    {
+      "id": "l1",
+      "from": {
+        "node": "brief",
+        "port": "text"
+      },
+      "to": {
+        "node": "writer",
+        "port": "prompt"
+      }
+    },
+    {
+      "id": "l2",
+      "from": {
+        "node": "writer",
+        "port": "text"
+      },
+      "to": {
+        "node": "voice",
+        "port": "prompt"
+      }
+    },
+    {
+      "id": "l3",
+      "from": {
+        "node": "voice",
+        "port": "audio"
+      },
+      "to": {
+        "node": "hearback",
+        "port": "audio"
+      }
+    },
+    {
+      "id": "l4",
+      "from": {
+        "node": "writer",
+        "port": "text"
+      },
+      "to": {
+        "node": "j1",
+        "port": "a"
+      }
+    },
+    {
+      "id": "l5",
+      "from": {
+        "node": "hearback",
+        "port": "text"
+      },
+      "to": {
+        "node": "j1",
+        "port": "b"
+      }
+    },
+    {
+      "id": "l6",
+      "from": {
+        "node": "j1",
+        "port": "text"
+      },
+      "to": {
+        "node": "checker",
+        "port": "prompt"
+      }
+    },
+    {
+      "id": "l7",
+      "from": {
+        "node": "j1",
+        "port": "text"
+      },
+      "to": {
+        "node": "audit",
+        "port": "text"
+      }
+    }
+  ],
+  "nid": 10,
+  "lid": 10,
+  "view": {
+    "panX": 40,
+    "panY": 40,
+    "scale": 0.6
+  }
+}
