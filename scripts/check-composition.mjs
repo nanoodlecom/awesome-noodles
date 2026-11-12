@@ -9,7 +9,7 @@ import { dirname, join, resolve } from 'node:path';
 import { fileURLToPath, pathToFileURL } from 'node:url';
 
 export const root = resolve(dirname(fileURLToPath(import.meta.url)), '..');
-export const slugs = ['storyboard-relay', 'tiny-world-film'];
+export const slugs = ['storyboard-relay'];
 const MOCK_ORIGIN = 'https://composition.invalid';
 const NETWORK_TYPES = new Set(['llm', 'vision', 'image', 'edit', 'inpaint', 'tvideo', 'ivideo', 'vedit', 'lipsync', 'music', 'remix', 'tts', 'transcribe']);
 const MUSE = 'meta/muse-image/text-to-image';

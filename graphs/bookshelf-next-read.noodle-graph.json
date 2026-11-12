@@ -120,7 +120,7 @@
       "x": 2060,
       "y": 280,
       "fields": {
-        "model": "perplexity/pplx-decider-v1.1-27b",
+        "model": "perplexity/pplx-decider-v1.2",
         "mode": "choose",
         "question": "The text is a shelf inventory followed by a next-read slip picking ONE book from it, cited by inventory number, with a 'Cover:' line. The image claims to show that picked book in a reading still life. Which verdict fits? 'right book, legible' means the cover shows the slip's exact title and author, spelled correctly and readable. 'right book, garbled' means it is clearly meant to be the slip's book but the title or author lettering is misspelled, jumbled or unreadable. 'wrong book' means the cover shows a different title or author than the slip's pick, or a book the inventory never listed. 'no book visible' means there is no book with a readable cover in the picture at all. Judge the lettering, not the scene's beauty.",
         "options": "right book, legible\nright book, garbled\nwrong book\nno book visible"

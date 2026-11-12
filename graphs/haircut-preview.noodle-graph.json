@@ -108,7 +108,7 @@
       "x": 2060,
       "y": 280,
       "fields": {
-        "model": "perplexity/pplx-decider-v1.1-27b",
+        "model": "perplexity/pplx-decider-v1.2",
         "mode": "choose",
         "question": "The text is a sitter's face card: a numbered list of face anchors that make this person recognisable, plus a current-hair line. The image is a haircut preview that claims to show that same person with a new, noticeably shorter haircut. Which verdict fits? 'same person, new cut' means the preview carries the listed face anchors - face shape, eyes, nose, lips, freckles or moles on the correct sides - AND the hair is clearly a new, shorter style. 'face drifted' means it is plausibly the same person and the hair changed, but one or two listed anchors moved, changed or vanished. 'barely a haircut' means the face is intact but the hair is much the same length and style as the card describes. 'different person' means the preview contradicts the card on face shape or several anchors. Judge the face anchors and the hair change, not the photo's beauty.",
         "options": "same person, new cut\nface drifted\nbarely a haircut\ndifferent person"

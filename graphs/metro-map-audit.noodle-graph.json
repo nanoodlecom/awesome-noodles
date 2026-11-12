@@ -74,7 +74,7 @@
       "x": 1500,
       "y": 280,
       "fields": {
-        "model": "perplexity/pplx-decider-v1.1-27b",
+        "model": "perplexity/pplx-decider-v1.2",
         "mode": "choose",
         "question": "The text is a two-line metro network spec: Line A with 5 stations west to east, Line B with 5 stations north to south, and one interchange station that is stop 3 on both lines. The image is a rendered schematic metro map that claims to show exactly that network. Which verdict fits? 'mapped to spec' means every station stands on its planned line in its planned order and the two lines cross only at the shared interchange station. 'order drifted' means all stations are present on the right lines but at least one is out of order, or the crossing is at the wrong station. 'stations missing' means at least one planned station cannot be found anywhere on the map. 'wrong network' means the image is not a two-line metro map of this spec at all. Judge the network, not the styling.",
         "options": "mapped to spec\norder drifted\nstations missing\nwrong network"
