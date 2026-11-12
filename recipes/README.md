@@ -33,6 +33,7 @@ Do not hand-edit these files — run `node scripts/make-recipes.mjs` after chang
 | [Neon shrine duel](neon-shrine-duel.md) | [`graphs/neon-shrine-duel.noodle-graph.json`](../graphs/neon-shrine-duel.noodle-graph.json) | defaults in graph |
 | [Pack the bag, checked](pack-the-bag-checked.md) | [`graphs/pack-the-bag-checked.noodle-graph.json`](../graphs/pack-the-bag-checked.noodle-graph.json) | defaults in graph |
 | [Pet portrait, likeness-checked](pet-portrait-studio.md) | [`graphs/pet-portrait-studio.noodle-graph.json`](../graphs/pet-portrait-studio.noodle-graph.json) | needs Pet photo |
+| [Photo to scene mesh](photo-to-scene-mesh.md) | [`graphs/photo-to-scene-mesh.noodle-graph.json`](../graphs/photo-to-scene-mesh.noodle-graph.json) | needs Scene photo |
 | [Still to short clip](photo-to-video.md) | [`graphs/photo-to-video.noodle-graph.json`](../graphs/photo-to-video.noodle-graph.json) | defaults in graph |
 | [Plant doctor](plant-doctor.md) | [`graphs/plant-doctor.noodle-graph.json`](../graphs/plant-doctor.noodle-graph.json) | needs Plant photo |
 | [Rain window loop](rain-window-loop.md) | [`graphs/rain-window-loop.noodle-graph.json`](../graphs/rain-window-loop.noodle-graph.json) | defaults in graph |

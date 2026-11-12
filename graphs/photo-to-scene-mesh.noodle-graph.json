@@ -1,0 +1,109 @@
+{
+ "v": 1,
+ "nid": 6,
+ "lid": 4,
+ "nodes": [
+  {
+   "id": "c-intent",
+   "type": "comment",
+   "x": -40,
+   "y": -380,
+   "w": 560,
+   "fields": {
+    "text": "Photo → real 3D scene mesh. Upload one photo of a place. A vision model surveys it (what is there, near to far), MoGe 3 reconstructs the visible geometry into a textured GLB you can orbit, and an LLM turns the survey into a viewing guide for the mesh — including what a single photo cannot reconstruct. Swap the photo and ▶ Run.",
+    "color": "yellow"
+   }
+  },
+  {
+   "id": "src",
+   "type": "upload",
+   "x": -40,
+   "y": 0,
+   "w": 320,
+   "name": "Scene photo",
+   "fields": {
+    "image": ""
+   }
+  },
+  {
+   "id": "survey",
+   "type": "vision",
+   "x": 380,
+   "y": -40,
+   "w": 340,
+   "name": "Scene survey — Gemini reads the photo",
+   "fields": {
+    "model": "google/gemini-3.8-flash",
+    "q": "You are the surveyor in a photo-to-3D pipeline. Look at this photo and write a SCENE SURVEY in this exact shape:\nSetting: <what place this is, one line>\nCamera: <viewpoint and rough height, one line>\nNear to far: <the main objects and surfaces in depth order, nearest first, comma separated>\nSurfaces: <floor, wall, ceiling or ground and sky materials, one line>\nTricky geometry: <glass, mirrors, shiny or very thin objects a reconstruction may get wrong, or 'none'>\nPlain factual lines only. No advice, no markdown, no extra lines."
+   }
+  },
+  {
+   "id": "geo",
+   "type": "model3d",
+   "x": 380,
+   "y": 300,
+   "w": 440,
+   "name": "Reconstruct the scene — MoGe 3",
+   "fields": {
+    "model": "microsoft/moge-3",
+    "prompt": "",
+    "modelOpts": {
+     "num_refinement_steps": 3,
+     "resolution_level": 9
+    }
+   }
+  },
+  {
+   "id": "guide",
+   "type": "llm",
+   "x": 820,
+   "y": -40,
+   "w": 340,
+   "name": "Viewing guide — GLM writes the tour",
+   "sizes": {
+    "system": 120
+   },
+   "fields": {
+    "model": "z-ai/glm-5.3-flash",
+    "reasoningEffort": "low",
+    "maxTokens": "500",
+    "system": "You write the viewing guide that ships with a 3D mesh reconstructed from ONE photo by MoGe 3. The input is a scene survey of that photo. Write 120 to 180 words in exactly three short paragraphs:\nWHAT YOU GOT — the mesh is a textured GLB of everything the camera could see; say how to open it (any GLB viewer, a browser 3D viewer, or Blender).\nTHE WALKTHROUGH — walk the scene near to far in the survey's order, naming what to look for at each depth.\nTHE HONEST EDGES — MoGe reconstructs only visible surfaces: backsides and anything hidden behind other objects are absent or stretched, thin and shiny objects are approximate, and scale is relative, not measured in metres.\nPlain sentences, no markdown, no hype. Do not invent objects the survey does not name."
+   }
+  }
+ ],
+ "links": [
+  {
+   "id": "l1",
+   "from": {
+    "node": "src",
+    "port": "image"
+   },
+   "to": {
+    "node": "survey",
+    "port": "image"
+   }
+  },
+  {
+   "id": "l2",
+   "from": {
+    "node": "src",
+    "port": "image"
+   },
+   "to": {
+    "node": "geo",
+    "port": "image"
+   }
+  },
+  {
+   "id": "l3",
+   "from": {
+    "node": "survey",
+    "port": "text"
+   },
+   "to": {
+    "node": "guide",
+    "port": "prompt"
+   }
+  }
+ ]
+}
