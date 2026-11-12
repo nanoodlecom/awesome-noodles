@@ -109,7 +109,7 @@
       "x": 2060,
       "y": 280,
       "fields": {
-        "model": "perplexity/pplx-decider-v1.1-27b",
+        "model": "perplexity/pplx-decider-v1.2",
         "mode": "choose",
         "question": "The text is a recipe a chef wrote from a fridge inventory. The image is a rendered plate that claims to be that recipe. Which verdict fits? 'faithful plate' means it is that dish and every main ingredient visible in it appears in the recipe. 'minor liberties' means it is that dish with only garnish-level or styling differences. 'phantom ingredient' means a main ingredient is clearly visible that the recipe never had. 'wrong dish' means it is a different dish altogether. Judge the food, not the photography.",
         "options": "faithful plate\nminor liberties\nphantom ingredient\nwrong dish"

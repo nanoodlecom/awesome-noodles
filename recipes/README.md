@@ -6,49 +6,21 @@ Do not hand-edit these files — run `node scripts/make-recipes.mjs` after chang
 
 `inspect` never calls the API. `run` needs `NANOGPT_API_KEY` and spends NanoGPT balance. Guide: [Run workflows headlessly](https://nanoodle.com/guide/run-headless).
 
-**[Sing requires a source install](sing.md#install-from-source)** for the music prompt fix on GitHub main until package releases include it. Other workflows use the published packages.
 
 | Recipe | Graph | Inputs |
 | --- | --- | --- |
 | [ADetailer finisher](adetailer-finisher.md) | [`graphs/adetailer-finisher.noodle-graph.json`](../graphs/adetailer-finisher.noodle-graph.json) | needs Portrait |
-| [Aquarium stocking, zone-checked](aquarium-stocking-audit.md) | [`graphs/aquarium-stocking-audit.noodle-graph.json`](../graphs/aquarium-stocking-audit.noodle-graph.json) | defaults in graph |
 | [Bar chart, number-checked](bar-chart-audit.md) | [`graphs/bar-chart-audit.noodle-graph.json`](../graphs/bar-chart-audit.noodle-graph.json) | defaults in graph |
-| [Bento box, compartment-checked](bento-box-audit.md) | [`graphs/bento-box-audit.noodle-graph.json`](../graphs/bento-box-audit.noodle-graph.json) | defaults in graph |
 | [Bookshelf next-read, phantom-checked](bookshelf-next-read.md) | [`graphs/bookshelf-next-read.noodle-graph.json`](../graphs/bookshelf-next-read.noodle-graph.json) | needs Shelf photo |
-| [Bouquet recipe, count-checked](bouquet-recipe-audit.md) | [`graphs/bouquet-recipe-audit.noodle-graph.json`](../graphs/bouquet-recipe-audit.noodle-graph.json) | defaults in graph |
-| [Cake decoration, count-checked](cake-decoration-audit.md) | [`graphs/cake-decoration-audit.noodle-graph.json`](../graphs/cake-decoration-audit.noodle-graph.json) | needs Cake photo |
-| [Game character kit](character-sprites.md) | [`graphs/character-sprites.noodle-graph.json`](../graphs/character-sprites.noodle-graph.json) | defaults in graph |
-| [Closet capsule, phantom-checked](closet-capsule-audit.md) | [`graphs/closet-capsule-audit.noodle-graph.json`](../graphs/closet-capsule-audit.noodle-graph.json) | needs Closet photo |
 | [A composer that watches your film](composer-watches-your-film.md) | [`graphs/composer-watches-your-film.noodle-graph.json`](../graphs/composer-watches-your-film.noodle-graph.json) | defaults in graph |
-| [Floor plan, room-checked](floor-plan-audit.md) | [`graphs/floor-plan-audit.noodle-graph.json`](../graphs/floor-plan-audit.noodle-graph.json) | defaults in graph |
 | [Fridge to feast](fridge-to-feast.md) | [`graphs/fridge-to-feast.noodle-graph.json`](../graphs/fridge-to-feast.noodle-graph.json) | needs Fridge photo |
-| [Garden bed, row-checked](garden-bed-audit.md) | [`graphs/garden-bed-audit.noodle-graph.json`](../graphs/garden-bed-audit.noodle-graph.json) | defaults in graph |
 | [Haircut preview, identity-checked](haircut-preview.md) | [`graphs/haircut-preview.noodle-graph.json`](../graphs/haircut-preview.noodle-graph.json) | needs Portrait photo |
 | [Humanize a comment](humanize-comment.md) | [`graphs/humanize-comment.noodle-graph.json`](../graphs/humanize-comment.noodle-graph.json) | defaults in graph |
 | [Idea to 3D model](idea-to-3d-model.md) | [`graphs/idea-to-3d-model.noodle-graph.json`](../graphs/idea-to-3d-model.noodle-graph.json) | defaults in graph |
-| [Compare image models](image-model-arena.md) | [`graphs/image-model-arena.noodle-graph.json`](../graphs/image-model-arena.noodle-graph.json) | defaults in graph |
 | [Menu to plate, checked](menu-to-plate.md) | [`graphs/menu-to-plate.noodle-graph.json`](../graphs/menu-to-plate.noodle-graph.json) | needs Menu photo |
 | [Metro map, station-checked](metro-map-audit.md) | [`graphs/metro-map-audit.noodle-graph.json`](../graphs/metro-map-audit.noodle-graph.json) | defaults in graph |
-| [Mix the references](mix-the-references.md) | [`graphs/mix-the-references.noodle-graph.json`](../graphs/mix-the-references.noodle-graph.json) | defaults in graph |
-| [Mural wall, fixture-checked](mural-wall-audit.md) | [`graphs/mural-wall-audit.noodle-graph.json`](../graphs/mural-wall-audit.noodle-graph.json) | needs Wall photo |
-| [Neon shrine duel](neon-shrine-duel.md) | [`graphs/neon-shrine-duel.noodle-graph.json`](../graphs/neon-shrine-duel.noodle-graph.json) | defaults in graph |
-| [Pack the bag, checked](pack-the-bag-checked.md) | [`graphs/pack-the-bag-checked.noodle-graph.json`](../graphs/pack-the-bag-checked.noodle-graph.json) | defaults in graph |
 | [Pet portrait, likeness-checked](pet-portrait-studio.md) | [`graphs/pet-portrait-studio.noodle-graph.json`](../graphs/pet-portrait-studio.noodle-graph.json) | needs Pet photo |
 | [Photo to scene mesh](photo-to-scene-mesh.md) | [`graphs/photo-to-scene-mesh.noodle-graph.json`](../graphs/photo-to-scene-mesh.noodle-graph.json) | needs Scene photo |
-| [Still to short clip](photo-to-video.md) | [`graphs/photo-to-video.noodle-graph.json`](../graphs/photo-to-video.noodle-graph.json) | defaults in graph |
-| [Plant doctor](plant-doctor.md) | [`graphs/plant-doctor.noodle-graph.json`](../graphs/plant-doctor.noodle-graph.json) | needs Plant photo |
-| [Rain window loop](rain-window-loop.md) | [`graphs/rain-window-loop.noodle-graph.json`](../graphs/rain-window-loop.noodle-graph.json) | defaults in graph |
-| [Regional inpaint passes](regional-inpaint-passes.md) | [`graphs/regional-inpaint-passes.noodle-graph.json`](../graphs/regional-inpaint-passes.noodle-graph.json) | needs Photo, Mask 1, Mask 2, Mask 3 |
-| [Room makeover, audited](room-makeover-audit.md) | [`graphs/room-makeover-audit.noodle-graph.json`](../graphs/room-makeover-audit.noodle-graph.json) | needs Room photo |
-| [Sing](sing.md) | [`graphs/sing.noodle-graph.json`](../graphs/sing.noodle-graph.json) | defaults in graph |
-| [Prompt to an editable SVG sticker](sketch-to-svg.md) | [`graphs/sketch-to-svg.noodle-graph.json`](../graphs/sketch-to-svg.noodle-graph.json) | defaults in graph |
-| [Sneaker colorway, part-checked](sneaker-colorway-audit.md) | [`graphs/sneaker-colorway-audit.noodle-graph.json`](../graphs/sneaker-colorway-audit.noodle-graph.json) | needs Sneaker photo |
-| [Song in, music video out](song-to-music-video.md) | [`graphs/song-to-music-video.noodle-graph.json`](../graphs/song-to-music-video.noodle-graph.json) | defaults in graph |
-| [Star system poster, orbit-checked](star-system-audit.md) | [`graphs/star-system-audit.noodle-graph.json`](../graphs/star-system-audit.noodle-graph.json) | defaults in graph |
 | [Storyboard relay](storyboard-relay.md) | [`graphs/storyboard-relay.noodle-graph.json`](../graphs/storyboard-relay.noodle-graph.json) | defaults in graph |
-| [Spoken introduction](talking-avatar.md) | [`graphs/talking-avatar.noodle-graph.json`](../graphs/talking-avatar.noodle-graph.json) | defaults in graph |
-| [Tattoo placement, anchor-checked](tattoo-placement-audit.md) | [`graphs/tattoo-placement-audit.noodle-graph.json`](../graphs/tattoo-placement-audit.noodle-graph.json) | needs Forearm photo |
-| [Terrarium build, layer-checked](terrarium-build-audit.md) | [`graphs/terrarium-build-audit.noodle-graph.json`](../graphs/terrarium-build-audit.noodle-graph.json) | defaults in graph |
-| [Tiny world film](tiny-world-film.md) | [`graphs/tiny-world-film.noodle-graph.json`](../graphs/tiny-world-film.noodle-graph.json) | defaults in graph |
 
 Install: `npm i nanoodle` · `pip install nanoodle`. Run anywhere: [nanoodle-js](https://github.com/nanoodlecom/nanoodle-js) · [nanoodle-py](https://github.com/nanoodlecom/nanoodle-py) · [nanoodle-mcp](https://github.com/nanoodlecom/nanoodle-mcp) · [run-noodle-action](https://github.com/nanoodlecom/run-noodle-action).

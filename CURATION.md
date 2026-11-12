@@ -97,3 +97,13 @@ The browser gallery is a curated collection of workflows, not a mirror of whiche
 The Auto-dub removal explicitly intended to keep it on the website. Site commit [`e4f4adb`](https://github.com/nanoodlecom/nanoodle/commit/e4f4adb) then tied the gallery to the smaller MCP catalog and removed it there too. Those losses predate the September cull.
 
 A concrete Auto-dub reproduction uses `nanoodle-js/tests/fixtures/media/clipA.mp4` (one second), a 0.35-second replacement WAV, and `muxSoundtrack(video, audio, false)`. The current headless output lasts 0.35 seconds; the browser retains approximately one second with trailing silence. Repair the non-looping `-shortest` branches in `nanoodle-js/src/local-media.mjs` and `nanoodle-py/src/nanoodle/local_media.py`, with duration and silence assertions. Embedded app preview also lacks multipart transcription support; editor and standalone execution need separate validation.
+
+## Catalog prune — 12 November 2026
+
+Owner decision, 2026-11-12: at forty workflows the catalog had too many re-skins of one experiment — a plan with exact counts, a render, a recount, and the same verdict ("placement exact, counts drifted"). The catalog is pruned to the thirteen workflows whose mechanism is distinct, or whose audit catches a failure that matters:
+
+adetailer-finisher, bar-chart-audit, bookshelf-next-read, composer-watches-your-film, fridge-to-feast, haircut-preview, humanize-comment, idea-to-3d-model, menu-to-plate, metro-map-audit, pet-portrait-studio, photo-to-scene-mesh, storyboard-relay.
+
+Removed (27): aquarium-stocking-audit, bento-box-audit, bouquet-recipe-audit, cake-decoration-audit, character-sprites, closet-capsule-audit, floor-plan-audit, garden-bed-audit, image-model-arena, mix-the-references, mural-wall-audit, neon-shrine-duel, pack-the-bag-checked, photo-to-video, plant-doctor, rain-window-loop, regional-inpaint-passes, room-makeover-audit, sing, sketch-to-svg, sneaker-colorway-audit, song-to-music-video, star-system-audit, talking-avatar, tattoo-placement-audit, terrarium-build-audit, tiny-world-film. Their graphs, notes and recipes are removed from the catalog; they remain in git history and can be restored individually. The evidence archive is unchanged.
+
+Same change: the eight kept graphs that pinned the retired `perplexity/pplx-decider-v1.1-27b` now pin `perplexity/pplx-decider-v1.2` — v1.2 was proven live in the star-system run of 2026-11-12 and is spot-checked again on bar-chart-audit and fridge-to-feast in this change. Share links and recipes regenerated. The capture-example test fixture moves from tiny-world-film to storyboard-relay, and the composition checker now covers storyboard-relay only.

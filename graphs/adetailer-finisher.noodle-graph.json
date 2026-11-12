@@ -146,7 +146,7 @@
       "x": 3020,
       "y": 280,
       "fields": {
-        "model": "perplexity/pplx-decider-v1.1-27b",
+        "model": "perplexity/pplx-decider-v1.2",
         "mode": "pick",
         "question": "Which image has the most natural, artifact-free faces and hands while best preserving the original person - same identity, expression, pose, clothing, composition and background? Penalise extra or fused fingers, warped eyes, melted jewellery, garbled text and waxy, over-smoothed skin. The candidates are the original and two refined versions of it; if a refined version changed the person's identity or the scene, prefer the version that stayed faithful, even if that is the original."
       },

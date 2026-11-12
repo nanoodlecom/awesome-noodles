@@ -109,7 +109,7 @@
       "x": 2060,
       "y": 280,
       "fields": {
-        "model": "perplexity/pplx-decider-v1.1-27b",
+        "model": "perplexity/pplx-decider-v1.2",
         "mode": "choose",
         "question": "The text is an order slip for one dish chosen from a menu: it lists the components the menu promises on an 'On the plate:' line list, and a 'Not promised:' line of things that must not appear. The image claims to be that dish plated. Which verdict fits? 'faithful plate' means the picture shows that dish with the promised components visible and nothing from the Not promised line. 'plausible but drifted' means it is recognisably the right dish family but a promised component is missing, swapped or hard to find. 'phantom ingredients' means the right dish is there but the picture adds a prominent ingredient the menu never promised. 'wrong dish' means the picture is a different dish altogether. Judge the components, not the picture's beauty.",
         "options": "faithful plate\nplausible but drifted\nphantom ingredients\nwrong dish"

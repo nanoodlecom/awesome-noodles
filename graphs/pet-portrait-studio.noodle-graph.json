@@ -108,7 +108,7 @@
       "x": 2060,
       "y": 280,
       "fields": {
-        "model": "perplexity/pplx-decider-v1.1-27b",
+        "model": "perplexity/pplx-decider-v1.2",
         "mode": "choose",
         "question": "The text is a pet's identity card: a numbered list of the markings and features that make this animal recognisable. The image is a painted portrait that claims to be that same pet. Which verdict fits? 'same pet, painted' means the animal in the portrait carries the listed identity marks - coat pattern, distinctive markings on the correct sides, ear and face shape, eye colour - and is clearly a painting. 'markings drifted' means it is plausibly the same animal and clearly painted, but one or two listed marks moved, changed colour or vanished. 'different animal' means the portrait's animal contradicts the card on species, coat pattern or several marks. 'still a photo' means the likeness is fine but the result still looks like a photograph, not a painting. Judge the identity marks, not the painting's beauty.",
         "options": "same pet, painted\nmarkings drifted\ndifferent animal\nstill a photo"

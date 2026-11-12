@@ -74,7 +74,7 @@
       "x": 1500,
       "y": 280,
       "fields": {
-        "model": "perplexity/pplx-decider-v1.1-27b",
+        "model": "perplexity/pplx-decider-v1.2",
         "mode": "choose",
         "question": "The text is a 5-line dataset: each line names one cafe drink with an exact number of cups sold. The image is a rendered bar chart that claims to show exactly that dataset. Which verdict fits? 'charted to data' means every drink's bar stands in dataset order with exactly its planned number printed above it, and nothing else was added. 'numbers drifted' means all five drinks are charted in order but at least one printed number is wrong. 'bars missing' means at least one planned drink cannot be found anywhere in the chart. 'wrong chart' means the image is not a bar chart of this dataset at all. Judge the data, not the design.",
         "options": "charted to data\nnumbers drifted\nbars missing\nwrong chart"
