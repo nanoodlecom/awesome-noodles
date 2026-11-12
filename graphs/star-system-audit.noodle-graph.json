@@ -74,7 +74,7 @@
       "x": 1500,
       "y": 280,
       "fields": {
-        "model": "perplexity/pplx-decider-v1.1-27b",
+        "model": "perplexity/pplx-decider-v1.2",
         "mode": "choose",
         "question": "The text is a star-system spec: six planets numbered from orbit 1 (innermost) to orbit 6 (outermost), each with a dominant colour and a signature feature. The image is a rendered star-system poster that claims to show exactly that system. Which verdict fits? 'charted to spec' means every planet stands on its planned orbit in its planned colour with its planned feature. 'order drifted' means all six planets are present but at least one is on the wrong orbit, or a colour or feature is clearly wrong. 'planets missing' means at least one planned planet cannot be found anywhere on the poster. 'wrong system' means the image is not a six-planet star-system poster of this spec at all. Judge the system, not the styling.",
         "options": "charted to spec\norder drifted\nplanets missing\nwrong system"
