@@ -24,5 +24,6 @@ Do not hand-edit these files — run `node scripts/make-recipes.mjs` after chang
 | [Photo to scene mesh](photo-to-scene-mesh.md) | [`graphs/photo-to-scene-mesh.noodle-graph.json`](../graphs/photo-to-scene-mesh.noodle-graph.json) | needs Scene photo |
 | [Say it back, transcript-checked](say-it-back.md) | [`graphs/say-it-back.noodle-graph.json`](../graphs/say-it-back.noodle-graph.json) | defaults in graph |
 | [Storyboard relay](storyboard-relay.md) | [`graphs/storyboard-relay.noodle-graph.json`](../graphs/storyboard-relay.noodle-graph.json) | defaults in graph |
+| [Words only, repainted](words-only-repaint.md) | [`graphs/words-only-repaint.noodle-graph.json`](../graphs/words-only-repaint.noodle-graph.json) | needs Scene photo |
 
 Install: `npm i nanoodle` · `pip install nanoodle`. Run anywhere: [nanoodle-js](https://github.com/nanoodlecom/nanoodle-js) · [nanoodle-py](https://github.com/nanoodlecom/nanoodle-py) · [nanoodle-mcp](https://github.com/nanoodlecom/nanoodle-mcp) · [run-noodle-action](https://github.com/nanoodlecom/run-noodle-action).
