@@ -84,7 +84,7 @@ The initial graph incorrectly used a one-input Combine node to expose the silent
 
 The [runtime record](environment.json) pins the executor revision and local tools used. The [selected catalog snapshot](catalogs-2026-09-12.json) preserves dated model capabilities and pricing from the provider's public [chat](https://nano-gpt.com/api/v1/models?detailed=true), [image](https://nano-gpt.com/api/v1/image-models) and [video](https://nano-gpt.com/api/v1/video-models) catalogs. WAN's explicit `480p`, `81` frames and `16` fps model options keep headless runs from silently inheriting its higher-resolution default. The foley duration field supports a cost estimate; it is not a supported provider duration control. The observed foley charge was $0.06 per clip, so do not treat the catalog's approximately $0.05 forecast as a cap.
 
-From this repository, with Node 20+, `ffmpeg`, and the JavaScript executor installed:
+From this repository, with Node 22.23.5+, 24.22.3+, or 26.13.1+, `ffmpeg`, and the JavaScript executor installed:
 
 ```bash
 # Inspect only: no key, network request or generation.
