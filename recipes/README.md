@@ -15,6 +15,7 @@ Do not hand-edit these files — run `node scripts/make-recipes.mjs` after chang
 | [Clean-voice rescue, transcript-scored](clean-voice-rescue.md) | [`graphs/clean-voice-rescue.noodle-graph.json`](../graphs/clean-voice-rescue.noodle-graph.json) | defaults in graph |
 | [Clip to comic, order-checked](clip-to-comic.md) | [`graphs/clip-to-comic.noodle-graph.json`](../graphs/clip-to-comic.noodle-graph.json) | needs Clip |
 | [A composer that watches your film](composer-watches-your-film.md) | [`graphs/composer-watches-your-film.noodle-graph.json`](../graphs/composer-watches-your-film.noodle-graph.json) | defaults in graph |
+| [Cover version, lyric-checked](cover-version.md) | [`graphs/cover-version.noodle-graph.json`](../graphs/cover-version.noodle-graph.json) | defaults in graph |
 | [Fridge to feast](fridge-to-feast.md) | [`graphs/fridge-to-feast.noodle-graph.json`](../graphs/fridge-to-feast.noodle-graph.json) | needs Fridge photo |
 | [Haircut preview, identity-checked](haircut-preview.md) | [`graphs/haircut-preview.noodle-graph.json`](../graphs/haircut-preview.noodle-graph.json) | needs Portrait photo |
 | [Humanize a comment](humanize-comment.md) | [`graphs/humanize-comment.noodle-graph.json`](../graphs/humanize-comment.noodle-graph.json) | defaults in graph |
