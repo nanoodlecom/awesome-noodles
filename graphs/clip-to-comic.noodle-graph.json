@@ -1,0 +1,343 @@
+{
+  "v": 1,
+  "nodes": [
+    {
+      "id": "c1",
+      "type": "comment",
+      "x": 60,
+      "y": 30,
+      "fields": {
+        "text": "A Gemini story clerk watches 6 frames sampled from your clip and writes a STORY LOG: the anchors (who, what colours, where) plus exactly 4 events in chronological order, each with a 2-4 word caption. A GLM page designer turns the log into one comic-page prompt - a 2 by 2 grid, one event per panel in reading order, captions copied word for word - and Muse paints the page. A second Gemini inventories the finished page panel by panel, and a GLM order auditor scores the log against that read-back: IN ORDER, SWAPPED (with the panel it landed in) or MISSING per event, captions KEPT, GARBLED or LOST, ending in 'X of 4 in place'. A Decide judge gives the headline: story in order, panels shuffled, events missing or a different story. Every other flow in this catalog starts from a still or from text; this is the one that flattens TIME into space and then checks the chronology survived the flattening. See recipes/clip-to-comic.md."
+      },
+      "w": 900,
+      "name": "Clip to comic, order-checked - frames, story log, comic page, order audit"
+    },
+    {
+      "id": "src",
+      "type": "vupload",
+      "x": 60,
+      "y": 300,
+      "fields": {
+        "video": ""
+      },
+      "w": 240,
+      "name": "Clip"
+    },
+    {
+      "id": "frames",
+      "type": "vframes",
+      "x": 340,
+      "y": 300,
+      "fields": {
+        "frames": "6",
+        "gap": "2",
+        "dir": "start"
+      },
+      "w": 220,
+      "name": "6 frames across the clip"
+    },
+    {
+      "id": "ask",
+      "type": "text",
+      "x": 340,
+      "y": 560,
+      "fields": {
+        "text": "Read these 6 frames in order and write the story log."
+      },
+      "w": 300,
+      "name": "Ask"
+    },
+    {
+      "id": "clerk",
+      "type": "llm",
+      "x": 640,
+      "y": 280,
+      "fields": {
+        "model": "google/gemini-3.8-flash",
+        "system": "You are the story clerk in a clip-to-comic pipeline. The images are 6 frames from one short clip, in chronological order (frame 1 is the start, frame 6 the end). Watch what CHANGES across the frames and write a STORY LOG in exactly this shape. First line: 'ANCHORS: ' followed by the main subject(s), their colours/appearance, and the setting, in one short line. Then exactly 4 lines, 'EVENT 1: ' to 'EVENT 4: ', the clip's four most distinct visible beats in chronological order - each one line, one concrete action or change, no opinions. End each EVENT line with ' | CAPTION: ' and a caption of 2-4 words that names that beat (for example 'The first fall'). Choose beats that are visibly different from each other; if the action is continuous, split it into start, middle change, late change, and end state. Report only what the frames show.",
+        "maxTokens": "500",
+        "reasoningEffort": "low"
+      },
+      "w": 300,
+      "name": "Story log - Gemini reads the frames in order",
+      "sizes": {
+        "system": 150
+      }
+    },
+    {
+      "id": "designer",
+      "type": "llm",
+      "x": 1020,
+      "y": 280,
+      "fields": {
+        "model": "z-ai/glm-5.3-flash",
+        "system": "You turn a STORY LOG (an ANCHORS line plus 4 numbered EVENT lines, each ending with a CAPTION) into ONE prompt for an image model that draws a comic page. The prompt must specify: a single comic page, a 2 by 2 grid of exactly 4 equal panels separated by clean white gutters, read left to right, top to bottom; panel 1 (top left) shows EVENT 1, panel 2 (top right) EVENT 2, panel 3 (bottom left) EVENT 3, panel 4 (bottom right) EVENT 4; the ANCHORS subject and setting stay visually identical in every panel; each panel has one small white caption box at its top containing exactly that event's CAPTION text, word for word, and no other text anywhere on the page; clean flat comic illustration, bold outlines. Carry every event and caption exactly - add no new action, character or object, drop none. Keep it under 170 words. Output the prompt only.",
+        "maxTokens": "300",
+        "reasoningEffort": "low"
+      },
+      "w": 280,
+      "name": "Page prompt - GLM lays out the comic",
+      "sizes": {
+        "system": 150
+      }
+    },
+    {
+      "id": "page",
+      "type": "image",
+      "x": 1380,
+      "y": 280,
+      "fields": {
+        "model": "meta/muse-image/text-to-image",
+        "size": "1:1",
+        "variations": "1"
+      },
+      "w": 260,
+      "name": "Comic page - Muse paints the panels"
+    },
+    {
+      "id": "audit",
+      "type": "decide",
+      "x": 1720,
+      "y": 280,
+      "fields": {
+        "model": "perplexity/pplx-decider-v1.2",
+        "mode": "choose",
+        "question": "The text is a story log: 4 numbered events in the chronological order they happen in a short clip. The image is a 2 by 2 comic page drawn from that log, to be read left to right, top to bottom. Which verdict fits? 'story in order' means each panel shows its numbered event, in order. 'panels shuffled' means the events are all (or mostly) there but one or more sit in the wrong panel. 'events missing' means one or more logged events appear in no panel. 'different story' means the page shows a different subject or action altogether. Judge the order and the events, not the drawing's beauty.",
+        "options": "story in order\npanels shuffled\nevents missing\ndifferent story"
+      },
+      "w": 280,
+      "name": "Comic - audited",
+      "sizes": {
+        "question": 130
+      }
+    },
+    {
+      "id": "look",
+      "type": "vision",
+      "x": 1380,
+      "y": 580,
+      "fields": {
+        "model": "google/gemini-3.8-flash",
+        "q": "You are the reader in a clip-to-comic pipeline. Look at this comic page and inventory it panel by panel. First line: 'PANELS: ' plus the number of panels you can see. Then one line per panel IN READING ORDER (top left first, then top right, then bottom left, then bottom right), in this shape: 'PANEL 1: <the action visibly happening in that panel, one short clause> | CAPTION: <the panel's caption text, transcribed exactly, or NONE>'. Report only what is visibly there; do not guess at any story beyond the panels."
+      },
+      "w": 260,
+      "name": "Page read-back - Gemini inventories the panels",
+      "sizes": {
+        "q": 150
+      }
+    },
+    {
+      "id": "j1",
+      "type": "join",
+      "x": 1720,
+      "y": 580,
+      "fields": {
+        "sep": "\n\nCOMIC READ-BACK:\n"
+      },
+      "w": 200,
+      "name": "Story log + read-back"
+    },
+    {
+      "id": "checker",
+      "type": "llm",
+      "x": 2000,
+      "y": 560,
+      "fields": {
+        "model": "z-ai/glm-5.3-flash",
+        "system": "You are an order auditor. The input gives a STORY LOG - an ANCHORS line and 4 numbered EVENT lines in chronological order, each ending with a CAPTION - then the marker 'COMIC READ-BACK:' and a reader's panel-by-panel inventory of a comic page drawn from that log. Score each event with ONE short line: 'Event N: IN ORDER' if panel N shows that event, 'Event N: SWAPPED (panel M)' if it appears in a different panel, or 'Event N: MISSING' if no panel shows it; end the line with '; caption KEPT', '; caption GARBLED' or '; caption LOST' judging the read-back's transcription of that panel's caption against the log. Then one 'INVENTED - ' line for each panel action the log never had, if any. Keep every line under 12 words. End with one line 'Summary: X of 4 in place, captions Y of 4 kept.' Judge by the two texts only. Output the audit only.",
+        "maxTokens": "600",
+        "reasoningEffort": "low"
+      },
+      "w": 280,
+      "name": "Order audit - GLM scores event by event",
+      "sizes": {
+        "system": 150
+      }
+    }
+  ],
+  "links": [
+    {
+      "id": "l1",
+      "from": {
+        "node": "src",
+        "port": "video"
+      },
+      "to": {
+        "node": "frames",
+        "port": "video"
+      }
+    },
+    {
+      "id": "l2",
+      "from": {
+        "node": "ask",
+        "port": "text"
+      },
+      "to": {
+        "node": "clerk",
+        "port": "prompt"
+      }
+    },
+    {
+      "id": "f1",
+      "from": {
+        "node": "frames",
+        "port": "frame1"
+      },
+      "to": {
+        "node": "clerk",
+        "port": "img1"
+      }
+    },
+    {
+      "id": "f2",
+      "from": {
+        "node": "frames",
+        "port": "frame2"
+      },
+      "to": {
+        "node": "clerk",
+        "port": "img2"
+      }
+    },
+    {
+      "id": "f3",
+      "from": {
+        "node": "frames",
+        "port": "frame3"
+      },
+      "to": {
+        "node": "clerk",
+        "port": "img3"
+      }
+    },
+    {
+      "id": "f4",
+      "from": {
+        "node": "frames",
+        "port": "frame4"
+      },
+      "to": {
+        "node": "clerk",
+        "port": "img4"
+      }
+    },
+    {
+      "id": "f5",
+      "from": {
+        "node": "frames",
+        "port": "frame5"
+      },
+      "to": {
+        "node": "clerk",
+        "port": "img5"
+      }
+    },
+    {
+      "id": "f6",
+      "from": {
+        "node": "frames",
+        "port": "frame6"
+      },
+      "to": {
+        "node": "clerk",
+        "port": "img6"
+      }
+    },
+    {
+      "id": "l3",
+      "from": {
+        "node": "clerk",
+        "port": "text"
+      },
+      "to": {
+        "node": "designer",
+        "port": "prompt"
+      }
+    },
+    {
+      "id": "l4",
+      "from": {
+        "node": "designer",
+        "port": "text"
+      },
+      "to": {
+        "node": "page",
+        "port": "prompt"
+      }
+    },
+    {
+      "id": "l5",
+      "from": {
+        "node": "clerk",
+        "port": "text"
+      },
+      "to": {
+        "node": "audit",
+        "port": "text"
+      }
+    },
+    {
+      "id": "l6",
+      "from": {
+        "node": "page",
+        "port": "image"
+      },
+      "to": {
+        "node": "audit",
+        "port": "img1"
+      }
+    },
+    {
+      "id": "l7",
+      "from": {
+        "node": "page",
+        "port": "image"
+      },
+      "to": {
+        "node": "look",
+        "port": "image"
+      }
+    },
+    {
+      "id": "l8",
+      "from": {
+        "node": "clerk",
+        "port": "text"
+      },
+      "to": {
+        "node": "j1",
+        "port": "a"
+      }
+    },
+    {
+      "id": "l9",
+      "from": {
+        "node": "look",
+        "port": "text"
+      },
+      "to": {
+        "node": "j1",
+        "port": "b"
+      }
+    },
+    {
+      "id": "l10",
+      "from": {
+        "node": "j1",
+        "port": "text"
+      },
+      "to": {
+        "node": "checker",
+        "port": "prompt"
+      }
+    }
+  ],
+  "nid": 20,
+  "lid": 17,
+  "view": {
+    "panX": 40,
+    "panY": 40,
+    "scale": 0.55
+  }
+}
