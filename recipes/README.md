@@ -12,6 +12,7 @@ Do not hand-edit these files — run `node scripts/make-recipes.mjs` after chang
 | [ADetailer finisher](adetailer-finisher.md) | [`graphs/adetailer-finisher.noodle-graph.json`](../graphs/adetailer-finisher.noodle-graph.json) | needs Portrait |
 | [Bar chart, number-checked](bar-chart-audit.md) | [`graphs/bar-chart-audit.noodle-graph.json`](../graphs/bar-chart-audit.noodle-graph.json) | defaults in graph |
 | [Bookshelf next-read, phantom-checked](bookshelf-next-read.md) | [`graphs/bookshelf-next-read.noodle-graph.json`](../graphs/bookshelf-next-read.noodle-graph.json) | needs Shelf photo |
+| [Clean-voice rescue, transcript-scored](clean-voice-rescue.md) | [`graphs/clean-voice-rescue.noodle-graph.json`](../graphs/clean-voice-rescue.noodle-graph.json) | defaults in graph |
 | [A composer that watches your film](composer-watches-your-film.md) | [`graphs/composer-watches-your-film.noodle-graph.json`](../graphs/composer-watches-your-film.noodle-graph.json) | defaults in graph |
 | [Fridge to feast](fridge-to-feast.md) | [`graphs/fridge-to-feast.noodle-graph.json`](../graphs/fridge-to-feast.noodle-graph.json) | needs Fridge photo |
 | [Haircut preview, identity-checked](haircut-preview.md) | [`graphs/haircut-preview.noodle-graph.json`](../graphs/haircut-preview.noodle-graph.json) | needs Portrait photo |

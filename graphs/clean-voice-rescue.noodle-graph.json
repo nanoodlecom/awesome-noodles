@@ -1,0 +1,290 @@
+{
+  "v": 1,
+  "nodes": [
+    {
+      "id": "c1",
+      "type": "comment",
+      "x": 60,
+      "y": 30,
+      "fields": {
+        "text": "Seedance 2.5 films a baker shouting one exact line in a loud farmers market, native sound and all - crowd chatter, an espresso machine, the lot. Whisper transcribes that raw take. Then the clean-voice node (ElevenLabs Audio Isolation) strips everything but her voice - it needs a hosted file, which is exactly what a generated video is - and Whisper transcribes the cleaned audio cold. A GLM auditor scores the line against BOTH transcripts word by word (RECOVERED / CLEAR BOTH / STILL GARBLED / LOST IN CLEANING, 'raw X of Y words, clean A of Y'), and a Decide judge labels the rescue: rescued, partly clearer, no better or voice damaged. The score is the delta between the two hearings. See recipes/clean-voice-rescue.md."
+      },
+      "w": 900,
+      "name": "Clean-voice rescue - film it noisy, strip the noise, score what comes back"
+    },
+    {
+      "id": "brief",
+      "type": "text",
+      "x": 60,
+      "y": 300,
+      "fields": {
+        "text": "Handheld phone video, close-up of a cheerful baker in a striped apron at a busy farmers-market bread stall in bright morning light, crowds jostling past behind her, an espresso machine hissing and loud crowd chatter all around. She looks straight into the camera and shouts her offer clearly and loudly, word for word: 'Fresh sourdough, still warm from the oven - two loaves for five dollars, today only at stall twelve!' Natural location sound only, no music, no captions, no text on screen."
+      },
+      "w": 300,
+      "name": "Filming brief"
+    },
+    {
+      "id": "line",
+      "type": "text",
+      "x": 60,
+      "y": 620,
+      "fields": {
+        "text": "Fresh sourdough, still warm from the oven - two loaves for five dollars, today only at stall twelve!"
+      },
+      "w": 300,
+      "name": "The line"
+    },
+    {
+      "id": "film",
+      "type": "tvideo",
+      "x": 440,
+      "y": 280,
+      "fields": {
+        "model": "bytedance/seedance-2.5",
+        "prompt": "",
+        "duration": "6",
+        "resolution": "480p",
+        "aspect": "16:9",
+        "modelOpts": {
+          "generateAudio": true
+        },
+        "loras": []
+      },
+      "w": 280,
+      "name": "Noisy take - Seedance films her in the market"
+    },
+    {
+      "id": "raw",
+      "type": "extractaudio",
+      "x": 800,
+      "y": 280,
+      "fields": {
+        "start": "0"
+      },
+      "w": 280,
+      "name": "Raw sound - the take's own audio"
+    },
+    {
+      "id": "before",
+      "type": "transcribe",
+      "x": 1160,
+      "y": 280,
+      "fields": {
+        "model": "whisper-1",
+        "language": "auto"
+      },
+      "w": 280,
+      "name": "Heard raw - Whisper transcribes the noisy take"
+    },
+    {
+      "id": "clean",
+      "type": "cleanvoice",
+      "x": 800,
+      "y": 580,
+      "fields": {
+        "model": "elevenlabs/audio-isolation",
+        "url": ""
+      },
+      "w": 280,
+      "name": "Rescue - ElevenLabs Audio Isolation strips the market"
+    },
+    {
+      "id": "after",
+      "type": "transcribe",
+      "x": 1160,
+      "y": 580,
+      "fields": {
+        "model": "whisper-1",
+        "language": "auto"
+      },
+      "w": 280,
+      "name": "Heard clean - Whisper transcribes the rescue"
+    },
+    {
+      "id": "j1",
+      "type": "join",
+      "x": 1500,
+      "y": 280,
+      "fields": {
+        "sep": "\n\nHEARD RAW (TRANSCRIPT):\n"
+      },
+      "w": 200,
+      "name": "Line + raw transcript"
+    },
+    {
+      "id": "j2",
+      "type": "join",
+      "x": 1500,
+      "y": 580,
+      "fields": {
+        "sep": "\n\nHEARD CLEAN (TRANSCRIPT):\n"
+      },
+      "w": 200,
+      "name": "Line + both transcripts"
+    },
+    {
+      "id": "checker",
+      "type": "llm",
+      "x": 1860,
+      "y": 580,
+      "fields": {
+        "model": "z-ai/glm-5.3-flash",
+        "system": "You are an audio rescue auditor. The input gives the LINE a speaker was asked to deliver, then the marker 'HEARD RAW (TRANSCRIPT):' and a transcript of the original noisy recording, then the marker 'HEARD CLEAN (TRANSCRIPT):' and a transcript of the same recording after a noise-removal model stripped the background. Both transcripts were written by the same listening model, which never saw the line. Score the line word by word - every content word and every fact (names, counts, prices, places) in line order, one per line: start 'RECOVERED - ' if the word is wrong or missing in the raw transcript but right in the clean one, 'CLEAR BOTH - ' if it is right in both, 'STILL GARBLED - ' if it is wrong or missing in both (add what the clean transcript heard instead), or 'LOST IN CLEANING - ' if it was right in the raw transcript but wrong or missing in the clean one; follow the marker with the word in a few letters. Ignore punctuation, capitalisation and harmless wording differences: a number heard as words counts as the same value, and a swallowed filler word does not count either way. End with two lines: 'Raw: X of Y words heard.' and 'Clean: A of Y words heard.' Output the audit only, no preamble.",
+        "maxTokens": "400",
+        "reasoningEffort": "low"
+      },
+      "w": 280,
+      "name": "Rescue audit - GLM scores what the cleaning recovered",
+      "sizes": {
+        "system": 150
+      }
+    },
+    {
+      "id": "audit",
+      "type": "decide",
+      "x": 1860,
+      "y": 280,
+      "fields": {
+        "model": "perplexity/pplx-decider-v1.2",
+        "mode": "choose",
+        "question": "The text is the line a speaker was asked to deliver, then after the marker 'HEARD RAW (TRANSCRIPT):' a transcript of the original noisy recording, and after 'HEARD CLEAN (TRANSCRIPT):' a transcript of the same recording after a noise-removal model cleaned it; both transcripts come from the same listening model. Which verdict fits what the cleaning did? 'rescued' means the clean transcript carries essentially the whole line - every fact and nearly every word - whether or not the raw take did. 'partly clearer' means the clean transcript recovers clearly more of the line than the raw one but still garbles or drops some of it. 'no better' means the clean transcript is about as garbled as the raw one. 'voice damaged' means the clean transcript loses words the raw transcript had right, or the voice itself is broken up. Judge the two transcripts against the line, not the writing.",
+        "options": "rescued\npartly clearer\nno better\nvoice damaged"
+      },
+      "w": 280,
+      "name": "Take - rescued?",
+      "sizes": {
+        "question": 130
+      }
+    }
+  ],
+  "links": [
+    {
+      "id": "l1",
+      "from": {
+        "node": "brief",
+        "port": "text"
+      },
+      "to": {
+        "node": "film",
+        "port": "prompt"
+      }
+    },
+    {
+      "id": "l2",
+      "from": {
+        "node": "film",
+        "port": "video"
+      },
+      "to": {
+        "node": "raw",
+        "port": "video"
+      }
+    },
+    {
+      "id": "l3",
+      "from": {
+        "node": "raw",
+        "port": "audio"
+      },
+      "to": {
+        "node": "before",
+        "port": "audio"
+      }
+    },
+    {
+      "id": "l4",
+      "from": {
+        "node": "film",
+        "port": "video"
+      },
+      "to": {
+        "node": "clean",
+        "port": "video"
+      }
+    },
+    {
+      "id": "l5",
+      "from": {
+        "node": "clean",
+        "port": "audio"
+      },
+      "to": {
+        "node": "after",
+        "port": "audio"
+      }
+    },
+    {
+      "id": "l6",
+      "from": {
+        "node": "line",
+        "port": "text"
+      },
+      "to": {
+        "node": "j1",
+        "port": "a"
+      }
+    },
+    {
+      "id": "l7",
+      "from": {
+        "node": "before",
+        "port": "text"
+      },
+      "to": {
+        "node": "j1",
+        "port": "b"
+      }
+    },
+    {
+      "id": "l8",
+      "from": {
+        "node": "j1",
+        "port": "text"
+      },
+      "to": {
+        "node": "j2",
+        "port": "a"
+      }
+    },
+    {
+      "id": "l9",
+      "from": {
+        "node": "after",
+        "port": "text"
+      },
+      "to": {
+        "node": "j2",
+        "port": "b"
+      }
+    },
+    {
+      "id": "l10",
+      "from": {
+        "node": "j2",
+        "port": "text"
+      },
+      "to": {
+        "node": "checker",
+        "port": "prompt"
+      }
+    },
+    {
+      "id": "l11",
+      "from": {
+        "node": "j2",
+        "port": "text"
+      },
+      "to": {
+        "node": "audit",
+        "port": "text"
+      }
+    }
+  ],
+  "nid": 13,
+  "lid": 12,
+  "view": {
+    "panX": 40,
+    "panY": 40,
+    "scale": 0.55
+  }
+}
