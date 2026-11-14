@@ -26,6 +26,7 @@ Do not hand-edit these files — run `node scripts/make-recipes.mjs` after chang
 | [Pet portrait, likeness-checked](pet-portrait-studio.md) | [`graphs/pet-portrait-studio.noodle-graph.json`](../graphs/pet-portrait-studio.noodle-graph.json) | needs Pet photo |
 | [Photo to scene mesh](photo-to-scene-mesh.md) | [`graphs/photo-to-scene-mesh.noodle-graph.json`](../graphs/photo-to-scene-mesh.noodle-graph.json) | needs Scene photo |
 | [Say it back, transcript-checked](say-it-back.md) | [`graphs/say-it-back.noodle-graph.json`](../graphs/say-it-back.noodle-graph.json) | defaults in graph |
+| [Score the still, ear-checked](score-the-still.md) | [`graphs/score-the-still.noodle-graph.json`](../graphs/score-the-still.noodle-graph.json) | defaults in graph |
 | [Storyboard relay](storyboard-relay.md) | [`graphs/storyboard-relay.noodle-graph.json`](../graphs/storyboard-relay.noodle-graph.json) | defaults in graph |
 | [Words only, repainted](words-only-repaint.md) | [`graphs/words-only-repaint.noodle-graph.json`](../graphs/words-only-repaint.noodle-graph.json) | needs Scene photo |
 
