@@ -1,0 +1,380 @@
+{
+  "v": 1,
+  "nodes": [
+    {
+      "id": "c1",
+      "type": "comment",
+      "x": 60,
+      "y": 30,
+      "fields": {
+        "text": "Muse paints a cluttered wizard's desk from your brief. A Gemini clerk inventories the finished picture into a SCENE CARD - every prominent movable object, numbered, with its place and colour. A GLM planner picks five different card items and plans exactly one big change each - a REMOVE, a RECOLOUR, or an ADD beside an anchor item - and a second GLM compresses the plan into one surgical edit instruction. Muse Edit applies it to the original picture. Then the audit does something no other catalog flow does: a Gemini spotter is shown BOTH pictures at once, before and after, and lists every difference it can see - it never sees the plan, and no text inventory intermediates the comparison, so quiet changes (an object vanished, a cushion turned blue) are exactly what it hunts. A capped GLM auditor scores the plan against the spotted list - SPOTTED / NOT SPOTTED per change, plus an UNPLANNED line for differences nobody ordered - ending in 'X of 5 changes spotted, Y unplanned differences'. A Decide judge sees both pictures and all three texts and gives the headline: exactly the five, five plus extras, some changes missing, or barely changed. The pair is a playable puzzle: your own eyes are the third judge. See recipes/spot-the-difference.md."
+      },
+      "w": 900,
+      "name": "Spot the difference, diff-checked - five planned changes, one surgical edit, and a blind spotter who diffs the two pictures directly"
+    },
+    {
+      "id": "brief",
+      "type": "text",
+      "x": 60,
+      "y": 300,
+      "fields": {
+        "text": "A cluttered wizard's desk by a round window at dusk, photorealistic, wide view: an open spellbook with illegible script and a red ribbon bookmark, a brass telescope, a stack of letters tied with red string, a green glass potion bottle, a lit candle in a brass holder, a sleeping grey cat on a rust-red cushion, a quill in a black inkpot, scattered gold coins, a wooden mug, and wooden shelves of glass jars behind the desk. Warm candlelight, no people, no readable words."
+      },
+      "w": 300,
+      "name": "Scene brief"
+    },
+    {
+      "id": "scenea",
+      "type": "image",
+      "x": 440,
+      "y": 280,
+      "fields": {
+        "model": "meta/muse-image/text-to-image",
+        "size": "16:9",
+        "variations": "1"
+      },
+      "w": 280,
+      "name": "Before picture - Muse paints the desk"
+    },
+    {
+      "id": "card",
+      "type": "vision",
+      "x": 800,
+      "y": 280,
+      "fields": {
+        "model": "google/gemini-3.8-flash",
+        "q": "You are the scene clerk in a spot-the-difference pipeline. Look at this image and write a SCENE CARD: a numbered inventory of the distinct movable objects in it, one line each in this shape: '<number>. <object> - <where it is, its colour and material>'. Number every clearly visible prominent object (about 10 to 14); skip background texture, walls and light itself. List only what is actually visible; if an object is ambiguous, name your best guess and add '(?)'. After the list, one last line: 'FIXED: ' plus the viewpoint, background and lighting in one short line. Output the card only."
+      },
+      "w": 280,
+      "name": "Scene card - Gemini inventories the objects",
+      "sizes": {
+        "q": 150
+      }
+    },
+    {
+      "id": "planner",
+      "type": "llm",
+      "x": 1160,
+      "y": 280,
+      "fields": {
+        "model": "z-ai/glm-5.3-flash",
+        "system": "You are the change planner in a spot-the-difference pipeline. The input is a SCENE CARD: a numbered inventory of the objects in a picture. Plan EXACTLY FIVE changes, each touching a DIFFERENT card item, using only these three kinds. REMOVE: the item is gone. RECOLOUR: the item changes to a named, clearly different colour. ADD: one new object appears beside a named card item (the anchor item itself stays unchanged, and the ADD counts as that item's one change). Every change must be big and unmissable - a whole object gone, a bold colour change, a clearly new object - never a subtle shift. Output exactly five numbered lines in these shapes: '1. REMOVE #<n> - <object>' / '2. RECOLOUR #<n> - <object>: <current colour> to <new colour>' / '3. ADD beside #<n> - <new object> beside the <anchor object>'. Use at least one REMOVE and at least one RECOLOUR. Then one last line: 'KEEP: everything else exactly as it is.' Output the plan only.",
+        "maxTokens": "400",
+        "reasoningEffort": "low"
+      },
+      "w": 280,
+      "name": "Change plan - GLM picks five items, one change each",
+      "sizes": {
+        "system": 150
+      }
+    },
+    {
+      "id": "brief2",
+      "type": "llm",
+      "x": 1520,
+      "y": 280,
+      "fields": {
+        "model": "z-ai/glm-5.3-flash",
+        "system": "You turn a CHANGE PLAN into ONE instruction for an AI image editor that will edit the original picture. Start with: 'Make ONLY these five changes to this image and change nothing else:' Then the five changes as plain sentences, in plan order, naming each object by what it is and where it sits - no card numbers, no plan jargon. For a REMOVE, say the object is gone completely. For a RECOLOUR, name the object and the new colour. For an ADD, name the new object and exactly where it appears. End with: 'Keep the composition, viewpoint, lighting and every other object exactly as they are.' Output the instruction only.",
+        "maxTokens": "300",
+        "reasoningEffort": "low"
+      },
+      "w": 280,
+      "name": "Edit instruction - GLM compresses the plan",
+      "sizes": {
+        "system": 150
+      }
+    },
+    {
+      "id": "sceneb",
+      "type": "edit",
+      "x": 1880,
+      "y": 280,
+      "fields": {
+        "model": "meta/muse-image/edit",
+        "size": "auto"
+      },
+      "w": 280,
+      "name": "After picture - Muse Edit makes the five changes"
+    },
+    {
+      "id": "diffask",
+      "type": "text",
+      "x": 1160,
+      "y": 640,
+      "fields": {
+        "text": "Two images follow. The first image is BEFORE and the second image is AFTER. List every difference you can see between them."
+      },
+      "w": 300,
+      "name": "Diff ask"
+    },
+    {
+      "id": "differ",
+      "type": "llm",
+      "x": 1880,
+      "y": 640,
+      "fields": {
+        "model": "google/gemini-3.8-flash",
+        "system": "You are the difference spotter in a spot-the-difference pipeline. You are shown two images of the same scene: the first is BEFORE, the second is AFTER. List every visible difference between them, numbered, one line each in this shape: '<number>. <thing> - <what changed: what it was, what it is now, or that it appeared, or that it vanished>'. Compare object by object across the whole frame: things added, things removed, things recoloured, things moved or reshaped. List only differences you can actually see; do not invent differences and do not comment on image quality or style. If the images are identical, output only 'No differences found.' Output the list only.",
+        "maxTokens": "900"
+      },
+      "w": 280,
+      "name": "Difference spotter - Gemini compares both pictures directly",
+      "sizes": {
+        "system": 150
+      }
+    },
+    {
+      "id": "j1",
+      "type": "join",
+      "x": 2240,
+      "y": 640,
+      "fields": {
+        "sep": "\n\nSPOTTED DIFFERENCES (a blind spotter compared the two pictures directly; it never saw the plan):\n"
+      },
+      "w": 200,
+      "name": "Plan + spotted differences"
+    },
+    {
+      "id": "checker",
+      "type": "llm",
+      "x": 2600,
+      "y": 640,
+      "fields": {
+        "model": "z-ai/glm-5.3-flash",
+        "system": "You are a spot-the-difference auditor. The input gives a CHANGE PLAN (five changes an editor was told to make to a picture), then 'SPOTTED DIFFERENCES' with the list a blind spotter produced by comparing the before and after pictures directly - the spotter never saw the plan. Score one line per planned change, in plan order: '<change in a few words>: SPOTTED' if the spotted list contains that same change (same object, same kind of change; for a RECOLOUR the new colour must match), or 'NOT SPOTTED' if it does not. Then one 'UNPLANNED: ' line listing any spotted differences that match no planned change, or 'none'. End with one line 'Summary: X of 5 changes spotted, Y unplanned differences.' where X is the number SPOTTED and Y the number of unplanned differences. Judge by the two texts only. Output the audit only.",
+        "maxTokens": "600",
+        "reasoningEffort": "low"
+      },
+      "w": 280,
+      "name": "Change audit - GLM scores plan vs spotted list",
+      "sizes": {
+        "system": 150
+      }
+    },
+    {
+      "id": "j2",
+      "type": "join",
+      "x": 2600,
+      "y": 300,
+      "fields": {
+        "sep": "\n\nCHANGE AUDIT:\n"
+      },
+      "w": 200,
+      "name": "Plan + spotted + audit"
+    },
+    {
+      "id": "audit",
+      "type": "decide",
+      "x": 2960,
+      "y": 300,
+      "fields": {
+        "model": "perplexity/pplx-decider-v1.2",
+        "mode": "choose",
+        "question": "The first image is AFTER (a picture an editor changed) and the second image is BEFORE (the original). The text gives a CHANGE PLAN (the five changes the editor was told to make), a blind spotter's SPOTTED DIFFERENCES list from comparing the two pictures directly, and a CHANGE AUDIT scoring the plan against that list. Which verdict fits? 'exactly the five' means all five planned changes are visible and nothing else changed. 'five plus extras' means the five landed but other things changed too. 'some changes missing' means at least one planned change is not visible in the after picture, with no worse failure. 'barely changed' means the after picture is nearly identical to the before, or the scene itself is different. Judge the change fidelity, not the picture's beauty.",
+        "options": "exactly the five\nfive plus extras\nsome changes missing\nbarely changed"
+      },
+      "w": 280,
+      "name": "Exactly the five - audited",
+      "sizes": {
+        "question": 130
+      }
+    }
+  ],
+  "links": [
+    {
+      "id": "l1",
+      "from": {
+        "node": "brief",
+        "port": "text"
+      },
+      "to": {
+        "node": "scenea",
+        "port": "prompt"
+      }
+    },
+    {
+      "id": "l2",
+      "from": {
+        "node": "scenea",
+        "port": "image"
+      },
+      "to": {
+        "node": "card",
+        "port": "image"
+      }
+    },
+    {
+      "id": "l3",
+      "from": {
+        "node": "card",
+        "port": "text"
+      },
+      "to": {
+        "node": "planner",
+        "port": "prompt"
+      }
+    },
+    {
+      "id": "l4",
+      "from": {
+        "node": "planner",
+        "port": "text"
+      },
+      "to": {
+        "node": "brief2",
+        "port": "prompt"
+      }
+    },
+    {
+      "id": "l5",
+      "from": {
+        "node": "brief2",
+        "port": "text"
+      },
+      "to": {
+        "node": "sceneb",
+        "port": "prompt"
+      }
+    },
+    {
+      "id": "l6",
+      "from": {
+        "node": "scenea",
+        "port": "image"
+      },
+      "to": {
+        "node": "sceneb",
+        "port": "image"
+      }
+    },
+    {
+      "id": "l7",
+      "from": {
+        "node": "diffask",
+        "port": "text"
+      },
+      "to": {
+        "node": "differ",
+        "port": "prompt"
+      }
+    },
+    {
+      "id": "l8",
+      "from": {
+        "node": "scenea",
+        "port": "image"
+      },
+      "to": {
+        "node": "differ",
+        "port": "img1"
+      }
+    },
+    {
+      "id": "l9",
+      "from": {
+        "node": "sceneb",
+        "port": "image"
+      },
+      "to": {
+        "node": "differ",
+        "port": "img2"
+      }
+    },
+    {
+      "id": "l10",
+      "from": {
+        "node": "planner",
+        "port": "text"
+      },
+      "to": {
+        "node": "j1",
+        "port": "a"
+      }
+    },
+    {
+      "id": "l11",
+      "from": {
+        "node": "differ",
+        "port": "text"
+      },
+      "to": {
+        "node": "j1",
+        "port": "b"
+      }
+    },
+    {
+      "id": "l12",
+      "from": {
+        "node": "j1",
+        "port": "text"
+      },
+      "to": {
+        "node": "checker",
+        "port": "prompt"
+      }
+    },
+    {
+      "id": "l13",
+      "from": {
+        "node": "j1",
+        "port": "text"
+      },
+      "to": {
+        "node": "j2",
+        "port": "a"
+      }
+    },
+    {
+      "id": "l14",
+      "from": {
+        "node": "checker",
+        "port": "text"
+      },
+      "to": {
+        "node": "j2",
+        "port": "b"
+      }
+    },
+    {
+      "id": "l15",
+      "from": {
+        "node": "j2",
+        "port": "text"
+      },
+      "to": {
+        "node": "audit",
+        "port": "text"
+      }
+    },
+    {
+      "id": "l16",
+      "from": {
+        "node": "sceneb",
+        "port": "image"
+      },
+      "to": {
+        "node": "audit",
+        "port": "img1"
+      }
+    },
+    {
+      "id": "l17",
+      "from": {
+        "node": "scenea",
+        "port": "image"
+      },
+      "to": {
+        "node": "audit",
+        "port": "img2"
+      }
+    }
+  ],
+  "nid": 30,
+  "lid": 31,
+  "view": {
+    "panX": 40,
+    "panY": 40,
+    "scale": 0.5
+  }
+}
