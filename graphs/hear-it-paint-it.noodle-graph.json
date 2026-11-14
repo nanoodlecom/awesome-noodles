@@ -1,0 +1,319 @@
+{
+  "v": 1,
+  "nodes": [
+    {
+      "id": "c1",
+      "type": "comment",
+      "x": 60,
+      "y": 30,
+      "fields": {
+        "text": "A sound script - four sound events in a fixed order - is performed by ElevenLabs Sound Effects V3 as a 24-second soundscape. A Qwen omni model then LISTENS to the finished audio through the LLM node's audio port: it never sees the script, and writes a SOUND-EVENT CARD - a SETTING guess, the events in the order it heard them, and a LOUDEST line. That card is the only thing that crosses: a capped GLM painter turns the card alone into one image prompt (every carded source in one scene, the loudest source largest and central) and Muse paints it. A Gemini clerk then inventories only the sound-making things visible in the painting, and a capped GLM auditor scores TWO hops - script vs card (HEARD / MISSED / ADDED, order kept or changed) and card vs painting (PAINTED / MISSING, extras) - ending in 'heard X of Y events, painted Z of X', so a loss is attributable: the sound was never made, never heard, or never painted. A Decide judge sees the painting and all three texts and gives the headline: sounds became the picture, partly painted, heard wrong, or silence or noise. No other catalog flow starts from sound: audio elsewhere is a product (music, speech) or speech to transcribe. See recipes/hear-it-paint-it.md."
+      },
+      "w": 900,
+      "name": "Hear it, paint it - a soundscape is heard blind, painted from the hearing, and audited across both hops"
+    },
+    {
+      "id": "script",
+      "type": "text",
+      "x": 60,
+      "y": 300,
+      "fields": {
+        "text": "Sound effects only, no music, no speech, no voices: a small village at dawn. The sounds happen one at a time, in this exact order, each clearly separated from the next. First, a rooster crows twice, loud and clear. Second, a heavy church bell tolls three times. Third, rain begins pattering on rooftops and grows steady. Fourth, a steam train whistles twice and chugs past."
+      },
+      "w": 300,
+      "name": "Sound script"
+    },
+    {
+      "id": "sfx",
+      "type": "music",
+      "x": 440,
+      "y": 280,
+      "fields": {
+        "model": "elevenlabs/sound-effects/v3",
+        "duration": "24"
+      },
+      "w": 280,
+      "name": "Soundscape - ElevenLabs SFX V3 performs the script"
+    },
+    {
+      "id": "ask",
+      "type": "text",
+      "x": 440,
+      "y": 620,
+      "fields": {
+        "text": "Listen to this soundscape and report only what you hear."
+      },
+      "w": 300,
+      "name": "Ask"
+    },
+    {
+      "id": "listener",
+      "type": "llm",
+      "x": 780,
+      "y": 280,
+      "fields": {
+        "model": "qwen/qwen3.8-omni-flash",
+        "system": "You are the listener in a hear-it-paint-it pipeline. You hear a short soundscape and nothing else - no script, no brief, no picture. Write a SOUND-EVENT CARD in exactly this shape. First line: 'SETTING: ' plus your best guess at the place and time the sounds suggest, in one short line. Then the sound events you actually hear, numbered in the order you hear them, one line each: '<number>. <the thing making the sound> - <what it does>' (for example '1. rooster - crows twice'). List only sounds you really hear; do not invent sounds a place like this usually has. Last line: 'LOUDEST: ' plus the single sound source that is most prominent overall. If the audio is silence or unrecognisable noise, say so on the SETTING line, list no events, and put 'none' on the LOUDEST line. Output the card only.",
+        "maxTokens": "600"
+      },
+      "w": 300,
+      "name": "Heard card - Qwen Omni listens blind",
+      "sizes": {
+        "system": 150
+      }
+    },
+    {
+      "id": "painter",
+      "type": "llm",
+      "x": 1140,
+      "y": 280,
+      "fields": {
+        "model": "z-ai/glm-5.3-flash",
+        "system": "You write ONE prompt for an AI image generator. The input is a SOUND-EVENT CARD written by a listener who heard a soundscape: a SETTING line, numbered sound events in order, and a LOUDEST line. Write a single prompt, under 120 words, for ONE wide photoreal scene set in the card's SETTING that shows every event's sound source, caught in the act where an act can be shown (a crowing rooster with beak open, a bell in its tower, rain visibly falling, a train moving with steam). Make the LOUDEST line's source the largest and most central thing in the scene. Include no sound source the card does not list. End with 'Photorealistic, wide view. No people, no text, no lettering.' Output the prompt only.",
+        "maxTokens": "300",
+        "reasoningEffort": "low"
+      },
+      "w": 280,
+      "name": "Painting prompt - GLM paints from the card alone",
+      "sizes": {
+        "system": 150
+      }
+    },
+    {
+      "id": "painting",
+      "type": "image",
+      "x": 1500,
+      "y": 280,
+      "fields": {
+        "model": "meta/muse-image/text-to-image",
+        "size": "16:9",
+        "variations": "1"
+      },
+      "w": 280,
+      "name": "Painting - Muse paints the heard scene"
+    },
+    {
+      "id": "readback",
+      "type": "vision",
+      "x": 1860,
+      "y": 280,
+      "fields": {
+        "model": "google/gemini-3.8-flash",
+        "q": "You are the painting clerk in a hear-it-paint-it pipeline. Look at this image and inventory ONLY the things in it that could make a sound: animals, bells, vehicles, weather, water, machines. One numbered line per thing, in this shape: '<number>. <thing> - <where it is and what it is doing>'. List only what is actually visible; if a thing is ambiguous, name your best guess and add '(?)'. After the list, one last line: 'SETTING SEEN: ' plus the place and time the picture shows, in one short line. Output the inventory only."
+      },
+      "w": 280,
+      "name": "Painting read-back - Gemini inventories sound-makers",
+      "sizes": {
+        "q": 150
+      }
+    },
+    {
+      "id": "j1",
+      "type": "join",
+      "x": 780,
+      "y": 660,
+      "fields": {
+        "sep": "\n\nHEARD CARD (written by a blind listener who heard only the soundscape):\n"
+      },
+      "w": 200,
+      "name": "Script + heard card"
+    },
+    {
+      "id": "j2",
+      "type": "join",
+      "x": 1500,
+      "y": 660,
+      "fields": {
+        "sep": "\n\nPAINTING READ-BACK:\n"
+      },
+      "w": 200,
+      "name": "Script + card + read-back"
+    },
+    {
+      "id": "checker",
+      "type": "llm",
+      "x": 2240,
+      "y": 660,
+      "fields": {
+        "model": "z-ai/glm-5.3-flash",
+        "system": "You are a sound-to-picture auditor. The input gives a SOUND SCRIPT (the events a soundscape was asked to perform, in order), then 'HEARD CARD' with a blind listener's card of the finished soundscape (SETTING, numbered events in the order heard, LOUDEST line), then 'PAINTING READ-BACK' with an inventory of the sound-making things visible in a painting made from the card alone. Score hop 1, script against card: one line per scripted event, in script order, '<event in a few words>: HEARD' if the card lists the same source doing the same thing, or 'MISSED' if it does not. Then one 'ADDED: ' line listing any card events that are not in the script, or 'none'. Then one line 'ORDER: kept' if the heard events appear in the script's order, or 'ORDER: changed'. Score hop 2, card against read-back: one line per carded event, in card order, '<source>: PAINTED' if the read-back lists that source in the painting, or 'MISSING' if it does not. Then one 'EXTRAS: ' line listing any read-back sources that are not on the card, or 'none'. Keep every line under 12 words. End with one line 'Summary: heard X of Y events, painted Z of X.' where Y is the number of scripted events, X the number HEARD, and Z the number of carded events PAINTED. Judge by the three texts only. Output the audit only.",
+        "maxTokens": "600",
+        "reasoningEffort": "low"
+      },
+      "w": 280,
+      "name": "Two-hop audit - GLM scores hearing, then painting",
+      "sizes": {
+        "system": 150
+      }
+    },
+    {
+      "id": "audit",
+      "type": "decide",
+      "x": 2240,
+      "y": 300,
+      "fields": {
+        "model": "perplexity/pplx-decider-v1.2",
+        "mode": "choose",
+        "question": "The text gives a SOUND SCRIPT (the events a soundscape was asked to perform, in order), a HEARD CARD written by a blind listener who heard only the finished soundscape, and a PAINTING READ-BACK inventoried from the image, which is a painting made from the card alone. Which verdict fits? 'sounds became the picture' means most scripted events were heard by the listener AND are visible in the painting - the sounds survived both hops. 'partly painted' means some events made it through but others were lost at one of the hops. 'heard wrong' means the card itself diverges from the script - events missed, added or reordered - so the painting faithfully illustrates the wrong sounds. 'silence or noise' means the listener reported no recognisable events at all. Judge the survival of the scripted events, not the painting's beauty.",
+        "options": "sounds became the picture\npartly painted\nheard wrong\nsilence or noise"
+      },
+      "w": 280,
+      "name": "Sounds became the picture - audited",
+      "sizes": {
+        "question": 130
+      }
+    }
+  ],
+  "links": [
+    {
+      "id": "l1",
+      "from": {
+        "node": "script",
+        "port": "text"
+      },
+      "to": {
+        "node": "sfx",
+        "port": "prompt"
+      }
+    },
+    {
+      "id": "l2",
+      "from": {
+        "node": "ask",
+        "port": "text"
+      },
+      "to": {
+        "node": "listener",
+        "port": "prompt"
+      }
+    },
+    {
+      "id": "l3",
+      "from": {
+        "node": "sfx",
+        "port": "audio"
+      },
+      "to": {
+        "node": "listener",
+        "port": "audio"
+      }
+    },
+    {
+      "id": "l4",
+      "from": {
+        "node": "listener",
+        "port": "text"
+      },
+      "to": {
+        "node": "painter",
+        "port": "prompt"
+      }
+    },
+    {
+      "id": "l5",
+      "from": {
+        "node": "painter",
+        "port": "text"
+      },
+      "to": {
+        "node": "painting",
+        "port": "prompt"
+      }
+    },
+    {
+      "id": "l6",
+      "from": {
+        "node": "painting",
+        "port": "image"
+      },
+      "to": {
+        "node": "readback",
+        "port": "image"
+      }
+    },
+    {
+      "id": "l7",
+      "from": {
+        "node": "script",
+        "port": "text"
+      },
+      "to": {
+        "node": "j1",
+        "port": "a"
+      }
+    },
+    {
+      "id": "l8",
+      "from": {
+        "node": "listener",
+        "port": "text"
+      },
+      "to": {
+        "node": "j1",
+        "port": "b"
+      }
+    },
+    {
+      "id": "l9",
+      "from": {
+        "node": "j1",
+        "port": "text"
+      },
+      "to": {
+        "node": "j2",
+        "port": "a"
+      }
+    },
+    {
+      "id": "l10",
+      "from": {
+        "node": "readback",
+        "port": "text"
+      },
+      "to": {
+        "node": "j2",
+        "port": "b"
+      }
+    },
+    {
+      "id": "l11",
+      "from": {
+        "node": "j2",
+        "port": "text"
+      },
+      "to": {
+        "node": "checker",
+        "port": "prompt"
+      }
+    },
+    {
+      "id": "l12",
+      "from": {
+        "node": "j2",
+        "port": "text"
+      },
+      "to": {
+        "node": "audit",
+        "port": "text"
+      }
+    },
+    {
+      "id": "l13",
+      "from": {
+        "node": "painting",
+        "port": "image"
+      },
+      "to": {
+        "node": "audit",
+        "port": "img1"
+      }
+    }
+  ],
+  "nid": 26,
+  "lid": 27,
+  "view": {
+    "panX": 40,
+    "panY": 40,
+    "scale": 0.55
+  }
+}
