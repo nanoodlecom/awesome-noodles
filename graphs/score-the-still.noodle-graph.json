@@ -1,0 +1,289 @@
+{
+  "v": 1,
+  "nodes": [
+    {
+      "id": "c1",
+      "type": "comment",
+      "x": 60,
+      "y": 30,
+      "fields": {
+        "text": "Muse paints a still from your scene brief. A Gemini sound scout reads the still and writes a SOUND CARD in a fixed five-axis vocabulary - MOOD, ENERGY, PACE, the instrument FAMILY that should lead, and the ARC the cue should follow, each chosen from a closed word list, plus a SETTING line. A GLM composer turns the card into one instrumental music prompt and ElevenLabs Music composes a 20-second cue. Then a Qwen omni model LISTENS to the finished cue through the LLM node's audio port - it never sees the picture, the card or the prompt - and writes a LISTENING REPORT in the same five axes, plus the instruments it actually heard. A GLM sound auditor scores axis by axis: MATCH, NEAR or OPPOSITE, ending in 'X of 5 axes heard'. A Decide judge sees the still, the card and the report and gives the headline: sounds like the picture, partly sounds like it, wrong mood, or silence or noise. No other catalog flow audits music by listening to it: every earlier audio audit ran through Whisper, which can only judge words. See recipes/score-the-still.md."
+      },
+      "w": 900,
+      "name": "Score the still, ear-checked - card the sound a picture asks for, compose it, then listen back blind"
+    },
+    {
+      "id": "scene",
+      "type": "text",
+      "x": 60,
+      "y": 300,
+      "fields": {
+        "text": "A lone lighthouse on black rocks at dusk in a heavy storm, photorealistic, wide view. Huge waves crash and throw spray against the rocks, rain slants through the sweeping beam of light from the lamp, dark fast-moving clouds fill the sky, and one small fishing boat with a single warm window light pitches in the rough sea below. No people, no text, no lettering."
+      },
+      "w": 300,
+      "name": "Scene brief"
+    },
+    {
+      "id": "still",
+      "type": "image",
+      "x": 440,
+      "y": 280,
+      "fields": {
+        "model": "meta/muse-image/text-to-image",
+        "size": "16:9",
+        "variations": "1"
+      },
+      "w": 260,
+      "name": "Still - Muse paints the scene"
+    },
+    {
+      "id": "card",
+      "type": "vision",
+      "x": 780,
+      "y": 280,
+      "fields": {
+        "model": "google/gemini-3.8-flash",
+        "q": "You are the sound scout in a score-the-still pipeline. Look at this image and write a SOUND CARD: the instrumental music this picture is asking for, in exactly this shape. First line: 'SETTING: ' plus what the picture shows - place, time, weather, movement - in one short line. Then one line each, choosing ONLY from the words offered: 'MOOD: ' plus one of serene, joyful, melancholy, tense, dramatic, eerie, triumphant, sleepy. 'ENERGY: ' plus one of low, medium, high. 'PACE: ' plus one of slow, moderate, fast. 'FAMILY: ' plus the one instrument family that should lead a score for this picture, one of solo piano, strings, brass, folk acoustic, electronic, percussion-led, choir. 'ARC: ' plus one of steady, builds, fades, swells and settles. Judge by the picture's light, weather, motion and scale - not by any music you imagine in detail. Output the card only."
+      },
+      "w": 280,
+      "name": "Sound card - Gemini reads the still",
+      "sizes": {
+        "q": 150
+      }
+    },
+    {
+      "id": "composer",
+      "type": "llm",
+      "x": 1140,
+      "y": 280,
+      "fields": {
+        "model": "z-ai/glm-5.3-flash",
+        "system": "You write ONE prompt for an AI music generator. The input is a SOUND CARD (SETTING, MOOD, ENERGY, PACE, FAMILY, ARC). Write a single prompt, under 80 words: an instrumental cue, exactly 20 seconds, no vocals, no lyrics. Name the FAMILY's instruments as the lead, set the tempo feel from PACE, the intensity from ENERGY, the emotional tone from MOOD, and shape the 20 seconds by ARC (for example 'builds' means start spare and grow to a peak at the end). Evoke the SETTING without sound effects - this is music, not foley. Output the prompt only.",
+        "maxTokens": "300",
+        "reasoningEffort": "low"
+      },
+      "w": 280,
+      "name": "Music prompt - GLM composes from the card",
+      "sizes": {
+        "system": 150
+      }
+    },
+    {
+      "id": "score",
+      "type": "music",
+      "x": 1500,
+      "y": 280,
+      "fields": {
+        "model": "elevenlabs/music",
+        "prompt": "",
+        "duration": "20",
+        "instrumental": true,
+        "response_format": "mp3"
+      },
+      "w": 280,
+      "name": "Cue - ElevenLabs Music performs it"
+    },
+    {
+      "id": "ask",
+      "type": "text",
+      "x": 1500,
+      "y": 620,
+      "fields": {
+        "text": "Listen to this music and report only what you hear."
+      },
+      "w": 300,
+      "name": "Ask"
+    },
+    {
+      "id": "listener",
+      "type": "llm",
+      "x": 1860,
+      "y": 340,
+      "fields": {
+        "model": "qwen/qwen3.8-omni-flash",
+        "system": "You are the listener in a score-the-still pipeline. You hear a short instrumental cue and nothing else - no picture, no brief. Write a LISTENING REPORT in exactly this shape, choosing ONLY from the words offered. 'MOOD: ' plus one of serene, joyful, melancholy, tense, dramatic, eerie, triumphant, sleepy. 'ENERGY: ' plus one of low, medium, high. 'PACE: ' plus one of slow, moderate, fast. 'FAMILY: ' plus the instrument family that leads what you heard, one of solo piano, strings, brass, folk acoustic, electronic, percussion-led, choir. 'ARC: ' plus one of steady, builds, fades, swells and settles. Then one line 'HEARD: ' plus the instruments you actually heard, comma separated. Report only what the audio shows; if it is silence or noise, say so on the HEARD line and still give your best axes. Output the report only.",
+        "maxTokens": "500"
+      },
+      "w": 300,
+      "name": "Listening report - Qwen Omni hears the cue blind",
+      "sizes": {
+        "system": 150
+      }
+    },
+    {
+      "id": "j1",
+      "type": "join",
+      "x": 1860,
+      "y": 660,
+      "fields": {
+        "sep": "\n\nLISTENING REPORT:\n"
+      },
+      "w": 200,
+      "name": "Card + listening report"
+    },
+    {
+      "id": "checker",
+      "type": "llm",
+      "x": 2240,
+      "y": 620,
+      "fields": {
+        "model": "z-ai/glm-5.3-flash",
+        "system": "You are a sound auditor. The input gives a SOUND CARD (SETTING, MOOD, ENERGY, PACE, FAMILY, ARC - the music a picture asked for), then 'LISTENING REPORT:' with a blind listener's report of the finished cue in the same vocabulary. Score the five axes one line each, in card order, capitalising the axis name: 'Mood: MATCH' if the report's word is the card's word, 'Mood: NEAR' if it is a close cousin (adjacent energy or pace step, a neighbouring mood, a family that overlaps, a similar arc), or 'Mood: OPPOSITE' if it is far from the card. Then one 'HEARD CHECK: ' line: whether the HEARD instruments include the card's FAMILY - answer 'family heard', 'family partly heard' or 'family not heard'. Keep every line under 12 words. End with one line 'Summary: X of 5 axes heard.' where X is the number of MATCH verdicts. Judge by the two texts only. Output the audit only.",
+        "maxTokens": "600",
+        "reasoningEffort": "low"
+      },
+      "w": 280,
+      "name": "Sound audit - GLM scores axis by axis",
+      "sizes": {
+        "system": 150
+      }
+    },
+    {
+      "id": "audit",
+      "type": "decide",
+      "x": 2240,
+      "y": 300,
+      "fields": {
+        "model": "perplexity/pplx-decider-v1.2",
+        "mode": "choose",
+        "question": "The text gives a SOUND CARD read from the image (the instrumental music this picture asked for, on five axes: mood, energy, pace, leading instrument family, arc) and a LISTENING REPORT written by a blind listener who heard only the finished cue. The image is the picture the card was read from. Which verdict fits? 'sounds like the picture' means the report matches the card on most axes - the cue feels like this scene sounds. 'partly sounds like it' means some axes match but the mood, energy or family clearly drifted. 'wrong mood' means the cue evokes a different scene - calm music for a storm, cheerful music for a grim scene. 'silence or noise' means the report says there was no real music to hear. Judge the match between picture, card and heard cue, not the music's beauty.",
+        "options": "sounds like the picture\npartly sounds like it\nwrong mood\nsilence or noise"
+      },
+      "w": 280,
+      "name": "Sounds like the picture - audited",
+      "sizes": {
+        "question": 130
+      }
+    }
+  ],
+  "links": [
+    {
+      "id": "l1",
+      "from": {
+        "node": "scene",
+        "port": "text"
+      },
+      "to": {
+        "node": "still",
+        "port": "prompt"
+      }
+    },
+    {
+      "id": "l2",
+      "from": {
+        "node": "still",
+        "port": "image"
+      },
+      "to": {
+        "node": "card",
+        "port": "image"
+      }
+    },
+    {
+      "id": "l3",
+      "from": {
+        "node": "card",
+        "port": "text"
+      },
+      "to": {
+        "node": "composer",
+        "port": "prompt"
+      }
+    },
+    {
+      "id": "l4",
+      "from": {
+        "node": "composer",
+        "port": "text"
+      },
+      "to": {
+        "node": "score",
+        "port": "prompt"
+      }
+    },
+    {
+      "id": "l5",
+      "from": {
+        "node": "ask",
+        "port": "text"
+      },
+      "to": {
+        "node": "listener",
+        "port": "prompt"
+      }
+    },
+    {
+      "id": "l6",
+      "from": {
+        "node": "score",
+        "port": "audio"
+      },
+      "to": {
+        "node": "listener",
+        "port": "audio"
+      }
+    },
+    {
+      "id": "l7",
+      "from": {
+        "node": "card",
+        "port": "text"
+      },
+      "to": {
+        "node": "j1",
+        "port": "a"
+      }
+    },
+    {
+      "id": "l8",
+      "from": {
+        "node": "listener",
+        "port": "text"
+      },
+      "to": {
+        "node": "j1",
+        "port": "b"
+      }
+    },
+    {
+      "id": "l9",
+      "from": {
+        "node": "j1",
+        "port": "text"
+      },
+      "to": {
+        "node": "checker",
+        "port": "prompt"
+      }
+    },
+    {
+      "id": "l10",
+      "from": {
+        "node": "j1",
+        "port": "text"
+      },
+      "to": {
+        "node": "audit",
+        "port": "text"
+      }
+    },
+    {
+      "id": "l11",
+      "from": {
+        "node": "still",
+        "port": "image"
+      },
+      "to": {
+        "node": "audit",
+        "port": "img1"
+      }
+    }
+  ],
+  "nid": 24,
+  "lid": 25,
+  "view": {
+    "panX": 40,
+    "panY": 40,
+    "scale": 0.55
+  }
+}
