@@ -20,6 +20,7 @@ Do not hand-edit these files — run `node scripts/make-recipes.mjs` after chang
 | [Fridge to feast](fridge-to-feast.md) | [`graphs/fridge-to-feast.noodle-graph.json`](../graphs/fridge-to-feast.noodle-graph.json) | needs Fridge photo |
 | [Haircut preview, identity-checked](haircut-preview.md) | [`graphs/haircut-preview.noodle-graph.json`](../graphs/haircut-preview.noodle-graph.json) | needs Portrait photo |
 | [Hear it, paint it](hear-it-paint-it.md) | [`graphs/hear-it-paint-it.noodle-graph.json`](../graphs/hear-it-paint-it.noodle-graph.json) | defaults in graph |
+| [Hidden word, object-coded](hidden-word.md) | [`graphs/hidden-word.noodle-graph.json`](../graphs/hidden-word.noodle-graph.json) | defaults in graph |
 | [Humanize a comment](humanize-comment.md) | [`graphs/humanize-comment.noodle-graph.json`](../graphs/humanize-comment.noodle-graph.json) | defaults in graph |
 | [Idea to 3D model](idea-to-3d-model.md) | [`graphs/idea-to-3d-model.noodle-graph.json`](../graphs/idea-to-3d-model.noodle-graph.json) | defaults in graph |
 | [Menu to plate, checked](menu-to-plate.md) | [`graphs/menu-to-plate.noodle-graph.json`](../graphs/menu-to-plate.noodle-graph.json) | needs Menu photo |
