@@ -1,0 +1,275 @@
+{
+  "v": 1,
+  "nodes": [
+    {
+      "id": "c1",
+      "type": "comment",
+      "x": 60,
+      "y": 30,
+      "fields": {
+        "text": "Give it a word and a GLM coder hides it in plain sight: one object per letter, chosen so each object's most common name starts with that letter, set in a row on a shelf. A second GLM turns the code plan into one still-life prompt that never mentions the word, and Muse paints the shelf - a picture with no text, no lettering and nothing to OCR, because the message is not drawn, it is chosen. A Gemini reader who never saw the word or the plan then names the shelf objects strictly left to right, and a GLM decoder spells what those names actually say and scores the plan letter by letter: KEPT, RENAMED (the right object under a synonym that starts with another letter - the letter dies of a naming choice, not a bad render), WRONG OBJECT or MISSING. A Decide judge gives the headline: spells it exactly, one letter lost, word scrambled, or no word there. See recipes/hidden-word.md."
+      },
+      "w": 900,
+      "name": "Hidden word, object-coded - a word spelled by a shelf of objects, decoded blind"
+    },
+    {
+      "id": "word",
+      "type": "text",
+      "x": 60,
+      "y": 300,
+      "fields": {
+        "text": "DREAM"
+      },
+      "w": 300,
+      "name": "Target word"
+    },
+    {
+      "id": "coder",
+      "type": "llm",
+      "x": 440,
+      "y": 280,
+      "fields": {
+        "model": "z-ai/glm-5.3-flash",
+        "system": "You are the coder in a hidden-word pipeline. The input is one target word (3 to 7 letters). Choose exactly one object per letter, in word order, so the objects' names spell the word by their first letters. Rules for every object: its MOST COMMON everyday name starts with the needed letter; the name must be unambiguous - never pick an object people commonly call by a different name starting with another letter (no sofa for C, no cup for M); it must be a single, visually unmistakable thing of roughly shelf size that can stand or sit on a wooden shelf; and no two objects may look alike. Output: first line 'WORD: <the word in capitals>'. Then one numbered line per letter in this shape: '<n>. <LETTER> - <Object name> - <short visual description: colour, material, shape>'. Then one last line: 'SETTING: <one cosy shelf setting in a few words>'. Output the code plan only.",
+        "maxTokens": "400",
+        "reasoningEffort": "low"
+      },
+      "w": 280,
+      "name": "Code plan - GLM picks one object per letter",
+      "sizes": {
+        "system": 150
+      }
+    },
+    {
+      "id": "brief",
+      "type": "llm",
+      "x": 800,
+      "y": 280,
+      "fields": {
+        "model": "z-ai/glm-5.3-flash",
+        "system": "You turn a CODE PLAN into ONE prompt for an AI image generator. The prompt must describe: a photorealistic still life, front-on view of one wooden shelf against a plain warm wall, holding exactly the planned objects and nothing else, standing in a single row in the plan's exact left-to-right order, evenly spaced, each object fully visible and recognisably the thing the plan names, lit by soft window light, the SETTING line's flavour in the background only. State each object with its visual description from the plan. End with: 'No text, no letters, no labels, no signs, no people, nothing else on the shelf.' Output the prompt only - never mention the word, the letters, or that anything is a code.",
+        "maxTokens": "300",
+        "reasoningEffort": "low"
+      },
+      "w": 280,
+      "name": "Shelf prompt - GLM compresses the plan (never names the word)",
+      "sizes": {
+        "system": 150
+      }
+    },
+    {
+      "id": "paint",
+      "type": "image",
+      "x": 1160,
+      "y": 280,
+      "fields": {
+        "model": "meta/muse-image/text-to-image",
+        "size": "16:9",
+        "variations": "1"
+      },
+      "w": 280,
+      "name": "Shelf picture - Muse paints the coded row"
+    },
+    {
+      "id": "reader",
+      "type": "vision",
+      "x": 1520,
+      "y": 280,
+      "fields": {
+        "model": "google/gemini-3.8-flash",
+        "q": "You are the shelf reader in a hidden-word pipeline. Look at this image and list the main objects standing on the shelf, strictly in left-to-right order, numbered, one line each in this shape: '<number>. <name> - <colour and material>'. Use each object's most common everyday name - the first name an ordinary person would call it. List only the objects on the shelf itself; ignore the shelf, the wall and the background. List only what is actually visible; if an object is ambiguous, give your best guess and add '(?)'. Do not guess at any hidden message. Output the list only."
+      },
+      "w": 280,
+      "name": "Read-back - Gemini names the shelf left to right, blind",
+      "sizes": {
+        "q": 150
+      }
+    },
+    {
+      "id": "j1",
+      "type": "join",
+      "x": 1880,
+      "y": 640,
+      "fields": {
+        "sep": "\n\nREAD-BACK (a blind reader named the shelf objects left to right; it never saw the word or the plan):\n"
+      },
+      "w": 200,
+      "name": "Plan + read-back"
+    },
+    {
+      "id": "checker",
+      "type": "llm",
+      "x": 2240,
+      "y": 640,
+      "fields": {
+        "model": "z-ai/glm-5.3-flash",
+        "system": "You are a hidden-word decoder. The input gives a CODE PLAN (a target word and one planned object per letter, in order), then 'READ-BACK' with the list a blind reader produced by naming the shelf objects left to right - the reader never saw the word or the plan. First line: 'DECODED: ' plus the word spelled by the first letters of the reader's object names, in read-back order, in capitals (use '?' for a position with no object). Then one line per planned letter, in plan order: '<letter> - <planned object>: KEPT' if the reader's object at that position is that same object under a name starting with the planned letter; 'RENAMED (reader called it <name>)' if it is the same object but the reader's name starts with a different letter; 'WRONG OBJECT (reader saw <name>)' if a different object sits at that position; 'MISSING' if the read-back has no object at that position. Then one 'EXTRA: ' line naming any read-back objects beyond the plan's count, or 'none'. End with one line 'Summary: decoded '<DECODED>' - X of N letters survived.' where N is the target word's length and X is the number KEPT. Judge by the two texts only. Output the decode audit only.",
+        "maxTokens": "500",
+        "reasoningEffort": "low"
+      },
+      "w": 280,
+      "name": "Decode audit - GLM spells the read-back and scores letter by letter",
+      "sizes": {
+        "system": 150
+      }
+    },
+    {
+      "id": "j2",
+      "type": "join",
+      "x": 2240,
+      "y": 300,
+      "fields": {
+        "sep": "\n\nDECODE AUDIT:\n"
+      },
+      "w": 200,
+      "name": "Plan + read-back + audit"
+    },
+    {
+      "id": "audit",
+      "type": "decide",
+      "x": 2600,
+      "y": 300,
+      "fields": {
+        "model": "perplexity/pplx-decider-v1.2",
+        "mode": "choose",
+        "question": "The image is a shelf of objects that was supposed to hide a word: the objects' names, read left to right, should spell the target word by their first letters. The text gives the CODE PLAN (the word and the planned objects), a blind reader's READ-BACK of the shelf, and a DECODE AUDIT comparing them. Which verdict fits? 'spells it exactly' means the decoded word equals the target word, letter for letter. 'one letter lost' means exactly one position failed - a renamed, wrong or missing object - and the rest kept. 'word scrambled' means two or more positions failed but the shelf still broadly matches the plan. 'no word there' means the shelf does not match the plan at all, or holds a different set of objects. Judge the code's survival, not the picture's beauty.",
+        "options": "spells it exactly\none letter lost\nword scrambled\nno word there"
+      },
+      "w": 280,
+      "name": "Spells it exactly - audited",
+      "sizes": {
+        "question": 130
+      }
+    }
+  ],
+  "links": [
+    {
+      "id": "l1",
+      "from": {
+        "node": "word",
+        "port": "text"
+      },
+      "to": {
+        "node": "coder",
+        "port": "prompt"
+      }
+    },
+    {
+      "id": "l2",
+      "from": {
+        "node": "coder",
+        "port": "text"
+      },
+      "to": {
+        "node": "brief",
+        "port": "prompt"
+      }
+    },
+    {
+      "id": "l3",
+      "from": {
+        "node": "brief",
+        "port": "text"
+      },
+      "to": {
+        "node": "paint",
+        "port": "prompt"
+      }
+    },
+    {
+      "id": "l4",
+      "from": {
+        "node": "paint",
+        "port": "image"
+      },
+      "to": {
+        "node": "reader",
+        "port": "image"
+      }
+    },
+    {
+      "id": "l5",
+      "from": {
+        "node": "coder",
+        "port": "text"
+      },
+      "to": {
+        "node": "j1",
+        "port": "a"
+      }
+    },
+    {
+      "id": "l6",
+      "from": {
+        "node": "reader",
+        "port": "text"
+      },
+      "to": {
+        "node": "j1",
+        "port": "b"
+      }
+    },
+    {
+      "id": "l7",
+      "from": {
+        "node": "j1",
+        "port": "text"
+      },
+      "to": {
+        "node": "checker",
+        "port": "prompt"
+      }
+    },
+    {
+      "id": "l8",
+      "from": {
+        "node": "j1",
+        "port": "text"
+      },
+      "to": {
+        "node": "j2",
+        "port": "a"
+      }
+    },
+    {
+      "id": "l9",
+      "from": {
+        "node": "checker",
+        "port": "text"
+      },
+      "to": {
+        "node": "j2",
+        "port": "b"
+      }
+    },
+    {
+      "id": "l10",
+      "from": {
+        "node": "j2",
+        "port": "text"
+      },
+      "to": {
+        "node": "audit",
+        "port": "text"
+      }
+    },
+    {
+      "id": "l11",
+      "from": {
+        "node": "paint",
+        "port": "image"
+      },
+      "to": {
+        "node": "audit",
+        "port": "img1"
+      }
+    }
+  ],
+  "nid": 30,
+  "lid": 31,
+  "view": {
+    "panX": 40,
+    "panY": 40,
+    "scale": 0.5
+  }
+}
