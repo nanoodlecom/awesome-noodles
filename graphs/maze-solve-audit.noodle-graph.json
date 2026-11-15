@@ -1,0 +1,308 @@
+{
+  "v": 1,
+  "nodes": [
+    {
+      "id": "c1",
+      "type": "comment",
+      "x": 60,
+      "y": 30,
+      "fields": {
+        "text": "A maze is the hardest thing to ask an image model for: whether a corridor dead-ends in the top corner is decided by wall choices in the bottom corner, so a generated maze can look perfect and have no way through - and a vision model asked to solve one quietly translates the picture into a text grid and searches that instead (MazeBench's central finding). This flow makes both weaknesses the audit. A Gemini architect designs a formal 7 by 7 block maze as text - hedge blocks, path cells, a start and an exit, with its own solution - a second GLM turns the grid into a row-by-row image prompt, and Muse paints it. A blind Gemini solver, who never saw the plan, transcribes the rendered maze back into a character grid and proposes a path. A GLM auditor then SIMULATES every walk step by step: the architect's solution on the plan (a broken plan fails before the render is scored), the solver's path on the solver's own grid, and the same path on the plan grid - so a lost route is charged to the right hop, painter, reader or solver. A Decide judge gives the headline: solvable as drawn, maze drifted, solver lost, or no way through. See recipes/maze-solve-audit.md."
+      },
+      "w": 900,
+      "name": "Maze run, solve-checked - a plan is drawn, a blind solver walks it, every path is simulated"
+    },
+    {
+      "id": "theme",
+      "type": "text",
+      "x": 60,
+      "y": 300,
+      "fields": {
+        "text": "An English garden in spring: the maze walls are dark green hedge blocks, the paths are pale gravel, the start cell carries a small red flag, and the exit cell carries a small gold star."
+      },
+      "w": 300,
+      "name": "Maze theme"
+    },
+    {
+      "id": "architect",
+      "type": "llm",
+      "x": 440,
+      "y": 280,
+      "fields": {
+        "model": "google/gemini-3.8-flash",
+        "system": "You are a maze architect. Given a THEME, design ONE block maze on a grid of exactly 7 columns by 7 rows. Rows are numbered 1-7 top to bottom, columns 1-7 left to right. Each cell is one character: '#' is a solid wall block, '.' is open path, 'S' is the start cell, 'E' is the exit cell. Work in this exact order and show each stage: (1) ROUTE - write the solution route as a list of (row, column) coordinates, starting at an S cell in row 1 and ending at an E cell in row 7. Consecutive coordinates must differ by exactly 1 in exactly one of row or column (no diagonals, no jumps), no coordinate repeats, and the route has at least 13 coordinates (12 moves). (2) GRID - draw the 7 by 7 grid so that every ROUTE coordinate is a path cell (the first is 'S', the last is 'E', the rest '.'), then add 4 to 8 extra '.' branch cells, each touching a route or branch cell, forming at least 3 dead ends; every other cell is '#'. Total path cells: 17 to 26, all connected through the route. (3) SOLUTION - convert the ROUTE into moves: moving to a coordinate with row-1 is U, row+1 is D, column-1 is L, column+1 is R. Output exactly this shape and nothing else:\nROUTE: <the coordinates, space-separated>\nGRID:\n<7 lines of exactly 7 characters>\nSOLUTION: <the moves as single letters separated by spaces>\nMOVES: <the number of moves in the solution>\nDEAD ENDS: <the number of dead-end path cells>",
+        "maxTokens": "8000",
+        "reasoningEffort": "low"
+      },
+      "w": 280,
+      "name": "Maze plan - Gemini designs a formal 7x7 grid plus its solution",
+      "sizes": {
+        "system": 150
+      }
+    },
+    {
+      "id": "j0",
+      "type": "join",
+      "x": 800,
+      "y": 480,
+      "fields": {
+        "sep": "\n\nMAZE PLAN (the architect's formal grid; its SOLUTION lines must never reach the picture):\n"
+      },
+      "w": 200,
+      "name": "Theme + maze plan"
+    },
+    {
+      "id": "cartographer",
+      "type": "llm",
+      "x": 800,
+      "y": 280,
+      "fields": {
+        "model": "z-ai/glm-5.3-flash",
+        "system": "You turn a maze plan into ONE prompt for an AI image generator. The input gives a THEME first (the visual style to paint in: which material the wall blocks are, what the path cells are made of, what marks the start cell and what marks the exit cell), then 'MAZE PLAN' with an architect's GRID of 7 rows by 7 characters ('#' wall block, '.' path, 'S' start, 'E' exit). Write the prompt so the generator paints: a flat, straight-down top view of a square 7 by 7 grid of equal square cells with thin even spacing, no perspective, no tilt; then describe the grid ROW BY ROW from the top row (row 1) to the bottom row (row 7), each row as a sequence of seven cells named left to right as 'hedge' or 'gravel path', with the start row's path cell named 'gravel path with the red flag' and the exit row's named 'gravel path with the gold star'. Every one of the 49 cells must be accounted for exactly once, in order. End with: 'Flat puzzle illustration, crisp cell edges, nothing outside the square grid, no text, no letters, no numbers, no people, no solution line drawn.' Never mention the architect's ROUTE, SOLUTION, MOVES or DEAD ENDS lines - the picture must show an unsolved maze. Output the prompt only.",
+        "maxTokens": "600",
+        "reasoningEffort": "low"
+      },
+      "w": 280,
+      "name": "Maze prompt - GLM turns the grid into a row-by-row painting brief",
+      "sizes": {
+        "system": 150
+      }
+    },
+    {
+      "id": "paint",
+      "type": "image",
+      "x": 1160,
+      "y": 280,
+      "fields": {
+        "model": "meta/muse-image/text-to-image",
+        "size": "1:1",
+        "variations": "1"
+      },
+      "w": 280,
+      "name": "Maze picture - Muse paints the 7x7 grid top-down"
+    },
+    {
+      "id": "solver",
+      "type": "vision",
+      "x": 1520,
+      "y": 280,
+      "fields": {
+        "model": "google/gemini-3.8-flash",
+        "q": "You are the blind solver in a maze-check pipeline. This image should show a square maze of 7 columns by 7 rows of equal cells, seen straight from above: dark hedge blocks are walls, pale gravel cells are paths, one path cell carries a small red flag (the start), one carries a small gold star (the exit). First transcribe the maze into exactly 7 lines of exactly 7 characters, top row first: '#' for a hedge cell, '.' for a gravel path cell, 'S' for the red-flag cell, 'E' for the gold-star cell. Then solve YOUR transcribed grid: find a route from S to E moving only up/down/left/right through '.', 'S' and 'E' cells, never through '#'. Output exactly this shape and nothing else:\nGRID:\n<7 lines of 7 characters>\nPATH: <the moves from S to E as single letters separated by spaces: U, D, L, R - or the words NO PATH if E cannot be reached>\nMOVES: <the number of moves in the path, or 0>"
+      },
+      "w": 280,
+      "name": "Solver card - Gemini transcribes the maze blind and proposes a path",
+      "sizes": {
+        "q": 150
+      }
+    },
+    {
+      "id": "j1",
+      "type": "join",
+      "x": 1880,
+      "y": 480,
+      "fields": {
+        "sep": "\n\nSOLVER CARD (a blind solver transcribed the rendered maze into its own grid and proposed a path; it never saw the plan):\n"
+      },
+      "w": 200,
+      "name": "Plan + solver card"
+    },
+    {
+      "id": "checker",
+      "type": "llm",
+      "x": 2240,
+      "y": 640,
+      "fields": {
+        "model": "z-ai/glm-5.3-flash",
+        "system": "You are a maze auditor. The input gives a PLAN (a maze architect's GRID of 7 lines of 7 characters - '#' wall, '.' path, 'S' start in row 1, 'E' exit in row 7 - plus its ROUTE, SOLUTION moves, MOVES and DEAD ENDS lines; ignore the ROUTE line, audit the GRID and the SOLUTION), then 'SOLVER CARD' with a blind solver's own GRID transcription of the rendered picture and its PATH. Rows are numbered 1-7 top to bottom, columns 1-7 left to right; a move changes the position by one cell (U row-1, D row+1, L col-1, R col+1); a path may only stand on '.', 'S' or 'E' cells and reaches the exit only when a move lands exactly on 'E'. Do these checks in order and output exactly these lines:\n1. 'GRID: X of 49 cells match' - compare the two grids cell by cell; then 'DRIFT: ' followed by each mismatching cell as 'r<row>c<col> plan <char> read <char>', comma-separated, or 'none'.\n2. 'PLAN PATH: VALID' if walking the architect's SOLUTION on the PLAN grid from S stays on path cells and ends on E, otherwise 'PLAN PATH: BROKEN at move <k>' naming the first illegal move.\n3. 'PATH ON READ GRID: ' - walk the solver's PATH on the SOLVER's grid: 'REACHES EXIT in <n> moves' if it is legal throughout and ends on E; 'CROSSES WALL at move <k>' if a move first lands on '#'; 'LEAVES GRID at move <k>'; 'STOPS SHORT' if it is legal but never lands on E; or 'NO PATH CLAIMED' if the solver said NO PATH.\n4. 'PATH ON PLAN GRID: ' - walk the same solver PATH on the PLAN grid with the same verdict wording as line 3.\n5. 'Summary: grid X of 49, plan <valid/broken>, solver <reached exit on both grids / reached exit on read grid only / reached exit on plan grid only / reached exit on neither grid>.'\nIf the PLAN is incomplete (grid lines missing, or no SOLUTION line) or the SOLVER CARD is incomplete, still output all five lines: score the grid on the cells that exist (say 'GRID: incomplete plan' instead of a count), score a missing SOLUTION as 'PLAN PATH: BROKEN at move 0', and treat NO PATH as 'NO PATH CLAIMED' on both path lines. Never output nothing. Simulate every walk step by step from the texts; do not guess a walk's outcome from how the grids look. Output the audit only.",
+        "maxTokens": "1200",
+        "reasoningEffort": "low"
+      },
+      "w": 280,
+      "name": "Maze audit - GLM simulates every path on both grids",
+      "sizes": {
+        "system": 150
+      }
+    },
+    {
+      "id": "j2",
+      "type": "join",
+      "x": 2240,
+      "y": 300,
+      "fields": {
+        "sep": "\n\nMAZE AUDIT:\n"
+      },
+      "w": 200,
+      "name": "Plan, solver card + maze audit"
+    },
+    {
+      "id": "audit",
+      "type": "decide",
+      "x": 2600,
+      "y": 300,
+      "fields": {
+        "model": "perplexity/pplx-decider-v1.2",
+        "mode": "choose",
+        "question": "The image should be a 7 by 7 block maze drawn from a formal text plan. The text gives the PLAN (grid plus the architect's own solution), a blind SOLVER CARD (the solver's transcription of the rendered maze and the path it proposes), and a MAZE AUDIT that simulated every path on both grids. Which verdict fits? 'solvable as drawn' means the grids match almost perfectly and the solver's path legally reaches the exit on both grids. 'maze drifted' means the rendered maze differs from the plan enough to change the route: the grid drift is real, or the solver's path is legal on one grid but not the other. 'solver lost' means the plan and the read-back grids agree but the solver's path is illegal or stops short on the solver's own grid - the maze was fine, the solving failed. 'no way through' means the plan's own solution is broken, or no legal route to the exit exists in the grids at all. Judge the maze's solvability and who lost it, not the picture's beauty.",
+        "options": "solvable as drawn\nmaze drifted\nsolver lost\nno way through"
+      },
+      "w": 280,
+      "name": "Solvable as drawn - audited",
+      "sizes": {
+        "question": 130
+      }
+    }
+  ],
+  "links": [
+    {
+      "id": "l1",
+      "from": {
+        "node": "theme",
+        "port": "text"
+      },
+      "to": {
+        "node": "architect",
+        "port": "prompt"
+      }
+    },
+    {
+      "id": "l2",
+      "from": {
+        "node": "architect",
+        "port": "text"
+      },
+      "to": {
+        "node": "j0",
+        "port": "b"
+      }
+    },
+    {
+      "id": "l12",
+      "from": {
+        "node": "theme",
+        "port": "text"
+      },
+      "to": {
+        "node": "j0",
+        "port": "a"
+      }
+    },
+    {
+      "id": "l13",
+      "from": {
+        "node": "j0",
+        "port": "text"
+      },
+      "to": {
+        "node": "cartographer",
+        "port": "prompt"
+      }
+    },
+    {
+      "id": "l3",
+      "from": {
+        "node": "cartographer",
+        "port": "text"
+      },
+      "to": {
+        "node": "paint",
+        "port": "prompt"
+      }
+    },
+    {
+      "id": "l4",
+      "from": {
+        "node": "paint",
+        "port": "image"
+      },
+      "to": {
+        "node": "solver",
+        "port": "image"
+      }
+    },
+    {
+      "id": "l5",
+      "from": {
+        "node": "architect",
+        "port": "text"
+      },
+      "to": {
+        "node": "j1",
+        "port": "a"
+      }
+    },
+    {
+      "id": "l6",
+      "from": {
+        "node": "solver",
+        "port": "text"
+      },
+      "to": {
+        "node": "j1",
+        "port": "b"
+      }
+    },
+    {
+      "id": "l7",
+      "from": {
+        "node": "j1",
+        "port": "text"
+      },
+      "to": {
+        "node": "checker",
+        "port": "prompt"
+      }
+    },
+    {
+      "id": "l8",
+      "from": {
+        "node": "j1",
+        "port": "text"
+      },
+      "to": {
+        "node": "j2",
+        "port": "a"
+      }
+    },
+    {
+      "id": "l9",
+      "from": {
+        "node": "checker",
+        "port": "text"
+      },
+      "to": {
+        "node": "j2",
+        "port": "b"
+      }
+    },
+    {
+      "id": "l10",
+      "from": {
+        "node": "j2",
+        "port": "text"
+      },
+      "to": {
+        "node": "audit",
+        "port": "text"
+      }
+    },
+    {
+      "id": "l11",
+      "from": {
+        "node": "paint",
+        "port": "image"
+      },
+      "to": {
+        "node": "audit",
+        "port": "img1"
+      }
+    }
+  ],
+  "nid": 30,
+  "lid": 31,
+  "view": {
+    "panX": 40,
+    "panY": 40,
+    "scale": 0.5
+  }
+}

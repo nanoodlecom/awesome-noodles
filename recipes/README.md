@@ -23,6 +23,7 @@ Do not hand-edit these files — run `node scripts/make-recipes.mjs` after chang
 | [Hidden word, object-coded](hidden-word.md) | [`graphs/hidden-word.noodle-graph.json`](../graphs/hidden-word.noodle-graph.json) | defaults in graph |
 | [Humanize a comment](humanize-comment.md) | [`graphs/humanize-comment.noodle-graph.json`](../graphs/humanize-comment.noodle-graph.json) | defaults in graph |
 | [Idea to 3D model](idea-to-3d-model.md) | [`graphs/idea-to-3d-model.noodle-graph.json`](../graphs/idea-to-3d-model.noodle-graph.json) | defaults in graph |
+| [Maze run, solve-checked](maze-solve-audit.md) | [`graphs/maze-solve-audit.noodle-graph.json`](../graphs/maze-solve-audit.noodle-graph.json) | defaults in graph |
 | [Menu to plate, checked](menu-to-plate.md) | [`graphs/menu-to-plate.noodle-graph.json`](../graphs/menu-to-plate.noodle-graph.json) | needs Menu photo |
 | [Metro map, station-checked](metro-map-audit.md) | [`graphs/metro-map-audit.noodle-graph.json`](../graphs/metro-map-audit.noodle-graph.json) | defaults in graph |
 | [Mirror check, reflection-audited](mirror-check.md) | [`graphs/mirror-check.noodle-graph.json`](../graphs/mirror-check.noodle-graph.json) | defaults in graph |
