@@ -1,0 +1,391 @@
+{
+  "v": 1,
+  "nodes": [
+    {
+      "id": "c1",
+      "type": "comment",
+      "x": 60,
+      "y": 30,
+      "fields": {
+        "text": "A picture that reads twice: once up close, once from across the room. This flow builds a flat lay whose small objects are its pixels. A GLM director writes a SCALE CARD - one big FAR SHAPE, one small MATERIAL in a dark SHAPE COLOUR and a pale FILL COLOUR - and a second GLM turns it into a painter prompt for a dense top-down carpet of those objects, the dark ones forming the shape. Muse paints it. Then the same picture is read twice by two blind Gemini readers who receive physically different pixels: the close reader gets the full-resolution image and inventories the objects themselves; the far reader gets the picture after a local Resize node shrinks it to 64 pixels wide - the squint view, where individual objects should vanish and only the big shape survives. A GLM auditor scores both readings against the card (far shape match, close material and colours, and whether the scales stayed separated - a far reader that can still name individual objects is a leak). A Decide judge gives the headline: both distances read, far shape lost, close detail lost, or neither distance reads. See recipes/squint-test.md."
+      },
+      "w": 900,
+      "name": "Squint test, two-distance-checked - one picture, two readings, separated by a resize"
+    },
+    {
+      "id": "surface",
+      "type": "text",
+      "x": 60,
+      "y": 300,
+      "fields": {
+        "text": "A flat pale linen tablecloth seen straight from above, filling the whole square picture edge to edge, in bright even daylight."
+      },
+      "w": 300,
+      "name": "Surface"
+    },
+    {
+      "id": "director",
+      "type": "llm",
+      "x": 440,
+      "y": 280,
+      "fields": {
+        "model": "z-ai/glm-5.3-flash",
+        "system": "You are a mosaic director. Given a SURFACE, design a SCALE CARD for a top-down flat-lay picture that reads at two distances. Pick a FAR SHAPE from exactly this list: heart, five-pointed star, crescent moon, diamond, circle, triangle. Pick a MATERIAL: one kind of small, uniform object that can be scattered in a dense carpet (for example coffee beans, rosebuds, buttons, pebbles, bottle caps, acorns, seashells, dried beans). Pick a SHAPE COLOUR: a dark, saturated colour the material can plausibly be (the objects forming the shape are this colour). Pick a FILL COLOUR: a pale colour of the same material (the objects everywhere else are this colour, so the dark shape stands out against a pale field of the same objects). Output exactly this shape and nothing else:\nFAR SHAPE: <one shape from the list>\nSHAPE COLOUR: <dark colour>\nMATERIAL: <the small objects, plural>\nFILL COLOUR: <pale colour>\nSURFACE: <the surface given, in a few words>",
+        "maxTokens": "400",
+        "reasoningEffort": "low"
+      },
+      "w": 280,
+      "name": "Scale card - GLM picks the far shape, the material and its two colours",
+      "sizes": {
+        "system": 150
+      }
+    },
+    {
+      "id": "j0",
+      "type": "join",
+      "x": 800,
+      "y": 480,
+      "fields": {
+        "sep": "\n\nSCALE CARD (the far shape, the material and its two colours; its exact wording must reach the painter):\n"
+      },
+      "w": 200,
+      "name": "Surface + scale card"
+    },
+    {
+      "id": "stylist",
+      "type": "llm",
+      "x": 800,
+      "y": 280,
+      "fields": {
+        "model": "z-ai/glm-5.3-flash",
+        "system": "You turn a SCALE CARD into ONE prompt for an AI image generator. The input gives a SURFACE first, then 'SCALE CARD' with a FAR SHAPE, a SHAPE COLOUR, a MATERIAL (small uniform objects) and a FILL COLOUR. Write the prompt so the generator paints: a square picture seen straight from above (top-down flat lay, no perspective, no hands, no people); the surface filling the whole frame; a dense, even carpet of the small objects covering the whole surface with no bare patches and no other objects; the objects in the SHAPE COLOUR arranged to form one single large, clean, centred FAR SHAPE occupying about two thirds of the picture's width, its edges sharp and its interior completely filled with the dark objects; the objects in the FILL COLOUR filling every other part of the carpet evenly. Every object is small relative to the shape (the shape is made of many objects, like a mosaic). End with: 'Photorealistic top-down flat lay, even daylight, exactly two colours of one material, no text, no letters, no numbers, no other objects.' Output the prompt only.",
+        "maxTokens": "600",
+        "reasoningEffort": "low"
+      },
+      "w": 280,
+      "name": "Painting brief - GLM turns the scale card into a mosaic flat-lay prompt",
+      "sizes": {
+        "system": 150
+      }
+    },
+    {
+      "id": "paint",
+      "type": "image",
+      "x": 1160,
+      "y": 280,
+      "fields": {
+        "model": "meta/muse-image/text-to-image",
+        "size": "1:1",
+        "variations": "1"
+      },
+      "w": 280,
+      "name": "Flat lay - Muse paints the object carpet and its hidden shape"
+    },
+    {
+      "id": "closereader",
+      "type": "vision",
+      "x": 1520,
+      "y": 180,
+      "fields": {
+        "model": "google/gemini-3.8-flash",
+        "q": "You are the close reader in a squint-test pipeline. You see the full-resolution picture. Look CLOSELY at the individual small objects, not at any overall pattern. Report only what the objects themselves are. Output exactly this shape and nothing else:\nMATERIAL SEEN: <the small objects you see, plural, or 'none'>\nDARK COLOUR SEEN: <the darker colour some objects have>\nFILL COLOUR SEEN: <the paler colour the other objects have>\nCOVERAGE: <dense and even, patchy, or sparse>\nARRANGEMENT NOTED: <in plain words, what the dark objects seem to be doing or forming, or 'no pattern noticed'>"
+      },
+      "w": 280,
+      "name": "Close card - Gemini inventories the objects at full resolution, blind",
+      "sizes": {
+        "q": 150
+      }
+    },
+    {
+      "id": "shrink",
+      "type": "resize",
+      "x": 1520,
+      "y": 480,
+      "fields": {
+        "mode": "fit",
+        "width": "64",
+        "height": "64"
+      },
+      "w": 280,
+      "name": "Far view - local resize shrinks the picture to a 64-pixel squint"
+    },
+    {
+      "id": "farreader",
+      "type": "vision",
+      "x": 1880,
+      "y": 480,
+      "fields": {
+        "model": "google/gemini-3.8-flash",
+        "q": "You are the far reader in a squint-test pipeline. This is a tiny, heavily downscaled version of a picture - the view from far away, squinting. Individual small objects should be impossible to make out; only large shapes and colour masses survive. Name the one big shape, if any, that the dark colour mass forms. Output exactly this shape and nothing else:\nSHAPE SEEN: <one shape name, or 'no clear shape'>\nSHAPE COLOUR SEEN: <the dark colour of the shape>\nBACKGROUND SEEN: <the pale colour around it>\nOBJECTS SEEN: <any individual small objects you can still make out, or 'none'>"
+      },
+      "w": 280,
+      "name": "Far card - Gemini names the big shape in the tiny view, blind",
+      "sizes": {
+        "q": 150
+      }
+    },
+    {
+      "id": "j1",
+      "type": "join",
+      "x": 1880,
+      "y": 180,
+      "fields": {
+        "sep": "\n\nCLOSE CARD (a blind close reader inventoried the full-resolution picture; it never saw the scale card):\n"
+      },
+      "w": 200,
+      "name": "Scale card + close card"
+    },
+    {
+      "id": "j2",
+      "type": "join",
+      "x": 2240,
+      "y": 180,
+      "fields": {
+        "sep": "\n\nFAR CARD (a blind far reader named what survives in the tiny downscaled view; it never saw the scale card):\n"
+      },
+      "w": 200,
+      "name": "Card, close card + far card"
+    },
+    {
+      "id": "checker",
+      "type": "llm",
+      "x": 2600,
+      "y": 400,
+      "fields": {
+        "model": "z-ai/glm-5.3-flash",
+        "system": "You are a scale auditor. The input gives a SCALE CARD (FAR SHAPE, SHAPE COLOUR, MATERIAL, FILL COLOUR), then 'CLOSE CARD' with a close reader's inventory of the rendered picture at full resolution, then 'FAR CARD' with a far reader's report on a tiny downscaled version of the same picture. Do these checks in order and output exactly these lines:\n1. 'FAR: MATCH' if SHAPE SEEN names the card's FAR SHAPE (wording may vary, the shape must be the same), 'FAR: WRONG SHAPE - seen <shape>' if it names a different shape, or 'FAR: NO SHAPE' if it says no clear shape.\n2. 'CLOSE: X of 3' - one point each for: MATERIAL SEEN matches the card's MATERIAL; DARK COLOUR SEEN matches SHAPE COLOUR; FILL COLOUR SEEN matches FILL COLOUR (near colour names count). Then 'DRIFTED: ' followed by each failing item, comma-separated, or 'none'.\n3. 'SEPARATION: CLEAN' if the far reader's OBJECTS SEEN is 'none' (from far away the individual objects vanished), otherwise 'SEPARATION: LEAKED - far reader still saw <the objects named>'.\n4. 'Summary: far <match/wrong shape/no shape>, close <X> of 3, separation <clean/leaked>.'\nIf any card is incomplete, still output all four lines with your best judgement and say 'incomplete card' in the Summary. Never output nothing. Compare only the texts; do not invent readings. Output the audit only.",
+        "maxTokens": "1200",
+        "reasoningEffort": "low"
+      },
+      "w": 280,
+      "name": "Scale audit - GLM scores both readings against the scale card",
+      "sizes": {
+        "system": 150
+      }
+    },
+    {
+      "id": "j3",
+      "type": "join",
+      "x": 2600,
+      "y": 180,
+      "fields": {
+        "sep": "\n\nSCALE AUDIT:\n"
+      },
+      "w": 200,
+      "name": "Cards + scale audit"
+    },
+    {
+      "id": "audit",
+      "type": "decide",
+      "x": 2960,
+      "y": 180,
+      "fields": {
+        "model": "perplexity/pplx-decider-v1.2",
+        "mode": "choose",
+        "question": "The picture should read at two distances: up close it is a carpet of small objects in two colours, and from far away (a tiny downscaled view) those same objects merge into one big planned shape, with the individual objects no longer make-out-able. The text gives the SCALE CARD, a blind CLOSE CARD read at full resolution, a blind FAR CARD read from the downscaled view, and a SCALE AUDIT scoring them. Which verdict fits? 'both distances read' means the far shape matches the plan and the close reading keeps the material and both colours (separation clean or leaked does not change this). 'far shape lost' means the close reading is sound but the far reader saw the wrong shape or no shape. 'close detail lost' means the far shape matches but the close reading drifted on the material or colours. 'neither distance reads' means both readings failed. Judge the two readings, not the picture's beauty.",
+        "options": "both distances read\nfar shape lost\nclose detail lost\nneither distance reads"
+      },
+      "w": 280,
+      "name": "Both distances read - audited",
+      "sizes": {
+        "question": 130
+      }
+    }
+  ],
+  "links": [
+    {
+      "id": "l1",
+      "from": {
+        "node": "surface",
+        "port": "text"
+      },
+      "to": {
+        "node": "director",
+        "port": "prompt"
+      }
+    },
+    {
+      "id": "l2",
+      "from": {
+        "node": "director",
+        "port": "text"
+      },
+      "to": {
+        "node": "j0",
+        "port": "b"
+      }
+    },
+    {
+      "id": "l12",
+      "from": {
+        "node": "surface",
+        "port": "text"
+      },
+      "to": {
+        "node": "j0",
+        "port": "a"
+      }
+    },
+    {
+      "id": "l13",
+      "from": {
+        "node": "j0",
+        "port": "text"
+      },
+      "to": {
+        "node": "stylist",
+        "port": "prompt"
+      }
+    },
+    {
+      "id": "l3",
+      "from": {
+        "node": "stylist",
+        "port": "text"
+      },
+      "to": {
+        "node": "paint",
+        "port": "prompt"
+      }
+    },
+    {
+      "id": "l4",
+      "from": {
+        "node": "paint",
+        "port": "image"
+      },
+      "to": {
+        "node": "closereader",
+        "port": "image"
+      }
+    },
+    {
+      "id": "l5",
+      "from": {
+        "node": "paint",
+        "port": "image"
+      },
+      "to": {
+        "node": "shrink",
+        "port": "image"
+      }
+    },
+    {
+      "id": "l6",
+      "from": {
+        "node": "shrink",
+        "port": "image"
+      },
+      "to": {
+        "node": "farreader",
+        "port": "image"
+      }
+    },
+    {
+      "id": "l7",
+      "from": {
+        "node": "director",
+        "port": "text"
+      },
+      "to": {
+        "node": "j1",
+        "port": "a"
+      }
+    },
+    {
+      "id": "l8",
+      "from": {
+        "node": "closereader",
+        "port": "text"
+      },
+      "to": {
+        "node": "j1",
+        "port": "b"
+      }
+    },
+    {
+      "id": "l9",
+      "from": {
+        "node": "j1",
+        "port": "text"
+      },
+      "to": {
+        "node": "j2",
+        "port": "a"
+      }
+    },
+    {
+      "id": "l10",
+      "from": {
+        "node": "farreader",
+        "port": "text"
+      },
+      "to": {
+        "node": "j2",
+        "port": "b"
+      }
+    },
+    {
+      "id": "l11",
+      "from": {
+        "node": "j2",
+        "port": "text"
+      },
+      "to": {
+        "node": "checker",
+        "port": "prompt"
+      }
+    },
+    {
+      "id": "l14",
+      "from": {
+        "node": "j2",
+        "port": "text"
+      },
+      "to": {
+        "node": "j3",
+        "port": "a"
+      }
+    },
+    {
+      "id": "l15",
+      "from": {
+        "node": "checker",
+        "port": "text"
+      },
+      "to": {
+        "node": "j3",
+        "port": "b"
+      }
+    },
+    {
+      "id": "l16",
+      "from": {
+        "node": "j3",
+        "port": "text"
+      },
+      "to": {
+        "node": "audit",
+        "port": "text"
+      }
+    },
+    {
+      "id": "l17",
+      "from": {
+        "node": "paint",
+        "port": "image"
+      },
+      "to": {
+        "node": "audit",
+        "port": "img1"
+      }
+    }
+  ],
+  "nid": 30,
+  "lid": 31,
+  "view": {
+    "panX": 40,
+    "panY": 40,
+    "scale": 0.5
+  }
+}
