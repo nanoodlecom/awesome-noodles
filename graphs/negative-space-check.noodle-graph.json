@@ -1,0 +1,308 @@
+{
+  "v": 1,
+  "nodes": [
+    {
+      "id": "c1",
+      "type": "comment",
+      "x": 60,
+      "y": 30,
+      "fields": {
+        "text": "Is the picture in the empty space? This flow paints a flat silhouette scene whose real subject is not in it: the bright empty sky in the centre is shaped, by the dark silhouettes around it, into one familiar shape. A GLM director writes a NEGATIVE CARD - one SHAPE (a star, heart, crescent, key, diamond, bell, arrow or bird) to be formed ONLY by empty sky, the LEFT FORM and RIGHT FORM whose facing edges bound it, a FLOOR it sits on, and exactly five dark silhouette objects left to right. A second GLM turns the card into a painter prompt, and Muse paints the scene. A blind Gemini surveyor lists the objects, then inverts figure and ground: ignoring the dark objects entirely, what shape does the bright empty region form - and does anything intrude into it? A GLM auditor scores objects, shape match and gap cleanliness against the card, and a Decide judge gives the headline: shape in the sky, shape almost there, just sky, or wrong scene. See recipes/negative-space-check.md."
+      },
+      "w": 900,
+      "name": "Negative space check, figure-ground-audited - a shape that is only empty sky"
+    },
+    {
+      "id": "setting",
+      "type": "text",
+      "x": 60,
+      "y": 300,
+      "fields": {
+        "text": "A flat, bright, completely plain pale-cream sky at dawn behind a single row of dark silhouettes standing on one flat horizon line, seen straight on, with no clouds, no birds and no text."
+      },
+      "w": 300,
+      "name": "Setting"
+    },
+    {
+      "id": "director",
+      "type": "llm",
+      "x": 440,
+      "y": 280,
+      "fields": {
+        "model": "z-ai/glm-5.3-flash",
+        "system": "You are a negative-space director. Given a SETTING (a bright plain sky behind a row of dark silhouettes on one flat horizon), design a NEGATIVE CARD for ONE silhouette scene whose centrepiece is a shape made of EMPTY SKY. Choose exactly one SHAPE from this menu: five-pointed star, heart, crescent moon, key, diamond, bell, arrow pointing up, bird in flight. The shape must be formed ONLY by the bright empty sky in the centre of the scene, bounded on the left by the right edge of a LEFT FORM silhouette, on the right by the left edge of a RIGHT FORM silhouette, and below by a FLOOR silhouette line; it must NOT be an object, a drawing or a decoration - nothing in the scene is shaped like it except the empty sky itself. Pick LEFT FORM and RIGHT FORM as tall dark silhouette objects whose facing edges can plausibly carve the shape's two sides (for example a pine tree, a lighthouse, a church spire, a water tower, a cliff face, a rooftop with a chimney, a windmill). The FLOOR is one low wide silhouette the shape rests above (for example a long rooftop, a flat cliff top, a harbour wall). Then list exactly 5 dark silhouette OBJECTS left to right along the horizon, including the LEFT FORM and RIGHT FORM as two of the five, each a different object, all plausible in one scene. Output exactly this shape and nothing else:\nSHAPE: <the chosen shape, copied from the menu>\nLEFT FORM: <object>\nRIGHT FORM: <object>\nFLOOR: <object>\nOBJECT 1: <object>\nOBJECT 2: <object>\nOBJECT 3: <object>\nOBJECT 4: <object>\nOBJECT 5: <object>",
+        "maxTokens": "400",
+        "reasoningEffort": "low"
+      },
+      "w": 280,
+      "name": "Negative card - GLM designs a shape made of empty sky and its bounding silhouettes",
+      "sizes": {
+        "system": 150
+      }
+    },
+    {
+      "id": "j0",
+      "type": "join",
+      "x": 800,
+      "y": 480,
+      "fields": {
+        "sep": "\n\nNEGATIVE CARD (the shape made of empty sky, its bounding forms and the five silhouette objects; its exact wording must reach the painter):\n"
+      },
+      "w": 200,
+      "name": "Setting + negative card"
+    },
+    {
+      "id": "stylist",
+      "type": "llm",
+      "x": 800,
+      "y": 280,
+      "fields": {
+        "model": "z-ai/glm-5.3-flash",
+        "system": "You turn a NEGATIVE CARD into ONE prompt for an AI image generator. The input gives a SETTING first, then 'NEGATIVE CARD' with a SHAPE, a LEFT FORM, a RIGHT FORM, a FLOOR and 5 silhouette OBJECTS left to right. Write the prompt so the generator paints: a flat, high-contrast silhouette illustration, seen straight on - a bright, completely plain pale sky filling the background, and exactly the 5 carded objects as dark near-black silhouettes in the carded left-to-right order along one flat horizon line, the FLOOR as a low dark band along the bottom; in the CENTRE of the picture, the bright empty sky between the LEFT FORM and the RIGHT FORM, above the FLOOR, forms one large, clean, unmistakable shape of a <SHAPE> made of nothing but empty bright sky - the facing edges of the two forms carve its sides exactly; the shape is EMPTY - no object, bird, cloud, star or mark of any kind inside it, and the shape itself is never drawn, outlined or filled in. No other objects anywhere, no clouds, no birds, no moon, no stars. End with: 'Flat silhouette illustration, bright plain sky, dark silhouettes, one large shape formed only by empty sky in the centre, no text, no letters, no numbers, no people.' Output the prompt only, with the card's actual SHAPE, LEFT FORM, RIGHT FORM, FLOOR and object names written into it.",
+        "maxTokens": "600",
+        "reasoningEffort": "low"
+      },
+      "w": 280,
+      "name": "Painting brief - GLM turns the negative card into a silhouette prompt",
+      "sizes": {
+        "system": 150
+      }
+    },
+    {
+      "id": "paint",
+      "type": "image",
+      "x": 1160,
+      "y": 280,
+      "fields": {
+        "model": "meta/muse-image/text-to-image",
+        "size": "1:1",
+        "variations": "1"
+      },
+      "w": 280,
+      "name": "Silhouette scene - Muse paints the dark forms around the empty shape"
+    },
+    {
+      "id": "surveyor",
+      "type": "vision",
+      "x": 1520,
+      "y": 280,
+      "fields": {
+        "model": "google/gemini-3.8-flash",
+        "q": "You are the surveyor in a negative-space pipeline. You see a flat silhouette picture: dark shapes against a bright plain sky. First, list the dark silhouette objects from LEFT to RIGHT in exactly this shape:\nOBJECTS SEEN: <object 1>, <object 2>, ... (every dark silhouette object along the horizon, in order)\nThen perform a figure-ground inversion: IGNORE the dark objects completely. Look ONLY at the bright empty sky region in the CENTRE of the picture, the empty area bounded by the dark silhouettes on its sides and below. Ask what familiar shape that bright EMPTY region itself most closely forms, the way a hole or a gap can be shaped. Output exactly this line:\nSKY SHAPE: <one familiar shape name for the shape the empty central sky forms, or NONE if the empty sky is just an irregular gap with no recognisable shape>\nThen output exactly this line:\nINTRUSIONS: <anything dark or drawn that sits INSIDE that central bright empty region, or 'none'>\nJudge only the empty region's outline, not the objects. Do not name a shape just because an object looks like one."
+      },
+      "w": 280,
+      "name": "Survey - Gemini lists the silhouettes, then reads the empty sky's shape, blind",
+      "sizes": {
+        "q": 150
+      }
+    },
+    {
+      "id": "j1",
+      "type": "join",
+      "x": 1880,
+      "y": 180,
+      "fields": {
+        "sep": "\n\nSURVEY (a blind surveyor's object list, figure-ground read of the empty sky, and intrusions):\n"
+      },
+      "w": 200,
+      "name": "Negative card + survey"
+    },
+    {
+      "id": "checker",
+      "type": "llm",
+      "x": 2240,
+      "y": 400,
+      "fields": {
+        "model": "z-ai/glm-5.3-flash",
+        "system": "You are a figure-ground auditor. The input gives a NEGATIVE CARD (a SHAPE to be formed by empty sky, a LEFT FORM, a RIGHT FORM, a FLOOR and 5 silhouette OBJECTS left to right), then 'SURVEY' with a blind surveyor's OBJECTS SEEN list, its SKY SHAPE read of the empty central sky, and its INTRUSIONS line. Do these checks in order and output exactly these lines:\n1. 'OBJECTS: X of 5' - one point per carded object that appears in OBJECTS SEEN in the same left-to-right position (near object names count; the FLOOR is not one of the 5). Then 'MISSING: ' followed by each carded object not seen in its position, or 'none'.\n2. 'SHAPE READ: ' followed by the surveyor's SKY SHAPE value, copied exactly.\n3. 'SHAPE: MATCH' if the SKY SHAPE names the carded SHAPE (synonyms and fuller names of the same shape count - 'star' for 'five-pointed star', 'crescent' for 'crescent moon'); 'SHAPE: NEAR' if it names a different shape that shares the planned shape's main geometry (for example 'triangle' for 'arrow pointing up', 'circle' for 'crescent moon' is NOT near - a crescent is not a circle; use NEAR only when a viewer would see the planned shape partly formed); otherwise 'SHAPE: MISS'. If SHAPE READ is NONE, it is a MISS.\n4. 'GAP: CLEAN' if INTRUSIONS is 'none'; otherwise 'GAP: INTRUDED' followed by the intrusions copied from the survey.\n5. 'Summary: objects <X> of 5, shape <MATCH/NEAR/MISS> (<the shape read>), gap <clean/intruded>.'\nIf any input is incomplete, still output all five lines with your best judgement and say 'incomplete input' in the Summary. Never output nothing. Compare only the texts; do not invent readings. Output the audit only.",
+        "maxTokens": "1200",
+        "reasoningEffort": "low"
+      },
+      "w": 280,
+      "name": "Figure-ground audit - GLM scores the objects, the empty shape and the gap",
+      "sizes": {
+        "system": 150
+      }
+    },
+    {
+      "id": "j2",
+      "type": "join",
+      "x": 2240,
+      "y": 180,
+      "fields": {
+        "sep": "\n\nFIGURE-GROUND AUDIT (objects, shape match and gap scored against the card):\n"
+      },
+      "w": 200,
+      "name": "Card, survey + figure-ground audit"
+    },
+    {
+      "id": "audit",
+      "type": "decide",
+      "x": 2600,
+      "y": 180,
+      "fields": {
+        "model": "perplexity/pplx-decider-v1.2",
+        "mode": "choose",
+        "question": "The picture should be a flat silhouette scene of the 5 planned dark objects, where the bright EMPTY sky in the centre - bounded by the planned LEFT FORM and RIGHT FORM above the FLOOR - itself forms the planned SHAPE, with nothing inside it. The text gives the NEGATIVE CARD, a blind SURVEY (objects seen, a figure-ground read of the empty sky's shape, intrusions), and a FIGURE-GROUND AUDIT scoring objects, shape match and gap cleanliness. Which verdict fits? 'shape in the sky' means SHAPE is MATCH, GAP is CLEAN and OBJECTS is at least 4 of 5. 'shape almost there' means SHAPE is NEAR, or SHAPE is MATCH but the GAP is INTRUDED. 'just sky' means SHAPE is MISS but OBJECTS is at least 4 of 5 - the right scene, but the empty sky forms no planned shape. 'wrong scene' means OBJECTS is 3 of 5 or less, whatever the shape score says. Judge the empty region's shape, not the picture's beauty.",
+        "options": "shape in the sky\nshape almost there\njust sky\nwrong scene"
+      },
+      "w": 280,
+      "name": "Shape in the sky - audited",
+      "sizes": {
+        "question": 130
+      }
+    }
+  ],
+  "links": [
+    {
+      "id": "l1",
+      "from": {
+        "node": "setting",
+        "port": "text"
+      },
+      "to": {
+        "node": "director",
+        "port": "prompt"
+      }
+    },
+    {
+      "id": "l2",
+      "from": {
+        "node": "director",
+        "port": "text"
+      },
+      "to": {
+        "node": "j0",
+        "port": "b"
+      }
+    },
+    {
+      "id": "l12",
+      "from": {
+        "node": "setting",
+        "port": "text"
+      },
+      "to": {
+        "node": "j0",
+        "port": "a"
+      }
+    },
+    {
+      "id": "l13",
+      "from": {
+        "node": "j0",
+        "port": "text"
+      },
+      "to": {
+        "node": "stylist",
+        "port": "prompt"
+      }
+    },
+    {
+      "id": "l3",
+      "from": {
+        "node": "stylist",
+        "port": "text"
+      },
+      "to": {
+        "node": "paint",
+        "port": "prompt"
+      }
+    },
+    {
+      "id": "l4",
+      "from": {
+        "node": "paint",
+        "port": "image"
+      },
+      "to": {
+        "node": "surveyor",
+        "port": "image"
+      }
+    },
+    {
+      "id": "l7",
+      "from": {
+        "node": "director",
+        "port": "text"
+      },
+      "to": {
+        "node": "j1",
+        "port": "a"
+      }
+    },
+    {
+      "id": "l8",
+      "from": {
+        "node": "surveyor",
+        "port": "text"
+      },
+      "to": {
+        "node": "j1",
+        "port": "b"
+      }
+    },
+    {
+      "id": "l11",
+      "from": {
+        "node": "j1",
+        "port": "text"
+      },
+      "to": {
+        "node": "checker",
+        "port": "prompt"
+      }
+    },
+    {
+      "id": "l14",
+      "from": {
+        "node": "j1",
+        "port": "text"
+      },
+      "to": {
+        "node": "j2",
+        "port": "a"
+      }
+    },
+    {
+      "id": "l15",
+      "from": {
+        "node": "checker",
+        "port": "text"
+      },
+      "to": {
+        "node": "j2",
+        "port": "b"
+      }
+    },
+    {
+      "id": "l16",
+      "from": {
+        "node": "j2",
+        "port": "text"
+      },
+      "to": {
+        "node": "audit",
+        "port": "text"
+      }
+    },
+    {
+      "id": "l17",
+      "from": {
+        "node": "paint",
+        "port": "image"
+      },
+      "to": {
+        "node": "audit",
+        "port": "img1"
+      }
+    }
+  ],
+  "nid": 30,
+  "lid": 31,
+  "view": {
+    "panX": 40,
+    "panY": 40,
+    "scale": 0.5
+  }
+}
