@@ -37,6 +37,7 @@ Do not hand-edit these files — run `node scripts/make-recipes.mjs` after chang
 | [Spot the difference, diff-checked](spot-the-difference.md) | [`graphs/spot-the-difference.noodle-graph.json`](../graphs/spot-the-difference.noodle-graph.json) | defaults in graph |
 | [Squint test, two-distance-checked](squint-test.md) | [`graphs/squint-test.noodle-graph.json`](../graphs/squint-test.noodle-graph.json) | defaults in graph |
 | [Stack check, support-audited](stack-check.md) | [`graphs/stack-check.noodle-graph.json`](../graphs/stack-check.noodle-graph.json) | defaults in graph |
+| [Stereo check, disparity-audited](stereo-check.md) | [`graphs/stereo-check.noodle-graph.json`](../graphs/stereo-check.noodle-graph.json) | defaults in graph |
 | [Storyboard relay](storyboard-relay.md) | [`graphs/storyboard-relay.noodle-graph.json`](../graphs/storyboard-relay.noodle-graph.json) | defaults in graph |
 | [Turnaround check, viewpoint-audited](turnaround-check.md) | [`graphs/turnaround-check.noodle-graph.json`](../graphs/turnaround-check.noodle-graph.json) | defaults in graph |
 | [Words only, repainted](words-only-repaint.md) | [`graphs/words-only-repaint.noodle-graph.json`](../graphs/words-only-repaint.noodle-graph.json) | needs Scene photo |
