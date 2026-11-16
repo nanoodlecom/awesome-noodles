@@ -1,0 +1,308 @@
+{
+  "v": 1,
+  "nodes": [
+    {
+      "id": "c1",
+      "type": "comment",
+      "x": 60,
+      "y": 30,
+      "fields": {
+        "text": "Will it stand? This flow builds a tower of six stacked objects and audits the one thing a pretty render can fake: whether anything is actually holding the top up. A GLM director writes a STACK CARD - six stackable objects bottom to top, each with a colour, a width category that never increases upward, and a RESTS ON line naming the object directly below it. A second GLM turns the card into a painter prompt for a flat side elevation, and Muse paints the tower. A blind Gemini surveyor then inventories the rendered tower: for each object, what it actually rests on and whether the contact is full, partial or none. A GLM auditor scores identity and per-level support against the card, and computes a transitive GROUNDED closure over the survey alone - one break ungrounds every level above it. A Decide judge gives the headline: stack stands, support drifted, pieces floating, or different stack. See recipes/stack-check.md."
+      },
+      "w": 900,
+      "name": "Stack check, support-audited - a tower, its contact graph, and a grounded closure"
+    },
+    {
+      "id": "setting",
+      "type": "text",
+      "x": 60,
+      "y": 300,
+      "fields": {
+        "text": "A plain pale-grey studio wall behind a flat light-wood tabletop, seen straight from the side in bright even daylight, with nothing on the table and no people."
+      },
+      "w": 300,
+      "name": "Setting"
+    },
+    {
+      "id": "director",
+      "type": "llm",
+      "x": 440,
+      "y": 280,
+      "fields": {
+        "model": "z-ai/glm-5.3-flash",
+        "system": "You are a stacking director. Given a SETTING, design a STACK CARD for ONE vertical tower of exactly 6 stackable everyday objects on the table in the setting. Pick 6 DIFFERENT objects with flat bottoms that can plausibly rest on each other (for example a wooden crate, a suitcase, a shoebox, a thick hardcover book, a flat ceramic platter, a metal lunchbox, a folded blanket, a cutting board, a storage tin, a small plant pot). Give each object a distinct colour. Number the levels 1 to 6 from the BOTTOM (on the table) to the TOP. Each level gets a WIDTH category - wide, medium or narrow - and widths must NEVER increase going up: a level's width category must be the same as or narrower than the level below it (wide is widest, then medium, then narrow), so the planned tower is stable by construction. Each level's RESTS ON line names the object directly below it, copied exactly; level 1 rests on TABLE. Output exactly this shape and nothing else:\nLEVEL 1: <object> | <colour> | WIDTH: <wide/medium/narrow> | RESTS ON: TABLE\nLEVEL 2: <object> | <colour> | WIDTH: <wide/medium/narrow> | RESTS ON: <level 1 object>\nLEVEL 3: <object> | <colour> | WIDTH: <wide/medium/narrow> | RESTS ON: <level 2 object>\nLEVEL 4: <object> | <colour> | WIDTH: <wide/medium/narrow> | RESTS ON: <level 3 object>\nLEVEL 5: <object> | <colour> | WIDTH: <wide/medium/narrow> | RESTS ON: <level 4 object>\nLEVEL 6: <object> | <colour> | WIDTH: <wide/medium/narrow> | RESTS ON: <level 5 object>",
+        "maxTokens": "400",
+        "reasoningEffort": "low"
+      },
+      "w": 280,
+      "name": "Stack card - GLM designs the six-level tower and its rests-on chain",
+      "sizes": {
+        "system": 150
+      }
+    },
+    {
+      "id": "j0",
+      "type": "join",
+      "x": 800,
+      "y": 480,
+      "fields": {
+        "sep": "\n\nSTACK CARD (the six levels, their widths and rests-on chain; its exact wording must reach the painter):\n"
+      },
+      "w": 200,
+      "name": "Setting + stack card"
+    },
+    {
+      "id": "stylist",
+      "type": "llm",
+      "x": 800,
+      "y": 280,
+      "fields": {
+        "model": "z-ai/glm-5.3-flash",
+        "system": "You turn a STACK CARD into ONE prompt for an AI image generator. The input gives a SETTING first, then 'STACK CARD' with 6 levels bottom to top, each an object with a colour, a WIDTH category and a RESTS ON line. Write the prompt so the generator paints: a flat side elevation (seen straight from the side, no perspective, no people) of the setting, with ONE single centred vertical tower on the table made of exactly the 6 carded objects in the carded bottom-to-top order, each in its carded colour and at its carded relative width; every object resting DIRECTLY on the object below it with broad, clearly visible flat contact along its whole bottom edge - no gaps, no floating, nothing leaning, nothing held up by anything else; level 1 resting flat on the tabletop; no other objects anywhere. End with: 'Photorealistic flat side view, even daylight, one tower of six stacked objects in full contact, no text, no letters, no numbers, no people.' Output the prompt only.",
+        "maxTokens": "600",
+        "reasoningEffort": "low"
+      },
+      "w": 280,
+      "name": "Painting brief - GLM turns the stack card into a side-elevation prompt",
+      "sizes": {
+        "system": 150
+      }
+    },
+    {
+      "id": "paint",
+      "type": "image",
+      "x": 1160,
+      "y": 280,
+      "fields": {
+        "model": "meta/muse-image/text-to-image",
+        "size": "1:1",
+        "variations": "1"
+      },
+      "w": 280,
+      "name": "Tower - Muse paints the six-object stack"
+    },
+    {
+      "id": "surveyor",
+      "type": "vision",
+      "x": 1520,
+      "y": 280,
+      "fields": {
+        "model": "google/gemini-3.8-flash",
+        "q": "You are the surveyor in a stack-check pipeline. You see a picture of a tower of stacked objects on a table, seen from the side. Inventory the tower from the BOTTOM object (resting on the table) to the TOP object. For each object output one line in exactly this shape:\nLEVEL <n> SEEN: <object> | <colour> | RESTS ON SEEN: <the object it directly touches beneath it, or TABLE if it rests on the table, or NOTHING if it touches nothing below it and floats> | CONTACT: <full if it rests with broad flat contact, partial if it only touches at an edge or a point, none if it touches nothing below it>\nThen output exactly these two lines:\nEXTRA OBJECTS: <any objects in the picture that are not part of the tower, or 'none'>\nTOWER COUNT: <how many objects are in the tower>"
+      },
+      "w": 280,
+      "name": "Survey - Gemini inventories the tower's contacts, blind",
+      "sizes": {
+        "q": 150
+      }
+    },
+    {
+      "id": "j1",
+      "type": "join",
+      "x": 1880,
+      "y": 180,
+      "fields": {
+        "sep": "\n\nSURVEY (a blind surveyor inventoried the rendered tower's contacts; it never saw the stack card):\n"
+      },
+      "w": 200,
+      "name": "Stack card + survey"
+    },
+    {
+      "id": "checker",
+      "type": "llm",
+      "x": 2240,
+      "y": 400,
+      "fields": {
+        "model": "z-ai/glm-5.3-flash",
+        "system": "You are a support auditor. The input gives a STACK CARD (6 levels bottom to top, each with an object, a colour, a WIDTH and a RESTS ON line), then 'SURVEY' with a blind surveyor's inventory of the rendered tower (each level's object, colour, RESTS ON SEEN and CONTACT). Do these checks in order and output exactly these lines:\n1. 'IDENTITY: X of 6' - one point per level where the survey's object and colour match the card's level of the same number (near object and colour names count). Then 'DRIFTED: ' followed by each failing level as 'LEVEL <n>', comma-separated, or 'none'.\n2. 'SUPPORT: X of 6' - one point per level where RESTS ON SEEN names the same supporter as the card's RESTS ON for that level (TABLE for level 1; near object names count) AND its CONTACT is full or partial. A level with CONTACT none never scores.\n3. 'GROUNDED: X of 6' - computed from the SURVEY ALONE, not the card: level 1 is grounded if its RESTS ON SEEN is TABLE and its CONTACT is not none; a higher level is grounded if its RESTS ON SEEN names the object at the level directly below it in the survey AND that lower level is itself grounded AND its CONTACT is not none. Count the grounded levels. Then 'FIRST BREAK: LEVEL <n>' for the lowest level that is not grounded, or 'FIRST BREAK: none' if all 6 are grounded.\n4. 'FLOATING: ' followed by each level whose CONTACT is none or whose RESTS ON SEEN is NOTHING, as 'LEVEL <n>', comma-separated, or 'none'.\n5. 'Summary: identity <X> of 6, support <X> of 6, grounded <X> of 6, first break <level or none>, floating <list or none>.'\nIf any card is incomplete, still output all five lines with your best judgement and say 'incomplete card' in the Summary. Never output nothing. Compare only the texts; do not invent readings. Output the audit only.",
+        "maxTokens": "1200",
+        "reasoningEffort": "low"
+      },
+      "w": 280,
+      "name": "Support audit - GLM scores support and computes the grounded closure",
+      "sizes": {
+        "system": 150
+      }
+    },
+    {
+      "id": "j2",
+      "type": "join",
+      "x": 2240,
+      "y": 180,
+      "fields": {
+        "sep": "\n\nSUPPORT AUDIT:\n"
+      },
+      "w": 200,
+      "name": "Card, survey + support audit"
+    },
+    {
+      "id": "audit",
+      "type": "decide",
+      "x": 2600,
+      "y": 180,
+      "fields": {
+        "model": "perplexity/pplx-decider-v1.2",
+        "mode": "choose",
+        "question": "The picture should show one tower of the 6 planned objects in order, every object resting on the one below it so the whole tower is grounded on the table. The text gives the STACK CARD, a blind SURVEY of the rendered tower, and a SUPPORT AUDIT scoring identity, per-level support, and a transitive grounded closure over the survey. Which verdict fits? 'stack stands' means identity is 6 of 6 and grounded is 6 of 6. 'pieces floating' means the audit's FLOATING list is not empty. 'support drifted' means nothing floats but the support or grounded scores fall short (a wrong supporter, or a break in the chain). 'different stack' means identity is 3 of 6 or less, whatever the support scores say - unless FLOATING is not empty, in which case 'pieces floating' wins. Judge the support relations, not the picture's beauty.",
+        "options": "stack stands\nsupport drifted\npieces floating\ndifferent stack"
+      },
+      "w": 280,
+      "name": "Stack stands - audited",
+      "sizes": {
+        "question": 130
+      }
+    }
+  ],
+  "links": [
+    {
+      "id": "l1",
+      "from": {
+        "node": "setting",
+        "port": "text"
+      },
+      "to": {
+        "node": "director",
+        "port": "prompt"
+      }
+    },
+    {
+      "id": "l2",
+      "from": {
+        "node": "director",
+        "port": "text"
+      },
+      "to": {
+        "node": "j0",
+        "port": "b"
+      }
+    },
+    {
+      "id": "l12",
+      "from": {
+        "node": "setting",
+        "port": "text"
+      },
+      "to": {
+        "node": "j0",
+        "port": "a"
+      }
+    },
+    {
+      "id": "l13",
+      "from": {
+        "node": "j0",
+        "port": "text"
+      },
+      "to": {
+        "node": "stylist",
+        "port": "prompt"
+      }
+    },
+    {
+      "id": "l3",
+      "from": {
+        "node": "stylist",
+        "port": "text"
+      },
+      "to": {
+        "node": "paint",
+        "port": "prompt"
+      }
+    },
+    {
+      "id": "l4",
+      "from": {
+        "node": "paint",
+        "port": "image"
+      },
+      "to": {
+        "node": "surveyor",
+        "port": "image"
+      }
+    },
+    {
+      "id": "l7",
+      "from": {
+        "node": "director",
+        "port": "text"
+      },
+      "to": {
+        "node": "j1",
+        "port": "a"
+      }
+    },
+    {
+      "id": "l8",
+      "from": {
+        "node": "surveyor",
+        "port": "text"
+      },
+      "to": {
+        "node": "j1",
+        "port": "b"
+      }
+    },
+    {
+      "id": "l11",
+      "from": {
+        "node": "j1",
+        "port": "text"
+      },
+      "to": {
+        "node": "checker",
+        "port": "prompt"
+      }
+    },
+    {
+      "id": "l14",
+      "from": {
+        "node": "j1",
+        "port": "text"
+      },
+      "to": {
+        "node": "j2",
+        "port": "a"
+      }
+    },
+    {
+      "id": "l15",
+      "from": {
+        "node": "checker",
+        "port": "text"
+      },
+      "to": {
+        "node": "j2",
+        "port": "b"
+      }
+    },
+    {
+      "id": "l16",
+      "from": {
+        "node": "j2",
+        "port": "text"
+      },
+      "to": {
+        "node": "audit",
+        "port": "text"
+      }
+    },
+    {
+      "id": "l17",
+      "from": {
+        "node": "paint",
+        "port": "image"
+      },
+      "to": {
+        "node": "audit",
+        "port": "img1"
+      }
+    }
+  ],
+  "nid": 30,
+  "lid": 31,
+  "view": {
+    "panX": 40,
+    "panY": 40,
+    "scale": 0.5
+  }
+}
