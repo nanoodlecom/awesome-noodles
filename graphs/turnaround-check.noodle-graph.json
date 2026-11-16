@@ -1,0 +1,421 @@
+{
+  "v": 1,
+  "nodes": [
+    {
+      "id": "c1",
+      "type": "comment",
+      "x": 60,
+      "y": 30,
+      "fields": {
+        "text": "What does it look like from behind? This flow paints a toy-shop shelf from the front, then predicts - in words, before any second picture exists - exactly what the same shelf must look like from behind: the left-to-right order reverses, every face, eye and headlight disappears, and backs nobody has seen yet (a wind-up key, a tail, a sepal cup) must appear. A GLM director writes a FRONT CARD for five display pieces chosen from a menu with canonical front and back features. Muse paints the front view. A GLM predictor then performs the viewpoint change on paper: back position 1 is front position 5, each piece's BACK features move to SHOWS and its FRONT features to HIDES. A second GLM turns that prediction into a painter prompt and Muse generates the back view from text alone - no edit, no shared pixels. A blind Gemini surveyor reads the back view, and a GLM auditor scores identity, position-by-position order, backs shown, and front leak - the failure where a generator quietly paints the front again. A Decide judge gives the headline: true turnaround, fronts leaked, order kept, backs drifted, or different display. See recipes/turnaround-check.md."
+      },
+      "w": 900,
+      "name": "Turnaround check, viewpoint-audited - a shelf from the front, its predicted back, and a leak test"
+    },
+    {
+      "id": "setting",
+      "type": "text",
+      "x": 60,
+      "y": 300,
+      "fields": {
+        "text": "A display shelf in a toy shop window: a long pale wooden shelf against a soft cream wall, bright even daylight, the five display pieces standing in one row on the shelf, seen straight-on from the front."
+      },
+      "w": 300,
+      "name": "Setting"
+    },
+    {
+      "id": "director",
+      "type": "llm",
+      "x": 440,
+      "y": 280,
+      "fields": {
+        "model": "z-ai/glm-5.3-flash",
+        "system": "You are a display director. Given a SETTING, design a FRONT CARD for ONE row of exactly 5 display pieces standing left to right on the shelf, all facing the viewer. Choose 5 DIFFERENT pieces from this menu ONLY, using each piece's canonical front and back features exactly as given:\nteddy bear - FRONT: round black eyes, stitched brown nose, cream belly patch; BACK: plain fur back, short round tail, seam down the spine.\ntoy robot - FRONT: glowing round eyes, grille mouth, three chest buttons; BACK: brass wind-up key, rectangular battery panel, plain metal back.\nplush owl - FRONT: huge round eyes, heart-shaped face, speckled chest; BACK: folded wings, smooth feathered back, no eyes.\ntoy car - FRONT: round headlights, chrome grille, front windshield; BACK: red tail lights, rear window, small exhaust pipe.\npotted sunflower - FRONT: yellow petals around a brown disc face, green leaves below; BACK: green sepal cup behind the head, petals only as a thin rim, bent stem back.\ncuckoo clock - FRONT: round clock face, little door, swinging pendulum; BACK: plain wooden case back, flat back panel, no clock face.\nGive each chosen piece a distinct main colour. Order the card by front-view position, POSITION 1 at the LEFT to POSITION 5 at the RIGHT. Output exactly this shape and nothing else, copying the menu's front and back feature wording for each piece:\nPOSITION 1: <piece> | <colour> | FRONT: <front features> | BACK: <back features>\nPOSITION 2: <piece> | <colour> | FRONT: <front features> | BACK: <back features>\nPOSITION 3: <piece> | <colour> | FRONT: <front features> | BACK: <back features>\nPOSITION 4: <piece> | <colour> | FRONT: <front features> | BACK: <back features>\nPOSITION 5: <piece> | <colour> | FRONT: <front features> | BACK: <back features>",
+        "maxTokens": "600",
+        "reasoningEffort": "low"
+      },
+      "w": 280,
+      "name": "Front card - GLM picks five display pieces with canonical front and back features",
+      "sizes": {
+        "system": 150
+      }
+    },
+    {
+      "id": "j0",
+      "type": "join",
+      "x": 800,
+      "y": 520,
+      "fields": {
+        "sep": "\n\nFRONT CARD (the five pieces, front-view order, colours, front and back features; its exact wording must reach the painter):\n"
+      },
+      "w": 200,
+      "name": "Setting + front card"
+    },
+    {
+      "id": "stylistf",
+      "type": "llm",
+      "x": 800,
+      "y": 280,
+      "fields": {
+        "model": "z-ai/glm-5.3-flash",
+        "system": "You turn a FRONT CARD into ONE prompt for an AI image generator. The input gives a SETTING first, then 'FRONT CARD' with 5 positions left to right, each a display piece with a colour, FRONT features and BACK features. Write the prompt so the generator paints the FRONT VIEW: the setting, the 5 pieces in one row on the shelf in card order left to right, every piece facing the viewer straight-on so its FRONT features from the card are clearly visible, each in its card colour, similar display size, nothing else on the shelf. End with: 'Warm storybook illustration, straight-on front view, five display pieces in a row facing the viewer, no text, no letters, no people.' Output the prompt only.",
+        "maxTokens": "600",
+        "reasoningEffort": "low"
+      },
+      "w": 280,
+      "name": "Front brief - GLM turns the front card into a front-view prompt",
+      "sizes": {
+        "system": 150
+      }
+    },
+    {
+      "id": "paintf",
+      "type": "image",
+      "x": 1160,
+      "y": 280,
+      "fields": {
+        "model": "meta/muse-image/text-to-image",
+        "size": "1:1",
+        "variations": "1"
+      },
+      "w": 280,
+      "name": "Front view - Muse paints the five pieces facing the viewer"
+    },
+    {
+      "id": "predictor",
+      "type": "llm",
+      "x": 440,
+      "y": 620,
+      "fields": {
+        "model": "z-ai/glm-5.3-flash",
+        "system": "You are a viewpoint predictor. The input is a FRONT CARD: 5 display pieces in front-view positions 1 (left) to 5 (right), each with FRONT features (what its front shows) and BACK features (what its back shows). Imagine walking around behind the shelf and looking at the SAME row from the back, the pieces unmoved and now showing their backs to you. Write the BACK PREDICTION in exactly this shape and nothing else:\nOne line per back-view position, BACK POSITION 1 at the LEFT of the back view to BACK POSITION 5 at the RIGHT. Because the viewer moved to the opposite side, the left-to-right order REVERSES: back position 1 is the piece that was front position 5, back position 2 was front position 4, and so on. Each line: 'BACK POSITION <n>: <piece> | <colour> | SHOWS: <that piece's BACK features, copied from the card> | HIDES: <that piece's FRONT features, copied from the card>'.\nThen a final line: 'ORDER RULE: reversed'.",
+        "maxTokens": "800",
+        "reasoningEffort": "low"
+      },
+      "w": 280,
+      "name": "Back prediction - GLM reverses the order and swaps front features for back features",
+      "sizes": {
+        "system": 150
+      }
+    },
+    {
+      "id": "j1",
+      "type": "join",
+      "x": 800,
+      "y": 820,
+      "fields": {
+        "sep": "\n\nBACK PREDICTION (the same row seen from behind: reversed order, SHOWS are back features that must appear, HIDES are front features that must not):\n"
+      },
+      "w": 200,
+      "name": "Setting + back prediction"
+    },
+    {
+      "id": "stylistb",
+      "type": "llm",
+      "x": 1160,
+      "y": 620,
+      "fields": {
+        "model": "z-ai/glm-5.3-flash",
+        "system": "You turn a BACK PREDICTION into ONE prompt for an AI image generator. The input gives a SETTING first, then 'BACK PREDICTION' with 5 back positions left to right, each a display piece with a colour, SHOWS features (its back) and HIDES features (its front). Write the prompt so the generator paints the BACK VIEW of the same display: the setting, the same shelf, the 5 pieces in one row in the prediction's back-position order left to right, every piece seen directly FROM BEHIND so only its SHOWS features are visible and NONE of its HIDES features (no eyes, no faces, no fronts) appear anywhere, each in its colour, similar display size, nothing else on the shelf. End with: 'Warm storybook illustration, straight-on back view, five display pieces in a row seen from behind, no text, no letters, no people.' Output the prompt only.",
+        "maxTokens": "600",
+        "reasoningEffort": "low"
+      },
+      "w": 280,
+      "name": "Back brief - GLM turns the prediction into a back-view prompt",
+      "sizes": {
+        "system": 150
+      }
+    },
+    {
+      "id": "paintb",
+      "type": "image",
+      "x": 1520,
+      "y": 620,
+      "fields": {
+        "model": "meta/muse-image/text-to-image",
+        "size": "1:1",
+        "variations": "1"
+      },
+      "w": 280,
+      "name": "Back view - Muse generates the shelf from behind, from text alone"
+    },
+    {
+      "id": "surveyor",
+      "type": "vision",
+      "x": 1880,
+      "y": 620,
+      "fields": {
+        "model": "google/gemini-3.8-flash",
+        "q": "You are the surveyor in a turnaround-check pipeline. You see a picture that should be the BACK view of a row of five display pieces on a shelf. List the pieces LEFT TO RIGHT as they appear. For each, output one line in exactly this shape:\nPIECE SEEN: <piece> | <colour> | FEATURES SEEN: <the visible features of this piece, comma-separated, naming only what you can actually see>\nThen output exactly these two lines:\nFRONT FEATURES SEEN: <any eyes, faces, noses, clock faces, headlights or other front-of-object features visible anywhere in the picture, comma-separated, or 'none'>\nPIECE COUNT: <how many pieces stand in the row>"
+      },
+      "w": 280,
+      "name": "Survey - Gemini reads the back view, blind",
+      "sizes": {
+        "q": 150
+      }
+    },
+    {
+      "id": "j2",
+      "type": "join",
+      "x": 2240,
+      "y": 400,
+      "fields": {
+        "sep": "\n\nSURVEY (a blind surveyor read the rendered back view; it never saw the prediction):\n"
+      },
+      "w": 200,
+      "name": "Back prediction + survey"
+    },
+    {
+      "id": "checker",
+      "type": "llm",
+      "x": 2240,
+      "y": 640,
+      "fields": {
+        "model": "z-ai/glm-5.3-flash",
+        "system": "You are a turnaround auditor. The input gives a BACK PREDICTION (5 back positions left to right; each line names a piece, its colour, SHOWS features its back should display and HIDES features its front has, which must NOT be visible), then 'SURVEY' with a blind surveyor's read of the rendered back view (pieces left to right with FEATURES SEEN, plus a FRONT FEATURES SEEN line). Output exactly these lines:\n1. 'IDENTITY: X of 5' - one point per predicted piece the survey lists with a matching colour (near piece and colour names count). Then 'MISSING: ' followed by each predicted piece the survey does not list, or 'none'; and 'EXTRA: ' followed by any surveyed piece not predicted, or 'none'.\n2. 'ORDER: X of 5' - one point per back position where the survey's piece at that position matches the prediction's piece at that position.\n3. 'BACKS SHOWN: X of 15' - the prediction lists 3 SHOWS features per piece, 15 in all. One point per SHOWS feature the survey's FEATURES SEEN clearly names for that same piece (near wording counts). State the score as 'X of <denominator>'.\n4. 'FRONT LEAK: <n>' - n is the number of distinct HIDES (front) features the survey reports seeing: count the items on its FRONT FEATURES SEEN line (0 if it says none), plus any HIDES feature named in a piece's FEATURES SEEN.\n5. 'Summary: identity <X> of 5, order <X> of 5, backs shown <X> of <denominator>, front leak <n>.'\nIf any input is incomplete, still output all five lines with your best judgement and say 'incomplete input' in the Summary. Never output nothing. Compare only the texts; do not invent readings. Output the audit only.",
+        "maxTokens": "1200",
+        "reasoningEffort": "low"
+      },
+      "w": 280,
+      "name": "Turnaround audit - GLM scores order, backs shown and front leak",
+      "sizes": {
+        "system": 150
+      }
+    },
+    {
+      "id": "j3",
+      "type": "join",
+      "x": 2600,
+      "y": 400,
+      "fields": {
+        "sep": "\n\nTURNAROUND AUDIT:\n"
+      },
+      "w": 200,
+      "name": "Prediction, survey + turnaround audit"
+    },
+    {
+      "id": "audit",
+      "type": "decide",
+      "x": 2960,
+      "y": 400,
+      "fields": {
+        "model": "perplexity/pplx-decider-v1.2",
+        "mode": "choose",
+        "question": "The picture should be the back view of the planned display: the same 5 pieces in reversed left-to-right order, each showing its back features, with no front features (eyes, faces, headlights, clock face) visible. The text gives the BACK PREDICTION, a blind SURVEY of the rendered back view, and a TURNAROUND AUDIT scoring identity, position-by-position order, backs shown, and front leak. Which verdict fits? 'true turnaround' means identity is 5 of 5, order is 5 of 5, backs shown is at least 12 of its denominator, and front leak is 0. 'fronts leaked' means front leak is 2 or more, whatever the other scores. 'order kept' means identity is at least 4 of 5 but order is 2 of 5 or less (the row was not reversed). 'different display' means identity is 2 of 5 or less. Anything else is 'backs drifted'. Judge the viewpoint change, not the picture's beauty.",
+        "options": "true turnaround\nfronts leaked\norder kept\nbacks drifted\ndifferent display"
+      },
+      "w": 280,
+      "name": "True turnaround - audited",
+      "sizes": {
+        "question": 130
+      }
+    }
+  ],
+  "links": [
+    {
+      "id": "l1",
+      "from": {
+        "node": "setting",
+        "port": "text"
+      },
+      "to": {
+        "node": "director",
+        "port": "prompt"
+      }
+    },
+    {
+      "id": "l2",
+      "from": {
+        "node": "director",
+        "port": "text"
+      },
+      "to": {
+        "node": "j0",
+        "port": "b"
+      }
+    },
+    {
+      "id": "l12",
+      "from": {
+        "node": "setting",
+        "port": "text"
+      },
+      "to": {
+        "node": "j0",
+        "port": "a"
+      }
+    },
+    {
+      "id": "l13",
+      "from": {
+        "node": "j0",
+        "port": "text"
+      },
+      "to": {
+        "node": "stylistf",
+        "port": "prompt"
+      }
+    },
+    {
+      "id": "l3",
+      "from": {
+        "node": "stylistf",
+        "port": "text"
+      },
+      "to": {
+        "node": "paintf",
+        "port": "prompt"
+      }
+    },
+    {
+      "id": "l4",
+      "from": {
+        "node": "director",
+        "port": "text"
+      },
+      "to": {
+        "node": "predictor",
+        "port": "prompt"
+      }
+    },
+    {
+      "id": "l5",
+      "from": {
+        "node": "setting",
+        "port": "text"
+      },
+      "to": {
+        "node": "j1",
+        "port": "a"
+      }
+    },
+    {
+      "id": "l6",
+      "from": {
+        "node": "predictor",
+        "port": "text"
+      },
+      "to": {
+        "node": "j1",
+        "port": "b"
+      }
+    },
+    {
+      "id": "l7",
+      "from": {
+        "node": "j1",
+        "port": "text"
+      },
+      "to": {
+        "node": "stylistb",
+        "port": "prompt"
+      }
+    },
+    {
+      "id": "l8",
+      "from": {
+        "node": "stylistb",
+        "port": "text"
+      },
+      "to": {
+        "node": "paintb",
+        "port": "prompt"
+      }
+    },
+    {
+      "id": "l9",
+      "from": {
+        "node": "paintb",
+        "port": "image"
+      },
+      "to": {
+        "node": "surveyor",
+        "port": "image"
+      }
+    },
+    {
+      "id": "l10",
+      "from": {
+        "node": "predictor",
+        "port": "text"
+      },
+      "to": {
+        "node": "j2",
+        "port": "a"
+      }
+    },
+    {
+      "id": "l11",
+      "from": {
+        "node": "surveyor",
+        "port": "text"
+      },
+      "to": {
+        "node": "j2",
+        "port": "b"
+      }
+    },
+    {
+      "id": "l14",
+      "from": {
+        "node": "j2",
+        "port": "text"
+      },
+      "to": {
+        "node": "checker",
+        "port": "prompt"
+      }
+    },
+    {
+      "id": "l15",
+      "from": {
+        "node": "j2",
+        "port": "text"
+      },
+      "to": {
+        "node": "j3",
+        "port": "a"
+      }
+    },
+    {
+      "id": "l16",
+      "from": {
+        "node": "checker",
+        "port": "text"
+      },
+      "to": {
+        "node": "j3",
+        "port": "b"
+      }
+    },
+    {
+      "id": "l17",
+      "from": {
+        "node": "j3",
+        "port": "text"
+      },
+      "to": {
+        "node": "audit",
+        "port": "text"
+      }
+    },
+    {
+      "id": "l18",
+      "from": {
+        "node": "paintb",
+        "port": "image"
+      },
+      "to": {
+        "node": "audit",
+        "port": "img1"
+      }
+    }
+  ],
+  "nid": 40,
+  "lid": 41,
+  "view": {
+    "panX": 40,
+    "panY": 40,
+    "scale": 0.42
+  }
+}
