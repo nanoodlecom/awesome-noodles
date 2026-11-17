@@ -29,6 +29,7 @@ Do not hand-edit these files — run `node scripts/make-recipes.mjs` after chang
 | [Mirror check, reflection-audited](mirror-check.md) | [`graphs/mirror-check.noodle-graph.json`](../graphs/mirror-check.noodle-graph.json) | defaults in graph |
 | [Negative space check, figure-ground-audited](negative-space-check.md) | [`graphs/negative-space-check.noodle-graph.json`](../graphs/negative-space-check.noodle-graph.json) | defaults in graph |
 | [Palette transplant, re-measured](palette-transplant.md) | [`graphs/palette-transplant.noodle-graph.json`](../graphs/palette-transplant.noodle-graph.json) | defaults in graph |
+| [Perspective check, convergence-audited](perspective-check.md) | [`graphs/perspective-check.noodle-graph.json`](../graphs/perspective-check.noodle-graph.json) | defaults in graph |
 | [Pet portrait, likeness-checked](pet-portrait-studio.md) | [`graphs/pet-portrait-studio.noodle-graph.json`](../graphs/pet-portrait-studio.noodle-graph.json) | needs Pet photo |
 | [Photo to scene mesh](photo-to-scene-mesh.md) | [`graphs/photo-to-scene-mesh.noodle-graph.json`](../graphs/photo-to-scene-mesh.noodle-graph.json) | needs Scene photo |
 | [Say it back, transcript-checked](say-it-back.md) | [`graphs/say-it-back.noodle-graph.json`](../graphs/say-it-back.noodle-graph.json) | defaults in graph |
