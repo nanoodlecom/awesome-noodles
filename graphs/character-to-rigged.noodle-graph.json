@@ -1,0 +1,178 @@
+{
+  "v": 1,
+  "nodes": [
+    {
+      "id": "c1",
+      "type": "comment",
+      "x": -40,
+      "y": -380,
+      "w": 560,
+      "name": "Character to rigged, skin-verified - a statue goes in, a puppet comes out",
+      "fields": {
+        "color": "yellow",
+        "text": "A statue goes in, a puppet comes out. Describe a humanoid character in plain words. A GLM concept writer expands the brief into a rig-ready character reference (full body, strict T-pose, solid connected parts), a Join adds fixed reference rules, and Nano Banana paints it. Tripo 2.5 lifts that single picture into a 3D statue - and then the new trick: the statue's MESH travels the model wire into Hyper3D Rigging, a mesh-processing model that cannot run without it, which fits a human skeleton and skin weights and returns a GLB that can actually be posed and animated. The proof is structural, not visual: parse the returned GLB and check it carries a skin (JOINTS_0 / WEIGHTS_0 attributes and a skins entry) - no screenshot can prove a model is rigged, only its binary can. Swap the character and \u25b6 Run. See recipes/character-to-rigged.md."
+      }
+    },
+    {
+      "id": "brief",
+      "type": "text",
+      "x": -40,
+      "y": 0,
+      "w": 320,
+      "name": "Character brief",
+      "fields": {
+        "text": "A cheerful robot gardener with a round watering-can belly, brass trowel hands, a wide sun hat and big friendly eyes."
+      }
+    },
+    {
+      "id": "concept",
+      "type": "llm",
+      "x": 380,
+      "y": 0,
+      "w": 320,
+      "sizes": {
+        "system": 120
+      },
+      "name": "Character reference description - GLM expands the brief for rigging",
+      "fields": {
+        "model": "z-ai/glm-5.3-flash",
+        "reasoningEffort": "low",
+        "maxTokens": "400",
+        "system": "You write the SUBJECT part of an image prompt for a rig-ready character reference of ONE humanoid character from the user's brief. Describe only the character: overall build and proportions, head, torso, arms, hands, legs and feet, materials, colors, small surface details. The character must be humanoid with two arms and two legs, every part solid and connected (no floating pieces, no thin wires, nothing held in the hands). Do not mention pose, background, lighting, camera, or text - the pose and framing rules are added separately. Family-friendly. 40 to 70 words, one paragraph, plain sentences. Output only the description."
+      }
+    },
+    {
+      "id": "style",
+      "type": "text",
+      "x": 380,
+      "y": 420,
+      "w": 320,
+      "name": "Rig-ready reference rules",
+      "fields": {
+        "text": "Full-body character reference, the character standing in a strict T-pose with both arms stretched straight out to the sides at shoulder height and palms down, legs straight and slightly apart, the whole body fully in frame and centered with margin on all sides, straight-on front view, plain seamless white background, soft even studio light, no props, no text, no other characters."
+      }
+    },
+    {
+      "id": "j-prompt",
+      "type": "join",
+      "x": 800,
+      "y": 160,
+      "w": 240,
+      "name": "Reference prompt",
+      "fields": {
+        "sep": "\\n\\n"
+      }
+    },
+    {
+      "id": "paint",
+      "type": "image",
+      "x": 1140,
+      "y": 60,
+      "w": 300,
+      "sizes": {
+        "prompt": 0
+      },
+      "name": "Character reference - Nano Banana paints the T-pose",
+      "fields": {
+        "model": "nano-banana"
+      }
+    },
+    {
+      "id": "statue",
+      "type": "model3d",
+      "x": 1540,
+      "y": 60,
+      "w": 440,
+      "name": "Statue - Tripo lifts the reference into a 3D mesh",
+      "fields": {
+        "model": "tripo3d/v2.5",
+        "prompt": ""
+      }
+    },
+    {
+      "id": "rig",
+      "type": "model3d",
+      "x": 2060,
+      "y": 60,
+      "w": 440,
+      "name": "Rigged model - Hyper3D fits a skeleton and skin weights to the statue's mesh",
+      "fields": {
+        "model": "hyper3d/rigging",
+        "modelOpts": {
+          "bone_template": "human",
+          "geometry_file_format": "glb"
+        }
+      }
+    }
+  ],
+  "links": [
+    {
+      "id": "l1",
+      "from": {
+        "node": "brief",
+        "port": "text"
+      },
+      "to": {
+        "node": "concept",
+        "port": "prompt"
+      }
+    },
+    {
+      "id": "l2",
+      "from": {
+        "node": "concept",
+        "port": "text"
+      },
+      "to": {
+        "node": "j-prompt",
+        "port": "a"
+      }
+    },
+    {
+      "id": "l3",
+      "from": {
+        "node": "style",
+        "port": "text"
+      },
+      "to": {
+        "node": "j-prompt",
+        "port": "b"
+      }
+    },
+    {
+      "id": "l4",
+      "from": {
+        "node": "j-prompt",
+        "port": "text"
+      },
+      "to": {
+        "node": "paint",
+        "port": "prompt"
+      }
+    },
+    {
+      "id": "l5",
+      "from": {
+        "node": "paint",
+        "port": "image"
+      },
+      "to": {
+        "node": "statue",
+        "port": "image"
+      }
+    },
+    {
+      "id": "l6",
+      "from": {
+        "node": "statue",
+        "port": "model"
+      },
+      "to": {
+        "node": "rig",
+        "port": "model"
+      }
+    }
+  ],
+  "nid": 9,
+  "lid": 7
+}
