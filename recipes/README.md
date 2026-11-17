@@ -42,6 +42,7 @@ Do not hand-edit these files — run `node scripts/make-recipes.mjs` after chang
 | [Stack check, support-audited](stack-check.md) | [`graphs/stack-check.noodle-graph.json`](../graphs/stack-check.noodle-graph.json) | defaults in graph |
 | [Stereo check, disparity-audited](stereo-check.md) | [`graphs/stereo-check.noodle-graph.json`](../graphs/stereo-check.noodle-graph.json) | defaults in graph |
 | [Storyboard relay](storyboard-relay.md) | [`graphs/storyboard-relay.noodle-graph.json`](../graphs/storyboard-relay.noodle-graph.json) | defaults in graph |
+| [Subject anywhere, preservation-audited](subject-anywhere.md) | [`graphs/subject-anywhere.noodle-graph.json`](../graphs/subject-anywhere.noodle-graph.json) | needs Product photo |
 | [Turnaround check, viewpoint-audited](turnaround-check.md) | [`graphs/turnaround-check.noodle-graph.json`](../graphs/turnaround-check.noodle-graph.json) | defaults in graph |
 | [Words only, repainted](words-only-repaint.md) | [`graphs/words-only-repaint.noodle-graph.json`](../graphs/words-only-repaint.noodle-graph.json) | needs Scene photo |
 
