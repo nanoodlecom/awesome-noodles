@@ -1,0 +1,308 @@
+{
+  "v": 1,
+  "nodes": [
+    {
+      "id": "c1",
+      "type": "comment",
+      "x": 60,
+      "y": 30,
+      "fields": {
+        "text": "Can a generator take something apart? This flow asks for an exploded view: a GLM director writes an EXPLODED CARD - one familiar object from a short menu, decomposed into exactly 6 canonical parts listed top to bottom in disassembly order. A second GLM turns the card into a painter prompt for an exploded-view photograph: the 6 parts floating on one vertical axis, aligned as if the object had been lifted apart, every part separated from its neighbours by a clear gap of empty space. Muse paints it. A blind Gemini surveyor lists the parts it actually sees top to bottom and grades every gap (clear gap, touching, or fused into one piece). A GLM auditor scores whether every planned part is present exactly once, whether the top-to-bottom order matches the disassembly order, and whether the parts are really separated - the headline failure is STILL ASSEMBLED, a normal object whose parts all touch, which is the default way image models draw objects. A Decide judge gives the headline: fully exploded, parts missing, order scrambled, or still assembled. See recipes/exploded-check.md."
+      },
+      "w": 900,
+      "name": "Exploded check, disassembly-audited - one object taken apart on one axis, parts separated, order and gaps scored"
+    },
+    {
+      "id": "setting",
+      "type": "text",
+      "x": 60,
+      "y": 300,
+      "fields": {
+        "text": "A clean studio product-photography setup: one single familiar object centred against a plain seamless light-grey background, soft even lighting, nothing else in frame, no people, no text."
+      },
+      "w": 300,
+      "name": "Setting"
+    },
+    {
+      "id": "director",
+      "type": "llm",
+      "x": 440,
+      "y": 280,
+      "fields": {
+        "model": "z-ai/glm-5.3-flash",
+        "system": "You are an exploded-view director. Given a SETTING (a clean studio product shot), design an EXPLODED CARD. Choose ONE object from this menu ONLY:\ncheeseburger; French press coffee maker; camping lantern; desk lamp; hand-crank coffee grinder.\nThen list exactly 6 canonical parts of that object in DISASSEMBLY ORDER, top to bottom - the order the parts would appear from top to bottom if the object were lifted apart along a vertical axis (for a cheeseburger: top bun, lettuce leaf, tomato slice, cheese slice, beef patty, bottom bun). Every part must be a real, separable physical part of that object - no invented parts, no part repeated, no two parts merged into one line. Give each part a short identifying detail (colour, material or shape) that a painter can use. Output exactly this shape and nothing else:\nOBJECT: <object>\nPART 1: <part> | <detail>\nPART 2: <part> | <detail>\nPART 3: <part> | <detail>\nPART 4: <part> | <detail>\nPART 5: <part> | <detail>\nPART 6: <part> | <detail>",
+        "maxTokens": "500",
+        "reasoningEffort": "low"
+      },
+      "w": 280,
+      "name": "Exploded card - GLM picks one object and lists its six canonical parts in disassembly order",
+      "sizes": {
+        "system": 150
+      }
+    },
+    {
+      "id": "j0",
+      "type": "join",
+      "x": 800,
+      "y": 480,
+      "fields": {
+        "sep": "\n\nEXPLODED CARD (the object and its six canonical parts in disassembly order, top to bottom; its exact wording must reach the painter):\n"
+      },
+      "w": 200,
+      "name": "Setting + exploded card"
+    },
+    {
+      "id": "stylist",
+      "type": "llm",
+      "x": 800,
+      "y": 280,
+      "fields": {
+        "model": "z-ai/glm-5.3-flash",
+        "system": "You turn an EXPLODED CARD into ONE prompt for an AI image generator. The input gives a SETTING first, then 'EXPLODED CARD' with an OBJECT and 6 parts in disassembly order, top to bottom. Write the prompt so the generator paints an EXPLODED VIEW product photograph of that object: the object taken apart along a vertical axis, its 6 parts floating in a single vertical column in exactly the card's top-to-bottom order, every part perfectly aligned on the central axis as if the assembled object had been lifted straight apart. Name every part with its card detail and state for EACH part that it is completely separated from the parts above and below it by a clear gap of empty background - no part touches, overlaps or merges into another part; there is no assembled object anywhere in the picture, only the 6 separate floating parts. End with: 'Photorealistic exploded-view product photograph, plain light-grey studio background, no text, no letters, no people.' Output the prompt only.",
+        "maxTokens": "700",
+        "reasoningEffort": "low"
+      },
+      "w": 280,
+      "name": "Exploded brief - GLM turns the card into an exploded-view painter prompt",
+      "sizes": {
+        "system": 150
+      }
+    },
+    {
+      "id": "paint",
+      "type": "image",
+      "x": 1160,
+      "y": 280,
+      "fields": {
+        "model": "meta/muse-image/text-to-image",
+        "size": "16:9",
+        "variations": "1"
+      },
+      "w": 280,
+      "name": "Exploded view - Muse paints the object taken apart on one axis"
+    },
+    {
+      "id": "surveyor",
+      "type": "vision",
+      "x": 1520,
+      "y": 280,
+      "fields": {
+        "model": "google/gemini-3.8-flash",
+        "q": "You are the surveyor in an exploded-view pipeline. You see ONE product photograph that should show a single object taken apart into separate parts floating in a vertical column. Look honestly at what is actually there. First name the object you think the parts belong to. Then, TOP TO BOTTOM, list every distinct separate part you can see (up to 8 lines); for each give its name and identifying detail, and grade the GAP below it as exactly one of: CLEAR GAP (empty background fully separates it from the next part down), TOUCHING (it contacts the next part but is still a distinct piece), FUSED (it merges into the next part as one continuous piece). The last part gets GAP: END. Then give a DUPLICATES line: any part kind that appears more than once, or 'none'. Output exactly this shape:\nOBJECT SEEN: <object>\nPART 1: <part> | <detail> | GAP: <CLEAR GAP, TOUCHING, FUSED or END>\nPART 2: <part> | <detail> | GAP: <CLEAR GAP, TOUCHING, FUSED or END>\n(continue for every part seen, in top-to-bottom order)\nDUPLICATES: <list or none>"
+      },
+      "w": 280,
+      "name": "Survey - Gemini lists the parts it sees top to bottom and grades every gap, blind",
+      "sizes": {
+        "q": 150
+      }
+    },
+    {
+      "id": "j1",
+      "type": "join",
+      "x": 1880,
+      "y": 180,
+      "fields": {
+        "sep": "\n\nSURVEY (a blind surveyor listed the parts it actually saw in the rendered picture, top to bottom, and graded the gap below each one; it never saw the exploded card):\n"
+      },
+      "w": 200,
+      "name": "Exploded card + survey"
+    },
+    {
+      "id": "checker",
+      "type": "llm",
+      "x": 2240,
+      "y": 400,
+      "fields": {
+        "model": "z-ai/glm-5.3-flash",
+        "system": "You are an exploded-view auditor. The input gives an EXPLODED CARD (an OBJECT and 6 parts in disassembly order, top to bottom), then 'SURVEY' with a blind surveyor's parts in the order seen, top to bottom, each with a GAP grade, plus a DUPLICATES line. Work in this order and output exactly these lines:\n1. 'PARTS: X of 6' - one point per card part that the survey lists (near part names and matching details count). Then 'MISSING: ' followed by each card part not found, or 'none'. Then 'EXTRA: ' followed by each survey part that matches no card part, or 'none'.\n2. 'ORDER: X of 5' - consider the card parts that were found, in survey order; one point per adjacent pair in that survey sequence whose card order also has them in that same relative order (first-found before second-found). If fewer than 2 card parts were found, ORDER is 0 of 5.\n3. 'SEPARATION: X of 5' - one point per adjacent pair of FOUND card parts (adjacent in the survey's full list, ignoring extra parts between them only if the extra is listed separately) whose upper part's GAP grade is CLEAR GAP. Pairs whose upper part is TOUCHING or FUSED score nothing. Score at most 5 pairs, in survey order.\n4. 'STILL ASSEMBLED: YES' if SEPARATION is 0 or 1 of 5 and PARTS is at least 4 of 6 - the picture is basically a whole object - otherwise 'STILL ASSEMBLED: NO'.\n5. 'Summary: ' followed by one sentence restating parts, order, separation and still-assembled.\nOutput exactly these lines and nothing else. If a line the rules need is missing from the survey, score it as absent and say so in the summary.",
+        "maxTokens": "1200",
+        "reasoningEffort": "low"
+      },
+      "w": 280,
+      "name": "Exploded audit - GLM scores parts, disassembly order and separation",
+      "sizes": {
+        "system": 150
+      }
+    },
+    {
+      "id": "j2",
+      "type": "join",
+      "x": 2240,
+      "y": 180,
+      "fields": {
+        "sep": "\n\nEXPLODED AUDIT:\n"
+      },
+      "w": 200,
+      "name": "Card, survey + exploded audit"
+    },
+    {
+      "id": "audit",
+      "type": "decide",
+      "x": 2600,
+      "y": 180,
+      "fields": {
+        "model": "perplexity/pplx-decider-v1.2",
+        "mode": "choose",
+        "question": "The picture should be an exploded view of the planned object: its 6 planned parts floating separated on one vertical axis in the planned disassembly order, top to bottom, each part present exactly once and no part touching another. The text gives the EXPLODED CARD (object, 6 parts in order), a blind SURVEY listing the parts actually seen top to bottom with a gap grade under each, and an EXPLODED AUDIT scoring parts, order, separation and the still-assembled failure. Which verdict fits? 'fully exploded' means PARTS is 6 of 6, ORDER is at least 4 of 5 and SEPARATION is at least 4 of 5. 'still assembled' means the audit's STILL ASSEMBLED line says YES - the parts are all there but touching, a whole object rather than an exploded view. 'parts missing' means PARTS is 4 of 6 or less and it is not still assembled. 'order scrambled' means PARTS is at least 5 of 6, it is not still assembled, but ORDER is 3 of 5 or less or SEPARATION is 3 of 5 or less. Judge the disassembly, not the picture's beauty.",
+        "options": "fully exploded\nparts missing\norder scrambled\nstill assembled"
+      },
+      "w": 280,
+      "name": "Fully exploded - audited",
+      "sizes": {
+        "question": 130
+      }
+    }
+  ],
+  "links": [
+    {
+      "id": "l1",
+      "from": {
+        "node": "setting",
+        "port": "text"
+      },
+      "to": {
+        "node": "director",
+        "port": "prompt"
+      }
+    },
+    {
+      "id": "l2",
+      "from": {
+        "node": "director",
+        "port": "text"
+      },
+      "to": {
+        "node": "j0",
+        "port": "b"
+      }
+    },
+    {
+      "id": "l12",
+      "from": {
+        "node": "setting",
+        "port": "text"
+      },
+      "to": {
+        "node": "j0",
+        "port": "a"
+      }
+    },
+    {
+      "id": "l13",
+      "from": {
+        "node": "j0",
+        "port": "text"
+      },
+      "to": {
+        "node": "stylist",
+        "port": "prompt"
+      }
+    },
+    {
+      "id": "l3",
+      "from": {
+        "node": "stylist",
+        "port": "text"
+      },
+      "to": {
+        "node": "paint",
+        "port": "prompt"
+      }
+    },
+    {
+      "id": "l4",
+      "from": {
+        "node": "paint",
+        "port": "image"
+      },
+      "to": {
+        "node": "surveyor",
+        "port": "image"
+      }
+    },
+    {
+      "id": "l7",
+      "from": {
+        "node": "director",
+        "port": "text"
+      },
+      "to": {
+        "node": "j1",
+        "port": "a"
+      }
+    },
+    {
+      "id": "l8",
+      "from": {
+        "node": "surveyor",
+        "port": "text"
+      },
+      "to": {
+        "node": "j1",
+        "port": "b"
+      }
+    },
+    {
+      "id": "l11",
+      "from": {
+        "node": "j1",
+        "port": "text"
+      },
+      "to": {
+        "node": "checker",
+        "port": "prompt"
+      }
+    },
+    {
+      "id": "l14",
+      "from": {
+        "node": "j1",
+        "port": "text"
+      },
+      "to": {
+        "node": "j2",
+        "port": "a"
+      }
+    },
+    {
+      "id": "l15",
+      "from": {
+        "node": "checker",
+        "port": "text"
+      },
+      "to": {
+        "node": "j2",
+        "port": "b"
+      }
+    },
+    {
+      "id": "l16",
+      "from": {
+        "node": "j2",
+        "port": "text"
+      },
+      "to": {
+        "node": "audit",
+        "port": "text"
+      }
+    },
+    {
+      "id": "l17",
+      "from": {
+        "node": "paint",
+        "port": "image"
+      },
+      "to": {
+        "node": "audit",
+        "port": "img1"
+      }
+    }
+  ],
+  "nid": 30,
+  "lid": 31,
+  "view": {
+    "panX": 40,
+    "panY": 40,
+    "scale": 0.5
+  }
+}
