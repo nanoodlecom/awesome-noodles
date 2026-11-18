@@ -1,0 +1,530 @@
+{
+  "v": 1,
+  "nodes": [
+    {
+      "id": "c1",
+      "type": "comment",
+      "x": 60,
+      "y": 30,
+      "fields": {
+        "text": "A picture passed hand to hand until only words carry it. A GLM director writes a SCENE CARD of exactly 6 numbered elements, a second GLM turns it into a painter prompt, and Muse paints generation 1. Then the relay starts: a blind Gemini reader inventories generation 1 and writes a recreation prompt; a GLM relay clerk extracts that prompt verbatim; Muse paints generation 2 from those words alone - it never sees generation 1. A second reader and clerk pass it on to generation 3 the same way. A GLM drift auditor scores how many of the card's 6 elements survive at EACH hop, which hop each loss happened at, and what the chain invented along the way. A Decide judge gives the headline on the trajectory: survived the relay, drifted slowly, collapsed mid-relay, or mutated beyond recognition. See recipes/relay-drift.md."
+      },
+      "w": 900,
+      "name": "Relay drift, hop-checked - one scene, three generations, only words pass between them"
+    },
+    {
+      "id": "seed",
+      "type": "text",
+      "x": 60,
+      "y": 300,
+      "fields": {
+        "text": "A small harbour cafe terrace at sunrise, seen from the water side."
+      },
+      "w": 300,
+      "name": "Seed scene"
+    },
+    {
+      "id": "director",
+      "type": "llm",
+      "x": 440,
+      "y": 280,
+      "fields": {
+        "model": "z-ai/glm-5.3-flash",
+        "system": "You are a scene director. Given a SEED scene, write a SCENE CARD with exactly 6 numbered ELEMENTS that a painter can draw and a reader can check. Each element is ONE concrete visible thing with a specific colour, count or position (for example 'a red fishing boat tied at the left edge', 'three white seagulls on the roof ridge'). Elements must be distinct, non-overlapping, and likely to survive being described in words. Output exactly this shape and nothing else:\nSETTING: <the seed scene in a few words>\nSTYLE: photorealistic, warm sunrise light, no text\nELEMENTS:\n1. <element>\n2. <element>\n3. <element>\n4. <element>\n5. <element>\n6. <element>",
+        "maxTokens": "400",
+        "reasoningEffort": "low"
+      },
+      "w": 280,
+      "name": "Scene card - GLM fixes exactly 6 checkable elements",
+      "sizes": {
+        "system": 150
+      }
+    },
+    {
+      "id": "j0",
+      "type": "join",
+      "x": 800,
+      "y": 480,
+      "fields": {
+        "sep": "\n\nSCENE CARD (the 6 planned elements; its exact wording must reach the painter):\n"
+      },
+      "w": 200,
+      "name": "Seed + scene card"
+    },
+    {
+      "id": "stylist",
+      "type": "llm",
+      "x": 800,
+      "y": 280,
+      "fields": {
+        "model": "z-ai/glm-5.3-flash",
+        "system": "You turn a SCENE CARD into ONE prompt for an AI image generator. The input gives a SEED first, then 'SCENE CARD' with a SETTING, a STYLE line and 6 numbered ELEMENTS. Write a single vivid prompt that paints the setting in that style and includes every one of the 6 elements exactly as described - same colours, counts and positions. End with: 'Photorealistic, warm sunrise light, no text, no letters, no people close to the camera.' Output the prompt only.",
+        "maxTokens": "600",
+        "reasoningEffort": "low"
+      },
+      "w": 280,
+      "name": "Painting brief - GLM turns the scene card into a painter prompt",
+      "sizes": {
+        "system": 150
+      }
+    },
+    {
+      "id": "paint1",
+      "type": "image",
+      "x": 1160,
+      "y": 280,
+      "fields": {
+        "model": "meta/muse-image/text-to-image",
+        "size": "1:1",
+        "variations": "1"
+      },
+      "w": 280,
+      "name": "Generation 1 - Muse paints the scene card"
+    },
+    {
+      "id": "reader1",
+      "type": "vision",
+      "x": 1520,
+      "y": 280,
+      "fields": {
+        "model": "google/gemini-3.8-flash",
+        "q": "You are a relay reader in a serial-reproduction pipeline. You see one picture. First inventory ONLY what is actually visible, then write a recreation prompt good enough for another painter to recreate this picture from your words alone - that painter will never see the picture, only your prompt. Output exactly this shape and nothing else:\nINVENTORY:\n1. <one visible element per line, with colour, count and position; list every distinct element you can see, at most 10>\nRECREATION PROMPT:\n<one paragraph, at most 120 words, describing the whole picture - setting, style, light, and every inventoried element with its colour, count and position; end with 'Photorealistic, warm sunrise light, no text.'>"
+      },
+      "w": 280,
+      "name": "Reader 1 - Gemini inventories generation 1 and writes its recreation prompt, blind",
+      "sizes": {
+        "q": 150
+      }
+    },
+    {
+      "id": "relay1",
+      "type": "llm",
+      "x": 1880,
+      "y": 280,
+      "fields": {
+        "model": "z-ai/glm-5.3-flash",
+        "system": "You are a relay clerk. The input is a reader report with an INVENTORY section and a RECREATION PROMPT section. Output ONLY the text that follows the line 'RECREATION PROMPT:', copied verbatim, with nothing added, removed or reworded. If there is no such section, output the whole input.",
+        "maxTokens": "800",
+        "reasoningEffort": "low"
+      },
+      "w": 280,
+      "name": "Relay clerk 1 - GLM extracts reader 1's recreation prompt verbatim",
+      "sizes": {
+        "system": 150
+      }
+    },
+    {
+      "id": "paint2",
+      "type": "image",
+      "x": 2240,
+      "y": 280,
+      "fields": {
+        "model": "meta/muse-image/text-to-image",
+        "size": "1:1",
+        "variations": "1"
+      },
+      "w": 280,
+      "name": "Generation 2 - Muse repaints from reader 1's words alone"
+    },
+    {
+      "id": "reader2",
+      "type": "vision",
+      "x": 2600,
+      "y": 280,
+      "fields": {
+        "model": "google/gemini-3.8-flash",
+        "q": "You are a relay reader in a serial-reproduction pipeline. You see one picture. First inventory ONLY what is actually visible, then write a recreation prompt good enough for another painter to recreate this picture from your words alone - that painter will never see the picture, only your prompt. Output exactly this shape and nothing else:\nINVENTORY:\n1. <one visible element per line, with colour, count and position; list every distinct element you can see, at most 10>\nRECREATION PROMPT:\n<one paragraph, at most 120 words, describing the whole picture - setting, style, light, and every inventoried element with its colour, count and position; end with 'Photorealistic, warm sunrise light, no text.'>"
+      },
+      "w": 280,
+      "name": "Reader 2 - Gemini inventories generation 2 and writes its recreation prompt, blind",
+      "sizes": {
+        "q": 150
+      }
+    },
+    {
+      "id": "relay2",
+      "type": "llm",
+      "x": 2960,
+      "y": 280,
+      "fields": {
+        "model": "z-ai/glm-5.3-flash",
+        "system": "You are a relay clerk. The input is a reader report with an INVENTORY section and a RECREATION PROMPT section. Output ONLY the text that follows the line 'RECREATION PROMPT:', copied verbatim, with nothing added, removed or reworded. If there is no such section, output the whole input.",
+        "maxTokens": "800",
+        "reasoningEffort": "low"
+      },
+      "w": 280,
+      "name": "Relay clerk 2 - GLM extracts reader 2's recreation prompt verbatim",
+      "sizes": {
+        "system": 150
+      }
+    },
+    {
+      "id": "paint3",
+      "type": "image",
+      "x": 3320,
+      "y": 280,
+      "fields": {
+        "model": "meta/muse-image/text-to-image",
+        "size": "1:1",
+        "variations": "1"
+      },
+      "w": 280,
+      "name": "Generation 3 - Muse repaints from reader 2's words alone"
+    },
+    {
+      "id": "reader3",
+      "type": "vision",
+      "x": 3680,
+      "y": 280,
+      "fields": {
+        "model": "google/gemini-3.8-flash",
+        "q": "You are a relay reader in a serial-reproduction pipeline. You see one picture. First inventory ONLY what is actually visible, then write a recreation prompt good enough for another painter to recreate this picture from your words alone - that painter will never see the picture, only your prompt. Output exactly this shape and nothing else:\nINVENTORY:\n1. <one visible element per line, with colour, count and position; list every distinct element you can see, at most 10>\nRECREATION PROMPT:\n<one paragraph, at most 120 words, describing the whole picture - setting, style, light, and every inventoried element with its colour, count and position; end with 'Photorealistic, warm sunrise light, no text.'>"
+      },
+      "w": 280,
+      "name": "Reader 3 - Gemini inventories generation 3, blind",
+      "sizes": {
+        "q": 150
+      }
+    },
+    {
+      "id": "j1",
+      "type": "join",
+      "x": 3680,
+      "y": 560,
+      "fields": {
+        "sep": "\n\nGEN 1 READER REPORT (a blind reader inventoried generation 1; it never saw the scene card):\n"
+      },
+      "w": 200,
+      "name": "Scene card + gen 1 report"
+    },
+    {
+      "id": "j2",
+      "type": "join",
+      "x": 4040,
+      "y": 560,
+      "fields": {
+        "sep": "\n\nGEN 2 READER REPORT (a blind reader inventoried generation 2; it never saw the scene card or generation 1):\n"
+      },
+      "w": 200,
+      "name": "Card, gen 1 + gen 2 reports"
+    },
+    {
+      "id": "j3",
+      "type": "join",
+      "x": 4400,
+      "y": 560,
+      "fields": {
+        "sep": "\n\nGEN 3 READER REPORT (a blind reader inventoried generation 3; it never saw the scene card or earlier generations):\n"
+      },
+      "w": 200,
+      "name": "Card, gen 1, gen 2 + gen 3 reports"
+    },
+    {
+      "id": "checker",
+      "type": "llm",
+      "x": 4760,
+      "y": 560,
+      "fields": {
+        "model": "z-ai/glm-5.3-flash",
+        "system": "You are a drift auditor. The input gives a SCENE CARD (SETTING, STYLE and 6 numbered ELEMENTS), then GEN 1, GEN 2 and GEN 3 READER REPORTS, each with an INVENTORY section. Compare ONLY the INVENTORY sections against the card's 6 elements. An element SURVIVES a generation if the inventory names the same thing with the same colour, count and position (near wording counts; a changed colour, count or position is a loss). Output exactly these lines:\nHOP 1: <X> of 6\nHOP 2: <X> of 6\nHOP 3: <X> of 6\nLOST AT HOP 1: <card element numbers lost in generation 1, or 'none'>\nLOST AT HOP 2: <card element numbers first lost in generation 2, or 'none'>\nLOST AT HOP 3: <card element numbers first lost in generation 3, or 'none'>\nINVENTED: <elements appearing in any inventory that are not on the card, comma-separated, or 'none'>\nSummary: hop 1 <X> of 6, hop 2 <X> of 6, hop 3 <X> of 6.\nIf any report is incomplete, still output all lines with your best judgement and say 'incomplete report' in the Summary. Never output nothing. Compare only the texts; do not invent readings. Output the audit only.",
+        "maxTokens": "1200",
+        "reasoningEffort": "low"
+      },
+      "w": 280,
+      "name": "Drift audit - GLM scores element survival at each hop",
+      "sizes": {
+        "system": 150
+      }
+    },
+    {
+      "id": "j4",
+      "type": "join",
+      "x": 4760,
+      "y": 280,
+      "fields": {
+        "sep": "\n\nDRIFT AUDIT:\n"
+      },
+      "w": 200,
+      "name": "Reports + drift audit"
+    },
+    {
+      "id": "audit",
+      "type": "decide",
+      "x": 5120,
+      "y": 280,
+      "fields": {
+        "model": "perplexity/pplx-decider-v1.2",
+        "mode": "choose",
+        "question": "A scene was painted, described in words by a blind reader, repainted from those words alone, described again and repainted a third time - a serial reproduction relay. The text gives the original SCENE CARD (6 planned elements), the three generations' reader inventories, and a DRIFT AUDIT scoring how many card elements survive at each hop and what was invented along the way. Which verdict fits the trajectory? 'survived the relay' means hop 3 still keeps 5 or 6 of 6 elements. 'drifted slowly' means elements were lost gradually, hop 3 keeping 3 or 4 of 6. 'collapsed mid-relay' means one single hop lost 3 or more elements. 'mutated beyond recognition' means hop 3 keeps 2 or fewer of 6, or the inventions outnumber the survivors. Judge the trajectory in the audit, not the final picture's beauty.",
+        "options": "survived the relay\ndrifted slowly\ncollapsed mid-relay\nmutated beyond recognition"
+      },
+      "w": 280,
+      "name": "Survived the relay - audited",
+      "sizes": {
+        "question": 130
+      }
+    }
+  ],
+  "links": [
+    {
+      "id": "l1",
+      "from": {
+        "node": "seed",
+        "port": "text"
+      },
+      "to": {
+        "node": "director",
+        "port": "prompt"
+      }
+    },
+    {
+      "id": "l2",
+      "from": {
+        "node": "director",
+        "port": "text"
+      },
+      "to": {
+        "node": "j0",
+        "port": "b"
+      }
+    },
+    {
+      "id": "l3",
+      "from": {
+        "node": "seed",
+        "port": "text"
+      },
+      "to": {
+        "node": "j0",
+        "port": "a"
+      }
+    },
+    {
+      "id": "l4",
+      "from": {
+        "node": "j0",
+        "port": "text"
+      },
+      "to": {
+        "node": "stylist",
+        "port": "prompt"
+      }
+    },
+    {
+      "id": "l5",
+      "from": {
+        "node": "stylist",
+        "port": "text"
+      },
+      "to": {
+        "node": "paint1",
+        "port": "prompt"
+      }
+    },
+    {
+      "id": "l6",
+      "from": {
+        "node": "paint1",
+        "port": "image"
+      },
+      "to": {
+        "node": "reader1",
+        "port": "image"
+      }
+    },
+    {
+      "id": "l7",
+      "from": {
+        "node": "reader1",
+        "port": "text"
+      },
+      "to": {
+        "node": "relay1",
+        "port": "prompt"
+      }
+    },
+    {
+      "id": "l8",
+      "from": {
+        "node": "relay1",
+        "port": "text"
+      },
+      "to": {
+        "node": "paint2",
+        "port": "prompt"
+      }
+    },
+    {
+      "id": "l9",
+      "from": {
+        "node": "paint2",
+        "port": "image"
+      },
+      "to": {
+        "node": "reader2",
+        "port": "image"
+      }
+    },
+    {
+      "id": "l10",
+      "from": {
+        "node": "reader2",
+        "port": "text"
+      },
+      "to": {
+        "node": "relay2",
+        "port": "prompt"
+      }
+    },
+    {
+      "id": "l11",
+      "from": {
+        "node": "relay2",
+        "port": "text"
+      },
+      "to": {
+        "node": "paint3",
+        "port": "prompt"
+      }
+    },
+    {
+      "id": "l12",
+      "from": {
+        "node": "paint3",
+        "port": "image"
+      },
+      "to": {
+        "node": "reader3",
+        "port": "image"
+      }
+    },
+    {
+      "id": "l13",
+      "from": {
+        "node": "director",
+        "port": "text"
+      },
+      "to": {
+        "node": "j1",
+        "port": "a"
+      }
+    },
+    {
+      "id": "l14",
+      "from": {
+        "node": "reader1",
+        "port": "text"
+      },
+      "to": {
+        "node": "j1",
+        "port": "b"
+      }
+    },
+    {
+      "id": "l15",
+      "from": {
+        "node": "j1",
+        "port": "text"
+      },
+      "to": {
+        "node": "j2",
+        "port": "a"
+      }
+    },
+    {
+      "id": "l16",
+      "from": {
+        "node": "reader2",
+        "port": "text"
+      },
+      "to": {
+        "node": "j2",
+        "port": "b"
+      }
+    },
+    {
+      "id": "l17",
+      "from": {
+        "node": "j2",
+        "port": "text"
+      },
+      "to": {
+        "node": "j3",
+        "port": "a"
+      }
+    },
+    {
+      "id": "l18",
+      "from": {
+        "node": "reader3",
+        "port": "text"
+      },
+      "to": {
+        "node": "j3",
+        "port": "b"
+      }
+    },
+    {
+      "id": "l19",
+      "from": {
+        "node": "j3",
+        "port": "text"
+      },
+      "to": {
+        "node": "checker",
+        "port": "prompt"
+      }
+    },
+    {
+      "id": "l20",
+      "from": {
+        "node": "j3",
+        "port": "text"
+      },
+      "to": {
+        "node": "j4",
+        "port": "a"
+      }
+    },
+    {
+      "id": "l21",
+      "from": {
+        "node": "checker",
+        "port": "text"
+      },
+      "to": {
+        "node": "j4",
+        "port": "b"
+      }
+    },
+    {
+      "id": "l22",
+      "from": {
+        "node": "j4",
+        "port": "text"
+      },
+      "to": {
+        "node": "audit",
+        "port": "text"
+      }
+    },
+    {
+      "id": "l23",
+      "from": {
+        "node": "paint3",
+        "port": "image"
+      },
+      "to": {
+        "node": "audit",
+        "port": "img1"
+      }
+    }
+  ],
+  "nid": 40,
+  "lid": 41,
+  "view": {
+    "panX": 40,
+    "panY": 40,
+    "scale": 0.35
+  }
+}
