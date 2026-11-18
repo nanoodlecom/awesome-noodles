@@ -1,0 +1,411 @@
+{
+ "v": 1,
+ "nodes": [
+  {
+   "id": "c1",
+   "type": "comment",
+   "x": 60,
+   "y": 30,
+   "fields": {
+    "text": "Muse paints a scene from your brief. A Gemini sound scout reads the painting and writes a SOUND CARD in a fixed five-axis vocabulary - MOOD, ENERGY, PACE, the instrument FAMILY that should lead, and the ARC the cue should follow, each chosen from a closed word list, plus a SETTING line. A GLM composer turns the card into one instrumental music prompt and ElevenLabs Music performs a 20-second cue. Then a Qwen omni model LISTENS to the finished cue through the LLM node's audio port - it never sees the painting, the card or the prompt - and writes a LISTENING REPORT in the same five axes, the instruments it actually heard, and a PICTURE line: one concrete scene this music could be the soundtrack to. A GLM painter turns that report alone into an image prompt and Muse paints the second painting - the flow's deliverable, a scene that has crossed into music and back. A Gemini read-back inventories the repaint, and a GLM round-trip auditor (side output) scores the journey: card against report axis by axis, and the listener's PICTURE against the repaint's read-back. A Decide judge (side output) sees both paintings and gives the headline: same scene heard back, same mood new scene, mood lost, or silence or noise. Score the still stops at the audit; hear it paint it starts from words. This one closes the loop. See recipes/paint-through-music.md."
+   },
+   "w": 1000,
+   "name": "Paint through music, round-trip - a painting is scored, the score is heard blind, and what was heard is painted again"
+  },
+  {
+   "id": "scene",
+   "type": "text",
+   "x": 60,
+   "y": 320,
+   "fields": {
+    "text": "A small harbour town festival at golden hour, photorealistic, wide view. Colourful fishing boats with bright sails return to the quay, gulls wheel overhead, bunting is strung between the masts, a small brass band plays on the quay while couples dance, warm low sun gilds the water and the stone harbour wall. No text, no lettering."
+   },
+   "w": 300,
+   "name": "Scene brief"
+  },
+  {
+   "id": "paint1",
+   "type": "image",
+   "x": 440,
+   "y": 300,
+   "fields": {
+    "model": "meta/muse-image/text-to-image",
+    "size": "16:9",
+    "variations": "1"
+   },
+   "w": 260,
+   "name": "First painting - Muse paints the scene"
+  },
+  {
+   "id": "card",
+   "type": "vision",
+   "x": 780,
+   "y": 300,
+   "fields": {
+    "model": "google/gemini-3.8-flash",
+    "q": "You are the sound scout in a paint-through-music pipeline. Look at this image and write a SOUND CARD: the instrumental music this picture is asking for, in exactly this shape. First line: 'SETTING: ' plus what the picture shows - place, time, weather, movement - in one short line. Then one line each, choosing ONLY from the words offered: 'MOOD: ' plus one of serene, joyful, melancholy, tense, dramatic, eerie, triumphant, sleepy. 'ENERGY: ' plus one of low, medium, high. 'PACE: ' plus one of slow, moderate, fast. 'FAMILY: ' plus the one instrument family that should lead a score for this picture, one of solo piano, strings, brass, folk acoustic, electronic, percussion-led, choir. 'ARC: ' plus one of steady, builds, fades, swells and settles. Judge by the picture's light, weather, motion and scale - not by any music you imagine in detail. Output the card only."
+   },
+   "w": 280,
+   "name": "Sound card - Gemini reads the painting",
+   "sizes": {
+    "q": 150
+   }
+  },
+  {
+   "id": "composer",
+   "type": "llm",
+   "x": 1140,
+   "y": 300,
+   "fields": {
+    "model": "z-ai/glm-5.3-flash",
+    "system": "You write ONE prompt for an AI music generator. The input is a SOUND CARD (SETTING, MOOD, ENERGY, PACE, FAMILY, ARC). Write a single prompt, under 80 words: an instrumental cue, exactly 20 seconds, no vocals, no lyrics. Name the FAMILY's instruments as the lead, set the tempo feel from PACE, the intensity from ENERGY, the emotional tone from MOOD, and shape the 20 seconds by ARC (for example 'builds' means start spare and grow to a peak at the end). Evoke the SETTING without sound effects - this is music, not foley. Output the prompt only.",
+    "maxTokens": "300",
+    "reasoningEffort": "low"
+   },
+   "w": 280,
+   "name": "Music prompt - GLM composes from the card",
+   "sizes": {
+    "system": 150
+   }
+  },
+  {
+   "id": "score",
+   "type": "music",
+   "x": 1500,
+   "y": 300,
+   "fields": {
+    "model": "elevenlabs/music",
+    "prompt": "",
+    "duration": "20",
+    "instrumental": true,
+    "response_format": "mp3"
+   },
+   "w": 280,
+   "name": "Cue - ElevenLabs Music performs it"
+  },
+  {
+   "id": "ask",
+   "type": "text",
+   "x": 1500,
+   "y": 640,
+   "fields": {
+    "text": "Listen to this music and report only what you hear, then say what scene it could be the soundtrack to."
+   },
+   "w": 300,
+   "name": "Ask"
+  },
+  {
+   "id": "listener",
+   "type": "llm",
+   "x": 1860,
+   "y": 360,
+   "fields": {
+    "model": "qwen/qwen3.8-omni-flash",
+    "system": "You are the listener in a paint-through-music pipeline. You hear a short instrumental cue and nothing else - no picture, no brief. Write a LISTENING REPORT in exactly this shape, choosing ONLY from the words offered. 'MOOD: ' plus one of serene, joyful, melancholy, tense, dramatic, eerie, triumphant, sleepy. 'ENERGY: ' plus one of low, medium, high. 'PACE: ' plus one of slow, moderate, fast. 'FAMILY: ' plus the instrument family that leads what you heard, one of solo piano, strings, brass, folk acoustic, electronic, percussion-led, choir. 'ARC: ' plus one of steady, builds, fades, swells and settles. Then one line 'HEARD: ' plus the instruments you actually heard, comma separated. Then one line 'PICTURE: ' plus one concrete scene this music could be the soundtrack to - place, time of day, light, weather and the main subjects - in one short line. Report only what the audio shows; if it is silence or noise, say so on the HEARD line and still give your best axes and PICTURE. Output the report only.",
+    "maxTokens": "500"
+   },
+   "w": 300,
+   "name": "Listening report - Qwen Omni hears the cue blind",
+   "sizes": {
+    "system": 150
+   }
+  },
+  {
+   "id": "painter",
+   "type": "llm",
+   "x": 2240,
+   "y": 360,
+   "fields": {
+    "model": "z-ai/glm-5.3-flash",
+    "system": "You write ONE prompt for an AI image painter. The input is a LISTENING REPORT written by a blind listener who heard a short music cue: five axes (MOOD, ENERGY, PACE, FAMILY, ARC), the instruments heard, and a PICTURE line naming one concrete scene. Write a single image prompt, under 90 words: paint the PICTURE line's scene as the subject, photorealistic, wide 16:9 view. Translate the axes into the picture: MOOD and ENERGY set the light and weather, PACE sets how much motion and blur the scene carries, ARC sets whether the scene feels like a beginning, a peak or a settling. Do not mention music, instruments or sound in the prompt - the painting must stand on its own as a scene. No text, no lettering. Output the prompt only.",
+    "maxTokens": "300",
+    "reasoningEffort": "low"
+   },
+   "w": 280,
+   "name": "Repaint prompt - GLM paints from the report alone",
+   "sizes": {
+    "system": 150
+   }
+  },
+  {
+   "id": "paint2",
+   "type": "image",
+   "x": 2620,
+   "y": 340,
+   "fields": {
+    "model": "meta/muse-image/text-to-image",
+    "size": "16:9",
+    "variations": "1"
+   },
+   "w": 260,
+   "name": "Second painting - Muse paints what was heard (the deliverable)"
+  },
+  {
+   "id": "readback",
+   "type": "vision",
+   "x": 2620,
+   "y": 700,
+   "fields": {
+    "model": "google/gemini-3.8-flash",
+    "q": "You are the read-back clerk in a paint-through-music pipeline. Look at this image and inventory only what is visible, in exactly this shape. First line: 'SETTING SEEN: ' plus the place, time of day, light and weather in one short line. Then 'SUBJECTS: ' plus the main visible subjects, comma separated, most prominent first. Then 'MOTION: ' plus one of still, gentle, busy. Do not guess at any music, story or earlier picture. Output the read-back only."
+   },
+   "w": 280,
+   "name": "Repaint read-back - Gemini inventories the second painting",
+   "sizes": {
+    "q": 150
+   }
+  },
+  {
+   "id": "j1",
+   "type": "join",
+   "x": 1500,
+   "y": 980,
+   "fields": {
+    "sep": "\n\nLISTENING REPORT:\n"
+   },
+   "w": 200,
+   "name": "Card + listening report"
+  },
+  {
+   "id": "j2",
+   "type": "join",
+   "x": 1860,
+   "y": 980,
+   "fields": {
+    "sep": "\n\nREPAINT READ-BACK:\n"
+   },
+   "w": 200,
+   "name": "Witnesses + repaint read-back"
+  },
+  {
+   "id": "checker",
+   "type": "llm",
+   "x": 2240,
+   "y": 960,
+   "fields": {
+    "model": "z-ai/glm-5.3-flash",
+    "system": "You are a round-trip auditor. The input gives a SOUND CARD (SETTING, MOOD, ENERGY, PACE, FAMILY, ARC - the music a first painting asked for), then 'LISTENING REPORT:' with a blind listener's report of the finished cue in the same vocabulary plus HEARD instruments and a PICTURE line, then 'REPAINT READ-BACK:' with a clerk's inventory of the second painting, which was painted from the report alone. Score the five axes one line each, in card order, capitalising the axis name: 'Mood: MATCH' if the report's word is the card's word, 'Mood: NEAR' if it is a close cousin (adjacent energy or pace step, a neighbouring mood, a family that overlaps, a similar arc), or 'Mood: OPPOSITE' if it is far from the card. Then one 'PICTURE KEPT: ' line: whether the read-back's SETTING SEEN and SUBJECTS show the listener's PICTURE scene - answer 'yes', 'partly' or 'no', and name the biggest difference in under eight words. Keep every line under 12 words. End with one line 'Summary: X of 5 axes heard, picture kept: Y.' where X is the number of MATCH verdicts and Y repeats the PICTURE KEPT answer. Judge by the three texts only. Output the audit only.",
+    "maxTokens": "600",
+    "reasoningEffort": "low"
+   },
+   "w": 280,
+   "name": "Round-trip audit - GLM scores both crossings (side output)",
+   "sizes": {
+    "system": 150
+   }
+  },
+  {
+   "id": "audit",
+   "type": "decide",
+   "x": 2960,
+   "y": 340,
+   "fields": {
+    "model": "perplexity/pplx-decider-v1.2",
+    "mode": "choose",
+    "question": "The text gives a SOUND CARD read from the first image, a blind LISTENING REPORT of the music composed from that card, and a REPAINT READ-BACK inventorying the second image, which was painted from the listening report alone. The two images are the first painting and the second painting, in that order. Which verdict fits the round trip? 'same scene heard back' means the second painting shows recognisably the first painting's scene and the report matched the card on most axes. 'same mood, new scene' means the feeling crossed (mood and energy near or matching) but the scene itself changed. 'mood lost' means the cue or the repaint drifted to a different feeling altogether. 'silence or noise' means the report says there was no real music to hear. Judge the match across the whole journey, not either painting's beauty.",
+    "options": "same scene heard back\nsame mood, new scene\nmood lost\nsilence or noise"
+   },
+   "w": 280,
+   "name": "Heard back - audited (side output)",
+   "sizes": {
+    "question": 130
+   }
+  }
+ ],
+ "links": [
+  {
+   "id": "l1",
+   "from": {
+    "node": "scene",
+    "port": "text"
+   },
+   "to": {
+    "node": "paint1",
+    "port": "prompt"
+   }
+  },
+  {
+   "id": "l2",
+   "from": {
+    "node": "paint1",
+    "port": "image"
+   },
+   "to": {
+    "node": "card",
+    "port": "image"
+   }
+  },
+  {
+   "id": "l3",
+   "from": {
+    "node": "card",
+    "port": "text"
+   },
+   "to": {
+    "node": "composer",
+    "port": "prompt"
+   }
+  },
+  {
+   "id": "l4",
+   "from": {
+    "node": "composer",
+    "port": "text"
+   },
+   "to": {
+    "node": "score",
+    "port": "prompt"
+   }
+  },
+  {
+   "id": "l5",
+   "from": {
+    "node": "ask",
+    "port": "text"
+   },
+   "to": {
+    "node": "listener",
+    "port": "prompt"
+   }
+  },
+  {
+   "id": "l6",
+   "from": {
+    "node": "score",
+    "port": "audio"
+   },
+   "to": {
+    "node": "listener",
+    "port": "audio"
+   }
+  },
+  {
+   "id": "l7",
+   "from": {
+    "node": "listener",
+    "port": "text"
+   },
+   "to": {
+    "node": "painter",
+    "port": "prompt"
+   }
+  },
+  {
+   "id": "l8",
+   "from": {
+    "node": "painter",
+    "port": "text"
+   },
+   "to": {
+    "node": "paint2",
+    "port": "prompt"
+   }
+  },
+  {
+   "id": "l9",
+   "from": {
+    "node": "paint2",
+    "port": "image"
+   },
+   "to": {
+    "node": "readback",
+    "port": "image"
+   }
+  },
+  {
+   "id": "l10",
+   "from": {
+    "node": "card",
+    "port": "text"
+   },
+   "to": {
+    "node": "j1",
+    "port": "a"
+   }
+  },
+  {
+   "id": "l11",
+   "from": {
+    "node": "listener",
+    "port": "text"
+   },
+   "to": {
+    "node": "j1",
+    "port": "b"
+   }
+  },
+  {
+   "id": "l12",
+   "from": {
+    "node": "j1",
+    "port": "text"
+   },
+   "to": {
+    "node": "j2",
+    "port": "a"
+   }
+  },
+  {
+   "id": "l13",
+   "from": {
+    "node": "readback",
+    "port": "text"
+   },
+   "to": {
+    "node": "j2",
+    "port": "b"
+   }
+  },
+  {
+   "id": "l14",
+   "from": {
+    "node": "j2",
+    "port": "text"
+   },
+   "to": {
+    "node": "checker",
+    "port": "prompt"
+   }
+  },
+  {
+   "id": "l15",
+   "from": {
+    "node": "j2",
+    "port": "text"
+   },
+   "to": {
+    "node": "audit",
+    "port": "text"
+   }
+  },
+  {
+   "id": "l16",
+   "from": {
+    "node": "paint1",
+    "port": "image"
+   },
+   "to": {
+    "node": "audit",
+    "port": "img1"
+   }
+  },
+  {
+   "id": "l17",
+   "from": {
+    "node": "paint2",
+    "port": "image"
+   },
+   "to": {
+    "node": "audit",
+    "port": "img2"
+   }
+  }
+ ],
+ "nid": 40,
+ "lid": 40,
+ "view": {
+  "panX": 40,
+  "panY": 40,
+  "scale": 0.5
+ }
+}
