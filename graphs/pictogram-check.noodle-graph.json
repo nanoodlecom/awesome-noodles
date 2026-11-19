@@ -1,0 +1,457 @@
+{
+  "v": 1,
+  "nodes": [
+    {
+      "id": "c1",
+      "type": "comment",
+      "x": 60,
+      "y": 30,
+      "fields": {
+        "text": "Can a generator draw signs that SPEAK without words? A GLM director writes a PICTOGRAM CARD: one venue from a short menu and exactly 5 messages chosen from a closed list of things a sign must say (no swimming, first aid, exit to the left...), each with the canonical bold symbol that says it. A second GLM turns the card into a painter prompt: a straight-on board of five large square plaques in a row, each plaque one flat, high-contrast pictogram - and no letters, words or numbers anywhere, because a sign that needs its caption has already failed. Muse paints it. Then a blind Gemini reader stands where a stranger would stand: for each plaque, left to right, it describes the glyph it sees and writes the MEANING it would take away, never having seen the card. A GLM auditor scores MEANING (how many of the five messages a stranger actually received), MISREAD (which plaques said something else, and what), and TEXT LEAK (letters, words or numbers anywhere on the board - the failure no other audit here can state: the painter cheating with words). Then the loop closes: a GLM editor turns the audit into concrete edit notes that may change only the failed plaques and must strip any leaked text, Muse Edit repaints, and a second blind reader and the same auditor re-score the corrected board. A Decide judge headlines round 1 as a side output - but the flow does not end in text. Its deliverable is the corrected board. See recipes/pictogram-check.md."
+      },
+      "w": 900,
+      "name": "Pictogram check, meaning-audited - wordless signs a stranger must understand, decoded blind, and a fix round that repairs only the plaques that failed"
+    },
+    {
+      "id": "setting",
+      "type": "text",
+      "x": 60,
+      "y": 300,
+      "fields": {
+        "text": "A public venue photographed straight-on in even, bright light: one plain pale wall, empty and uncluttered, where a row of five information signs will hang at eye level - no people, no furniture telling a story, and no text, letters or numbers anywhere yet."
+      },
+      "w": 300,
+      "name": "Venue"
+    },
+    {
+      "id": "director",
+      "type": "llm",
+      "x": 440,
+      "y": 280,
+      "fields": {
+        "model": "z-ai/glm-5.3-flash",
+        "system": "You are a pictogram director. Given a VENUE WALL (a plain wall in a public venue), design a PICTOGRAM CARD: the five wordless signs that will hang on it. Choose ONE venue from this menu ONLY:\nmountain trailhead visitor centre; harbour ferry terminal; botanical garden entrance; ski lodge lobby; night-market entrance.\nThen choose exactly 5 DIFFERENT messages from this closed list ONLY - the things a sign at that venue must say:\nNO SWIMMING; DRINKING WATER HERE; FIRST AID; EXIT TO THE LEFT; NO FLASH PHOTOGRAPHY; FRAGILE - HANDLE WITH CARE; HOT SURFACE - DO NOT TOUCH; QUIET PLEASE; RECYCLING HERE; NO DOGS; MIND THE STEP; LOST PROPERTY.\nFor each message write its CANONICAL SYMBOL: the one bold, simple pictogram a stranger anywhere would draw for it (a swimmer under a red diagonal slash for NO SWIMMING; a bold cross for FIRST AID; a running figure with a left-pointing arrow for EXIT TO THE LEFT). The symbol must say the message as a picture alone - describe shapes, figures and marks only, never letters, words or numbers; a red diagonal slash is allowed where the message is a prohibition. List the 5 signs in the LEFT-TO-RIGHT order they will hang. Finally write the BOARD line: five large square plaques in one straight row on the venue wall, seen straight-on. Output exactly this shape and nothing else:\nVENUE: <venue>\nSIGN 1: <MESSAGE> | <canonical symbol, shapes only>\nSIGN 2: <MESSAGE> | <canonical symbol, shapes only>\nSIGN 3: <MESSAGE> | <canonical symbol, shapes only>\nSIGN 4: <MESSAGE> | <canonical symbol, shapes only>\nSIGN 5: <MESSAGE> | <canonical symbol, shapes only>\nBOARD: <five large square plaques in one straight row, straight-on>",
+        "maxTokens": "500",
+        "reasoningEffort": "low"
+      },
+      "w": 280,
+      "name": "Pictogram card - GLM picks a venue and five wordless messages with their canonical symbols",
+      "sizes": {
+        "system": 150
+      }
+    },
+    {
+      "id": "j0",
+      "type": "join",
+      "x": 800,
+      "y": 480,
+      "fields": {
+        "sep": "\n\nPICTOGRAM CARD (the venue, the five messages in left-to-right order, the canonical symbol for each, and the board; its exact wording must reach the painter):\n"
+      },
+      "w": 200,
+      "name": "Venue + pictogram card"
+    },
+    {
+      "id": "stylist",
+      "type": "llm",
+      "x": 800,
+      "y": 280,
+      "fields": {
+        "model": "z-ai/glm-5.3-flash",
+        "system": "You turn a PICTOGRAM CARD into ONE prompt for an AI image generator. The input gives a VENUE WALL first, then 'PICTOGRAM CARD' with a VENUE, 5 signs (MESSAGE | canonical symbol) in left-to-right order, and a BOARD line. Write the prompt so the generator paints a straight-on, photorealistic photograph of that venue's wall with the board from the BOARD line: five large square plaques in one straight row at eye level, evenly spaced, each plaque showing exactly its carded symbol as a bold, flat, high-contrast pictogram - thick simple shapes, one symbol per plaque, in the card's left-to-right order, each symbol big and centred on its plaque. The cardinal rule: NO letters, NO words, NO numbers anywhere in the picture - not on the plaques, not under them, not anywhere on the wall; the symbols alone must carry the messages (a red diagonal slash is part of a symbol, not text). Keep the wall and venue plain around the board, no people. End with: 'Photorealistic straight-on photograph of a sign board with five bold wordless pictograms, no text, no letters, no numbers, no people.' Output the prompt only.",
+        "maxTokens": "700",
+        "reasoningEffort": "low"
+      },
+      "w": 280,
+      "name": "Pictogram brief - GLM turns the card into a wordless-sign painter prompt",
+      "sizes": {
+        "system": 150
+      }
+    },
+    {
+      "id": "paint",
+      "type": "image",
+      "x": 1160,
+      "y": 280,
+      "fields": {
+        "model": "meta/muse-image/text-to-image",
+        "size": "16:9",
+        "variations": "1"
+      },
+      "w": 280,
+      "name": "Pictogram board - Muse paints five wordless signs"
+    },
+    {
+      "id": "surveyor",
+      "type": "vision",
+      "x": 1520,
+      "y": 280,
+      "fields": {
+        "model": "google/gemini-3.8-flash",
+        "q": "You are a stranger standing in front of a board of pictogram signs. You see ONE photograph of a wall with a row of square sign plaques. You do not know what the signs are supposed to say - work out each one's meaning from its picture alone, the way a visitor who speaks no local language would. First, 'PLAQUES:' plus the number of plaques in the row. Then, for each plaque LEFT TO RIGHT (up to 6 lines), output two parts: 'GLYPH:' a plain description of the shapes you actually see (figures, objects, arrows, slashes, colours), then 'MEANING:' the one message you, a stranger, would take away from that glyph (for example 'no swimming', 'first aid here', 'exit this way'). If a plaque's glyph is unclear, still give your best single guess at its meaning and mark it '(guess)'. Finally, 'TEXT:' plus every letter, word or number you can see anywhere in the picture, quoted exactly, or 'none' if there is no text anywhere. Output exactly this shape:\nPLAQUES: <number>\nSIGN 1: GLYPH: <shapes you see> | MEANING: <the message you take away>\nSIGN 2: GLYPH: <shapes you see> | MEANING: <the message you take away>\n(continue for every plaque, left to right)\nTEXT: <quoted text, or none>"
+      },
+      "w": 280,
+      "name": "Stranger read - Gemini decodes each plaque's meaning blind, and reports any text",
+      "sizes": {
+        "q": 150
+      }
+    },
+    {
+      "id": "j1",
+      "type": "join",
+      "x": 1880,
+      "y": 180,
+      "fields": {
+        "sep": "\n\nSTRANGER READ (a blind reader decoded each plaque's meaning from its glyph alone; it never saw the pictogram card):\n"
+      },
+      "w": 200,
+      "name": "Pictogram card + stranger read"
+    },
+    {
+      "id": "checker",
+      "type": "llm",
+      "x": 2240,
+      "y": 400,
+      "fields": {
+        "model": "z-ai/glm-5.3-flash",
+        "system": "You are a pictogram auditor. The input gives a PICTOGRAM CARD (a VENUE, 5 signs as MESSAGE | canonical symbol in left-to-right order, and a BOARD line), then 'STRANGER READ' with a blind reader's PLAQUES count, one SIGN line per plaque (GLYPH description and the MEANING the stranger took away), and a TEXT line. Score plaque by plaque, matching the reader's SIGN n to the card's SIGN n (same position). Work in this order and output exactly these lines:\n1. 'PLAQUES: X' - the reader's plaque count, copied.\n2. 'MEANING: X of 5' - one point per sign whose reader MEANING states the card's MESSAGE: the same message in the stranger's own words counts (near-synonyms and equivalent phrasings count; the message must be the same, not merely the same topic - 'no photography' is not 'no flash photography' if the flash matters, but 'no photos with flash' is). A meaning marked '(guess)' still counts if it states the right message.\n3. 'MISREAD: ' followed by, for each sign that lost its point, 'SIGN n: <card message> -> <reader meaning>', separated by '; ', or 'none' if MEANING is 5 of 5.\n4. 'TEXT LEAK: X' - 0 if the reader's TEXT line says none; otherwise the count of distinct quoted text items in it. Then 'LEAKED TEXT: ' followed by the quoted items, or 'none'.\n5. 'Summary: ' followed by one sentence restating plaques, meaning and text leak.\nOutput exactly these lines and nothing else. If PLAQUES is not 5, score only the positions that exist and say so in the summary.",
+        "maxTokens": "1200",
+        "reasoningEffort": "low"
+      },
+      "w": 280,
+      "name": "Pictogram audit - GLM scores the meanings a stranger received and any text leak",
+      "sizes": {
+        "system": 150
+      }
+    },
+    {
+      "id": "j2",
+      "type": "join",
+      "x": 2240,
+      "y": 180,
+      "fields": {
+        "sep": "\n\nPICTOGRAM AUDIT:\n"
+      },
+      "w": 200,
+      "name": "Card, stranger read + pictogram audit"
+    },
+    {
+      "id": "audit",
+      "type": "decide",
+      "x": 2600,
+      "y": 180,
+      "fields": {
+        "model": "perplexity/pplx-decider-v1.2",
+        "mode": "choose",
+        "question": "The board should be a straight-on photograph of five large square pictogram plaques in a row at a venue: each plaque one bold wordless symbol carrying its planned message, in the planned left-to-right order, and no letters, words or numbers anywhere in the picture. The text gives the PICTOGRAM CARD (venue, 5 messages with their canonical symbols in order, board), a blind STRANGER READ (the glyphs seen and the meaning taken from each, plus any text seen), and a PICTOGRAM AUDIT scoring plaques, meaning and text leak. Which verdict fits? 'signs read clearly' means PLAQUES is 5, MEANING is 5 of 5 and TEXT LEAK is 0. 'text leaked' means TEXT LEAK is 1 or more - the painter cheated with words - whatever the meaning score. 'meanings lost' means TEXT LEAK is 0 and MEANING is 3 or 4 of 5. 'wrong board' means PLAQUES is not 5, or MEANING is 2 of 5 or less. Judge whether the signs communicate, not the picture's beauty.",
+        "options": "signs read clearly\nmeanings lost\ntext leaked\nwrong board"
+      },
+      "w": 280,
+      "name": "Signs read - audited",
+      "sizes": {
+        "question": 130
+      }
+    },
+    {
+      "id": "editor",
+      "type": "llm",
+      "x": 2600,
+      "y": 520,
+      "fields": {
+        "model": "z-ai/glm-5.3-flash",
+        "system": "You are the sign editor in a pictogram pipeline. The input gives a PICTOGRAM CARD (a VENUE, 5 signs as MESSAGE | canonical symbol in left-to-right order, a BOARD line), a blind STRANGER READ (glyphs seen, meanings taken, any text seen), and a PICTOGRAM AUDIT scoring plaques, meaning and text leak. Write ONE edit instruction for an image-editing model that will receive the painted board itself. Rules:\n- Address the editor directly and write in imperatives: 'Edit this photograph: ...'\n- The board is the scope: open by demanding the wall, the venue, the five-plaque row (count, size, spacing, straight-on view), the light and the framing stay exactly the same.\n- State the FULL target end state, not just the deltas: five plaques, each showing its carded canonical symbol as a bold flat pictogram, big and centred, in the card's exact left-to-right order, and absolutely no letters, words or numbers anywhere in the picture.\n- Then name the audit's specific failures as extra demands: for every MISREAD sign, name its plaque position and restate the canonical symbol it must show so a stranger reads the intended message; for every LEAKED TEXT item, demand its complete removal, leaving plain plaque or plain wall where it was; plaques the stranger read correctly must be left pixel-for-pixel alone - name them as keepers.\n- End with: 'Change nothing except the failed plaques and the leaked text. Photorealistic straight-on photograph, no text, no letters, no numbers, no people.'\nOutput the single edit instruction only - no preamble, no list, no explanation.",
+        "maxTokens": "350",
+        "reasoningEffort": "low"
+      },
+      "w": 280,
+      "name": "Edit notes - GLM turns the pictogram audit into plaque-bounded fix instructions",
+      "sizes": {
+        "system": 150
+      }
+    },
+    {
+      "id": "fix",
+      "type": "edit",
+      "x": 2960,
+      "y": 520,
+      "fields": {
+        "model": "meta/muse-image/edit",
+        "size": "auto"
+      },
+      "w": 280,
+      "name": "Corrected board - Muse Edit repairs the failed plaques and strips any text"
+    },
+    {
+      "id": "surveyor2",
+      "type": "vision",
+      "x": 3320,
+      "y": 520,
+      "fields": {
+        "model": "google/gemini-3.8-flash",
+        "q": "You are a stranger standing in front of a board of pictogram signs. You see ONE photograph of a wall with a row of square sign plaques. You do not know what the signs are supposed to say - work out each one's meaning from its picture alone, the way a visitor who speaks no local language would. First, 'PLAQUES:' plus the number of plaques in the row. Then, for each plaque LEFT TO RIGHT (up to 6 lines), output two parts: 'GLYPH:' a plain description of the shapes you actually see (figures, objects, arrows, slashes, colours), then 'MEANING:' the one message you, a stranger, would take away from that glyph (for example 'no swimming', 'first aid here', 'exit this way'). If a plaque's glyph is unclear, still give your best single guess at its meaning and mark it '(guess)'. Finally, 'TEXT:' plus every letter, word or number you can see anywhere in the picture, quoted exactly, or 'none' if there is no text anywhere. Output exactly this shape:\nPLAQUES: <number>\nSIGN 1: GLYPH: <shapes you see> | MEANING: <the message you take away>\nSIGN 2: GLYPH: <shapes you see> | MEANING: <the message you take away>\n(continue for every plaque, left to right)\nTEXT: <quoted text, or none>"
+      },
+      "w": 280,
+      "name": "Re-read - Gemini decodes the corrected board's plaques blind",
+      "sizes": {
+        "q": 150
+      }
+    },
+    {
+      "id": "j4",
+      "type": "join",
+      "x": 3680,
+      "y": 420,
+      "fields": {
+        "sep": "\n\nSTRANGER READ (a blind reader decoded the corrected board's plaques from their glyphs alone; it never saw the pictogram card):\n"
+      },
+      "w": 200,
+      "name": "Pictogram card + re-read"
+    },
+    {
+      "id": "checker2",
+      "type": "llm",
+      "x": 4040,
+      "y": 520,
+      "fields": {
+        "model": "z-ai/glm-5.3-flash",
+        "system": "You are a pictogram auditor. The input gives a PICTOGRAM CARD (a VENUE, 5 signs as MESSAGE | canonical symbol in left-to-right order, and a BOARD line), then 'STRANGER READ' with a blind reader's PLAQUES count, one SIGN line per plaque (GLYPH description and the MEANING the stranger took away), and a TEXT line. Score plaque by plaque, matching the reader's SIGN n to the card's SIGN n (same position). Work in this order and output exactly these lines:\n1. 'PLAQUES: X' - the reader's plaque count, copied.\n2. 'MEANING: X of 5' - one point per sign whose reader MEANING states the card's MESSAGE: the same message in the stranger's own words counts (near-synonyms and equivalent phrasings count; the message must be the same, not merely the same topic - 'no photography' is not 'no flash photography' if the flash matters, but 'no photos with flash' is). A meaning marked '(guess)' still counts if it states the right message.\n3. 'MISREAD: ' followed by, for each sign that lost its point, 'SIGN n: <card message> -> <reader meaning>', separated by '; ', or 'none' if MEANING is 5 of 5.\n4. 'TEXT LEAK: X' - 0 if the reader's TEXT line says none; otherwise the count of distinct quoted text items in it. Then 'LEAKED TEXT: ' followed by the quoted items, or 'none'.\n5. 'Summary: ' followed by one sentence restating plaques, meaning and text leak.\nOutput exactly these lines and nothing else. If PLAQUES is not 5, score only the positions that exist and say so in the summary.",
+        "maxTokens": "1200",
+        "reasoningEffort": "low"
+      },
+      "w": 280,
+      "name": "Pictogram re-audit - GLM scores the corrected board against the same card",
+      "sizes": {
+        "system": 150
+      }
+    }
+  ],
+  "links": [
+    {
+      "id": "l1",
+      "from": {
+        "node": "setting",
+        "port": "text"
+      },
+      "to": {
+        "node": "director",
+        "port": "prompt"
+      }
+    },
+    {
+      "id": "l2",
+      "from": {
+        "node": "director",
+        "port": "text"
+      },
+      "to": {
+        "node": "j0",
+        "port": "b"
+      }
+    },
+    {
+      "id": "l12",
+      "from": {
+        "node": "setting",
+        "port": "text"
+      },
+      "to": {
+        "node": "j0",
+        "port": "a"
+      }
+    },
+    {
+      "id": "l13",
+      "from": {
+        "node": "j0",
+        "port": "text"
+      },
+      "to": {
+        "node": "stylist",
+        "port": "prompt"
+      }
+    },
+    {
+      "id": "l3",
+      "from": {
+        "node": "stylist",
+        "port": "text"
+      },
+      "to": {
+        "node": "paint",
+        "port": "prompt"
+      }
+    },
+    {
+      "id": "l4",
+      "from": {
+        "node": "paint",
+        "port": "image"
+      },
+      "to": {
+        "node": "surveyor",
+        "port": "image"
+      }
+    },
+    {
+      "id": "l7",
+      "from": {
+        "node": "director",
+        "port": "text"
+      },
+      "to": {
+        "node": "j1",
+        "port": "a"
+      }
+    },
+    {
+      "id": "l8",
+      "from": {
+        "node": "surveyor",
+        "port": "text"
+      },
+      "to": {
+        "node": "j1",
+        "port": "b"
+      }
+    },
+    {
+      "id": "l11",
+      "from": {
+        "node": "j1",
+        "port": "text"
+      },
+      "to": {
+        "node": "checker",
+        "port": "prompt"
+      }
+    },
+    {
+      "id": "l14",
+      "from": {
+        "node": "j1",
+        "port": "text"
+      },
+      "to": {
+        "node": "j2",
+        "port": "a"
+      }
+    },
+    {
+      "id": "l15",
+      "from": {
+        "node": "checker",
+        "port": "text"
+      },
+      "to": {
+        "node": "j2",
+        "port": "b"
+      }
+    },
+    {
+      "id": "l16",
+      "from": {
+        "node": "j2",
+        "port": "text"
+      },
+      "to": {
+        "node": "audit",
+        "port": "text"
+      }
+    },
+    {
+      "id": "l17",
+      "from": {
+        "node": "paint",
+        "port": "image"
+      },
+      "to": {
+        "node": "audit",
+        "port": "img1"
+      }
+    },
+    {
+      "id": "l18",
+      "from": {
+        "node": "j2",
+        "port": "text"
+      },
+      "to": {
+        "node": "editor",
+        "port": "prompt"
+      }
+    },
+    {
+      "id": "l19",
+      "from": {
+        "node": "editor",
+        "port": "text"
+      },
+      "to": {
+        "node": "fix",
+        "port": "prompt"
+      }
+    },
+    {
+      "id": "l20",
+      "from": {
+        "node": "paint",
+        "port": "image"
+      },
+      "to": {
+        "node": "fix",
+        "port": "image"
+      }
+    },
+    {
+      "id": "l21",
+      "from": {
+        "node": "fix",
+        "port": "image"
+      },
+      "to": {
+        "node": "surveyor2",
+        "port": "image"
+      }
+    },
+    {
+      "id": "l22",
+      "from": {
+        "node": "director",
+        "port": "text"
+      },
+      "to": {
+        "node": "j4",
+        "port": "a"
+      }
+    },
+    {
+      "id": "l23",
+      "from": {
+        "node": "surveyor2",
+        "port": "text"
+      },
+      "to": {
+        "node": "j4",
+        "port": "b"
+      }
+    },
+    {
+      "id": "l24",
+      "from": {
+        "node": "j4",
+        "port": "text"
+      },
+      "to": {
+        "node": "checker2",
+        "port": "prompt"
+      }
+    }
+  ],
+  "nid": 30,
+  "lid": 38,
+  "view": {
+    "panX": 40,
+    "panY": 40,
+    "scale": 0.5
+  }
+}
