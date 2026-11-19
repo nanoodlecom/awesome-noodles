@@ -1,0 +1,457 @@
+{
+  "v": 1,
+  "nodes": [
+    {
+      "id": "c1",
+      "type": "comment",
+      "x": 60,
+      "y": 30,
+      "fields": {
+        "text": "Can a picture be READ BY TOUCH? A GLM director picks one word from a short menu and encodes it as a BRAILLE CARD using the Grade-1 dot table printed in its own prompt: the word, and for each of its 5 letters the exact set of raised dots in a fixed 2-by-3 cell (dots numbered 1-6). A second GLM turns the card into a painter prompt for a tactile plaque: one row of 5 large cells, every cell showing all six dot positions as faint dimples, the carded dots raised as big dark domes - and NO printed letters or text anywhere, because print would cheat the code. Muse paints it. Then a blind Gemini reader, who never saw the word or the card, reports cell by cell exactly which dot positions are raised, and any printed text it can see. A GLM auditor decodes the reader's dot sets with the same table and scores CELLS (letters whose dot set is exactly right), MISSING and EXTRA dots, the DECODED word, and TEXT LEAK. Then the loop closes: a GLM editor turns the audit into dot-level edit notes, Muse Edit repaints the plaque, and a second blind read plus the same auditor re-score the corrected plaque. A Decide judge headlines round 1 as a side output - but the flow does not end in text. Its deliverable is the corrected plaque. See recipes/braille-check.md."
+      },
+      "w": 900,
+      "name": "Braille check, dot-audited - a word encoded as raised dots, read blind, decoded, and a fix round that repairs the dots"
+    },
+    {
+      "id": "setting",
+      "type": "text",
+      "x": 60,
+      "y": 300,
+      "fields": {
+        "text": "A plain tactile plaque on a neutral studio background, seen straight-on at eye level, evenly lit, no people, no other objects. The plaque will carry one row of five large braille cells. Nothing is written or printed anywhere yet."
+      },
+      "w": 300,
+      "name": "Plaque setting"
+    },
+    {
+      "id": "director",
+      "type": "llm",
+      "x": 440,
+      "y": 280,
+      "fields": {
+        "model": "z-ai/glm-5.3-flash",
+        "system": "You are a braille encoder. Given a PLAQUE SETTING, design a BRAILLE CARD: one word encoded in Grade-1 braille. Choose ONE word from this menu ONLY:\nBRAVE; LIGHT; PLANT; MUSIC; QUILT.\nGrade-1 braille dot table (dot numbers raised for each letter): A = 1; B = 1,2; C = 1,4; D = 1,4,5; E = 1,5; F = 1,2,4; G = 1,2,4,5; H = 1,2,5; I = 2,4; J = 2,4,5; K = 1,3; L = 1,2,3; M = 1,3,4; N = 1,3,4,5; O = 1,3,5; P = 1,2,3,4; Q = 1,2,3,4,5; R = 1,2,3,5; S = 2,3,4; T = 2,3,4,5; U = 1,3,6; V = 1,2,3,6; W = 2,4,5,6; X = 1,3,4,6; Y = 1,3,4,5,6; Z = 1,3,5,6. Dot positions inside one cell: 1 = left-top, 2 = left-middle, 3 = left-bottom, 4 = right-top, 5 = right-middle, 6 = right-bottom.\nFor the chosen word, write one CELL line per letter, in word order: the letter, and its raised dot numbers from the table, ascending, comma-separated. Then write a FRAME line: the plaque's material and colour in a few words (for example 'matte cream ceramic plaque with dark bronze raised dots') - one material, one dot colour, nothing else on the plaque.\nOutput exactly this shape and nothing else:\nWORD: <the chosen word>\nCELL 1: <letter> | dots <numbers>\nCELL 2: <letter> | dots <numbers>\nCELL 3: <letter> | dots <numbers>\nCELL 4: <letter> | dots <numbers>\nCELL 5: <letter> | dots <numbers>\nFRAME: <plaque material and dot colour>",
+        "maxTokens": "500",
+        "reasoningEffort": "low"
+      },
+      "w": 280,
+      "name": "Braille card - GLM picks a word and encodes its five letters as dot sets",
+      "sizes": {
+        "system": 150
+      }
+    },
+    {
+      "id": "j0",
+      "type": "join",
+      "x": 800,
+      "y": 480,
+      "fields": {
+        "sep": "\n\nBRAILLE CARD (the word, the five letters with their exact raised-dot sets, and the plaque frame; its exact wording must reach the painter):\n"
+      },
+      "w": 200,
+      "name": "Setting + braille card"
+    },
+    {
+      "id": "stylist",
+      "type": "llm",
+      "x": 800,
+      "y": 280,
+      "fields": {
+        "model": "z-ai/glm-5.3-flash",
+        "system": "You turn a BRAILLE CARD into ONE prompt for an AI image generator. The input gives a PLAQUE SETTING first, then 'BRAILLE CARD' with a WORD, 5 CELL lines (letter | dots numbers) and a FRAME line. Write the prompt so the generator paints the plaque from the FRAME line, straight-on at eye level on the same plain neutral background, carrying ONE row of exactly 5 large braille cells, evenly spaced, in cell order. In every cell, all six dot positions must be visible as a regular 2-wide by 3-tall grid of faint shallow dimples; the dots named in that cell's CELL line - and only those - must stand out as large, dark, glossy raised domes at exactly those positions (1 = left-top, 2 = left-middle, 3 = left-bottom, 4 = right-top, 5 = right-middle, 6 = right-bottom). The cardinal rules: the letters themselves must NEVER appear - NO printed letters, NO words, NO numbers, NO captions, NO labels anywhere in the picture; the word exists only as raised dots. Do not name the word or any letter in the prompt except inside the per-cell dot instructions. End with: 'Clean straight-on photograph of a tactile braille plaque, one row of five cells, raised dots only, no printed text, no letters, no numbers, no people.' Output the prompt only.",
+        "maxTokens": "700",
+        "reasoningEffort": "low"
+      },
+      "w": 280,
+      "name": "Plaque brief - GLM turns the card into a tactile painter prompt",
+      "sizes": {
+        "system": 150
+      }
+    },
+    {
+      "id": "paint",
+      "type": "image",
+      "x": 1160,
+      "y": 280,
+      "fields": {
+        "model": "meta/muse-image/text-to-image",
+        "size": "16:9",
+        "variations": "1"
+      },
+      "w": 280,
+      "name": "Plaque - Muse paints the raised-dot cells"
+    },
+    {
+      "id": "surveyor",
+      "type": "vision",
+      "x": 1520,
+      "y": 280,
+      "fields": {
+        "model": "google/gemini-3.8-flash",
+        "q": "You are a reader examining a tactile braille plaque. You do not know what word was planned - report only the dots you actually see. The plaque should carry one row of braille cells; each cell is a 2-wide by 3-tall grid of dot positions numbered: 1 = left-top, 2 = left-middle, 3 = left-bottom, 4 = right-top, 5 = right-middle, 6 = right-bottom. A position counts as RAISED only if it stands out as a large dark dome; faint shallow dimples are empty positions and do NOT count. First, 'CELLS SEEN:' plus the number of cells in the row. Then, for each cell from left to right, output 'CELL <n>: raised <the raised dot numbers, ascending, comma-separated>' or 'CELL <n>: raised none'. Finally, 'PRINTED TEXT:' plus any printed letters, words or numbers visible anywhere in the picture, quoted, or 'none'. Output exactly this shape:\nCELLS SEEN: <number>\nCELL 1: raised <numbers or none>\n(continue for every cell seen)\nPRINTED TEXT: <quoted text, or none>"
+      },
+      "w": 280,
+      "name": "Dot read - Gemini reports the raised dots in each cell, blind",
+      "sizes": {
+        "q": 150
+      }
+    },
+    {
+      "id": "j1",
+      "type": "join",
+      "x": 1880,
+      "y": 180,
+      "fields": {
+        "sep": "\n\nDOT READ (a blind reader reported only the raised dots it could see, cell by cell; it never saw the braille card or the word):\n"
+      },
+      "w": 200,
+      "name": "Braille card + dot read"
+    },
+    {
+      "id": "checker",
+      "type": "llm",
+      "x": 2240,
+      "y": 400,
+      "fields": {
+        "model": "z-ai/glm-5.3-flash",
+        "system": "You are a braille auditor. The input gives a BRAILLE CARD (WORD, 5 CELL lines as letter | dots numbers, FRAME), then 'DOT READ' with a blind reader's CELLS SEEN, one raised-dot line per cell, and a PRINTED TEXT line. Grade-1 braille dot table (dot numbers raised for each letter): A = 1; B = 1,2; C = 1,4; D = 1,4,5; E = 1,5; F = 1,2,4; G = 1,2,4,5; H = 1,2,5; I = 2,4; J = 2,4,5; K = 1,3; L = 1,2,3; M = 1,3,4; N = 1,3,4,5; O = 1,3,5; P = 1,2,3,4; Q = 1,2,3,4,5; R = 1,2,3,5; S = 2,3,4; T = 2,3,4,5; U = 1,3,6; V = 1,2,3,6; W = 2,4,5,6; X = 1,3,4,6; Y = 1,3,4,5,6; Z = 1,3,5,6. Dot positions inside one cell: 1 = left-top, 2 = left-middle, 3 = left-bottom, 4 = right-top, 5 = right-middle, 6 = right-bottom.\nScore cell by cell, matching reader cell n to card cell n by position in the row. Work in this order and output exactly these lines:\n1. 'CELLS: X of 5' - one point per card cell whose reader dot set is EXACTLY the card's dot set for that cell (same numbers, no more, no fewer). If the reader saw fewer or more than 5 cells, score the missing or extra cells as wrong.\n2. 'MISSING DOTS: ' followed by, for every card dot the reader did not report raised in that cell, '<cell number>:<dot number>' entries separated by '; ', or 'none'.\n3. 'EXTRA DOTS: ' followed by, for every raised dot the reader reported that is not in that cell's card set, '<cell number>:<dot number>' entries separated by '; ', or 'none'.\n4. 'DECODED: ' followed by the word you get by decoding the reader's five dot sets with the table above, in cell order; write '?' for any cell whose dot set matches no letter.\n5. 'TEXT LEAK: ' plus the reader's PRINTED TEXT content, copied.\n6. 'Summary: ' followed by one sentence restating cells exact, missing and extra dots, and the decoded word.\nOutput exactly these lines and nothing else.",
+        "maxTokens": "1200",
+        "reasoningEffort": "low"
+      },
+      "w": 280,
+      "name": "Braille audit - GLM decodes the blind dot read and scores cells, missing and extra dots",
+      "sizes": {
+        "system": 150
+      }
+    },
+    {
+      "id": "j2",
+      "type": "join",
+      "x": 2240,
+      "y": 180,
+      "fields": {
+        "sep": "\n\nBRAILLE AUDIT:\n"
+      },
+      "w": 200,
+      "name": "Card, dot read + braille audit"
+    },
+    {
+      "id": "audit",
+      "type": "decide",
+      "x": 2600,
+      "y": 180,
+      "fields": {
+        "model": "perplexity/pplx-decider-v1.2",
+        "mode": "choose",
+        "question": "The picture should be a tactile plaque encoding the carded word in braille: one row of 5 cells, each cell's raised dots exactly the card's dot set for that letter, no printed letters or text anywhere. The text gives the BRAILLE CARD (word, five letters with dot sets), a blind DOT READ (cells seen, raised dots per cell, printed text), and a BRAILLE AUDIT scoring cells exact, missing and extra dots, the decoded word and text leak. Which verdict fits? 'reads exactly' means CELLS is 5 of 5, DECODED equals the carded word and TEXT LEAK is none. 'print cheat' means TEXT LEAK is not none - the word, or any letter of it, appears in print, however good the dots are. 'unreadable' means CELLS is 2 of 5 or less, or DECODED has two or more '?' cells. 'letters drifted' means anything else: most cells right but at least one letter changed by a missing or extra dot. Judge whether the dots themselves carry the word, not the picture's beauty.",
+        "options": "reads exactly\nletters drifted\nunreadable\nprint cheat"
+      },
+      "w": 280,
+      "name": "Reads exactly - audited",
+      "sizes": {
+        "question": 130
+      }
+    },
+    {
+      "id": "editor",
+      "type": "llm",
+      "x": 2600,
+      "y": 520,
+      "fields": {
+        "model": "z-ai/glm-5.3-flash",
+        "system": "You are the braille editor in a dot pipeline. The input gives a BRAILLE CARD (WORD, 5 CELL lines as letter | dots numbers, FRAME), a blind DOT READ (raised dots per cell, printed text), and a BRAILLE AUDIT scoring cells exact, missing and extra dots, the decoded word and text leak. Write ONE edit instruction for an image-editing model that will receive the painted plaque itself. Rules:\n- Address the editor directly and write in imperatives: 'Edit this picture: ...'\n- The frame is the scope: open by demanding the plaque, its material and colour, the background, the straight-on view, the light, the framing and the single row of exactly 5 cells stay exactly the same.\n- State the FULL target end state, not just the deltas: every cell shows all six dot positions as faint shallow dimples in a regular 2-by-3 grid, and the raised dark domes are exactly the card's dot set for that cell - cell 1 through cell 5, named with their dot numbers and position names (1 = left-top, 2 = left-middle, 3 = left-bottom, 4 = right-top, 5 = right-middle, 6 = right-bottom) - and no printed letters, words, numbers or labels anywhere.\n- Then name the audit's specific failures as extra demands: for every MISSING DOT, name its cell and position and demand a raised dome be added there; for every EXTRA DOT, name its cell and position and demand the dome be flattened to a faint dimple; if TEXT LEAK is not none, demand every printed character be removed completely; cells already exact must be left untouched - name them as keepers by cell number.\n- End with: 'Change nothing except the raised dots and any printed text named here. Clean straight-on photograph of a tactile braille plaque, raised dots only, no printed text, no letters, no numbers, no people.'\nOutput the single edit instruction only - no preamble, no list, no explanation.",
+        "maxTokens": "350",
+        "reasoningEffort": "low"
+      },
+      "w": 280,
+      "name": "Edit notes - GLM turns the braille audit into dot-level fix instructions",
+      "sizes": {
+        "system": 150
+      }
+    },
+    {
+      "id": "fix",
+      "type": "edit",
+      "x": 2960,
+      "y": 520,
+      "fields": {
+        "model": "meta/muse-image/edit",
+        "size": "auto"
+      },
+      "w": 280,
+      "name": "Corrected plaque - Muse Edit repairs the raised dots"
+    },
+    {
+      "id": "surveyor2",
+      "type": "vision",
+      "x": 3320,
+      "y": 520,
+      "fields": {
+        "model": "google/gemini-3.8-flash",
+        "q": "You are a reader examining a tactile braille plaque. You do not know what word was planned - report only the dots you actually see. The plaque should carry one row of braille cells; each cell is a 2-wide by 3-tall grid of dot positions numbered: 1 = left-top, 2 = left-middle, 3 = left-bottom, 4 = right-top, 5 = right-middle, 6 = right-bottom. A position counts as RAISED only if it stands out as a large dark dome; faint shallow dimples are empty positions and do NOT count. First, 'CELLS SEEN:' plus the number of cells in the row. Then, for each cell from left to right, output 'CELL <n>: raised <the raised dot numbers, ascending, comma-separated>' or 'CELL <n>: raised none'. Finally, 'PRINTED TEXT:' plus any printed letters, words or numbers visible anywhere in the picture, quoted, or 'none'. Output exactly this shape:\nCELLS SEEN: <number>\nCELL 1: raised <numbers or none>\n(continue for every cell seen)\nPRINTED TEXT: <quoted text, or none>"
+      },
+      "w": 280,
+      "name": "Re-read - Gemini reports the corrected plaque's raised dots blind",
+      "sizes": {
+        "q": 150
+      }
+    },
+    {
+      "id": "j4",
+      "type": "join",
+      "x": 3680,
+      "y": 420,
+      "fields": {
+        "sep": "\n\nDOT READ (a blind reader reported only the raised dots it could see in the corrected picture, cell by cell; it never saw the braille card or the word):\n"
+      },
+      "w": 200,
+      "name": "Braille card + re-read"
+    },
+    {
+      "id": "checker2",
+      "type": "llm",
+      "x": 4040,
+      "y": 520,
+      "fields": {
+        "model": "z-ai/glm-5.3-flash",
+        "system": "You are a braille auditor. The input gives a BRAILLE CARD (WORD, 5 CELL lines as letter | dots numbers, FRAME), then 'DOT READ' with a blind reader's CELLS SEEN, one raised-dot line per cell, and a PRINTED TEXT line. Grade-1 braille dot table (dot numbers raised for each letter): A = 1; B = 1,2; C = 1,4; D = 1,4,5; E = 1,5; F = 1,2,4; G = 1,2,4,5; H = 1,2,5; I = 2,4; J = 2,4,5; K = 1,3; L = 1,2,3; M = 1,3,4; N = 1,3,4,5; O = 1,3,5; P = 1,2,3,4; Q = 1,2,3,4,5; R = 1,2,3,5; S = 2,3,4; T = 2,3,4,5; U = 1,3,6; V = 1,2,3,6; W = 2,4,5,6; X = 1,3,4,6; Y = 1,3,4,5,6; Z = 1,3,5,6. Dot positions inside one cell: 1 = left-top, 2 = left-middle, 3 = left-bottom, 4 = right-top, 5 = right-middle, 6 = right-bottom.\nScore cell by cell, matching reader cell n to card cell n by position in the row. Work in this order and output exactly these lines:\n1. 'CELLS: X of 5' - one point per card cell whose reader dot set is EXACTLY the card's dot set for that cell (same numbers, no more, no fewer). If the reader saw fewer or more than 5 cells, score the missing or extra cells as wrong.\n2. 'MISSING DOTS: ' followed by, for every card dot the reader did not report raised in that cell, '<cell number>:<dot number>' entries separated by '; ', or 'none'.\n3. 'EXTRA DOTS: ' followed by, for every raised dot the reader reported that is not in that cell's card set, '<cell number>:<dot number>' entries separated by '; ', or 'none'.\n4. 'DECODED: ' followed by the word you get by decoding the reader's five dot sets with the table above, in cell order; write '?' for any cell whose dot set matches no letter.\n5. 'TEXT LEAK: ' plus the reader's PRINTED TEXT content, copied.\n6. 'Summary: ' followed by one sentence restating cells exact, missing and extra dots, and the decoded word.\nOutput exactly these lines and nothing else.",
+        "maxTokens": "1200",
+        "reasoningEffort": "low"
+      },
+      "w": 280,
+      "name": "Braille re-audit - GLM decodes the corrected plaque's dot read against the same card",
+      "sizes": {
+        "system": 150
+      }
+    }
+  ],
+  "links": [
+    {
+      "id": "l1",
+      "from": {
+        "node": "setting",
+        "port": "text"
+      },
+      "to": {
+        "node": "director",
+        "port": "prompt"
+      }
+    },
+    {
+      "id": "l2",
+      "from": {
+        "node": "director",
+        "port": "text"
+      },
+      "to": {
+        "node": "j0",
+        "port": "b"
+      }
+    },
+    {
+      "id": "l12",
+      "from": {
+        "node": "setting",
+        "port": "text"
+      },
+      "to": {
+        "node": "j0",
+        "port": "a"
+      }
+    },
+    {
+      "id": "l13",
+      "from": {
+        "node": "j0",
+        "port": "text"
+      },
+      "to": {
+        "node": "stylist",
+        "port": "prompt"
+      }
+    },
+    {
+      "id": "l3",
+      "from": {
+        "node": "stylist",
+        "port": "text"
+      },
+      "to": {
+        "node": "paint",
+        "port": "prompt"
+      }
+    },
+    {
+      "id": "l4",
+      "from": {
+        "node": "paint",
+        "port": "image"
+      },
+      "to": {
+        "node": "surveyor",
+        "port": "image"
+      }
+    },
+    {
+      "id": "l7",
+      "from": {
+        "node": "director",
+        "port": "text"
+      },
+      "to": {
+        "node": "j1",
+        "port": "a"
+      }
+    },
+    {
+      "id": "l8",
+      "from": {
+        "node": "surveyor",
+        "port": "text"
+      },
+      "to": {
+        "node": "j1",
+        "port": "b"
+      }
+    },
+    {
+      "id": "l11",
+      "from": {
+        "node": "j1",
+        "port": "text"
+      },
+      "to": {
+        "node": "checker",
+        "port": "prompt"
+      }
+    },
+    {
+      "id": "l14",
+      "from": {
+        "node": "j1",
+        "port": "text"
+      },
+      "to": {
+        "node": "j2",
+        "port": "a"
+      }
+    },
+    {
+      "id": "l15",
+      "from": {
+        "node": "checker",
+        "port": "text"
+      },
+      "to": {
+        "node": "j2",
+        "port": "b"
+      }
+    },
+    {
+      "id": "l16",
+      "from": {
+        "node": "j2",
+        "port": "text"
+      },
+      "to": {
+        "node": "audit",
+        "port": "text"
+      }
+    },
+    {
+      "id": "l17",
+      "from": {
+        "node": "paint",
+        "port": "image"
+      },
+      "to": {
+        "node": "audit",
+        "port": "img1"
+      }
+    },
+    {
+      "id": "l18",
+      "from": {
+        "node": "j2",
+        "port": "text"
+      },
+      "to": {
+        "node": "editor",
+        "port": "prompt"
+      }
+    },
+    {
+      "id": "l19",
+      "from": {
+        "node": "editor",
+        "port": "text"
+      },
+      "to": {
+        "node": "fix",
+        "port": "prompt"
+      }
+    },
+    {
+      "id": "l20",
+      "from": {
+        "node": "paint",
+        "port": "image"
+      },
+      "to": {
+        "node": "fix",
+        "port": "image"
+      }
+    },
+    {
+      "id": "l21",
+      "from": {
+        "node": "fix",
+        "port": "image"
+      },
+      "to": {
+        "node": "surveyor2",
+        "port": "image"
+      }
+    },
+    {
+      "id": "l22",
+      "from": {
+        "node": "director",
+        "port": "text"
+      },
+      "to": {
+        "node": "j4",
+        "port": "a"
+      }
+    },
+    {
+      "id": "l23",
+      "from": {
+        "node": "surveyor2",
+        "port": "text"
+      },
+      "to": {
+        "node": "j4",
+        "port": "b"
+      }
+    },
+    {
+      "id": "l24",
+      "from": {
+        "node": "j4",
+        "port": "text"
+      },
+      "to": {
+        "node": "checker2",
+        "port": "prompt"
+      }
+    }
+  ],
+  "nid": 30,
+  "lid": 38,
+  "view": {
+    "panX": 40,
+    "panY": 40,
+    "scale": 0.5
+  }
+}
