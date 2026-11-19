@@ -70,7 +70,6 @@
     "model": "lightricks/ltx-2.5/fast",
     "prompt": "The subject in the photo speaks the supplied audio aloud, mouth moving in sync with the words. Locked camera, same framing. Only the mouth, jaw and a slight head movement move; everything else stays exactly as it is. No cuts, no new objects, no camera motion.",
     "resolution": "720p",
-    "duration": "5",
     "modelOpts": {
      "generateAudio": false
     }
