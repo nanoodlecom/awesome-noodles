@@ -1,0 +1,654 @@
+{
+ "v": 1,
+ "nodes": [
+  {
+   "id": "c1",
+   "type": "comment",
+   "x": 60,
+   "y": 30,
+   "fields": {
+    "text": "Can one poster carry TWO messages, each readable only in its own light? A GLM director cards a HIDDEN word to be printed in cyan and a DECOY word in red, plus a red motif scene. A second GLM turns the card into a painter prompt for a flat two-ink poster: the hidden word in huge cyan block capitals, buried under a dense red overprint of motifs and the decoy word, so a casual glance reads the decoy and the pattern - not the secret. Muse paints it. A blind Gemini reads the NORMAL poster (the leak axis: the secret must NOT be readable there). Muse Edit then remaps the colours the way a sheet of red acetate would - red fades to a pale ghost, cyan turns charcoal - and a second blind Gemini reads the FILTERED view (the reveal axis: the secret must be readable there, exactly). A GLM auditor scores REVEAL, LEAK and DECOY against the card, and a Decide judge headlines round 1 - as a side output. The loop then closes: a GLM editor turns the audit into concrete ink-level edit notes, Muse Edit repaints the poster, and the corrected poster is rendered through the same red-filter remap again, with blind re-reads and a re-audit as side scores. The flow does not end in text: its deliverables are the corrected poster and its reveal view. See recipes/red-reveal-check.md."
+   },
+   "w": 900,
+   "name": "Red reveal, channel-audited - a cyan secret under red noise, read in two lights, and a fix round that repairs the channels"
+  },
+  {
+   "id": "setting",
+   "type": "text",
+   "x": 60,
+   "y": 300,
+   "fields": {
+    "text": "A flat vintage magic-shop poster, seen straight-on, filling the frame, evenly lit, on off-white paper. It is a two-colour screen print: pure bright red ink and pure cyan ink only - no black, no other colours. No people, no frame, no hands, no room around it."
+   },
+   "w": 300,
+   "name": "Poster setting"
+  },
+  {
+   "id": "filtertext",
+   "type": "text",
+   "x": 60,
+   "y": 560,
+   "fields": {
+    "text": "Transform this picture to show exactly how it would look viewed through a transparent sheet of RED acetate laid over it. Colour rules, applied to every pixel and nothing else: every pure RED element (ink, lines, letters, motifs) fades to a very pale pink, almost the off-white of the paper, so red printing effectively disappears; every CYAN / blue-green element turns dark charcoal-black and stands out sharply against the paper; the off-white paper stays off-white. Do not add, remove, move, resize or redraw any shape, letter or motif - only remap the colours exactly this way. No new text, no border, no hand holding a filter, no photograph of a poster - the same flat poster, recoloured."
+   },
+   "w": 300,
+   "name": "Red acetate view - the fixed colour-remap instruction for both filter passes"
+  },
+  {
+   "id": "director",
+   "type": "llm",
+   "x": 440,
+   "y": 280,
+   "fields": {
+    "model": "z-ai/glm-5.3-flash",
+    "system": "You are a red-reveal designer. Given a POSTER SETTING, design a REVEAL CARD for a two-ink poster that hides one word inside another.\nChoose the HIDDEN word from this menu ONLY: MAGIC; SPELL; GHOST; TRICK; CHARM.\nChoose the DECOY word from the same menu, and it must be a DIFFERENT word from the hidden word.\nThen write a SCENE line: the poster's red decorative motif field in a few words (for example 'a dense ring of red stars, crescent moons and swirling ribbons') - motifs only, no extra words or letters.\nThe printing plan is fixed and not yours to change: the HIDDEN word is printed in huge pure-cyan block capitals across the centre; the DECOY word is printed smaller in pure red; the red motif field is overprinted densely across the whole poster, including over the cyan letters, so at a casual glance the eye reads the red decoy and the pattern while the cyan word stays camouflaged.\nOutput exactly this shape and nothing else:\nHIDDEN: <word>\nDECOY: <different word>\nSCENE: <red motif field, a few words>",
+    "maxTokens": "500",
+    "reasoningEffort": "low"
+   },
+   "w": 280,
+   "name": "Reveal card - GLM picks a hidden cyan word, a red decoy and a motif scene",
+   "sizes": {
+    "system": 150
+   }
+  },
+  {
+   "id": "j0",
+   "type": "join",
+   "x": 800,
+   "y": 480,
+   "fields": {
+    "sep": "\n\nREVEAL CARD (the hidden word, the decoy word and the motif scene; its exact wording must reach the painter):\n"
+   },
+   "w": 200,
+   "name": "Setting + reveal card"
+  },
+  {
+   "id": "stylist",
+   "type": "llm",
+   "x": 800,
+   "y": 280,
+   "fields": {
+    "model": "z-ai/glm-5.3-flash",
+    "system": "You turn a REVEAL CARD into ONE prompt for an AI image generator. The input gives a POSTER SETTING first, then 'REVEAL CARD' with HIDDEN, DECOY and SCENE lines. Write the prompt so the generator paints a flat, straight-on, two-colour screen-print poster on off-white paper using ONLY pure bright red ink and pure cyan ink - no black, no grey, no other colours, no gradients, no photograph shading.\nComposition, exactly: the HIDDEN word in huge bold cyan block capitals across the centre of the poster, letterforms complete and correctly spelled; the DECOY word in smaller red capitals near the top; the SCENE's red motifs printed densely across the WHOLE poster as an overprint layer - red motif lines cross over the cyan letters everywhere, breaking up their outlines, so a casual glance reads the red decoy and the busy red pattern first and the cyan word is hard to notice, even though every cyan letter is fully present underneath.\nCardinal rules: the ONLY words in the poster are the HIDDEN word (cyan) and the DECOY word (red) - no other letters, words or numbers anywhere; both words spelled exactly as carded; the cyan letters must stay pure cyan (never darkened, outlined in black, or shadowed), because a later red-filter view depends on the ink colours being pure.\nOutput the image prompt only, one paragraph, no preamble.",
+    "maxTokens": "700",
+    "reasoningEffort": "low"
+   },
+   "w": 280,
+   "name": "Poster brief - GLM turns the card into a two-ink painter prompt",
+   "sizes": {
+    "system": 150
+   }
+  },
+  {
+   "id": "paint",
+   "type": "image",
+   "x": 1160,
+   "y": 280,
+   "fields": {
+    "model": "meta/muse-image/text-to-image",
+    "size": "16:9",
+    "variations": "1"
+   },
+   "w": 280,
+   "name": "Poster - Muse paints the two-ink poster"
+  },
+  {
+   "id": "readern",
+   "type": "vision",
+   "x": 1520,
+   "y": 180,
+   "fields": {
+    "model": "google/gemini-3.8-flash",
+    "q": "You are a casual viewer looking at a flat two-colour poster (red and cyan inks on off-white paper). You do not know anything was planned - report only what you actually see. Output exactly this shape:\nFIRST READ: <the single word a casual viewer reads first and most easily, or none>\nALL WORDS: <every legible word anywhere in the poster, in reading order, comma-separated, or none>\nCYAN WORD: <if the cyan / blue-green shapes form a readable word, that word spelled exactly; if they form only some letters, those letters with ? for unreadable ones; otherwise none>"
+   },
+   "w": 280,
+   "name": "Normal read - Gemini reads the unfiltered poster blind",
+   "sizes": {
+    "q": 150
+   }
+  },
+  {
+   "id": "filter1",
+   "type": "edit",
+   "x": 1520,
+   "y": 520,
+   "fields": {
+    "model": "meta/muse-image/edit",
+    "size": "auto"
+   },
+   "w": 280,
+   "name": "Red-filter view, round 1 - Muse Edit remaps red to ghost, cyan to charcoal"
+  },
+  {
+   "id": "readerr",
+   "type": "vision",
+   "x": 1880,
+   "y": 520,
+   "fields": {
+    "model": "google/gemini-3.8-flash",
+    "q": "You are looking at a flat poster that has been recoloured: dark charcoal shapes on off-white paper, with some very faint pale-pink ghost shapes. You do not know anything was planned - report only what you actually see. Output exactly this shape:\nDARKEST WORD: <the large dark word, transcribed letter by letter exactly as printed, or none>\nOTHER WORDS: <any other legible dark words, comma-separated, or none>\nGHOSTS: <any words or shapes still faintly visible in pale pink, described briefly, or none>"
+   },
+   "w": 280,
+   "name": "Reveal read - Gemini reads the filtered view blind",
+   "sizes": {
+    "q": 150
+   }
+  },
+  {
+   "id": "j1",
+   "type": "join",
+   "x": 1880,
+   "y": 180,
+   "fields": {
+    "sep": "\n\nNORMAL READ (a blind reader on the unfiltered poster; it never saw the card):\n"
+   },
+   "w": 200,
+   "name": "Card + normal read"
+  },
+  {
+   "id": "j2",
+   "type": "join",
+   "x": 2240,
+   "y": 320,
+   "fields": {
+    "sep": "\n\nREVEAL READ (a blind reader on the red-filtered view; it never saw the card):\n"
+   },
+   "w": 200,
+   "name": "Card, normal read + reveal read"
+  },
+  {
+   "id": "checker",
+   "type": "llm",
+   "x": 2600,
+   "y": 320,
+   "fields": {
+    "model": "z-ai/glm-5.3-flash",
+    "system": "You are a red-reveal auditor. The input gives a REVEAL CARD (HIDDEN word, DECOY word, SCENE), then a NORMAL READ (a blind reader's FIRST READ, ALL WORDS and CYAN WORD on the unfiltered poster), then a REVEAL READ (a blind reader's DARKEST WORD, OTHER WORDS and GHOSTS on the red-filtered view). Score in this order and output exactly these lines:\n1. 'REVEAL: EXACT' if the reveal read's DARKEST WORD is exactly the card's HIDDEN word, letter for letter; 'REVEAL: PARTIAL' if it shares at least two letters in the right positions or is the hidden word with exactly one letter wrong or unreadable; otherwise 'REVEAL: NONE'.\n2. 'REVEALED WORD: <the DARKEST WORD copied verbatim, or none>'.\n3. 'LEAK: FULL' if the normal read's FIRST READ is the hidden word or its CYAN WORD is exactly the hidden word (a casual viewer can read the secret with no filter); 'LEAK: PARTIAL' if the normal CYAN WORD shows at least two correct letters of the hidden word in position; otherwise 'LEAK: NONE'.\n4. 'DECOY: KEPT' if the card's DECOY word appears in the normal read's ALL WORDS; otherwise 'DECOY: LOST'.\n5. 'GHOSTS: <copied from the reveal read's GHOSTS line>'.\n6. 'Summary: <one sentence naming the reveal result, the leak result and the decoy result>'.\nJudge only from the two reads against the card; never invent letters a reader did not report.",
+    "maxTokens": "1200",
+    "reasoningEffort": "low"
+   },
+   "w": 280,
+   "name": "Reveal audit - GLM scores reveal, leak and decoy against the card",
+   "sizes": {
+    "system": 150
+   }
+  },
+  {
+   "id": "j3",
+   "type": "join",
+   "x": 2960,
+   "y": 320,
+   "fields": {
+    "sep": "\n\nREVEAL AUDIT:\n"
+   },
+   "w": 200,
+   "name": "Card, reads + reveal audit"
+  },
+  {
+   "id": "audit",
+   "type": "decide",
+   "x": 2960,
+   "y": 120,
+   "fields": {
+    "model": "perplexity/pplx-decider-v1.2",
+    "mode": "choose",
+    "question": "The picture should be a two-ink poster hiding a secret: in the normal view a casual reader must read the red DECOY word and NOT be able to read the cyan HIDDEN word; through a red filter the red printing must vanish and the hidden word must appear exactly. The text gives the REVEAL CARD (HIDDEN, DECOY, SCENE), a blind NORMAL READ, a blind REVEAL READ of the filtered view, and a REVEAL AUDIT scoring REVEAL, LEAK and DECOY. Which verdict fits? 'clean reveal' means REVEAL is EXACT, LEAK is NONE and DECOY is KEPT. 'leaked secret' means LEAK is FULL - the hidden word is readable with no filter, however well it reveals. 'never reveals' means REVEAL is NONE - the filtered view does not produce the hidden word. 'decoy lost' means anything else where DECOY is LOST, or REVEAL is only PARTIAL with no full leak. Judge the two reads, not the poster's beauty.",
+    "options": "clean reveal\nleaked secret\nnever reveals\ndecoy lost"
+   },
+   "w": 280,
+   "name": "Clean reveal - audited",
+   "sizes": {
+    "question": 130
+   }
+  },
+  {
+   "id": "editor",
+   "type": "llm",
+   "x": 3320,
+   "y": 320,
+   "fields": {
+    "model": "z-ai/glm-5.3-flash",
+    "system": "You are the red-reveal editor in a two-ink pipeline. The input gives a REVEAL CARD (HIDDEN, DECOY, SCENE), a blind NORMAL READ, a blind REVEAL READ, and a REVEAL AUDIT scoring REVEAL, LEAK and DECOY. Write ONE edit instruction for an image-editing model that will receive the painted poster itself. Rules:\n- Address the editor directly and write in imperatives: 'Edit this picture: ...'\n- Open by demanding the scope stay fixed: the same flat straight-on poster, off-white paper, framing, motif scene and layout stay exactly the same, and the inks stay ONLY pure bright red and pure cyan - no black, no grey, no new colours, no other words or letters.\n- State the FULL target end state: the HIDDEN word (copy it from the card) in huge, complete, correctly spelled pure-cyan block capitals across the centre; the DECOY word (copy it) in smaller red capitals near the top, clearly legible; the red motif field dense across the whole poster.\n- Then turn the audit into concrete extra demands, naming the failure: if LEAK is FULL or PARTIAL, demand a denser red overprint crossing the cyan letter strokes and more red motif clutter at the cyan letters' edges so the cyan word cannot be read at a glance, while every cyan letter stays complete underneath; if REVEAL is PARTIAL or NONE, demand purer, more saturated cyan letters with complete unbroken letterforms and red motifs that cross the letters as thin lines only, never covering or breaking a letter's shape; if DECOY is LOST, demand the decoy word be repainted larger and bolder in pure red; if GHOSTS names the decoy still visible in the filtered view, demand the decoy and motifs be printed in the purest, lightest red so they fade fully under the filter.\n- Name what already works as keepers to leave alone.\n- Output the edit instruction only, one paragraph, at most 180 words.",
+    "maxTokens": "350",
+    "reasoningEffort": "low"
+   },
+   "w": 280,
+   "name": "Edit notes - GLM turns the reveal audit into ink-level fix instructions",
+   "sizes": {
+    "system": 150
+   }
+  },
+  {
+   "id": "fix",
+   "type": "edit",
+   "x": 3680,
+   "y": 320,
+   "fields": {
+    "model": "meta/muse-image/edit",
+    "size": "auto"
+   },
+   "w": 280,
+   "name": "Corrected poster - Muse Edit repairs the channels"
+  },
+  {
+   "id": "filter2",
+   "type": "edit",
+   "x": 4040,
+   "y": 320,
+   "fields": {
+    "model": "meta/muse-image/edit",
+    "size": "auto"
+   },
+   "w": 280,
+   "name": "Red-filter view, corrected - Muse Edit remaps the corrected poster"
+  },
+  {
+   "id": "readern2",
+   "type": "vision",
+   "x": 4040,
+   "y": 620,
+   "fields": {
+    "model": "google/gemini-3.8-flash",
+    "q": "You are a casual viewer looking at a flat two-colour poster (red and cyan inks on off-white paper). You do not know anything was planned - report only what you actually see. Output exactly this shape:\nFIRST READ: <the single word a casual viewer reads first and most easily, or none>\nALL WORDS: <every legible word anywhere in the poster, in reading order, comma-separated, or none>\nCYAN WORD: <if the cyan / blue-green shapes form a readable word, that word spelled exactly; if they form only some letters, those letters with ? for unreadable ones; otherwise none>"
+   },
+   "w": 280,
+   "name": "Normal re-read - Gemini reads the corrected poster blind",
+   "sizes": {
+    "q": 150
+   }
+  },
+  {
+   "id": "readerr2",
+   "type": "vision",
+   "x": 4400,
+   "y": 320,
+   "fields": {
+    "model": "google/gemini-3.8-flash",
+    "q": "You are looking at a flat poster that has been recoloured: dark charcoal shapes on off-white paper, with some very faint pale-pink ghost shapes. You do not know anything was planned - report only what you actually see. Output exactly this shape:\nDARKEST WORD: <the large dark word, transcribed letter by letter exactly as printed, or none>\nOTHER WORDS: <any other legible dark words, comma-separated, or none>\nGHOSTS: <any words or shapes still faintly visible in pale pink, described briefly, or none>"
+   },
+   "w": 280,
+   "name": "Reveal re-read - Gemini reads the corrected filtered view blind",
+   "sizes": {
+    "q": 150
+   }
+  },
+  {
+   "id": "j5",
+   "type": "join",
+   "x": 4400,
+   "y": 620,
+   "fields": {
+    "sep": "\n\nNORMAL READ (a blind reader on the unfiltered poster; it never saw the card):\n"
+   },
+   "w": 200,
+   "name": "Card + corrected normal read"
+  },
+  {
+   "id": "j6",
+   "type": "join",
+   "x": 4760,
+   "y": 480,
+   "fields": {
+    "sep": "\n\nREVEAL READ (a blind reader on the red-filtered view; it never saw the card):\n"
+   },
+   "w": 200,
+   "name": "Card, corrected reads + reveal re-read"
+  },
+  {
+   "id": "checker2",
+   "type": "llm",
+   "x": 5120,
+   "y": 480,
+   "fields": {
+    "model": "z-ai/glm-5.3-flash",
+    "system": "You are a red-reveal auditor. The input gives a REVEAL CARD (HIDDEN word, DECOY word, SCENE), then a NORMAL READ (a blind reader's FIRST READ, ALL WORDS and CYAN WORD on the unfiltered poster), then a REVEAL READ (a blind reader's DARKEST WORD, OTHER WORDS and GHOSTS on the red-filtered view). Score in this order and output exactly these lines:\n1. 'REVEAL: EXACT' if the reveal read's DARKEST WORD is exactly the card's HIDDEN word, letter for letter; 'REVEAL: PARTIAL' if it shares at least two letters in the right positions or is the hidden word with exactly one letter wrong or unreadable; otherwise 'REVEAL: NONE'.\n2. 'REVEALED WORD: <the DARKEST WORD copied verbatim, or none>'.\n3. 'LEAK: FULL' if the normal read's FIRST READ is the hidden word or its CYAN WORD is exactly the hidden word (a casual viewer can read the secret with no filter); 'LEAK: PARTIAL' if the normal CYAN WORD shows at least two correct letters of the hidden word in position; otherwise 'LEAK: NONE'.\n4. 'DECOY: KEPT' if the card's DECOY word appears in the normal read's ALL WORDS; otherwise 'DECOY: LOST'.\n5. 'GHOSTS: <copied from the reveal read's GHOSTS line>'.\n6. 'Summary: <one sentence naming the reveal result, the leak result and the decoy result>'.\nJudge only from the two reads against the card; never invent letters a reader did not report.",
+    "maxTokens": "1200",
+    "reasoningEffort": "low"
+   },
+   "w": 280,
+   "name": "Reveal re-audit - GLM scores the corrected poster in both lights",
+   "sizes": {
+    "system": 150
+   }
+  }
+ ],
+ "links": [
+  {
+   "id": "l1",
+   "from": {
+    "node": "setting",
+    "port": "text"
+   },
+   "to": {
+    "node": "director",
+    "port": "prompt"
+   }
+  },
+  {
+   "id": "l2",
+   "from": {
+    "node": "director",
+    "port": "text"
+   },
+   "to": {
+    "node": "j0",
+    "port": "b"
+   }
+  },
+  {
+   "id": "l12",
+   "from": {
+    "node": "setting",
+    "port": "text"
+   },
+   "to": {
+    "node": "j0",
+    "port": "a"
+   }
+  },
+  {
+   "id": "l13",
+   "from": {
+    "node": "j0",
+    "port": "text"
+   },
+   "to": {
+    "node": "stylist",
+    "port": "prompt"
+   }
+  },
+  {
+   "id": "l3",
+   "from": {
+    "node": "stylist",
+    "port": "text"
+   },
+   "to": {
+    "node": "paint",
+    "port": "prompt"
+   }
+  },
+  {
+   "id": "l4",
+   "from": {
+    "node": "paint",
+    "port": "image"
+   },
+   "to": {
+    "node": "readern",
+    "port": "image"
+   }
+  },
+  {
+   "id": "l5",
+   "from": {
+    "node": "filtertext",
+    "port": "text"
+   },
+   "to": {
+    "node": "filter1",
+    "port": "prompt"
+   }
+  },
+  {
+   "id": "l6",
+   "from": {
+    "node": "paint",
+    "port": "image"
+   },
+   "to": {
+    "node": "filter1",
+    "port": "image"
+   }
+  },
+  {
+   "id": "l7",
+   "from": {
+    "node": "filter1",
+    "port": "image"
+   },
+   "to": {
+    "node": "readerr",
+    "port": "image"
+   }
+  },
+  {
+   "id": "l8",
+   "from": {
+    "node": "director",
+    "port": "text"
+   },
+   "to": {
+    "node": "j1",
+    "port": "a"
+   }
+  },
+  {
+   "id": "l9",
+   "from": {
+    "node": "readern",
+    "port": "text"
+   },
+   "to": {
+    "node": "j1",
+    "port": "b"
+   }
+  },
+  {
+   "id": "l10",
+   "from": {
+    "node": "j1",
+    "port": "text"
+   },
+   "to": {
+    "node": "j2",
+    "port": "a"
+   }
+  },
+  {
+   "id": "l11",
+   "from": {
+    "node": "readerr",
+    "port": "text"
+   },
+   "to": {
+    "node": "j2",
+    "port": "b"
+   }
+  },
+  {
+   "id": "l14",
+   "from": {
+    "node": "j2",
+    "port": "text"
+   },
+   "to": {
+    "node": "checker",
+    "port": "prompt"
+   }
+  },
+  {
+   "id": "l15",
+   "from": {
+    "node": "j2",
+    "port": "text"
+   },
+   "to": {
+    "node": "j3",
+    "port": "a"
+   }
+  },
+  {
+   "id": "l16",
+   "from": {
+    "node": "checker",
+    "port": "text"
+   },
+   "to": {
+    "node": "j3",
+    "port": "b"
+   }
+  },
+  {
+   "id": "l17",
+   "from": {
+    "node": "j3",
+    "port": "text"
+   },
+   "to": {
+    "node": "audit",
+    "port": "text"
+   }
+  },
+  {
+   "id": "l18",
+   "from": {
+    "node": "paint",
+    "port": "image"
+   },
+   "to": {
+    "node": "audit",
+    "port": "img1"
+   }
+  },
+  {
+   "id": "l19",
+   "from": {
+    "node": "j3",
+    "port": "text"
+   },
+   "to": {
+    "node": "editor",
+    "port": "prompt"
+   }
+  },
+  {
+   "id": "l20",
+   "from": {
+    "node": "editor",
+    "port": "text"
+   },
+   "to": {
+    "node": "fix",
+    "port": "prompt"
+   }
+  },
+  {
+   "id": "l21",
+   "from": {
+    "node": "paint",
+    "port": "image"
+   },
+   "to": {
+    "node": "fix",
+    "port": "image"
+   }
+  },
+  {
+   "id": "l22",
+   "from": {
+    "node": "filtertext",
+    "port": "text"
+   },
+   "to": {
+    "node": "filter2",
+    "port": "prompt"
+   }
+  },
+  {
+   "id": "l23",
+   "from": {
+    "node": "fix",
+    "port": "image"
+   },
+   "to": {
+    "node": "filter2",
+    "port": "image"
+   }
+  },
+  {
+   "id": "l24",
+   "from": {
+    "node": "fix",
+    "port": "image"
+   },
+   "to": {
+    "node": "readern2",
+    "port": "image"
+   }
+  },
+  {
+   "id": "l25",
+   "from": {
+    "node": "filter2",
+    "port": "image"
+   },
+   "to": {
+    "node": "readerr2",
+    "port": "image"
+   }
+  },
+  {
+   "id": "l26",
+   "from": {
+    "node": "director",
+    "port": "text"
+   },
+   "to": {
+    "node": "j5",
+    "port": "a"
+   }
+  },
+  {
+   "id": "l27",
+   "from": {
+    "node": "readern2",
+    "port": "text"
+   },
+   "to": {
+    "node": "j5",
+    "port": "b"
+   }
+  },
+  {
+   "id": "l28",
+   "from": {
+    "node": "j5",
+    "port": "text"
+   },
+   "to": {
+    "node": "j6",
+    "port": "a"
+   }
+  },
+  {
+   "id": "l29",
+   "from": {
+    "node": "readerr2",
+    "port": "text"
+   },
+   "to": {
+    "node": "j6",
+    "port": "b"
+   }
+  },
+  {
+   "id": "l30",
+   "from": {
+    "node": "j6",
+    "port": "text"
+   },
+   "to": {
+    "node": "checker2",
+    "port": "prompt"
+   }
+  }
+ ],
+ "nid": 40,
+ "lid": 40,
+ "view": {
+  "panX": 40,
+  "panY": 40,
+  "scale": 0.5
+ }
+}
