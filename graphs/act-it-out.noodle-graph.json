@@ -1,0 +1,415 @@
+{
+  "v": 1,
+  "nodes": [
+    {
+      "id": "c1",
+      "type": "comment",
+      "x": 60,
+      "y": 30,
+      "fields": {
+        "text": "Muse paints a still from your scene brief. A Gemini stage manager reads the still as rendered and writes an ACTION CARD: the ACTOR, the STAGE, and every STATIC that must not move, change or vanish, with counts. Your motion brief and the card meet in a GLM director, who writes one locked-camera motion prompt naming the single action and every static that stays put. MiniMax H3 (the ivideo node - no other catalog flow uses it) animates the actual still. Five frames are sampled and a second Gemini compares the first against the last: what the actor is doing at each end, what MOVED, what is STILL THERE. A GLM motion auditor scores the performance: the action PERFORMED, PARTIAL or NOT PERFORMED, each static KEPT, MOVED or LOST, ending in 'statics X of Y kept'. A Decide judge sees the card, the brief and the last frame and gives the headline: performed, partly performed, nothing moved or scene changed. Every other catalog flow either generates a video from text or analyses a clip somebody uploaded; this is the one that directs a performance on a still it painted - and then checks the performance happened and nothing else did. See recipes/act-it-out.md."
+      },
+      "w": 900,
+      "name": "Act it out, motion-checked - paint a still, direct one action, check the performance"
+    },
+    {
+      "id": "scene",
+      "type": "text",
+      "x": 60,
+      "y": 300,
+      "fields": {
+        "text": "A sunny cottage garden in soft morning light, wide locked-off view, photorealistic, no text. Centre frame: a young gardener in a straw hat and green apron, standing on a stone path, holding a tilted metal watering can above the first of exactly 3 terracotta flower pots in a row - about to pour, no water flowing yet. Behind, exactly 5 tall sunflowers stand along a wooden fence. To the right, a tabby cat sleeps curled on a wooden bench. Everything is still."
+      },
+      "w": 300,
+      "name": "Scene brief"
+    },
+    {
+      "id": "act",
+      "type": "text",
+      "x": 60,
+      "y": 640,
+      "fields": {
+        "text": "For the whole clip, the gardener pours: a thin stream of water arcs from the watering can into the first terracotta pot, and the can tilts a little further as it empties. Only the can, the gardener's arm and the water move. The cat stays asleep on the bench, the sunflowers stand still, the other two pots stay dry and untouched, and the camera never moves."
+      },
+      "w": 300,
+      "name": "Motion brief"
+    },
+    {
+      "id": "still",
+      "type": "image",
+      "x": 440,
+      "y": 280,
+      "fields": {
+        "model": "meta/muse-image/text-to-image",
+        "size": "16:9",
+        "variations": "1"
+      },
+      "w": 260,
+      "name": "Still - Muse paints the opening frame"
+    },
+    {
+      "id": "card",
+      "type": "vision",
+      "x": 780,
+      "y": 280,
+      "fields": {
+        "model": "google/gemini-3.8-flash",
+        "q": "You are the stage manager in an act-it-out pipeline. Look at this still image and write an ACTION CARD in exactly this shape. First line: 'ACTOR: ' followed by the main subject who could move - their appearance, position in frame, and what they hold or touch. Second line: 'STAGE: ' followed by the setting, viewpoint and light in one short line. Then 3 to 6 lines, 'STATIC 1: ' to 'STATIC N: ', one for every other distinct thing that is fully visible and must stay exactly as it is - each with its count if there is more than one of it. End with one line 'STATICS TOTAL: N'. Report only what is visibly there."
+      },
+      "w": 280,
+      "name": "Action card - Gemini reads the still",
+      "sizes": {
+        "q": 150
+      }
+    },
+    {
+      "id": "j0",
+      "type": "join",
+      "x": 780,
+      "y": 620,
+      "fields": {
+        "sep": "\n\nMOTION BRIEF:\n"
+      },
+      "w": 200,
+      "name": "Card + motion brief"
+    },
+    {
+      "id": "director",
+      "type": "llm",
+      "x": 1140,
+      "y": 560,
+      "fields": {
+        "model": "z-ai/glm-5.3-flash",
+        "system": "You write ONE motion prompt for an image-to-video model. The input gives an ACTION CARD (an ACTOR line, a STAGE line, numbered STATIC lines) then 'MOTION BRIEF:' and the one action the actor must perform. Write a single prompt, under 110 words: locked-off camera, same framing, no cuts; the actor performs exactly the brief's action, described concretely - which limb or object moves, toward what, for the whole clip; every STATIC stays completely still, present and unchanged - name each one; nothing new enters the frame; the actor stays the same subject throughout. Output the prompt only.",
+        "maxTokens": "300",
+        "reasoningEffort": "low"
+      },
+      "w": 280,
+      "name": "Motion prompt - GLM directs the shot",
+      "sizes": {
+        "system": 150
+      }
+    },
+    {
+      "id": "film",
+      "type": "ivideo",
+      "x": 1500,
+      "y": 360,
+      "fields": {
+        "model": "minimax-h3-singularity/image-to-video",
+        "prompt": "",
+        "resolution": "480p",
+        "aspect": "16:9",
+        "duration": "5",
+        "modelOpts": {},
+        "loras": []
+      },
+      "w": 280,
+      "name": "Performance - MiniMax H3 animates the still"
+    },
+    {
+      "id": "frames",
+      "type": "vframes",
+      "x": 1860,
+      "y": 360,
+      "fields": {
+        "frames": "5",
+        "gap": "1",
+        "dir": "start"
+      },
+      "w": 220,
+      "name": "5 frames across the clip"
+    },
+    {
+      "id": "ask",
+      "type": "text",
+      "x": 1860,
+      "y": 640,
+      "fields": {
+        "text": "Compare the first and last frames and report what moved."
+      },
+      "w": 300,
+      "name": "Ask"
+    },
+    {
+      "id": "reader",
+      "type": "llm",
+      "x": 2240,
+      "y": 340,
+      "fields": {
+        "model": "google/gemini-3.8-flash",
+        "system": "You are the motion reader in an act-it-out pipeline. The images are 5 frames from one short clip in chronological order (frame 1 is the start, frame 5 the end). Write a MOTION READ-BACK in exactly this shape. 'FIRST: ' plus what the actor is doing in frame 1, one short line. 'LAST: ' plus what the actor is doing in frame 5, one short line. 'MOVED: ' plus everything that visibly changed position, shape or state between frame 1 and frame 5, or 'nothing' - one line. 'STILL THERE: ' plus the other distinct things you can still see in frame 5, with counts - one line. Report only what the frames show; do not guess at anything between frames.",
+        "maxTokens": "500",
+        "reasoningEffort": "low"
+      },
+      "w": 300,
+      "name": "Motion read-back - Gemini compares first and last frames",
+      "sizes": {
+        "system": 150
+      }
+    },
+    {
+      "id": "j1",
+      "type": "join",
+      "x": 2240,
+      "y": 660,
+      "fields": {
+        "sep": "\n\nMOTION READ-BACK:\n"
+      },
+      "w": 200,
+      "name": "Card, brief + read-back"
+    },
+    {
+      "id": "checker",
+      "type": "llm",
+      "x": 2620,
+      "y": 620,
+      "fields": {
+        "model": "z-ai/glm-5.3-flash",
+        "system": "You are a motion auditor. The input gives an ACTION CARD (ACTOR, STAGE, numbered STATIC lines), then 'MOTION BRIEF:' with the one action that was directed, then 'MOTION READ-BACK:' with a reader's first-vs-last-frame report of the finished clip. Score with short lines. First: 'Action: PERFORMED' if the read-back shows the directed action clearly happened, 'Action: PARTIAL' if it began or happened weakly, or 'Action: NOT PERFORMED'. Then one line per card STATIC: 'Static N: KEPT' if the read-back's STILL THERE line lists it present at the same count, 'Static N: MOVED' if it is present but changed position or state, or 'Static N: LOST' if it is absent. Then one 'INVENTED - ' line for each thing in the read-back that the card never had, if any. Keep every line under 12 words. End with one line 'Summary: action PERFORMED, PARTIAL or NOT PERFORMED, statics X of Y kept.' - use the actual verdict word. Judge by the two texts only. Output the audit only.",
+        "maxTokens": "600",
+        "reasoningEffort": "low"
+      },
+      "w": 280,
+      "name": "Motion audit - GLM scores the performance",
+      "sizes": {
+        "system": 150
+      }
+    },
+    {
+      "id": "audit",
+      "type": "decide",
+      "x": 2620,
+      "y": 300,
+      "fields": {
+        "model": "perplexity/pplx-decider-v1.2",
+        "mode": "choose",
+        "question": "The text gives an ACTION CARD for a still image (the actor, the stage, and the numbered statics that must not change) and the MOTION BRIEF: the one action the actor was directed to perform when the still was animated into a 5-second clip. The image is the clip's LAST frame. Which verdict fits? 'performed' means the last frame shows the directed action done or clearly under way and the statics are still there. 'partly performed' means the action is only weakly visible or some statics drifted. 'nothing moved' means the last frame is essentially the still again - no action visible. 'scene changed' means the last frame shows a different scene, actor or missing statics. Judge the end state against the card and brief, not the clip's beauty.",
+        "options": "performed\npartly performed\nnothing moved\nscene changed"
+      },
+      "w": 280,
+      "name": "Performance - audited",
+      "sizes": {
+        "question": 130
+      }
+    }
+  ],
+  "links": [
+    {
+      "id": "l1",
+      "from": {
+        "node": "scene",
+        "port": "text"
+      },
+      "to": {
+        "node": "still",
+        "port": "prompt"
+      }
+    },
+    {
+      "id": "l2",
+      "from": {
+        "node": "still",
+        "port": "image"
+      },
+      "to": {
+        "node": "card",
+        "port": "image"
+      }
+    },
+    {
+      "id": "l3",
+      "from": {
+        "node": "card",
+        "port": "text"
+      },
+      "to": {
+        "node": "j0",
+        "port": "a"
+      }
+    },
+    {
+      "id": "l4",
+      "from": {
+        "node": "act",
+        "port": "text"
+      },
+      "to": {
+        "node": "j0",
+        "port": "b"
+      }
+    },
+    {
+      "id": "l5",
+      "from": {
+        "node": "j0",
+        "port": "text"
+      },
+      "to": {
+        "node": "director",
+        "port": "prompt"
+      }
+    },
+    {
+      "id": "l6",
+      "from": {
+        "node": "director",
+        "port": "text"
+      },
+      "to": {
+        "node": "film",
+        "port": "prompt"
+      }
+    },
+    {
+      "id": "l7",
+      "from": {
+        "node": "still",
+        "port": "image"
+      },
+      "to": {
+        "node": "film",
+        "port": "image"
+      }
+    },
+    {
+      "id": "l8",
+      "from": {
+        "node": "film",
+        "port": "video"
+      },
+      "to": {
+        "node": "frames",
+        "port": "video"
+      }
+    },
+    {
+      "id": "l9",
+      "from": {
+        "node": "ask",
+        "port": "text"
+      },
+      "to": {
+        "node": "reader",
+        "port": "prompt"
+      }
+    },
+    {
+      "id": "f1",
+      "from": {
+        "node": "frames",
+        "port": "frame1"
+      },
+      "to": {
+        "node": "reader",
+        "port": "img1"
+      }
+    },
+    {
+      "id": "f2",
+      "from": {
+        "node": "frames",
+        "port": "frame2"
+      },
+      "to": {
+        "node": "reader",
+        "port": "img2"
+      }
+    },
+    {
+      "id": "f3",
+      "from": {
+        "node": "frames",
+        "port": "frame3"
+      },
+      "to": {
+        "node": "reader",
+        "port": "img3"
+      }
+    },
+    {
+      "id": "f4",
+      "from": {
+        "node": "frames",
+        "port": "frame4"
+      },
+      "to": {
+        "node": "reader",
+        "port": "img4"
+      }
+    },
+    {
+      "id": "f5",
+      "from": {
+        "node": "frames",
+        "port": "frame5"
+      },
+      "to": {
+        "node": "reader",
+        "port": "img5"
+      }
+    },
+    {
+      "id": "l10",
+      "from": {
+        "node": "j0",
+        "port": "text"
+      },
+      "to": {
+        "node": "j1",
+        "port": "a"
+      }
+    },
+    {
+      "id": "l11",
+      "from": {
+        "node": "reader",
+        "port": "text"
+      },
+      "to": {
+        "node": "j1",
+        "port": "b"
+      }
+    },
+    {
+      "id": "l12",
+      "from": {
+        "node": "j1",
+        "port": "text"
+      },
+      "to": {
+        "node": "checker",
+        "port": "prompt"
+      }
+    },
+    {
+      "id": "l13",
+      "from": {
+        "node": "j0",
+        "port": "text"
+      },
+      "to": {
+        "node": "audit",
+        "port": "text"
+      }
+    },
+    {
+      "id": "l14",
+      "from": {
+        "node": "frames",
+        "port": "frame5"
+      },
+      "to": {
+        "node": "audit",
+        "port": "img1"
+      }
+    }
+  ],
+  "nid": 24,
+  "lid": 25,
+  "view": {
+    "panX": 40,
+    "panY": 40,
+    "scale": 0.55
+  }
+}

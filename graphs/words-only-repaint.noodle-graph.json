@@ -1,0 +1,240 @@
+{
+  "v": 1,
+  "nodes": [
+    {
+      "id": "c1",
+      "type": "comment",
+      "x": 60,
+      "y": 30,
+      "fields": {
+        "text": "A vision model describes your photo as a SCENE INVENTORY - 8 numbered facts in fixed slots: subject, appearance, position, secondary elements, setting, foreground, light, and one small telling detail. A GLM writer turns the inventory into one image prompt, and Muse paints a repaint from those words alone - the painter never sees your photo; the words are the only bridge. Then a second vision read inventories the repaint in the same 8 slots, a GLM auditor scores the original inventory against that read-back slot by slot - SURVIVED, CHANGED, LOST, plus INVENTED lines for anything the words never said - and a Decide judge labels the repaint faithful, mostly survived, half lost or a different scene. Every other audit in this catalog hands the renderer the pixels or a plan it wrote itself; this one measures what language alone can carry. See recipes/words-only-repaint.md."
+      },
+      "w": 900,
+      "name": "Words only, repainted - describe it, repaint it blind, score what survived"
+    },
+    {
+      "id": "src",
+      "type": "upload",
+      "x": 60,
+      "y": 300,
+      "fields": {
+        "image": ""
+      },
+      "w": 240,
+      "name": "Scene photo"
+    },
+    {
+      "id": "describe",
+      "type": "vision",
+      "x": 380,
+      "y": 300,
+      "fields": {
+        "model": "google/gemini-3.8-flash",
+        "q": "You are the describer in a repaint-by-words pipeline. Look at this photo and write a SCENE INVENTORY: exactly 8 numbered lines, in this fixed order, one line per slot: 1. Main subject - what or who it is and how many. 2. Subject appearance - colours, clothing or pattern, distinguishing features. 3. Subject position and action - where in the frame and what it is doing. 4. Secondary elements - every other person, animal or notable object, with counts. 5. Setting - the place and its main structures, with colours. 6. Foreground and ground - the surface and anything on it. 7. Light and sky - time of day, weather, direction and quality of light. 8. Small telling detail - one specific small detail that makes this scene itself. Each line starts with its number and a colon. Be concrete and factual: exact counts, exact colours, left/right/centre positions. List ONLY what you can actually see; if you are unsure of a detail, give your best guess and mark it '(?)'. No opinions, no mood words, no photography advice, no suggestions for changing anything - this inventory is the ONLY thing a painter who cannot see the photo will ever get."
+      },
+      "w": 260,
+      "name": "Scene inventory - Gemini describes the photo",
+      "sizes": {
+        "q": 150
+      }
+    },
+    {
+      "id": "writer",
+      "type": "llm",
+      "x": 720,
+      "y": 280,
+      "fields": {
+        "model": "z-ai/glm-5.3-flash",
+        "system": "You write ONE image prompt from a scene inventory: 8 numbered factual lines about a photo. Turn the inventory into a single flowing photograph prompt that carries EVERY fact in it - every subject, count, colour, position, element, surface, light condition and the small telling detail. You may add only generic photograph framing words (for example 'photorealistic, eye-level photograph'). Add NO new objects, people, animals, colours, counts or details of your own, and drop none. Keep it under 130 words. Output the prompt only, no preamble.",
+        "maxTokens": "300",
+        "reasoningEffort": "low"
+      },
+      "w": 280,
+      "name": "Repaint prompt - GLM turns facts into a prompt",
+      "sizes": {
+        "system": 150
+      }
+    },
+    {
+      "id": "repaint",
+      "type": "image",
+      "x": 1080,
+      "y": 280,
+      "fields": {
+        "model": "meta/muse-image/text-to-image",
+        "size": "1:1",
+        "variations": "1"
+      },
+      "w": 260,
+      "name": "Repaint - Muse paints from words alone"
+    },
+    {
+      "id": "audit",
+      "type": "decide",
+      "x": 1420,
+      "y": 280,
+      "fields": {
+        "model": "perplexity/pplx-decider-v1.2",
+        "mode": "choose",
+        "question": "The text is a scene inventory: 8 numbered factual lines describing an original photo. The image is a repaint made from those words alone - the painter never saw the photo. Which verdict fits? 'faithful repaint' means the image carries essentially every inventoried fact: same subjects, counts, colours, positions, setting and light. 'mostly survived' means the scene is clearly the same with one or two facts changed or lost. 'half lost' means the gist survives but several facts - a subject, a count, the setting or the light - are changed or gone. 'different scene' means the image contradicts the inventory on the main subject or setting. Judge what the words carried, not the painting's beauty.",
+        "options": "faithful repaint\nmostly survived\nhalf lost\ndifferent scene"
+      },
+      "w": 280,
+      "name": "Repaint - audited",
+      "sizes": {
+        "question": 130
+      }
+    },
+    {
+      "id": "look",
+      "type": "vision",
+      "x": 1080,
+      "y": 580,
+      "fields": {
+        "model": "google/gemini-3.8-flash",
+        "q": "You are the reader in a repaint-by-words pipeline. Look at this image and write a SCENE INVENTORY of it in exactly the same shape: exactly 8 numbered lines, in this fixed order, one line per slot: 1. Main subject - what or who it is and how many. 2. Subject appearance - colours, clothing or pattern, distinguishing features. 3. Subject position and action - where in the frame and what it is doing. 4. Secondary elements - every other person, animal or notable object, with counts. 5. Setting - the place and its main structures, with colours. 6. Foreground and ground - the surface and anything on it. 7. Light and sky - time of day, weather, direction and quality of light. 8. Small telling detail - one specific small detail that makes this scene itself. Each line starts with its number and a colon. Be concrete and factual: exact counts, exact colours, left/right/centre positions. List ONLY what you can actually see; if you are unsure of a detail, give your best guess and mark it '(?)'. Do not compare it to any other picture; just report what is visibly there."
+      },
+      "w": 260,
+      "name": "Repaint read-back - Gemini inventories the repaint",
+      "sizes": {
+        "q": 150
+      }
+    },
+    {
+      "id": "j1",
+      "type": "join",
+      "x": 1420,
+      "y": 580,
+      "fields": {
+        "sep": "\n\nREPAINT READ-BACK:\n"
+      },
+      "w": 200,
+      "name": "Inventory + read-back"
+    },
+    {
+      "id": "checker",
+      "type": "llm",
+      "x": 1700,
+      "y": 560,
+      "fields": {
+        "model": "z-ai/glm-5.3-flash",
+        "system": "You are a survival auditor. The input gives a SCENE INVENTORY - 8 numbered factual lines describing an original photo - then the marker 'REPAINT READ-BACK:' and a reader's inventory, in the same 8 slots, of a repaint that was made from the first inventory's words alone. Compare slot by slot. Output one line per numbered slot, in order, starting 'SURVIVED - ' if the read-back carries the same fact (same subject, count, colour and position), 'CHANGED - ' if the slot is there but a count, colour, position or identity differs (say what differs), or 'LOST - ' if the fact cannot be found in the read-back at all, followed by the fact in a few words. Then one 'INVENTED - ' line for each notable element the read-back lists that the original inventory never had, if any. End with one line 'Summary: X of 8 facts survived.' Judge by the two texts only. Output the audit only, no preamble.",
+        "maxTokens": "400",
+        "reasoningEffort": "low"
+      },
+      "w": 280,
+      "name": "Survival audit - GLM scores slot by slot",
+      "sizes": {
+        "system": 150
+      }
+    }
+  ],
+  "links": [
+    {
+      "id": "l1",
+      "from": {
+        "node": "src",
+        "port": "image"
+      },
+      "to": {
+        "node": "describe",
+        "port": "image"
+      }
+    },
+    {
+      "id": "l2",
+      "from": {
+        "node": "describe",
+        "port": "text"
+      },
+      "to": {
+        "node": "writer",
+        "port": "prompt"
+      }
+    },
+    {
+      "id": "l3",
+      "from": {
+        "node": "writer",
+        "port": "text"
+      },
+      "to": {
+        "node": "repaint",
+        "port": "prompt"
+      }
+    },
+    {
+      "id": "l4",
+      "from": {
+        "node": "describe",
+        "port": "text"
+      },
+      "to": {
+        "node": "audit",
+        "port": "text"
+      }
+    },
+    {
+      "id": "l5",
+      "from": {
+        "node": "repaint",
+        "port": "image"
+      },
+      "to": {
+        "node": "audit",
+        "port": "img1"
+      }
+    },
+    {
+      "id": "l6",
+      "from": {
+        "node": "repaint",
+        "port": "image"
+      },
+      "to": {
+        "node": "look",
+        "port": "image"
+      }
+    },
+    {
+      "id": "l7",
+      "from": {
+        "node": "describe",
+        "port": "text"
+      },
+      "to": {
+        "node": "j1",
+        "port": "a"
+      }
+    },
+    {
+      "id": "l8",
+      "from": {
+        "node": "look",
+        "port": "text"
+      },
+      "to": {
+        "node": "j1",
+        "port": "b"
+      }
+    },
+    {
+      "id": "l9",
+      "from": {
+        "node": "j1",
+        "port": "text"
+      },
+      "to": {
+        "node": "checker",
+        "port": "prompt"
+      }
+    }
+  ],
+  "nid": 11,
+  "lid": 10,
+  "view": {
+    "panX": 40,
+    "panY": 40,
+    "scale": 0.6
+  }
+}

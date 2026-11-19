@@ -1,0 +1,457 @@
+{
+  "v": 1,
+  "nodes": [
+    {
+      "id": "c1",
+      "type": "comment",
+      "x": 60,
+      "y": 30,
+      "fields": {
+        "text": "Can a generator paint a picture inside a picture - the same scene twice in one canvas? A GLM director writes a DROSTE CARD: one depictable scene with exactly 5 bold elements in left-to-right order, plus a FRAME HOST - a large framed picture hanging straight-on in a plain room. A second GLM turns the card into a painter prompt: a straight-on photograph of the room, the framed picture big and central, and inside the frame a flat painting of exactly the carded scene, element for element, in order. Muse paints it. A blind Gemini surveyor inventories the canvas in three zones: the room outside the frame, the frame itself, and the inner picture's elements left to right. A GLM auditor scores whether the frame is really there, how many carded elements survived INSIDE it, their order, and the containment failure no other audit can state - LEAK, carded scene elements found loose in the room, the scene escaping its frame. Then the loop closes: a GLM editor turns the audit into concrete edit notes whose permitted scope is the inside of the frame (plus removing leaked duplicates from the room), Muse Edit repaints, and a second blind surveyor and the same auditor re-score the corrected picture. A Decide judge headlines round 1 as a side output - but the flow does not end in text. Its deliverable is the corrected picture. See recipes/droste-check.md."
+      },
+      "w": 900,
+      "name": "Droste check, recursion-audited - a scene painted inside its own framed picture, containment scored, and a fix round that repairs only what is inside the frame"
+    },
+    {
+      "id": "setting",
+      "type": "text",
+      "x": 60,
+      "y": 300,
+      "fields": {
+        "text": "A plain, bright interior room photographed straight-on: one large empty picture frame hangs centred on the main wall, the rest of the room is simple and uncluttered - a floor, a skirting board, one small side table - nothing that tells a story, no people, no text."
+      },
+      "w": 300,
+      "name": "Setting"
+    },
+    {
+      "id": "director",
+      "type": "llm",
+      "x": 440,
+      "y": 280,
+      "fields": {
+        "model": "z-ai/glm-5.3-flash",
+        "system": "You are a Droste director. Given a SETTING (a plain room with one large empty frame on the wall), design a DROSTE CARD: the scene that the framed picture on that wall must depict. Choose ONE scene from this menu ONLY:\nharbour with lighthouse and fishing boats; mountain lake with a rowing boat and pine shore; desert oasis with palms and a well; old town square with a fountain and market stalls; snowy forest clearing with a cabin and a woodpile.\nThen list exactly 5 bold, visually distinct elements of that scene in LEFT-TO-RIGHT order - the order they must appear across the framed painting. Every element must be a big, unmistakable thing a painter can draw recognisably at small scale (a lighthouse, a red boat) - no tiny details, no element repeated, no two elements merged into one line. Give each a short identifying detail (colour, material or shape). Finally write the FRAME line: the frame from the setting, described as it must appear - large, centred, straight-on, gilt or plain wood (pick one). Output exactly this shape and nothing else:\nSCENE: <scene>\nELEMENT 1: <element> | <detail>\nELEMENT 2: <element> | <detail>\nELEMENT 3: <element> | <detail>\nELEMENT 4: <element> | <detail>\nELEMENT 5: <element> | <detail>\nFRAME: <the frame, large and centred on the wall, seen straight-on>",
+        "maxTokens": "500",
+        "reasoningEffort": "low"
+      },
+      "w": 280,
+      "name": "Droste card - GLM picks a scene, its five elements in order, and the frame host",
+      "sizes": {
+        "system": 150
+      }
+    },
+    {
+      "id": "j0",
+      "type": "join",
+      "x": 800,
+      "y": 480,
+      "fields": {
+        "sep": "\n\nDROSTE CARD (the scene the framed picture must depict, its five elements in left-to-right order, and the frame host; its exact wording must reach the painter):\n"
+      },
+      "w": 200,
+      "name": "Setting + droste card"
+    },
+    {
+      "id": "stylist",
+      "type": "llm",
+      "x": 800,
+      "y": 280,
+      "fields": {
+        "model": "z-ai/glm-5.3-flash",
+        "system": "You turn a DROSTE CARD into ONE prompt for an AI image generator. The input gives a SETTING first, then 'DROSTE CARD' with a SCENE, 5 elements in left-to-right order, and a FRAME line. Write the prompt so the generator paints a straight-on, photorealistic photograph of the setting's room: the large frame from the FRAME line hangs centred on the main wall, big in the picture, seen perfectly straight-on, and INSIDE the frame is a flat painted picture of exactly the carded SCENE - a painting, visibly a painting (brushwork, flat painted light), showing all 5 carded elements with their details in the card's left-to-right order, filling the frame edge to edge. The room outside the frame stays plain and generic exactly as the SETTING describes: NONE of the scene's 5 elements may appear in the room itself - no scene objects on the floor, the table or anywhere outside the frame; the scene exists only inside the painting. Inside the painting there is no room, no wall and no second frame - just the scene itself. End with: 'Photorealistic photograph of a room with one large framed painting, the painting flat and straight-on, no text, no letters, no people.' Output the prompt only.",
+        "maxTokens": "700",
+        "reasoningEffort": "low"
+      },
+      "w": 280,
+      "name": "Droste brief - GLM turns the card into a picture-in-a-picture painter prompt",
+      "sizes": {
+        "system": 150
+      }
+    },
+    {
+      "id": "paint",
+      "type": "image",
+      "x": 1160,
+      "y": 280,
+      "fields": {
+        "model": "meta/muse-image/text-to-image",
+        "size": "16:9",
+        "variations": "1"
+      },
+      "w": 280,
+      "name": "Droste picture - Muse paints the room and the scene inside its frame"
+    },
+    {
+      "id": "surveyor",
+      "type": "vision",
+      "x": 1520,
+      "y": 280,
+      "fields": {
+        "model": "google/gemini-3.8-flash",
+        "q": "You are the surveyor in a Droste (picture-in-a-picture) pipeline. You see ONE photograph of a room with a large framed picture hanging on its wall. Report the canvas in three zones, honestly, looking only at what is actually there. First, the FRAME: is there a framed picture on the wall? Answer 'FRAME: PRESENT' or 'FRAME: ABSENT', plus its size in the photo (large / medium / small) and whether it is seen straight-on or at an angle. Second, 'ROOM:' plus a short list of the notable objects you see in the room OUTSIDE the frame (furniture, objects on the floor or tables - not the wall or the frame itself), or 'none'. Third, look INSIDE the framed picture and list, LEFT TO RIGHT, every distinct element the inner picture shows (up to 8 lines), each with a short identifying detail; if there is no framed picture, write 'INNER 1: none'. Finally, 'INNER FRAME:' plus YES if the inner picture itself contains another framed picture or room scene, or NO if it is a plain scene. Output exactly this shape:\nFRAME: <PRESENT or ABSENT> | <large, medium or small> | <straight-on or angled>\nROOM: <objects outside the frame, comma separated, or none>\nINNER 1: <element> | <detail>\nINNER 2: <element> | <detail>\n(continue for every element inside the frame, left to right)\nINNER FRAME: <YES or NO>"
+      },
+      "w": 280,
+      "name": "Survey - Gemini inventories room, frame and inner picture in three zones, blind",
+      "sizes": {
+        "q": 150
+      }
+    },
+    {
+      "id": "j1",
+      "type": "join",
+      "x": 1880,
+      "y": 180,
+      "fields": {
+        "sep": "\n\nSURVEY (a blind surveyor inventoried the rendered canvas in three zones - room, frame, and the inner picture's elements left to right; it never saw the droste card):\n"
+      },
+      "w": 200,
+      "name": "Droste card + survey"
+    },
+    {
+      "id": "checker",
+      "type": "llm",
+      "x": 2240,
+      "y": 400,
+      "fields": {
+        "model": "z-ai/glm-5.3-flash",
+        "system": "You are a Droste auditor. The input gives a DROSTE CARD (a SCENE, 5 elements in left-to-right order, and a FRAME line), then 'SURVEY' with a blind surveyor's three zones: a FRAME line, a ROOM list (objects outside the frame), INNER lines (the elements inside the framed picture, left to right) and an INNER FRAME line. Work in this order and output exactly these lines:\n1. 'FRAME: PRESENT' if the survey's FRAME line says PRESENT, otherwise 'FRAME: ABSENT'.\n2. 'INNER: X of 5' - one point per card element that the survey's INNER lines list (near element names and matching details count). Then 'MISSING: ' followed by each card element not found inside the frame, or 'none'. Then 'EXTRA: ' followed by each INNER element that matches no card element, or 'none'.\n3. 'ORDER: X of 4' - consider the card elements that were found inside, in the survey's INNER order; one point per adjacent pair in that sequence whose card order also has them in that same relative order (first-found before second-found). If fewer than 2 card elements were found, ORDER is 0 of 4.\n4. 'LEAK: X' - the count of card elements that ALSO appear in the survey's ROOM list (the scene escaping its frame: a carded element found loose in the room outside the frame). Then 'LEAKED: ' followed by each such element, or 'none'. Room furniture that matches no card element is not a leak.\n5. 'Summary: ' followed by one sentence restating frame, inner, order and leak.\nOutput exactly these lines and nothing else. If the frame is ABSENT, INNER is 0 of 5, ORDER is 0 of 4, and say so in the summary.",
+        "maxTokens": "1200",
+        "reasoningEffort": "low"
+      },
+      "w": 280,
+      "name": "Droste audit - GLM scores the frame, the inner scene, its order and the leak",
+      "sizes": {
+        "system": 150
+      }
+    },
+    {
+      "id": "j2",
+      "type": "join",
+      "x": 2240,
+      "y": 180,
+      "fields": {
+        "sep": "\n\nDROSTE AUDIT:\n"
+      },
+      "w": 200,
+      "name": "Card, survey + droste audit"
+    },
+    {
+      "id": "audit",
+      "type": "decide",
+      "x": 2600,
+      "y": 180,
+      "fields": {
+        "model": "perplexity/pplx-decider-v1.2",
+        "mode": "choose",
+        "question": "The picture should be a straight-on photograph of a plain room with one large framed picture on the wall, and inside the frame a flat painting of the planned scene: all 5 planned elements, with their details, in the planned left-to-right order, and none of those elements loose in the room outside the frame. The text gives the DROSTE CARD (scene, 5 elements in order, frame), a blind SURVEY in three zones (room, frame, inner picture) and a DROSTE AUDIT scoring the frame, the inner elements, their order and the leak. Which verdict fits? 'recursion landed' means FRAME is PRESENT, INNER is 5 of 5, ORDER is at least 3 of 4 and LEAK is 0. 'no frame' means the audit's FRAME line says ABSENT - there is no picture in the picture at all. 'inner drifted' means the frame is present and INNER is 3 or 4 of 5, or ORDER is 2 of 4 or less, or LEAK is 1 or more. 'wrong scene' means the frame is present but INNER is 2 of 5 or less - the painting shows a different scene. Judge the recursion, not the picture's beauty.",
+        "options": "recursion landed\ninner drifted\nno frame\nwrong scene"
+      },
+      "w": 280,
+      "name": "Recursion landed - audited",
+      "sizes": {
+        "question": 130
+      }
+    },
+    {
+      "id": "editor",
+      "type": "llm",
+      "x": 2600,
+      "y": 520,
+      "fields": {
+        "model": "z-ai/glm-5.3-flash",
+        "system": "You are the picture editor in a Droste pipeline. The input gives a DROSTE CARD (a SCENE, 5 elements in left-to-right order, a FRAME line), a blind SURVEY in three zones (room, frame, inner picture), and a DROSTE AUDIT scoring the frame, the inner elements, their order and the leak. Write ONE edit instruction for an image-editing model that will receive the painted picture itself. Rules:\n- Address the editor directly and write in imperatives: 'Edit this photograph: ...'\n- The frame and the room are OUT OF SCOPE except for leaked elements: open by demanding the room, the frame (its size, position, material and straight-on view), the light and the framing stay exactly the same.\n- State the FULL target end state for the INSIDE of the frame, not just the deltas: the framed picture must be a flat painting of the carded SCENE showing all 5 carded elements with their card details in the card's exact left-to-right order, filling the frame edge to edge, with no room, no wall and no second frame inside the painting.\n- Then name the audit's specific failures as extra demands: for every MISSING element, name it and where it belongs in the order; if ORDER fell short, restate the full correct left-to-right sequence; for every EXTRA element inside the frame, demand its removal; for every LEAKED element, demand that the copy loose in the room be removed and replaced with plain empty room (floor, wall or the simple furniture that belongs there) - the element may exist only inside the frame.\n- End with: 'Change nothing outside the frame except removing leaked scene elements. Photorealistic photograph, the inner picture a flat painting, no text, no letters, no people.'\nOutput the single edit instruction only - no preamble, no list, no explanation.",
+        "maxTokens": "350",
+        "reasoningEffort": "low"
+      },
+      "w": 280,
+      "name": "Edit notes - GLM turns the droste audit into frame-bounded fix instructions",
+      "sizes": {
+        "system": 150
+      }
+    },
+    {
+      "id": "fix",
+      "type": "edit",
+      "x": 2960,
+      "y": 520,
+      "fields": {
+        "model": "meta/muse-image/edit",
+        "size": "auto"
+      },
+      "w": 280,
+      "name": "Corrected picture - Muse Edit repairs the framed picture's contents"
+    },
+    {
+      "id": "surveyor2",
+      "type": "vision",
+      "x": 3320,
+      "y": 520,
+      "fields": {
+        "model": "google/gemini-3.8-flash",
+        "q": "You are the surveyor in a Droste (picture-in-a-picture) pipeline. You see ONE photograph of a room with a large framed picture hanging on its wall. Report the canvas in three zones, honestly, looking only at what is actually there. First, the FRAME: is there a framed picture on the wall? Answer 'FRAME: PRESENT' or 'FRAME: ABSENT', plus its size in the photo (large / medium / small) and whether it is seen straight-on or at an angle. Second, 'ROOM:' plus a short list of the notable objects you see in the room OUTSIDE the frame (furniture, objects on the floor or tables - not the wall or the frame itself), or 'none'. Third, look INSIDE the framed picture and list, LEFT TO RIGHT, every distinct element the inner picture shows (up to 8 lines), each with a short identifying detail; if there is no framed picture, write 'INNER 1: none'. Finally, 'INNER FRAME:' plus YES if the inner picture itself contains another framed picture or room scene, or NO if it is a plain scene. Output exactly this shape:\nFRAME: <PRESENT or ABSENT> | <large, medium or small> | <straight-on or angled>\nROOM: <objects outside the frame, comma separated, or none>\nINNER 1: <element> | <detail>\nINNER 2: <element> | <detail>\n(continue for every element inside the frame, left to right)\nINNER FRAME: <YES or NO>"
+      },
+      "w": 280,
+      "name": "Re-survey - Gemini inventories the corrected picture's three zones, blind",
+      "sizes": {
+        "q": 150
+      }
+    },
+    {
+      "id": "j4",
+      "type": "join",
+      "x": 3680,
+      "y": 420,
+      "fields": {
+        "sep": "\n\nSURVEY (a blind surveyor inventoried the corrected picture in three zones - room, frame, and the inner picture's elements left to right; it never saw the droste card):\n"
+      },
+      "w": 200,
+      "name": "Droste card + re-survey"
+    },
+    {
+      "id": "checker2",
+      "type": "llm",
+      "x": 4040,
+      "y": 520,
+      "fields": {
+        "model": "z-ai/glm-5.3-flash",
+        "system": "You are a Droste auditor. The input gives a DROSTE CARD (a SCENE, 5 elements in left-to-right order, and a FRAME line), then 'SURVEY' with a blind surveyor's three zones: a FRAME line, a ROOM list (objects outside the frame), INNER lines (the elements inside the framed picture, left to right) and an INNER FRAME line. Work in this order and output exactly these lines:\n1. 'FRAME: PRESENT' if the survey's FRAME line says PRESENT, otherwise 'FRAME: ABSENT'.\n2. 'INNER: X of 5' - one point per card element that the survey's INNER lines list (near element names and matching details count). Then 'MISSING: ' followed by each card element not found inside the frame, or 'none'. Then 'EXTRA: ' followed by each INNER element that matches no card element, or 'none'.\n3. 'ORDER: X of 4' - consider the card elements that were found inside, in the survey's INNER order; one point per adjacent pair in that sequence whose card order also has them in that same relative order (first-found before second-found). If fewer than 2 card elements were found, ORDER is 0 of 4.\n4. 'LEAK: X' - the count of card elements that ALSO appear in the survey's ROOM list (the scene escaping its frame: a carded element found loose in the room outside the frame). Then 'LEAKED: ' followed by each such element, or 'none'. Room furniture that matches no card element is not a leak.\n5. 'Summary: ' followed by one sentence restating frame, inner, order and leak.\nOutput exactly these lines and nothing else. If the frame is ABSENT, INNER is 0 of 5, ORDER is 0 of 4, and say so in the summary.",
+        "maxTokens": "1200",
+        "reasoningEffort": "low"
+      },
+      "w": 280,
+      "name": "Droste re-audit - GLM scores the corrected picture against the same card",
+      "sizes": {
+        "system": 150
+      }
+    }
+  ],
+  "links": [
+    {
+      "id": "l1",
+      "from": {
+        "node": "setting",
+        "port": "text"
+      },
+      "to": {
+        "node": "director",
+        "port": "prompt"
+      }
+    },
+    {
+      "id": "l2",
+      "from": {
+        "node": "director",
+        "port": "text"
+      },
+      "to": {
+        "node": "j0",
+        "port": "b"
+      }
+    },
+    {
+      "id": "l12",
+      "from": {
+        "node": "setting",
+        "port": "text"
+      },
+      "to": {
+        "node": "j0",
+        "port": "a"
+      }
+    },
+    {
+      "id": "l13",
+      "from": {
+        "node": "j0",
+        "port": "text"
+      },
+      "to": {
+        "node": "stylist",
+        "port": "prompt"
+      }
+    },
+    {
+      "id": "l3",
+      "from": {
+        "node": "stylist",
+        "port": "text"
+      },
+      "to": {
+        "node": "paint",
+        "port": "prompt"
+      }
+    },
+    {
+      "id": "l4",
+      "from": {
+        "node": "paint",
+        "port": "image"
+      },
+      "to": {
+        "node": "surveyor",
+        "port": "image"
+      }
+    },
+    {
+      "id": "l7",
+      "from": {
+        "node": "director",
+        "port": "text"
+      },
+      "to": {
+        "node": "j1",
+        "port": "a"
+      }
+    },
+    {
+      "id": "l8",
+      "from": {
+        "node": "surveyor",
+        "port": "text"
+      },
+      "to": {
+        "node": "j1",
+        "port": "b"
+      }
+    },
+    {
+      "id": "l11",
+      "from": {
+        "node": "j1",
+        "port": "text"
+      },
+      "to": {
+        "node": "checker",
+        "port": "prompt"
+      }
+    },
+    {
+      "id": "l14",
+      "from": {
+        "node": "j1",
+        "port": "text"
+      },
+      "to": {
+        "node": "j2",
+        "port": "a"
+      }
+    },
+    {
+      "id": "l15",
+      "from": {
+        "node": "checker",
+        "port": "text"
+      },
+      "to": {
+        "node": "j2",
+        "port": "b"
+      }
+    },
+    {
+      "id": "l16",
+      "from": {
+        "node": "j2",
+        "port": "text"
+      },
+      "to": {
+        "node": "audit",
+        "port": "text"
+      }
+    },
+    {
+      "id": "l17",
+      "from": {
+        "node": "paint",
+        "port": "image"
+      },
+      "to": {
+        "node": "audit",
+        "port": "img1"
+      }
+    },
+    {
+      "id": "l18",
+      "from": {
+        "node": "j2",
+        "port": "text"
+      },
+      "to": {
+        "node": "editor",
+        "port": "prompt"
+      }
+    },
+    {
+      "id": "l19",
+      "from": {
+        "node": "editor",
+        "port": "text"
+      },
+      "to": {
+        "node": "fix",
+        "port": "prompt"
+      }
+    },
+    {
+      "id": "l20",
+      "from": {
+        "node": "paint",
+        "port": "image"
+      },
+      "to": {
+        "node": "fix",
+        "port": "image"
+      }
+    },
+    {
+      "id": "l21",
+      "from": {
+        "node": "fix",
+        "port": "image"
+      },
+      "to": {
+        "node": "surveyor2",
+        "port": "image"
+      }
+    },
+    {
+      "id": "l22",
+      "from": {
+        "node": "director",
+        "port": "text"
+      },
+      "to": {
+        "node": "j4",
+        "port": "a"
+      }
+    },
+    {
+      "id": "l23",
+      "from": {
+        "node": "surveyor2",
+        "port": "text"
+      },
+      "to": {
+        "node": "j4",
+        "port": "b"
+      }
+    },
+    {
+      "id": "l24",
+      "from": {
+        "node": "j4",
+        "port": "text"
+      },
+      "to": {
+        "node": "checker2",
+        "port": "prompt"
+      }
+    }
+  ],
+  "nid": 30,
+  "lid": 38,
+  "view": {
+    "panX": 40,
+    "panY": 40,
+    "scale": 0.5
+  }
+}

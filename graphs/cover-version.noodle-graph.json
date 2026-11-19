@@ -1,0 +1,430 @@
+{
+  "v": 1,
+  "nodes": [
+    {
+      "id": "c1",
+      "type": "comment",
+      "x": 60,
+      "y": 30,
+      "fields": {
+        "text": "A GLM lyricist writes a short original song (one verse, one chorus, a hook line) from your brief, and a GLM producer turns the brief into a music prompt. MiniMax Music 3 sings the original - a warm indie-folk ballad. Whisper transcribes that performance. Then the Remix node (MiniMax Music Cover) re-performs the actual recording in a completely different style - bright synth-pop - with the lyrics wired in and one instruction: change the sound, not the song. Both tracks are trimmed to their first 90 seconds (a local step) before Whisper transcribes them - the music model chooses the song's length, and an untrimmed track can outgrow the transcription size limit. Whisper transcribes the cover too, and a GLM lyric auditor scores the cover transcript against the ORIGINAL transcript line by line: KEPT, GARBLED or DROPPED, plus INVENTED lines the original never had, ending in 'X of 8 lines kept'. A Decide judge gives the headline: lyrics survived, words drifted, half the song lost or different song. Every audio flow before this one either generated music from text or cleaned speech back toward itself; this is the first that hands a finished recording to a second model to re-perform - and then checks the one thing a cover is supposed to keep. See recipes/cover-version.md."
+      },
+      "w": 900,
+      "name": "Cover version, lyric-checked - sing it, cover it, check the words survived"
+    },
+    {
+      "id": "brief",
+      "type": "text",
+      "x": 60,
+      "y": 300,
+      "fields": {
+        "text": "An original short song about Rosa, the night-bus driver on the last route home through a rainy city. She hums to stay awake, the streetlights blur in the wet windows, one passenger sleeps with a bag of groceries, and the hook line is 'last bus home'. Warm and wistful, not gloomy."
+      },
+      "w": 300,
+      "name": "Song brief"
+    },
+    {
+      "id": "style",
+      "type": "text",
+      "x": 60,
+      "y": 620,
+      "fields": {
+        "text": "Re-perform this song as bright, upbeat synth-pop: pulsing electronic beat, glossy synths, an energetic female pop vocal, a faster tempo. Keep the same melody and sing every word of the lyrics exactly as written - change the sound, not the song."
+      },
+      "w": 300,
+      "name": "Cover style"
+    },
+    {
+      "id": "lyricist",
+      "type": "llm",
+      "x": 440,
+      "y": 280,
+      "fields": {
+        "model": "z-ai/glm-5.3-flash",
+        "system": "You write short original song lyrics from a brief. Write exactly 8 lines: a [Verse] section of 4 lines, then a [Chorus] section of 4 lines. Total 45 to 60 words. The chorus must contain the brief's hook line word for word, twice. Singable lines, natural stresses, concrete images from the brief, no other names or facts. Output only the two section labels and the lyric lines - no title, no commentary.",
+        "maxTokens": "300",
+        "reasoningEffort": "low"
+      },
+      "w": 280,
+      "name": "Lyrics - GLM writes the song",
+      "sizes": {
+        "system": 150
+      }
+    },
+    {
+      "id": "j0",
+      "type": "join",
+      "x": 440,
+      "y": 580,
+      "fields": {
+        "sep": "\n\nLyrics:\n"
+      },
+      "w": 200,
+      "name": "Brief + lyrics"
+    },
+    {
+      "id": "producer",
+      "type": "llm",
+      "x": 760,
+      "y": 560,
+      "fields": {
+        "model": "z-ai/glm-5.3-flash",
+        "system": "You write one compact music-generator prompt for the ORIGINAL version of a song, from its brief and lyrics: a single paragraph, at most 50 words, naming the genre (warm indie folk ballad), the vocal (gentle female singer), the instruments (fingerpicked acoustic guitar, soft piano, light brushed drums), a slow tempo and a rainy late-night mood. Do not name artists or songs. Output only the prompt.",
+        "maxTokens": "200",
+        "reasoningEffort": "low"
+      },
+      "w": 280,
+      "name": "Original sound - GLM writes the music prompt",
+      "sizes": {
+        "system": 150
+      }
+    },
+    {
+      "id": "original",
+      "type": "music",
+      "x": 760,
+      "y": 280,
+      "fields": {
+        "model": "minimax/music-3",
+        "instrumental": "False",
+        "response_format": "mp3"
+      },
+      "w": 260,
+      "name": "Original - MiniMax Music 3 sings it"
+    },
+    {
+      "id": "trimorig",
+      "type": "trim",
+      "x": 1100,
+      "y": 280,
+      "fields": {
+        "start": "0",
+        "length": "90"
+      },
+      "w": 240,
+      "name": "First 90 seconds - the original, trimmed for transcription"
+    },
+    {
+      "id": "heardorig",
+      "type": "transcribe",
+      "x": 1440,
+      "y": 280,
+      "fields": {
+        "model": "whisper-1",
+        "language": "auto"
+      },
+      "w": 260,
+      "name": "Heard original - Whisper transcribes the performance"
+    },
+    {
+      "id": "cover",
+      "type": "remix",
+      "x": 1100,
+      "y": 560,
+      "fields": {
+        "model": "minimax/music-cover",
+        "response_format": "mp3"
+      },
+      "w": 260,
+      "name": "Cover - MiniMax Music Cover re-performs it"
+    },
+    {
+      "id": "trimcover",
+      "type": "trim",
+      "x": 1440,
+      "y": 840,
+      "fields": {
+        "start": "0",
+        "length": "90"
+      },
+      "w": 240,
+      "name": "First 90 seconds - the cover, trimmed for transcription"
+    },
+    {
+      "id": "heardcover",
+      "type": "transcribe",
+      "x": 1440,
+      "y": 560,
+      "fields": {
+        "model": "whisper-1",
+        "language": "auto"
+      },
+      "w": 260,
+      "name": "Heard cover - Whisper transcribes the cover"
+    },
+    {
+      "id": "j1",
+      "type": "join",
+      "x": 1780,
+      "y": 280,
+      "fields": {
+        "sep": "\n\nORIGINAL AS SUNG (TRANSCRIPT):\n"
+      },
+      "w": 200,
+      "name": "Lyrics + original transcript"
+    },
+    {
+      "id": "j2",
+      "type": "join",
+      "x": 2060,
+      "y": 400,
+      "fields": {
+        "sep": "\n\nCOVER AS SUNG (TRANSCRIPT):\n"
+      },
+      "w": 200,
+      "name": "Both transcripts"
+    },
+    {
+      "id": "checker",
+      "type": "llm",
+      "x": 2340,
+      "y": 560,
+      "fields": {
+        "model": "z-ai/glm-5.3-flash",
+        "system": "You are a lyric auditor. The input gives a song's WRITTEN LYRICS, then the marker 'ORIGINAL AS SUNG (TRANSCRIPT):' and a transcript of the original recording, then the marker 'COVER AS SUNG (TRANSCRIPT):' and a transcript of a cover version re-performed in a different style. Use the written lyrics only to segment the song into its 8 lines. Grade the COVER against the ORIGINAL AS SUNG - what was actually sung is the truth, not what was written. For each of the 8 lines output one short line: 'Line N: KEPT' if the cover sings that line with essentially the same words, 'Line N: GARBLED (<the cover's words, a few only>)' if the words changed or slurred, or 'Line N: DROPPED' if the cover never sings it. Then one 'INVENTED - ' line for each line the cover sings that the original never did, if any. Keep every line under 14 words. End with one line 'Summary: X of 8 lines kept.' Judge the words only - the style change is intended and is not a fault. Output the audit only.",
+        "maxTokens": "600",
+        "reasoningEffort": "low"
+      },
+      "w": 280,
+      "name": "Lyric audit - GLM scores line by line",
+      "sizes": {
+        "system": 150
+      }
+    },
+    {
+      "id": "audit",
+      "type": "decide",
+      "x": 2340,
+      "y": 280,
+      "fields": {
+        "model": "perplexity/pplx-decider-v1.2",
+        "mode": "choose",
+        "question": "The text gives a song's written lyrics, then a transcript of the original recording, then a transcript of a cover version re-performed in a very different style. Which verdict fits the cover? 'lyrics survived' means essentially every line is sung with the same words. 'words drifted' means most lines survive but a few words changed or slurred beyond recognition. 'half the song lost' means about half the lines are dropped or unrecognisable. 'different song' means the cover sings mostly different words. Judge the words only, not the style change, which is intended.",
+        "options": "lyrics survived\nwords drifted\nhalf the song lost\ndifferent song"
+      },
+      "w": 280,
+      "name": "Cover - audited",
+      "sizes": {
+        "question": 130
+      }
+    }
+  ],
+  "links": [
+    {
+      "id": "l1",
+      "from": {
+        "node": "brief",
+        "port": "text"
+      },
+      "to": {
+        "node": "lyricist",
+        "port": "prompt"
+      }
+    },
+    {
+      "id": "l2",
+      "from": {
+        "node": "brief",
+        "port": "text"
+      },
+      "to": {
+        "node": "j0",
+        "port": "a"
+      }
+    },
+    {
+      "id": "l3",
+      "from": {
+        "node": "lyricist",
+        "port": "text"
+      },
+      "to": {
+        "node": "j0",
+        "port": "b"
+      }
+    },
+    {
+      "id": "l4",
+      "from": {
+        "node": "j0",
+        "port": "text"
+      },
+      "to": {
+        "node": "producer",
+        "port": "prompt"
+      }
+    },
+    {
+      "id": "l5",
+      "from": {
+        "node": "producer",
+        "port": "text"
+      },
+      "to": {
+        "node": "original",
+        "port": "prompt"
+      }
+    },
+    {
+      "id": "l6",
+      "from": {
+        "node": "lyricist",
+        "port": "text"
+      },
+      "to": {
+        "node": "original",
+        "port": "lyrics"
+      }
+    },
+    {
+      "id": "l7",
+      "from": {
+        "node": "original",
+        "port": "audio"
+      },
+      "to": {
+        "node": "trimorig",
+        "port": "audio"
+      }
+    },
+    {
+      "id": "l18",
+      "from": {
+        "node": "trimorig",
+        "port": "audio"
+      },
+      "to": {
+        "node": "heardorig",
+        "port": "audio"
+      }
+    },
+    {
+      "id": "l8",
+      "from": {
+        "node": "original",
+        "port": "audio"
+      },
+      "to": {
+        "node": "cover",
+        "port": "audio"
+      }
+    },
+    {
+      "id": "l9",
+      "from": {
+        "node": "style",
+        "port": "text"
+      },
+      "to": {
+        "node": "cover",
+        "port": "prompt"
+      }
+    },
+    {
+      "id": "l10",
+      "from": {
+        "node": "lyricist",
+        "port": "text"
+      },
+      "to": {
+        "node": "cover",
+        "port": "lyrics"
+      }
+    },
+    {
+      "id": "l11",
+      "from": {
+        "node": "cover",
+        "port": "audio"
+      },
+      "to": {
+        "node": "trimcover",
+        "port": "audio"
+      }
+    },
+    {
+      "id": "l19",
+      "from": {
+        "node": "trimcover",
+        "port": "audio"
+      },
+      "to": {
+        "node": "heardcover",
+        "port": "audio"
+      }
+    },
+    {
+      "id": "l12",
+      "from": {
+        "node": "lyricist",
+        "port": "text"
+      },
+      "to": {
+        "node": "j1",
+        "port": "a"
+      }
+    },
+    {
+      "id": "l13",
+      "from": {
+        "node": "heardorig",
+        "port": "text"
+      },
+      "to": {
+        "node": "j1",
+        "port": "b"
+      }
+    },
+    {
+      "id": "l14",
+      "from": {
+        "node": "j1",
+        "port": "text"
+      },
+      "to": {
+        "node": "j2",
+        "port": "a"
+      }
+    },
+    {
+      "id": "l15",
+      "from": {
+        "node": "heardcover",
+        "port": "text"
+      },
+      "to": {
+        "node": "j2",
+        "port": "b"
+      }
+    },
+    {
+      "id": "l16",
+      "from": {
+        "node": "j2",
+        "port": "text"
+      },
+      "to": {
+        "node": "checker",
+        "port": "prompt"
+      }
+    },
+    {
+      "id": "l17",
+      "from": {
+        "node": "j2",
+        "port": "text"
+      },
+      "to": {
+        "node": "audit",
+        "port": "text"
+      }
+    }
+  ],
+  "nid": 22,
+  "lid": 19,
+  "view": {
+    "panX": 40,
+    "panY": 40,
+    "scale": 0.55
+  }
+}

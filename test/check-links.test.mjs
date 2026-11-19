@@ -9,13 +9,13 @@ import { authorInputs } from "../scripts/graph-io.mjs";
 test("every README share link decodes and matches its committed graph", () => {
   const { entries, problems } = checkLinks();
   assert.deepEqual(problems, []);
-  assert.equal(entries, 15, "the curated catalog has fifteen workflows");
+  assert.equal(entries, 46, "the curated catalog has forty-six workflows");
 });
 
 test("every catalog graph has a generated run-headless recipe that matches its committed graph", () => {
   const { entries, files, problems } = checkRecipes();
   assert.deepEqual(problems, []);
-  assert.equal(entries, 15, "the curated catalog has fifteen workflow recipes");
+  assert.equal(entries, 46, "the curated catalog has forty-six workflow recipes");
   assert.ok(files === entries + 1, `expected ${entries} recipes + index, found ${files} files`);
 });
 

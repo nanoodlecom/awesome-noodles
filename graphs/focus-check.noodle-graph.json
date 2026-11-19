@@ -1,0 +1,457 @@
+{
+  "v": 1,
+  "nodes": [
+    {
+      "id": "c1",
+      "type": "comment",
+      "x": 60,
+      "y": 30,
+      "fields": {
+        "text": "Can a generator actually focus - and if it misses, can the miss be repaired instead of just reported? A GLM director writes a FOCUS CARD: one scene with a long front-to-back depth row, exactly 5 objects at graded distances (1, 3, 6, 10 and 15 metres), and one FOCAL object in the middle of the row that alone must be tack sharp. A second GLM turns the card into a shallow-depth-of-field painter prompt, and Muse paints it. A blind Gemini surveyor grades every object's sharpness front to back and names the single sharpest position. A GLM auditor scores whether the sharpest object is the planned focal one, whether sharpness falls off on BOTH sides of the focal plane, and whether the picture fell into the all-sharp failure - everything in focus, the default AI look. Then the loop closes: a GLM editor turns the audit findings into concrete edit notes, Muse Edit repaints the focus on the original picture, and a second blind surveyor re-grades the corrected picture so the same auditor can score round 2 against the same card. A Decide judge still headlines round 1 as a side output - but the flow does not end in text. Its deliverable is the corrected picture. See recipes/focus-check.md."
+      },
+      "w": 900,
+      "name": "Focus check, depth-of-field-audited - one focal plane, graded blur on both sides, an all-sharp test, and a fix round that ends in the corrected picture"
+    },
+    {
+      "id": "setting",
+      "type": "text",
+      "x": 60,
+      "y": 300,
+      "fields": {
+        "text": "A location with one long, clear front-to-back depth row: a single line of distinct objects receding diagonally from very near the camera to far away, bright even daylight, no people, nothing else competing for attention."
+      },
+      "w": 300,
+      "name": "Setting"
+    },
+    {
+      "id": "director",
+      "type": "llm",
+      "x": 440,
+      "y": 280,
+      "fields": {
+        "model": "z-ai/glm-5.3-flash",
+        "system": "You are a focus director. Given a SETTING (a location with a long front-to-back depth row), design a FOCUS CARD. Choose ONE scene from this menu ONLY:\ngarden path lined with statues and terracotta pots; harbour quay with bollards, crates and coiled ropes; market street with stalls receding into the distance; orchard row with ladders, baskets and barrels; country lane with fence posts, a gate and hay bales.\nThen choose exactly 5 objects that belong in that scene, listed FRONT TO BACK (object 1 nearest the camera, object 5 farthest), each with a distinct colour. Their distances are FIXED: object 1 at 1 metre, object 2 at 3 metres, object 3 at 6 metres, object 4 at 10 metres, object 5 at 15 metres. Then choose the FOCAL object: it must be object 2, 3 or 4 - never object 1 or object 5 - the one object that will be in perfect focus. Output exactly this shape and nothing else:\nSCENE: <scene>\nOBJECT 1: <object> | <colour> | 1m\nOBJECT 2: <object> | <colour> | 3m\nOBJECT 3: <object> | <colour> | 6m\nOBJECT 4: <object> | <colour> | 10m\nOBJECT 5: <object> | <colour> | 15m\nFOCAL: OBJECT <2, 3 or 4>",
+        "maxTokens": "500",
+        "reasoningEffort": "low"
+      },
+      "w": 280,
+      "name": "Focus card - GLM picks a scene, five graded-distance objects and a mid-row focal object",
+      "sizes": {
+        "system": 150
+      }
+    },
+    {
+      "id": "j0",
+      "type": "join",
+      "x": 800,
+      "y": 480,
+      "fields": {
+        "sep": "\n\nFOCUS CARD (the scene, the five objects front to back with their distances, and the FOCAL object that alone must be tack sharp; its exact wording must reach the painter):\n"
+      },
+      "w": 200,
+      "name": "Setting + focus card"
+    },
+    {
+      "id": "stylist",
+      "type": "llm",
+      "x": 800,
+      "y": 280,
+      "fields": {
+        "model": "z-ai/glm-5.3-flash",
+        "system": "You turn a FOCUS CARD into ONE prompt for an AI image generator. The input gives a SETTING first, then 'FOCUS CARD' with a SCENE, 5 objects front to back with distances (1m, 3m, 6m, 10m, 15m) and a FOCAL object. Write the prompt so the generator paints that scene as a photograph shot on a fast lens at f/1.8 with a SHALLOW DEPTH OF FIELD: the 5 objects recede diagonally from near the camera to far away, each in its card colour; the FOCAL object (name it and its distance) is TACK SHARP - every edge and texture crisp - and it is the ONLY sharp object. Sharpness falls off on BOTH sides of the focal plane: objects NEARER than the focal object are softly blurred, and objects FARTHER than the focal object are blurred more and more with distance, the farthest the softest of all. State the blur for each non-focal object in plain words (e.g. 'the red bollard in front, nearer than the focus point, is softly out of focus'). No object besides the focal one may be sharp. End with: 'Photorealistic shallow depth-of-field photograph, shot at f/1.8, no text, no letters, no people.' Output the prompt only.",
+        "maxTokens": "700",
+        "reasoningEffort": "low"
+      },
+      "w": 280,
+      "name": "Focus brief - GLM turns the card into a shallow-depth-of-field painter prompt",
+      "sizes": {
+        "system": 150
+      }
+    },
+    {
+      "id": "paint",
+      "type": "image",
+      "x": 1160,
+      "y": 280,
+      "fields": {
+        "model": "meta/muse-image/text-to-image",
+        "size": "16:9",
+        "variations": "1"
+      },
+      "w": 280,
+      "name": "Focus scene - Muse paints the depth row with one focal plane"
+    },
+    {
+      "id": "surveyor",
+      "type": "vision",
+      "x": 1520,
+      "y": 280,
+      "fields": {
+        "model": "google/gemini-3.8-flash",
+        "q": "You are the surveyor in a focus-check pipeline. You see ONE photograph with a row of objects receding from near the camera to far away. Judge sharpness honestly from edge crispness and visible texture detail - do not guess from size or position. First name the scene. Then, FRONT TO BACK (nearest first), list exactly 5 main objects in the receding row; for each give its name and colour and grade its SHARPNESS as exactly one of: SHARP (edges and texture crisp), SLIGHTLY SOFT (mostly crisp, slight softness), SOFT (edges visibly blurred, texture smeared), VERY BLURRED (shapes only, no texture). Then name the SHARPEST position: the front-to-back number (1 to 5) of the single sharpest object, or NONE if two or more tie for sharpest. Output exactly this shape:\nSCENE SEEN: <what location this is>\nOBJECT 1: <object> | <colour> | <SHARPNESS grade>\nOBJECT 2: <object> | <colour> | <SHARPNESS grade>\nOBJECT 3: <object> | <colour> | <SHARPNESS grade>\nOBJECT 4: <object> | <colour> | <SHARPNESS grade>\nOBJECT 5: <object> | <colour> | <SHARPNESS grade>\nSHARPEST: <1, 2, 3, 4, 5 or NONE>"
+      },
+      "w": 280,
+      "name": "Survey - Gemini grades every object's sharpness and names the sharpest, blind",
+      "sizes": {
+        "q": 150
+      }
+    },
+    {
+      "id": "j1",
+      "type": "join",
+      "x": 1880,
+      "y": 180,
+      "fields": {
+        "sep": "\n\nSURVEY (a blind surveyor graded the rendered picture's sharpness object by object and named the sharpest position; it never saw the focus card):\n"
+      },
+      "w": 200,
+      "name": "Focus card + survey"
+    },
+    {
+      "id": "checker",
+      "type": "llm",
+      "x": 2240,
+      "y": 400,
+      "fields": {
+        "model": "z-ai/glm-5.3-flash",
+        "system": "You are a focus auditor. The input gives a FOCUS CARD (a SCENE, 5 objects front to back with colours and distances, and a FOCAL object number), then 'SURVEY' with a blind surveyor's 5 objects with SHARPNESS grades and a SHARPEST line. Sharpness points: SHARP = 3, SLIGHTLY SOFT = 2, SOFT = 1, VERY BLURRED = 0. Work in this order and output exactly these lines:\n1. 'IDENTITY: X of 5' - one point per card object the survey lists in the same front-to-back position with a matching colour (near object and colour names count). Then 'MISSING: ' followed by each card object not matched, or 'none'.\n2. 'FOCUS PEAK: CORRECT' if the survey SHARPEST number equals the card FOCAL number; 'FOCUS PEAK: NONE' if the survey SHARPEST is NONE; otherwise 'FOCUS PEAK: WRONG (sharpest <n>, focal <m>)' with the two numbers.\n3. 'FALL-OFF: X of 4' - one point per NON-focal object whose sharpness points are strictly less than the focal object's points AND which does not break the gradient on its side: moving away from the focal object on the same side (nearer side or farther side), points must never increase; an object breaks the gradient if an object farther from the focal plane on its side has MORE points than it. If the focal object's survey grade is missing, fall-off is 0 of 4.\n4. 'ALL SHARP: YES' if all 5 survey grades are SHARP, otherwise 'ALL SHARP: NO'.\n5. 'Summary: ' followed by one sentence restating identity, the focus peak, the fall-off and all-sharp.\nOutput exactly these lines and nothing else. If a line the rules need is missing from the survey, score it as absent and say so in the summary.",
+        "maxTokens": "1200",
+        "reasoningEffort": "low"
+      },
+      "w": 280,
+      "name": "Focus audit - GLM scores the focal peak, the two-sided fall-off and the all-sharp failure",
+      "sizes": {
+        "system": 150
+      }
+    },
+    {
+      "id": "j2",
+      "type": "join",
+      "x": 2240,
+      "y": 180,
+      "fields": {
+        "sep": "\n\nFOCUS AUDIT:\n"
+      },
+      "w": 200,
+      "name": "Card, survey + focus audit"
+    },
+    {
+      "id": "audit",
+      "type": "decide",
+      "x": 2600,
+      "y": 180,
+      "fields": {
+        "model": "perplexity/pplx-decider-v1.2",
+        "mode": "choose",
+        "question": "The picture should be a shallow-depth-of-field photograph of the planned scene: the 5 planned objects receding front to back, the one planned FOCAL object (mid-row) tack sharp and the only sharp object, with sharpness falling off on both sides of it. The text gives the FOCUS CARD (scene, objects with distances, focal number), a blind SURVEY grading each object's sharpness and naming the sharpest position, and a FOCUS AUDIT scoring identity, the focus peak, the two-sided fall-off and the all-sharp failure. Which verdict fits? 'focus landed' means FOCUS PEAK is CORRECT, fall-off is at least 3 of 4, identity is at least 4 of 5 and the picture is not all sharp. 'all sharp' means the audit's ALL SHARP line says YES and identity is at least 4 of 5 - everything in focus, no focal plane at all. 'focus missed' means identity is at least 4 of 5, the picture is not all sharp, but the peak is wrong or the fall-off falls short. 'wrong scene' means identity is 3 of 5 or less. Judge the focus, not the picture's beauty.",
+        "options": "focus landed\nfocus missed\nall sharp\nwrong scene"
+      },
+      "w": 280,
+      "name": "Focus landed - audited",
+      "sizes": {
+        "question": 130
+      }
+    },
+    {
+      "id": "editor",
+      "type": "llm",
+      "x": 2600,
+      "y": 520,
+      "fields": {
+        "model": "z-ai/glm-5.3-flash",
+        "system": "You are the photo editor in a focus-check pipeline. The input gives a FOCUS CARD (a SCENE, 5 objects front to back with colours and distances, and a FOCAL object number), a blind SURVEY grading each object's sharpness in the painted picture, and a FOCUS AUDIT scoring identity, the focus peak, the two-sided fall-off and the all-sharp failure. Write ONE edit instruction for an image-editing model that will receive the painted picture itself. Rules:\n- Address the editor directly and write in imperatives: 'Edit this photograph: ...'\n- Change ONLY sharpness. Open by demanding the scene, all 5 objects, their colours, positions, framing and light stay exactly the same - nothing moved, added, removed or recoloured.\n- State the FULL target end state, not just the deltas, so the instruction is complete even where round 1 already scored well: the FOCAL object (name it with its colour and distance) tack sharp, every edge and texture crisp, and the ONLY sharp object; each object NEARER than the focal object softly blurred; each object FARTHER than the focal object blurred more than the one before it, the farthest the softest of all.\n- Then name the audit's specific failures as extra demands, object by object: if ALL SHARP says YES, demand real blur on every non-focal object; if FOCUS PEAK is WRONG, demand the wrongly sharp object (name it) be blurred and the focal object sharpened; for every object whose sharpness broke the fall-off, name it and the blur it needs (more blur if it was too sharp for its side, or leave it if a farther object was the breaker).\n- End with: 'Do not move, add, remove or recolour anything. Photorealistic shallow depth-of-field photograph, shot at f/1.8, no text, no letters, no people.'\nOutput the single edit instruction only - no preamble, no list, no explanation.",
+        "maxTokens": "350",
+        "reasoningEffort": "low"
+      },
+      "w": 280,
+      "name": "Edit notes - GLM turns the focus audit into concrete fix instructions",
+      "sizes": {
+        "system": 150
+      }
+    },
+    {
+      "id": "fix",
+      "type": "edit",
+      "x": 2960,
+      "y": 520,
+      "fields": {
+        "model": "meta/muse-image/edit",
+        "size": "auto"
+      },
+      "w": 280,
+      "name": "Corrected picture - Muse Edit applies the audit's focus fixes"
+    },
+    {
+      "id": "surveyor2",
+      "type": "vision",
+      "x": 3320,
+      "y": 520,
+      "fields": {
+        "model": "google/gemini-3.8-flash",
+        "q": "You are the surveyor in a focus-check pipeline. You see ONE photograph with a row of objects receding from near the camera to far away. Judge sharpness honestly from edge crispness and visible texture detail - do not guess from size or position. First name the scene. Then, FRONT TO BACK (nearest first), list exactly 5 main objects in the receding row; for each give its name and colour and grade its SHARPNESS as exactly one of: SHARP (edges and texture crisp), SLIGHTLY SOFT (mostly crisp, slight softness), SOFT (edges visibly blurred, texture smeared), VERY BLURRED (shapes only, no texture). Then name the SHARPEST position: the front-to-back number (1 to 5) of the single sharpest object, or NONE if two or more tie for sharpest. Output exactly this shape:\nSCENE SEEN: <what location this is>\nOBJECT 1: <object> | <colour> | <SHARPNESS grade>\nOBJECT 2: <object> | <colour> | <SHARPNESS grade>\nOBJECT 3: <object> | <colour> | <SHARPNESS grade>\nOBJECT 4: <object> | <colour> | <SHARPNESS grade>\nOBJECT 5: <object> | <colour> | <SHARPNESS grade>\nSHARPEST: <1, 2, 3, 4, 5 or NONE>"
+      },
+      "w": 280,
+      "name": "Re-survey - Gemini grades the corrected picture's sharpness, blind",
+      "sizes": {
+        "q": 150
+      }
+    },
+    {
+      "id": "j4",
+      "type": "join",
+      "x": 3680,
+      "y": 420,
+      "fields": {
+        "sep": "\n\nSURVEY (a blind surveyor graded the corrected picture's sharpness object by object and named the sharpest position; it never saw the focus card):\n"
+      },
+      "w": 200,
+      "name": "Focus card + re-survey"
+    },
+    {
+      "id": "checker2",
+      "type": "llm",
+      "x": 4040,
+      "y": 520,
+      "fields": {
+        "model": "z-ai/glm-5.3-flash",
+        "system": "You are a focus auditor. The input gives a FOCUS CARD (a SCENE, 5 objects front to back with colours and distances, and a FOCAL object number), then 'SURVEY' with a blind surveyor's 5 objects with SHARPNESS grades and a SHARPEST line. Sharpness points: SHARP = 3, SLIGHTLY SOFT = 2, SOFT = 1, VERY BLURRED = 0. Work in this order and output exactly these lines:\n1. 'IDENTITY: X of 5' - one point per card object the survey lists in the same front-to-back position with a matching colour (near object and colour names count). Then 'MISSING: ' followed by each card object not matched, or 'none'.\n2. 'FOCUS PEAK: CORRECT' if the survey SHARPEST number equals the card FOCAL number; 'FOCUS PEAK: NONE' if the survey SHARPEST is NONE; otherwise 'FOCUS PEAK: WRONG (sharpest <n>, focal <m>)' with the two numbers.\n3. 'FALL-OFF: X of 4' - one point per NON-focal object whose sharpness points are strictly less than the focal object's points AND which does not break the gradient on its side: moving away from the focal object on the same side (nearer side or farther side), points must never increase; an object breaks the gradient if an object farther from the focal plane on its side has MORE points than it. If the focal object's survey grade is missing, fall-off is 0 of 4.\n4. 'ALL SHARP: YES' if all 5 survey grades are SHARP, otherwise 'ALL SHARP: NO'.\n5. 'Summary: ' followed by one sentence restating identity, the focus peak, the fall-off and all-sharp.\nOutput exactly these lines and nothing else. If a line the rules need is missing from the survey, score it as absent and say so in the summary.",
+        "maxTokens": "1200",
+        "reasoningEffort": "low"
+      },
+      "w": 280,
+      "name": "Focus re-audit - GLM scores the corrected picture against the same card",
+      "sizes": {
+        "system": 150
+      }
+    }
+  ],
+  "links": [
+    {
+      "id": "l1",
+      "from": {
+        "node": "setting",
+        "port": "text"
+      },
+      "to": {
+        "node": "director",
+        "port": "prompt"
+      }
+    },
+    {
+      "id": "l2",
+      "from": {
+        "node": "director",
+        "port": "text"
+      },
+      "to": {
+        "node": "j0",
+        "port": "b"
+      }
+    },
+    {
+      "id": "l12",
+      "from": {
+        "node": "setting",
+        "port": "text"
+      },
+      "to": {
+        "node": "j0",
+        "port": "a"
+      }
+    },
+    {
+      "id": "l13",
+      "from": {
+        "node": "j0",
+        "port": "text"
+      },
+      "to": {
+        "node": "stylist",
+        "port": "prompt"
+      }
+    },
+    {
+      "id": "l3",
+      "from": {
+        "node": "stylist",
+        "port": "text"
+      },
+      "to": {
+        "node": "paint",
+        "port": "prompt"
+      }
+    },
+    {
+      "id": "l4",
+      "from": {
+        "node": "paint",
+        "port": "image"
+      },
+      "to": {
+        "node": "surveyor",
+        "port": "image"
+      }
+    },
+    {
+      "id": "l7",
+      "from": {
+        "node": "director",
+        "port": "text"
+      },
+      "to": {
+        "node": "j1",
+        "port": "a"
+      }
+    },
+    {
+      "id": "l8",
+      "from": {
+        "node": "surveyor",
+        "port": "text"
+      },
+      "to": {
+        "node": "j1",
+        "port": "b"
+      }
+    },
+    {
+      "id": "l11",
+      "from": {
+        "node": "j1",
+        "port": "text"
+      },
+      "to": {
+        "node": "checker",
+        "port": "prompt"
+      }
+    },
+    {
+      "id": "l14",
+      "from": {
+        "node": "j1",
+        "port": "text"
+      },
+      "to": {
+        "node": "j2",
+        "port": "a"
+      }
+    },
+    {
+      "id": "l15",
+      "from": {
+        "node": "checker",
+        "port": "text"
+      },
+      "to": {
+        "node": "j2",
+        "port": "b"
+      }
+    },
+    {
+      "id": "l16",
+      "from": {
+        "node": "j2",
+        "port": "text"
+      },
+      "to": {
+        "node": "audit",
+        "port": "text"
+      }
+    },
+    {
+      "id": "l17",
+      "from": {
+        "node": "paint",
+        "port": "image"
+      },
+      "to": {
+        "node": "audit",
+        "port": "img1"
+      }
+    },
+    {
+      "id": "l18",
+      "from": {
+        "node": "j2",
+        "port": "text"
+      },
+      "to": {
+        "node": "editor",
+        "port": "prompt"
+      }
+    },
+    {
+      "id": "l19",
+      "from": {
+        "node": "editor",
+        "port": "text"
+      },
+      "to": {
+        "node": "fix",
+        "port": "prompt"
+      }
+    },
+    {
+      "id": "l20",
+      "from": {
+        "node": "paint",
+        "port": "image"
+      },
+      "to": {
+        "node": "fix",
+        "port": "image"
+      }
+    },
+    {
+      "id": "l21",
+      "from": {
+        "node": "fix",
+        "port": "image"
+      },
+      "to": {
+        "node": "surveyor2",
+        "port": "image"
+      }
+    },
+    {
+      "id": "l22",
+      "from": {
+        "node": "director",
+        "port": "text"
+      },
+      "to": {
+        "node": "j4",
+        "port": "a"
+      }
+    },
+    {
+      "id": "l23",
+      "from": {
+        "node": "surveyor2",
+        "port": "text"
+      },
+      "to": {
+        "node": "j4",
+        "port": "b"
+      }
+    },
+    {
+      "id": "l24",
+      "from": {
+        "node": "j4",
+        "port": "text"
+      },
+      "to": {
+        "node": "checker2",
+        "port": "prompt"
+      }
+    }
+  ],
+  "nid": 30,
+  "lid": 38,
+  "view": {
+    "panX": 40,
+    "panY": 40,
+    "scale": 0.5
+  }
+}

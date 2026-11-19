@@ -1,0 +1,308 @@
+{
+ "v": 1,
+ "nodes": [
+  {
+   "id": "c1",
+   "type": "comment",
+   "x": 60,
+   "y": 30,
+   "fields": {
+    "text": "Can a flat picture hold real depth? This flow asks a generator to paint a stereoscopic pair - the same paper diorama seen by a left eye and a right eye, side by side - where depth exists only as horizontal shift: near things move more between the two panels, far things barely move, and the painted sun on the backdrop does not move at all. A GLM director writes a DEPTH CARD: five diorama pieces, a distinct colour each, a left-to-right slot and a depth rank from nearest to farthest, with a planned shift for each rank (8, 6, 4, 2, 1 percent of the panel width) and the backdrop sun as a zero-shift control. A second GLM turns the card into one painter prompt and Muse paints both panels in a single generation. A blind Gemini surveyor then measures every piece's centre in each panel, and a GLM auditor subtracts the pairs: identity, shift accuracy, depth order, the control, and the flat-copy test - two identical panels mean no depth at all. A Decide judge gives the headline: true stereo, depth scrambled, flat copy, or wrong diorama. See recipes/stereo-check.md."
+   },
+   "w": 900,
+   "name": "Stereo check, disparity-audited - one diorama, two eyes, and a flat-copy test"
+  },
+  {
+   "id": "setting",
+   "type": "text",
+   "x": 60,
+   "y": 300,
+   "fields": {
+    "text": "A paper-theatre diorama of a harbour lane on a tabletop: a flat painted backdrop at the very back showing a pale sky, low hills and one round sun painted on the backdrop itself; in front of it, five free-standing cardboard pieces standing on a flat board in one loose row, bright even daylight, seen straight-on from the front, nothing else on the board."
+   },
+   "w": 300,
+   "name": "Setting"
+  },
+  {
+   "id": "director",
+   "type": "llm",
+   "x": 440,
+   "y": 280,
+   "fields": {
+    "model": "z-ai/glm-5.3-flash",
+    "system": "You are a stereo director. Given a SETTING (a paper diorama with a painted backdrop that includes one round sun painted on the backdrop itself), design a DEPTH CARD for exactly 5 free-standing pieces standing in one loose row in front of the backdrop. Choose 5 DIFFERENT pieces from this menu ONLY:\nlighthouse; cottage; pine tree; rowboat on a stand; bicycle; lamppost; postbox; windmill; fountain; small dog.\nRules: give each piece a distinct main colour. Give each piece a distinct SLOT, 1 to 5, its left-to-right place in the row (slot 1 at the left). Give each piece a distinct DEPTH RANK, 1 to 5, where rank 1 is NEAREST the viewer and rank 5 is FARTHEST (standing closest to the backdrop). Slots and depth ranks are independent: do not simply make slot order equal depth order. The planned shift for each rank is fixed: rank 1 shifts 8, rank 2 shifts 6, rank 3 shifts 4, rank 4 shifts 2, rank 5 shifts 1 (percent of panel width). Output exactly this shape and nothing else, ordered by SLOT:\nSLOT 1: <piece> | <colour> | DEPTH RANK: <rank> | PLANNED SHIFT: <shift>\nSLOT 2: <piece> | <colour> | DEPTH RANK: <rank> | PLANNED SHIFT: <shift>\nSLOT 3: <piece> | <colour> | DEPTH RANK: <rank> | PLANNED SHIFT: <shift>\nSLOT 4: <piece> | <colour> | DEPTH RANK: <rank> | PLANNED SHIFT: <shift>\nSLOT 5: <piece> | <colour> | DEPTH RANK: <rank> | PLANNED SHIFT: <shift>\nCONTROL: painted sun on the backdrop | PLANNED SHIFT: 0",
+    "maxTokens": "500",
+    "reasoningEffort": "low"
+   },
+   "w": 280,
+   "name": "Depth card - GLM picks five diorama pieces with depth ranks and planned shifts",
+   "sizes": {
+    "system": 150
+   }
+  },
+  {
+   "id": "j0",
+   "type": "join",
+   "x": 800,
+   "y": 480,
+   "fields": {
+    "sep": "\n\nDEPTH CARD (the five pieces, their colours, slots, depth ranks and planned shifts, plus the zero-shift backdrop control; its exact wording must reach the painter):\n"
+   },
+   "w": 200,
+   "name": "Setting + depth card"
+  },
+  {
+   "id": "stylist",
+   "type": "llm",
+   "x": 800,
+   "y": 280,
+   "fields": {
+    "model": "z-ai/glm-5.3-flash",
+    "system": "You turn a DEPTH CARD into ONE prompt for an AI image generator. The input gives a SETTING first, then 'DEPTH CARD' with 5 slots (each a piece with a colour, a DEPTH RANK and a PLANNED SHIFT) and a CONTROL line (the painted sun on the backdrop, planned shift 0). Write the prompt so the generator paints ONE wide image holding a SIDE-BY-SIDE STEREO PAIR: two equal rectangular panels, left panel and right panel, separated by one thin straight black vertical divider line in the exact middle, each panel showing the SAME diorama from the setting - the painted backdrop with its round sun, and the 5 carded pieces in slot order left to right, each in its card colour, every piece exactly the same size, height and vertical position in both panels. The ONLY difference between the panels is horizontal position: in the RIGHT panel each piece stands shifted LEFT by its PLANNED SHIFT percent of the panel width compared with its place in the left panel (state each piece's shift in the prompt as a plain instruction, e.g. 'the red lighthouse stands about 8 percent of the panel width further left in the right panel than in the left panel'), and the painted sun on the backdrop does not shift at all - it sits at exactly the same place in both panels. No other differences between the panels: same colours, same backdrop, same lighting, no extra objects in either panel. End with: 'Flat paper-theatre diorama photograph, side-by-side stereoscopic pair, two equal panels with a thin black vertical divider, no text, no letters, no people.' Output the prompt only.",
+    "maxTokens": "700",
+    "reasoningEffort": "low"
+   },
+   "w": 280,
+   "name": "Stereo brief - GLM turns the depth card into a side-by-side pair prompt",
+   "sizes": {
+    "system": 150
+   }
+  },
+  {
+   "id": "paint",
+   "type": "image",
+   "x": 1160,
+   "y": 280,
+   "fields": {
+    "model": "meta/muse-image/text-to-image",
+    "size": "16:9",
+    "variations": "1"
+   },
+   "w": 280,
+   "name": "Stereo pair - Muse paints both eyes of the diorama in one generation"
+  },
+  {
+   "id": "surveyor",
+   "type": "vision",
+   "x": 1520,
+   "y": 280,
+   "fields": {
+    "model": "google/gemini-3.8-flash",
+    "q": "You are the surveyor in a stereo-check pipeline. You see ONE wide image holding a side-by-side stereo pair: a LEFT panel and a RIGHT panel separated by a thin vertical divider. In EACH panel separately, list the free-standing pieces you see, left to right. For each piece, estimate the horizontal position of its CENTRE as a whole-number percentage of THAT PANEL's width (0 = the panel's left edge, 100 = the panel's right edge). Also locate the round sun painted on the backdrop in each panel the same way. Output exactly this shape:\nLEFT PANEL:\nPIECE SEEN: <piece> | <colour> | CENTRE: <whole number>\n(one line per piece in the left panel, then:)\nCONTROL SEEN: painted sun | CENTRE: <whole number>\nRIGHT PANEL:\nPIECE SEEN: <piece> | <colour> | CENTRE: <whole number>\n(one line per piece in the right panel, then:)\nCONTROL SEEN: painted sun | CENTRE: <whole number>\nThen output exactly these two lines:\nEXTRA PIECES: <any pieces in either panel beyond the ones you listed, or 'none'>\nPANELS: <'two panels with a divider' if you see two panels separated by a divider, otherwise describe what you see>"
+   },
+   "w": 280,
+   "name": "Survey - Gemini measures each piece's centre in both panels, blind",
+   "sizes": {
+    "q": 150
+   }
+  },
+  {
+   "id": "j1",
+   "type": "join",
+   "x": 1880,
+   "y": 180,
+   "fields": {
+    "sep": "\n\nSURVEY (a blind surveyor measured each piece's centre in both panels of the rendered stereo pair; it never saw the depth card):\n"
+   },
+   "w": 200,
+   "name": "Depth card + survey"
+  },
+  {
+   "id": "checker",
+   "type": "llm",
+   "x": 2240,
+   "y": 400,
+   "fields": {
+    "model": "z-ai/glm-5.3-flash",
+    "system": "You are a stereo auditor. The input gives a DEPTH CARD (5 slots, each a piece with a colour, a DEPTH RANK 1 nearest to 5 farthest and a PLANNED SHIFT in percent of panel width, plus a CONTROL line: the painted sun, planned shift 0), then 'SURVEY' with a blind surveyor's centre measurements for both panels of the rendered stereo pair. For each card piece, find its centre in the LEFT panel and in the RIGHT panel in the survey and compute its DISPARITY as the absolute difference between the two centres (a whole number). Do the same for the control sun. Work in this order and output exactly these lines:\n1. 'IDENTITY: X of 5' - one point per card piece the survey lists in BOTH panels with a matching colour (near piece and colour names count). Then 'MISSING: ' followed by each card piece not found in both panels, or 'none'; and 'EXTRA: ' followed by the survey's EXTRA PIECES, or 'none'.\n2. 'SHIFTS: ' followed by one '<piece> <disparity>' entry per matched card piece in depth-rank order (nearest first), then 'CONTROL <disparity>'.\n3. 'SHIFT: X of 5' - one point per matched piece whose disparity is within 3 points of its PLANNED SHIFT.\n4. 'DEPTH ORDER: X of 4' - one point per adjacent pair in depth-rank order (rank 1 vs 2, 2 vs 3, 3 vs 4, 4 vs 5) where the nearer piece's disparity is strictly greater than the farther piece's disparity.\n5. 'CONTROL: PASS' if the control sun's disparity is 3 or less, otherwise 'CONTROL: FAIL'.\n6. 'FLAT: YES' if the largest disparity among matched pieces is 2 or less (the pair is a flat copy with no real depth), otherwise 'FLAT: NO'.\n7. 'Summary: ' followed by one sentence restating identity, shift, depth order, control and flat.\nOutput exactly these lines and nothing else.",
+    "maxTokens": "1200",
+    "reasoningEffort": "low"
+   },
+   "w": 280,
+   "name": "Stereo audit - GLM subtracts the panels and scores disparity, depth order and the control",
+   "sizes": {
+    "system": 150
+   }
+  },
+  {
+   "id": "j2",
+   "type": "join",
+   "x": 2240,
+   "y": 180,
+   "fields": {
+    "sep": "\n\nSTEREO AUDIT:\n"
+   },
+   "w": 200,
+   "name": "Card, survey + stereo audit"
+  },
+  {
+   "id": "audit",
+   "type": "decide",
+   "x": 2600,
+   "y": 180,
+   "fields": {
+    "model": "perplexity/pplx-decider-v1.2",
+    "mode": "choose",
+    "question": "The picture should be a side-by-side stereo pair of one diorama: the same 5 planned pieces in both panels, each piece shifted horizontally between the panels by an amount that shrinks with its planned depth (nearest shifts most, farthest least), and the painted backdrop sun not shifting at all. The text gives the DEPTH CARD (slots, colours, depth ranks, planned shifts, and the zero-shift control), a blind SURVEY measuring each piece's centre in both panels, and a STEREO AUDIT scoring identity, shift accuracy, depth order, the control, and flatness. Which verdict fits? 'true stereo' means identity is 5 of 5, depth order is 4 of 4, the control passes and the pair is not flat. 'flat copy' means the audit's FLAT line says YES, whatever the other scores. 'depth scrambled' means identity is at least 4 of 5, the pair is not flat, but depth order falls short or the control fails. 'wrong diorama' means identity is 3 of 5 or less. Judge the geometry, not the picture's beauty.",
+    "options": "true stereo\ndepth scrambled\nflat copy\nwrong diorama"
+   },
+   "w": 280,
+   "name": "True stereo - audited",
+   "sizes": {
+    "question": 130
+   }
+  }
+ ],
+ "links": [
+  {
+   "id": "l1",
+   "from": {
+    "node": "setting",
+    "port": "text"
+   },
+   "to": {
+    "node": "director",
+    "port": "prompt"
+   }
+  },
+  {
+   "id": "l2",
+   "from": {
+    "node": "director",
+    "port": "text"
+   },
+   "to": {
+    "node": "j0",
+    "port": "b"
+   }
+  },
+  {
+   "id": "l12",
+   "from": {
+    "node": "setting",
+    "port": "text"
+   },
+   "to": {
+    "node": "j0",
+    "port": "a"
+   }
+  },
+  {
+   "id": "l13",
+   "from": {
+    "node": "j0",
+    "port": "text"
+   },
+   "to": {
+    "node": "stylist",
+    "port": "prompt"
+   }
+  },
+  {
+   "id": "l3",
+   "from": {
+    "node": "stylist",
+    "port": "text"
+   },
+   "to": {
+    "node": "paint",
+    "port": "prompt"
+   }
+  },
+  {
+   "id": "l4",
+   "from": {
+    "node": "paint",
+    "port": "image"
+   },
+   "to": {
+    "node": "surveyor",
+    "port": "image"
+   }
+  },
+  {
+   "id": "l7",
+   "from": {
+    "node": "director",
+    "port": "text"
+   },
+   "to": {
+    "node": "j1",
+    "port": "a"
+   }
+  },
+  {
+   "id": "l8",
+   "from": {
+    "node": "surveyor",
+    "port": "text"
+   },
+   "to": {
+    "node": "j1",
+    "port": "b"
+   }
+  },
+  {
+   "id": "l11",
+   "from": {
+    "node": "j1",
+    "port": "text"
+   },
+   "to": {
+    "node": "checker",
+    "port": "prompt"
+   }
+  },
+  {
+   "id": "l14",
+   "from": {
+    "node": "j1",
+    "port": "text"
+   },
+   "to": {
+    "node": "j2",
+    "port": "a"
+   }
+  },
+  {
+   "id": "l15",
+   "from": {
+    "node": "checker",
+    "port": "text"
+   },
+   "to": {
+    "node": "j2",
+    "port": "b"
+   }
+  },
+  {
+   "id": "l16",
+   "from": {
+    "node": "j2",
+    "port": "text"
+   },
+   "to": {
+    "node": "audit",
+    "port": "text"
+   }
+  },
+  {
+   "id": "l17",
+   "from": {
+    "node": "paint",
+    "port": "image"
+   },
+   "to": {
+    "node": "audit",
+    "port": "img1"
+   }
+  }
+ ],
+ "nid": 30,
+ "lid": 31,
+ "view": {
+  "panX": 40,
+  "panY": 40,
+  "scale": 0.5
+ }
+}

@@ -1,0 +1,308 @@
+{
+  "v": 1,
+  "nodes": [
+    {
+      "id": "c1",
+      "type": "comment",
+      "x": 60,
+      "y": 30,
+      "fields": {
+        "text": "Muse paints a source scene from your brief. A Gemini palette clerk measures the finished picture into a PALETTE CARD: exactly 6 swatches, most dominant first, each a plain colour name, an approximate hex and the share of the picture it covers, plus a LIGHT line. That card is the ONLY thing that crosses to the other side - the painter of the second scene never sees the source picture or its description. A GLM palette director turns the card plus your unrelated target-scene brief into one prompt that assigns every swatch to target elements in proportion to its share and explicitly bans the target scene's natural colours when they are not on the card. Muse paints the target scene from that prompt alone. Then the same clerk measures the new picture blind - it never sees the source card - and a GLM palette auditor matches the two cards swatch by swatch: CROSSED, SHIFTED or MISSING, plus any INTRUDER colours that appear in neither card's family, ending in 'X of 6 swatches crossed'. A Decide judge sees the new scene and both cards and gives the headline: palette transplanted, palette partly crossed, colours of its own, or source scene in disguise. See recipes/palette-transplant.md."
+      },
+      "w": 900,
+      "name": "Palette transplant, re-measured - only colour crosses between two unrelated scenes"
+    },
+    {
+      "id": "src",
+      "type": "text",
+      "x": 60,
+      "y": 300,
+      "fields": {
+        "text": "An autumn maple forest at peak colour, photorealistic, wide view. A winding path through crimson and burnt-orange maple trees, golden fallen leaves carpeting the ground, one moss-green stone lantern beside the path, dark bark-brown trunks, pale cream mist drifting between the trees, soft amber sunlight filtering through the canopy. No people, no text, no lettering."
+      },
+      "w": 300,
+      "name": "Source scene brief"
+    },
+    {
+      "id": "tgt",
+      "type": "text",
+      "x": 60,
+      "y": 640,
+      "fields": {
+        "text": "A small fishing harbour at dawn, photorealistic, wide view: three fishing boats tied to a wooden pier, a short lighthouse on the harbour wall, coiled nets and stacked crates on the quay, gulls resting on mooring posts, calm water with reflections. No people, no text, no lettering."
+      },
+      "w": 300,
+      "name": "Target scene brief"
+    },
+    {
+      "id": "srcimg",
+      "type": "image",
+      "x": 440,
+      "y": 280,
+      "fields": {
+        "model": "meta/muse-image/text-to-image",
+        "size": "16:9",
+        "variations": "1"
+      },
+      "w": 260,
+      "name": "Source scene - Muse paints it"
+    },
+    {
+      "id": "card",
+      "type": "vision",
+      "x": 780,
+      "y": 280,
+      "fields": {
+        "model": "google/gemini-3.8-flash",
+        "q": "You are the palette clerk in a palette-transplant pipeline. Look at this image and measure its colour palette into a PALETTE CARD of exactly 6 swatches, most dominant first, in exactly this shape, one line per swatch: '<number>. <plain colour name> | <approximate hex> | <share>%' where share is your estimate of the percent of the picture that colour covers, and the six shares add to about 100. Use plain colour names a painter would use (crimson, burnt orange, gold, moss green, bark brown, cream). After the six lines, one last line: 'LIGHT: ' plus warm, cool or neutral, and bright, muted or deep. Judge by area covered, not by what is eye-catching. Name the colours you actually see, never the colours a scene like this usually has. Output the card only."
+      },
+      "w": 280,
+      "name": "Palette card - Gemini measures the source",
+      "sizes": {
+        "q": 150
+      }
+    },
+    {
+      "id": "j0",
+      "type": "join",
+      "x": 780,
+      "y": 640,
+      "fields": {
+        "sep": "\n\nTARGET SCENE:\n"
+      },
+      "w": 200,
+      "name": "Card + target scene"
+    },
+    {
+      "id": "director",
+      "type": "llm",
+      "x": 1140,
+      "y": 480,
+      "fields": {
+        "model": "z-ai/glm-5.3-flash",
+        "system": "You write ONE prompt for an AI image generator. The input gives a PALETTE CARD (6 numbered swatches with colour names, hex values and shares) measured from a source picture you never see, then 'TARGET SCENE:' with a completely different scene to paint. Write a single prompt, under 120 words, that paints the TARGET SCENE using ONLY the six card colours: assign every swatch to elements of the target scene roughly in proportion to its share, repeat the hex and name of the two largest swatches, and state the LIGHT line as the scene's lighting. Explicitly ban the colours this scene would naturally have that are NOT on the card (name them: for a harbour, for example, blue sky, grey-blue water, white gulls - ban whichever are absent from the card). Carry over NOTHING from the source picture except colour: no source subjects, objects or setting may appear. End with 'Photorealistic, wide view. No people, no text.' Output the prompt only.",
+        "maxTokens": "300",
+        "reasoningEffort": "low"
+      },
+      "w": 280,
+      "name": "Painting prompt - GLM assigns the swatches",
+      "sizes": {
+        "system": 150
+      }
+    },
+    {
+      "id": "tgtimg",
+      "type": "image",
+      "x": 1500,
+      "y": 480,
+      "fields": {
+        "model": "meta/muse-image/text-to-image",
+        "size": "16:9",
+        "variations": "1"
+      },
+      "w": 280,
+      "name": "Target scene - Muse paints it in the source palette"
+    },
+    {
+      "id": "card2",
+      "type": "vision",
+      "x": 1860,
+      "y": 480,
+      "fields": {
+        "model": "google/gemini-3.8-flash",
+        "q": "You are the palette clerk in a palette-transplant pipeline. Look at this image and measure its colour palette into a PALETTE CARD of exactly 6 swatches, most dominant first, in exactly this shape, one line per swatch: '<number>. <plain colour name> | <approximate hex> | <share>%' where share is your estimate of the percent of the picture that colour covers, and the six shares add to about 100. Use plain colour names a painter would use (crimson, burnt orange, gold, moss green, bark brown, cream). After the six lines, one last line: 'LIGHT: ' plus warm, cool or neutral, and bright, muted or deep. Judge by area covered, not by what is eye-catching. Name the colours you actually see, never the colours a scene like this usually has. Output the card only."
+      },
+      "w": 280,
+      "name": "Target palette card - Gemini measures the new scene blind",
+      "sizes": {
+        "q": 150
+      }
+    },
+    {
+      "id": "j1",
+      "type": "join",
+      "x": 1860,
+      "y": 820,
+      "fields": {
+        "sep": "\n\nTARGET CARD (measured blind from the new scene):\n"
+      },
+      "w": 200,
+      "name": "Source card + target card"
+    },
+    {
+      "id": "checker",
+      "type": "llm",
+      "x": 2240,
+      "y": 820,
+      "fields": {
+        "model": "z-ai/glm-5.3-flash",
+        "system": "You are a palette auditor. The input gives a SOURCE PALETTE CARD (6 swatches measured from a source picture), then 'TARGET CARD' with the palette measured blind from a new scene painted to order. Score each source swatch one line each, in source order: '<colour name>: CROSSED' if a target swatch is the same colour family and its share is within about 15 points of the source share, 'SHIFTED' if the family is there but the share is far off or the shade clearly moved, or 'MISSING' if no target swatch is in that family. Then one 'INTRUDERS: ' line listing any target swatches whose family appears nowhere in the source card, or 'none'. End with one line 'Summary: X of 6 swatches crossed.' where X is the number of CROSSED verdicts. Judge by the two cards only - colour names first, hex as support. Output the audit only.",
+        "maxTokens": "600",
+        "reasoningEffort": "low"
+      },
+      "w": 280,
+      "name": "Palette audit - GLM matches the cards swatch by swatch",
+      "sizes": {
+        "system": 150
+      }
+    },
+    {
+      "id": "audit",
+      "type": "decide",
+      "x": 2240,
+      "y": 480,
+      "fields": {
+        "model": "perplexity/pplx-decider-v1.2",
+        "mode": "choose",
+        "question": "The text gives a SOURCE PALETTE CARD measured from one picture, then a TARGET CARD measured blind from a completely different scene that was painted using only the source palette, and the image is that new scene. Which verdict fits? 'palette transplanted' means the new scene visibly lives in the source's colours - most swatches recognisable at roughly their shares, no strong outside colour. 'palette partly crossed' means some swatches crossed but shares drifted or an outside colour crept in. 'colours of its own' means the scene mostly wears its natural colours and the source palette barely shows. 'source scene in disguise' means the new picture substantially depicts the source scene's subjects or setting instead of the target scene - the bottleneck leaked content, not just colour. Judge the image against both cards.",
+        "options": "palette transplanted\npalette partly crossed\ncolours of its own\nsource scene in disguise"
+      },
+      "w": 280,
+      "name": "Palette transplanted - audited",
+      "sizes": {
+        "question": 130
+      }
+    }
+  ],
+  "links": [
+    {
+      "id": "l1",
+      "from": {
+        "node": "src",
+        "port": "text"
+      },
+      "to": {
+        "node": "srcimg",
+        "port": "prompt"
+      }
+    },
+    {
+      "id": "l2",
+      "from": {
+        "node": "srcimg",
+        "port": "image"
+      },
+      "to": {
+        "node": "card",
+        "port": "image"
+      }
+    },
+    {
+      "id": "l3",
+      "from": {
+        "node": "card",
+        "port": "text"
+      },
+      "to": {
+        "node": "j0",
+        "port": "a"
+      }
+    },
+    {
+      "id": "l4",
+      "from": {
+        "node": "tgt",
+        "port": "text"
+      },
+      "to": {
+        "node": "j0",
+        "port": "b"
+      }
+    },
+    {
+      "id": "l5",
+      "from": {
+        "node": "j0",
+        "port": "text"
+      },
+      "to": {
+        "node": "director",
+        "port": "prompt"
+      }
+    },
+    {
+      "id": "l6",
+      "from": {
+        "node": "director",
+        "port": "text"
+      },
+      "to": {
+        "node": "tgtimg",
+        "port": "prompt"
+      }
+    },
+    {
+      "id": "l7",
+      "from": {
+        "node": "tgtimg",
+        "port": "image"
+      },
+      "to": {
+        "node": "card2",
+        "port": "image"
+      }
+    },
+    {
+      "id": "l8",
+      "from": {
+        "node": "card",
+        "port": "text"
+      },
+      "to": {
+        "node": "j1",
+        "port": "a"
+      }
+    },
+    {
+      "id": "l9",
+      "from": {
+        "node": "card2",
+        "port": "text"
+      },
+      "to": {
+        "node": "j1",
+        "port": "b"
+      }
+    },
+    {
+      "id": "l10",
+      "from": {
+        "node": "j1",
+        "port": "text"
+      },
+      "to": {
+        "node": "checker",
+        "port": "prompt"
+      }
+    },
+    {
+      "id": "l11",
+      "from": {
+        "node": "j1",
+        "port": "text"
+      },
+      "to": {
+        "node": "audit",
+        "port": "text"
+      }
+    },
+    {
+      "id": "l12",
+      "from": {
+        "node": "tgtimg",
+        "port": "image"
+      },
+      "to": {
+        "node": "audit",
+        "port": "img1"
+      }
+    }
+  ],
+  "nid": 26,
+  "lid": 27,
+  "view": {
+    "panX": 40,
+    "panY": 40,
+    "scale": 0.55
+  }
+}

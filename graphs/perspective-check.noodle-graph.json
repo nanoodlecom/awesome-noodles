@@ -1,0 +1,308 @@
+{
+  "v": 1,
+  "nodes": [
+    {
+      "id": "c1",
+      "type": "comment",
+      "x": 60,
+      "y": 30,
+      "fields": {
+        "text": "Can a flat picture hold real depth in its lines? This flow asks a generator to paint a strict one-point perspective scene where every receding parallel - both rooflines, both ground edges - must converge on ONE planned vanishing point. A GLM director writes a PERSPECTIVE CARD: a scene chosen from a menu of strong one-point locations, a vanishing point given as X and Y percentages of the picture (deliberately off-centre on at least one axis), and exactly 5 side objects in front-to-back order along the two sides. A second GLM turns the card into one painter prompt and Muse paints the scene. A blind Gemini surveyor then does the projective geometry: it estimates where the receding lines actually meet (its own vanishing-point X and Y), judges each of the four named edges CONVERGES or PARALLEL, and lists the side objects. A GLM auditor compares planned and measured vanishing points, scores convergence and identity, and tests for the flat-facade failure - receding lines that stay parallel, so the picture has no depth point at all. A Decide judge gives the headline: true perspective, point drifted, flat facade, or wrong scene. See recipes/perspective-check.md."
+      },
+      "w": 900,
+      "name": "Perspective check, convergence-audited - one vanishing point, four receding edges, and a flat-facade test"
+    },
+    {
+      "id": "setting",
+      "type": "text",
+      "x": 60,
+      "y": 300,
+      "fields": {
+        "text": "A straight, level, one-point perspective location seen from its exact centre line at standing eye height, looking straight down its length: long parallel sides receding into the distance, a clear horizon, bright even daylight, no people, nothing crossing the centre view."
+      },
+      "w": 300,
+      "name": "Setting"
+    },
+    {
+      "id": "director",
+      "type": "llm",
+      "x": 440,
+      "y": 280,
+      "fields": {
+        "model": "z-ai/glm-5.3-flash",
+        "system": "You are a perspective director. Given a SETTING (a straight one-point perspective location seen from its centre line), design a PERSPECTIVE CARD. Choose ONE scene from this menu ONLY:\nrailway station platform with two straight tracks; covered market arcade with arched bays; library aisle between tall shelves; tree-lined canal towpath; colonnaded cloister walkway; greenhouse glasshouse central path.\nChoose a VANISHING POINT: VP X must be one of 35, 42, 58, 65 (percent of picture width from the left edge - deliberately NOT 50) and VP Y must be one of 38, 46, 54 (percent of picture height from the top). Then choose exactly 5 side objects that belong in that scene, each with a distinct colour, listed in FRONT-TO-BACK order (object 1 nearest the viewer, object 5 farthest), alternating sides LEFT, RIGHT, LEFT, RIGHT, LEFT. Output exactly this shape and nothing else:\nSCENE: <scene>\nVP X: <number>\nVP Y: <number>\nOBJECT 1: <object> | <colour> | LEFT\nOBJECT 2: <object> | <colour> | RIGHT\nOBJECT 3: <object> | <colour> | LEFT\nOBJECT 4: <object> | <colour> | RIGHT\nOBJECT 5: <object> | <colour> | LEFT",
+        "maxTokens": "500",
+        "reasoningEffort": "low"
+      },
+      "w": 280,
+      "name": "Perspective card - GLM picks a scene, an off-centre vanishing point and five side objects",
+      "sizes": {
+        "system": 150
+      }
+    },
+    {
+      "id": "j0",
+      "type": "join",
+      "x": 800,
+      "y": 480,
+      "fields": {
+        "sep": "\n\nPERSPECTIVE CARD (the scene, the planned vanishing point as X and Y percentages, and the five side objects front to back; its exact wording must reach the painter):\n"
+      },
+      "w": 200,
+      "name": "Setting + perspective card"
+    },
+    {
+      "id": "stylist",
+      "type": "llm",
+      "x": 800,
+      "y": 280,
+      "fields": {
+        "model": "z-ai/glm-5.3-flash",
+        "system": "You turn a PERSPECTIVE CARD into ONE prompt for an AI image generator. The input gives a SETTING first, then 'PERSPECTIVE CARD' with a SCENE, a vanishing point (VP X percent of width from the left, VP Y percent of height from the top) and 5 side objects front to back with sides. Write the prompt so the generator paints that scene in STRICT ONE-POINT PERSPECTIVE: the camera stands on the scene's centre line at eye height looking straight down its length, and every receding parallel line - the top edges on both sides, the ground edges on both sides, and every repeated bay, arch, shelf, tree or lamp row - converges toward the single vanishing point at the stated position (state it plainly, e.g. 'all receding lines meet at one vanishing point about 42 percent across the picture and 46 percent down from the top, noticeably left of centre'). The 5 carded objects stand along the sides in front-to-back order, each in its card colour, each smaller and closer to the vanishing point than the one before it. The horizon sits at the vanishing point's height. No second vanishing point, no diagonal view, no tilt. End with: 'Photorealistic one-point perspective photograph, straight level camera, no text, no letters, no people.' Output the prompt only.",
+        "maxTokens": "700",
+        "reasoningEffort": "low"
+      },
+      "w": 280,
+      "name": "Perspective brief - GLM turns the card into a one-point painter prompt",
+      "sizes": {
+        "system": 150
+      }
+    },
+    {
+      "id": "paint",
+      "type": "image",
+      "x": 1160,
+      "y": 280,
+      "fields": {
+        "model": "meta/muse-image/text-to-image",
+        "size": "16:9",
+        "variations": "1"
+      },
+      "w": 280,
+      "name": "Perspective scene - Muse paints the one-point view"
+    },
+    {
+      "id": "surveyor",
+      "type": "vision",
+      "x": 1520,
+      "y": 280,
+      "fields": {
+        "model": "google/gemini-3.8-flash",
+        "q": "You are the surveyor in a perspective-check pipeline. You see ONE picture of a straight location. Do the projective geometry honestly. First list the side objects you see along the two sides, front to back. Then extend the receding parallel lines in your mind - the top edges on both sides and the ground edges on both sides - and estimate the single point where they best meet: its X as a whole-number percentage of picture width from the left edge and its Y as a whole-number percentage of picture height from the top. Judge each of the four edges: CONVERGES if its line, extended, passes within about 10 percent of that meeting point, otherwise PARALLEL (it stays parallel to the other edges and never meets them) or ABSENT. Output exactly this shape:\nSCENE SEEN: <what location this is>\nOBJECTS SEEN: <side objects front to back, comma-separated, or 'none'>\nVP ESTIMATE X: <whole number>\nVP ESTIMATE Y: <whole number>\nEDGE TOP LEFT: <CONVERGES, PARALLEL or ABSENT>\nEDGE TOP RIGHT: <CONVERGES, PARALLEL or ABSENT>\nEDGE GROUND LEFT: <CONVERGES, PARALLEL or ABSENT>\nEDGE GROUND RIGHT: <CONVERGES, PARALLEL or ABSENT>\nDEPTH: <STRONG if the lines clearly rush to one point, WEAK if they drift only slightly, NONE if the view is a flat facade with parallel lines>"
+      },
+      "w": 280,
+      "name": "Survey - Gemini estimates the real vanishing point and tests each receding edge, blind",
+      "sizes": {
+        "q": 150
+      }
+    },
+    {
+      "id": "j1",
+      "type": "join",
+      "x": 1880,
+      "y": 180,
+      "fields": {
+        "sep": "\n\nSURVEY (a blind surveyor estimated the rendered picture's real vanishing point and judged each receding edge; it never saw the perspective card):\n"
+      },
+      "w": 200,
+      "name": "Perspective card + survey"
+    },
+    {
+      "id": "checker",
+      "type": "llm",
+      "x": 2240,
+      "y": 400,
+      "fields": {
+        "model": "z-ai/glm-5.3-flash",
+        "system": "You are a perspective auditor. The input gives a PERSPECTIVE CARD (a SCENE, VP X and VP Y as percentages, and 5 side objects front to back with colours and sides), then 'SURVEY' with a blind surveyor's VP ESTIMATE X and Y, its four EDGE judgements, its OBJECTS SEEN and its DEPTH line. Work in this order and output exactly these lines:\n1. 'IDENTITY: X of 5' - one point per card object the survey's OBJECTS SEEN lists in the same front-to-back position with a matching colour (near object and colour names count). Then 'MISSING: ' followed by each card object not matched, or 'none'.\n2. 'VP ERROR: X <dx> Y <dy>' - dx is the absolute difference between the card VP X and the survey VP ESTIMATE X, dy the same for Y (whole numbers).\n3. 'VP: HIT' if dx is 8 or less AND dy is 8 or less; 'VP: NEAR' if dx is 15 or less AND dy is 15 or less (but not HIT); otherwise 'VP: MISS'.\n4. 'CONVERGENCE: X of 4' - one point per EDGE the survey judged CONVERGES.\n5. 'FLAT: YES' if the survey DEPTH is NONE or convergence is 0 of 4, otherwise 'FLAT: NO'.\n6. 'Summary: ' followed by one sentence restating identity, the VP verdict with its errors, convergence and flat.\nOutput exactly these lines and nothing else. If a line the rules need is missing from the survey, score it as absent and say so in the summary.",
+        "maxTokens": "1200",
+        "reasoningEffort": "low"
+      },
+      "w": 280,
+      "name": "Perspective audit - GLM compares vanishing points and scores convergence, identity and flatness",
+      "sizes": {
+        "system": 150
+      }
+    },
+    {
+      "id": "j2",
+      "type": "join",
+      "x": 2240,
+      "y": 180,
+      "fields": {
+        "sep": "\n\nPERSPECTIVE AUDIT:\n"
+      },
+      "w": 200,
+      "name": "Card, survey + perspective audit"
+    },
+    {
+      "id": "audit",
+      "type": "decide",
+      "x": 2600,
+      "y": 180,
+      "fields": {
+        "model": "perplexity/pplx-decider-v1.2",
+        "mode": "choose",
+        "question": "The picture should be a strict one-point perspective view of the planned scene: every receding parallel line converging on ONE vanishing point at the planned off-centre position, and the 5 planned side objects in front-to-back order. The text gives the PERSPECTIVE CARD (scene, planned VP X and Y, objects), a blind SURVEY estimating the real vanishing point and judging each of four receding edges, and a PERSPECTIVE AUDIT scoring identity, VP error, convergence and flatness. Which verdict fits? 'true perspective' means VP is HIT, convergence is at least 3 of 4, identity is at least 4 of 5 and the picture is not flat. 'flat facade' means the audit's FLAT line says YES, whatever the other scores. 'point drifted' means identity is at least 4 of 5, the picture is not flat, but the VP is NEAR or MISS or convergence falls short. 'wrong scene' means identity is 3 of 5 or less. Judge the geometry, not the picture's beauty.",
+        "options": "true perspective\npoint drifted\nflat facade\nwrong scene"
+      },
+      "w": 280,
+      "name": "True perspective - audited",
+      "sizes": {
+        "question": 130
+      }
+    }
+  ],
+  "links": [
+    {
+      "id": "l1",
+      "from": {
+        "node": "setting",
+        "port": "text"
+      },
+      "to": {
+        "node": "director",
+        "port": "prompt"
+      }
+    },
+    {
+      "id": "l2",
+      "from": {
+        "node": "director",
+        "port": "text"
+      },
+      "to": {
+        "node": "j0",
+        "port": "b"
+      }
+    },
+    {
+      "id": "l12",
+      "from": {
+        "node": "setting",
+        "port": "text"
+      },
+      "to": {
+        "node": "j0",
+        "port": "a"
+      }
+    },
+    {
+      "id": "l13",
+      "from": {
+        "node": "j0",
+        "port": "text"
+      },
+      "to": {
+        "node": "stylist",
+        "port": "prompt"
+      }
+    },
+    {
+      "id": "l3",
+      "from": {
+        "node": "stylist",
+        "port": "text"
+      },
+      "to": {
+        "node": "paint",
+        "port": "prompt"
+      }
+    },
+    {
+      "id": "l4",
+      "from": {
+        "node": "paint",
+        "port": "image"
+      },
+      "to": {
+        "node": "surveyor",
+        "port": "image"
+      }
+    },
+    {
+      "id": "l7",
+      "from": {
+        "node": "director",
+        "port": "text"
+      },
+      "to": {
+        "node": "j1",
+        "port": "a"
+      }
+    },
+    {
+      "id": "l8",
+      "from": {
+        "node": "surveyor",
+        "port": "text"
+      },
+      "to": {
+        "node": "j1",
+        "port": "b"
+      }
+    },
+    {
+      "id": "l11",
+      "from": {
+        "node": "j1",
+        "port": "text"
+      },
+      "to": {
+        "node": "checker",
+        "port": "prompt"
+      }
+    },
+    {
+      "id": "l14",
+      "from": {
+        "node": "j1",
+        "port": "text"
+      },
+      "to": {
+        "node": "j2",
+        "port": "a"
+      }
+    },
+    {
+      "id": "l15",
+      "from": {
+        "node": "checker",
+        "port": "text"
+      },
+      "to": {
+        "node": "j2",
+        "port": "b"
+      }
+    },
+    {
+      "id": "l16",
+      "from": {
+        "node": "j2",
+        "port": "text"
+      },
+      "to": {
+        "node": "audit",
+        "port": "text"
+      }
+    },
+    {
+      "id": "l17",
+      "from": {
+        "node": "paint",
+        "port": "image"
+      },
+      "to": {
+        "node": "audit",
+        "port": "img1"
+      }
+    }
+  ],
+  "nid": 30,
+  "lid": 31,
+  "view": {
+    "panX": 40,
+    "panY": 40,
+    "scale": 0.5
+  }
+}

@@ -1,0 +1,273 @@
+{
+  "v": 1,
+  "nodes": [
+    {
+      "id": "c1",
+      "type": "comment",
+      "x": 60,
+      "y": 30,
+      "fields": {
+        "text": "A picture with a reflection in it is really two pictures that have to agree - and image models pattern-match what reflections usually look like instead of working out what this one must show, so the water quietly invents: a landmark loses its reflection, a reflection changes colour, an extra shape appears in the lake that stands nowhere on the shore. This flow paints one glassy lakeshore with Muse from a GLM director's prompt, then reads the SAME picture twice with two blind Gemini readers who never see the brief or each other: one inventories only the real landmarks above the waterline, the other only the reflections in the water below it. A GLM mirror auditor lines the two cards up position by position - MIRRORED, COLOUR SHIFTED, WRONG OBJECT, MISSING REFLECTION, plus EXTRA reflections and an ORDER line - and a Decide judge gives the headline: true mirror, reflections drifted, half a mirror, or no reflection. The image is its own source of truth: there is no plan to recount, only one render disagreeing with itself. See recipes/mirror-check.md."
+      },
+      "w": 900,
+      "name": "Mirror check, reflection-audited - one picture, read twice: the shore and its reflection"
+    },
+    {
+      "id": "scene",
+      "type": "text",
+      "x": 60,
+      "y": 300,
+      "fields": {
+        "text": "Five landmarks in a row along the shore of a still lake, left to right: 1) a red-and-white striped lighthouse on grey rocks, 2) a bright yellow dome tent on the grass, 3) a blue sailboat with one white sail anchored just off the shore, 4) a single tall green pine tree, 5) a white boathouse with a dark grey roof."
+      },
+      "w": 300,
+      "name": "Shore brief"
+    },
+    {
+      "id": "director",
+      "type": "llm",
+      "x": 440,
+      "y": 280,
+      "fields": {
+        "model": "z-ai/glm-5.3-flash",
+        "system": "You turn a SHORE BRIEF into ONE prompt for an AI image generator. The prompt must describe: a photorealistic wide landscape, the brief's landmarks standing in a row along a shoreline that runs across the middle of the picture, in the brief's exact left-to-right order, each landmark named with its colours from the brief; the lower half of the picture is a perfectly still, glassy lake giving a clear mirror reflection of every landmark directly below itself, each reflection vertically flipped, slightly darker and slightly softer than the real landmark, the waterline sharp and level; calm dawn light, no ripples, no waves, no mist. End with: 'No people, no text, no signs, nothing in the water except the reflections.' Output the prompt only.",
+        "maxTokens": "300",
+        "reasoningEffort": "low"
+      },
+      "w": 280,
+      "name": "Lake prompt - GLM directs the mirrored scene",
+      "sizes": {
+        "system": 150
+      }
+    },
+    {
+      "id": "paint",
+      "type": "image",
+      "x": 800,
+      "y": 280,
+      "fields": {
+        "model": "meta/muse-image/text-to-image",
+        "size": "16:9",
+        "variations": "1"
+      },
+      "w": 280,
+      "name": "Lakeshore picture - Muse paints scene and reflection in one render"
+    },
+    {
+      "id": "direct",
+      "type": "vision",
+      "x": 1160,
+      "y": 160,
+      "fields": {
+        "model": "google/gemini-3.8-flash",
+        "q": "You are the direct-view reader in a mirror-check pipeline. Look at this image and list ONLY the real landmarks standing along the shore ABOVE the waterline, strictly in left-to-right order, numbered, one line each in this shape: '<number>. <name> - <main colours and one identifying detail>'. Ignore everything in or on the water: reflections are not real objects, do not list them. Ignore the sky, the shore and the background hills unless a landmark stands there. List only what is actually visible above the waterline; if something is ambiguous, give your best guess and add '(?)'. Output the list only."
+      },
+      "w": 280,
+      "name": "Direct card - Gemini reads only above the waterline, blind",
+      "sizes": {
+        "q": 150
+      }
+    },
+    {
+      "id": "reflect",
+      "type": "vision",
+      "x": 1160,
+      "y": 480,
+      "fields": {
+        "model": "google/gemini-3.8-flash",
+        "q": "You are the reflection reader in a mirror-check pipeline. Look at this image and list ONLY the reflections visible IN the water, below the waterline, strictly in left-to-right order as they appear in the picture, numbered, one line each in this shape: '<number>. reflection of <what it appears to be> - <colours as seen in the water>'. Ignore the real landmarks above the waterline: do not list them, list only their reflections. If a stretch of water shows no recognisable reflection, skip it. If a reflection is ambiguous, give your best guess and add '(?)'. Output the list only."
+      },
+      "w": 280,
+      "name": "Reflection card - Gemini reads only the water, blind",
+      "sizes": {
+        "q": 150
+      }
+    },
+    {
+      "id": "j1",
+      "type": "join",
+      "x": 1520,
+      "y": 330,
+      "fields": {
+        "sep": "\n\nREFLECTION CARD (a second blind reader inventoried only the reflections in the water, left to right; it never saw the brief or the direct card):\n"
+      },
+      "w": 200,
+      "name": "Direct card + reflection card"
+    },
+    {
+      "id": "checker",
+      "type": "llm",
+      "x": 1880,
+      "y": 640,
+      "fields": {
+        "model": "z-ai/glm-5.3-flash",
+        "system": "You are a mirror auditor. The input gives a DIRECT CARD (a blind reader's numbered list of the real landmarks above a waterline, left to right), then 'REFLECTION CARD' with a second blind reader's numbered list of only the reflections in the water, left to right - neither reader saw the scene brief. A true water reflection keeps the same left-to-right order, sits at the same position as its landmark, and keeps its colours, allowing them to read darker or softer in the water. Score one line per DIRECT position, in order: '<n>. <landmark>: MIRRORED' if the reflection at that position is the same landmark with matching colours; 'COLOUR SHIFTED (reflection reads <colours>)' if it is the same landmark in clearly different colours; 'WRONG OBJECT (reflection shows <name>)' if a different thing reflects at that position; 'MISSING REFLECTION' if no reflection sits at that position. Then one 'EXTRA: ' line naming any reflection with no direct landmark above it, or 'none'. Then one line 'ORDER: SAME' if the reflections run in the direct card's order, 'ORDER: REVERSED' if they run in the exact reverse order, or 'ORDER: SCRAMBLED' otherwise. End with one line 'Summary: X of Y landmarks mirrored.' counting only MIRRORED as mirrored. Judge by the two texts only. Output the mirror audit only.",
+        "maxTokens": "500",
+        "reasoningEffort": "low"
+      },
+      "w": 280,
+      "name": "Mirror audit - GLM lines the two cards up position by position",
+      "sizes": {
+        "system": 150
+      }
+    },
+    {
+      "id": "j2",
+      "type": "join",
+      "x": 1880,
+      "y": 300,
+      "fields": {
+        "sep": "\n\nMIRROR AUDIT:\n"
+      },
+      "w": 200,
+      "name": "Cards + mirror audit"
+    },
+    {
+      "id": "audit",
+      "type": "decide",
+      "x": 2240,
+      "y": 300,
+      "fields": {
+        "model": "perplexity/pplx-decider-v1.2",
+        "mode": "choose",
+        "question": "The image is a lakeshore scene whose lower half should be a true mirror: every landmark above the waterline should have a reflection of itself, same position, same left-to-right order, same colours (darker or softer in the water is fine). The text gives a DIRECT CARD of the real landmarks, a REFLECTION CARD of what the water actually shows, and a MIRROR AUDIT comparing them position by position. Which verdict fits? 'true mirror' means every landmark is mirrored with no extras. 'reflections drifted' means all landmarks have reflections but at least one is the wrong colour or the order differs. 'half a mirror' means at least one landmark has no reflection, or a reflection shows something that is not there. 'no reflection' means the water shows no recognisable reflections at all. Judge the reflection's fidelity, not the picture's beauty.",
+        "options": "true mirror\nreflections drifted\nhalf a mirror\nno reflection"
+      },
+      "w": 280,
+      "name": "True mirror - audited",
+      "sizes": {
+        "question": 130
+      }
+    }
+  ],
+  "links": [
+    {
+      "id": "l1",
+      "from": {
+        "node": "scene",
+        "port": "text"
+      },
+      "to": {
+        "node": "director",
+        "port": "prompt"
+      }
+    },
+    {
+      "id": "l2",
+      "from": {
+        "node": "director",
+        "port": "text"
+      },
+      "to": {
+        "node": "paint",
+        "port": "prompt"
+      }
+    },
+    {
+      "id": "l3",
+      "from": {
+        "node": "paint",
+        "port": "image"
+      },
+      "to": {
+        "node": "direct",
+        "port": "image"
+      }
+    },
+    {
+      "id": "l4",
+      "from": {
+        "node": "paint",
+        "port": "image"
+      },
+      "to": {
+        "node": "reflect",
+        "port": "image"
+      }
+    },
+    {
+      "id": "l5",
+      "from": {
+        "node": "direct",
+        "port": "text"
+      },
+      "to": {
+        "node": "j1",
+        "port": "a"
+      }
+    },
+    {
+      "id": "l6",
+      "from": {
+        "node": "reflect",
+        "port": "text"
+      },
+      "to": {
+        "node": "j1",
+        "port": "b"
+      }
+    },
+    {
+      "id": "l7",
+      "from": {
+        "node": "j1",
+        "port": "text"
+      },
+      "to": {
+        "node": "checker",
+        "port": "prompt"
+      }
+    },
+    {
+      "id": "l8",
+      "from": {
+        "node": "j1",
+        "port": "text"
+      },
+      "to": {
+        "node": "j2",
+        "port": "a"
+      }
+    },
+    {
+      "id": "l9",
+      "from": {
+        "node": "checker",
+        "port": "text"
+      },
+      "to": {
+        "node": "j2",
+        "port": "b"
+      }
+    },
+    {
+      "id": "l10",
+      "from": {
+        "node": "j2",
+        "port": "text"
+      },
+      "to": {
+        "node": "audit",
+        "port": "text"
+      }
+    },
+    {
+      "id": "l11",
+      "from": {
+        "node": "paint",
+        "port": "image"
+      },
+      "to": {
+        "node": "audit",
+        "port": "img1"
+      }
+    }
+  ],
+  "nid": 30,
+  "lid": 31,
+  "view": {
+    "panX": 40,
+    "panY": 40,
+    "scale": 0.5
+  }
+}

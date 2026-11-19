@@ -1,0 +1,308 @@
+{
+  "v": 1,
+  "nodes": [
+    {
+      "id": "c1",
+      "type": "comment",
+      "x": 60,
+      "y": 30,
+      "fields": {
+        "text": "Diffusion painters give every object its own private sun: shadows fall both ways in one picture, a lamp post throws a long raking shadow while the tree beside it throws a short one, and nobody checks, because a shadow audit needs measurements, not impressions. This flow makes the geometry the audit. A GLM director writes a SUN CARD - the sun on one side at one elevation, which fixes by a stated factor how long every shadow must be relative to its caster's height - plus five objects with heights in units, all on one flat ground line. A second GLM turns the card into a painter prompt for a flat side elevation, the one view where heights and ground shadows can be measured directly, and Muse paints it. A blind Gemini surveyor who never saw the card measures the picture: sun side, and each object's shadow side and shadow length as a ratio category against that object's own height. A GLM auditor then scores the measurements against the card's computed expectation - direction per object, length MATCH / NEAR / OFF, orphan shadows with no caster. A Decide judge gives the headline: sun obeyed, shadows drifted, wrong sun, or no shadows. See recipes/shadow-check.md."
+      },
+      "w": 900,
+      "name": "Shadow check, sun-audited - a sun is specified, a scene is painted, every shadow is measured"
+    },
+    {
+      "id": "scene",
+      "type": "text",
+      "x": 60,
+      "y": 300,
+      "fields": {
+        "text": "A seaside promenade in flat paper-cut style: one level stone promenade running left to right, a flat band of sea behind it, and a clear open sky above for the sun."
+      },
+      "w": 300,
+      "name": "Scene"
+    },
+    {
+      "id": "director",
+      "type": "llm",
+      "x": 440,
+      "y": 280,
+      "fields": {
+        "model": "z-ai/glm-5.3-flash",
+        "system": "You are a lighting director. Given a SCENE, design a SUN CARD for a flat side-elevation picture of it. Choose the sun: a SIDE, LEFT or RIGHT (the sun disc will be drawn in the sky on that side), and an ELEVATION, LOW, MEDIUM or HIGH. The elevation fixes how long every shadow must be, as a multiple of the height of the object casting it: LOW means about 2 times (category: about double), MEDIUM means about 1 time (category: about the same), HIGH means about 0.5 times (category: about half). Shadows always fall along the ground AWAY from the sun, so the shadow side is the opposite of the sun side. Then invent exactly 5 upright objects that suit the scene, listed in the order they stand from left to right, each with a distinctive colour and a HEIGHT in whole units from 1 to 4 (vary the heights; use simple bold silhouettes a painter can draw in flat side view, e.g. a lamp post, a person, a tree, a bench seen from the side, a dog, a statue, an ice-cream cart). All 5 stand spaced apart on the same flat ground line. Output exactly this shape and nothing else:\nSUN SIDE: <LEFT or RIGHT>\nELEVATION: <LOW, MEDIUM or HIGH>\nSHADOW SIDE: <the opposite side>\nSHADOW LENGTH: <about double, about the same, or about half, matching the elevation>\nOBJECTS:\n1. <colour + object>, height <n> units\n2. <colour + object>, height <n> units\n3. <colour + object>, height <n> units\n4. <colour + object>, height <n> units\n5. <colour + object>, height <n> units",
+        "maxTokens": "500",
+        "reasoningEffort": "low"
+      },
+      "w": 280,
+      "name": "Sun card - GLM fixes the sun and five objects with heights",
+      "sizes": {
+        "system": 150
+      }
+    },
+    {
+      "id": "j0",
+      "type": "join",
+      "x": 800,
+      "y": 480,
+      "fields": {
+        "sep": "\n\nSUN CARD (the sun, the shadow rule and the five objects; its exact wording must reach the painter):\n"
+      },
+      "w": 200,
+      "name": "Scene + sun card"
+    },
+    {
+      "id": "stylist",
+      "type": "llm",
+      "x": 800,
+      "y": 280,
+      "fields": {
+        "model": "z-ai/glm-5.3-flash",
+        "system": "You turn a SUN CARD into ONE prompt for an AI image generator. The input gives a SCENE first (the setting and flat paper-cut style), then 'SUN CARD' with the sun's side and elevation, the shadow side and shadow length, and 5 numbered objects with colours and heights in units, in left-to-right standing order. Write the prompt so the generator paints: a FLAT SIDE ELEVATION, like an architectural elevation drawing or paper-cut stage - no perspective, no tilt, no depth; one straight horizontal ground line across the whole picture with every object standing on it, spaced apart, drawn at sizes proportional to their stated heights (an object of height 4 units is four times as tall as one of height 1 unit); the scene's setting as flat bands behind them; a single round sun disc in the sky on the card's SUN SIDE at a height matching its elevation (LOW near the horizon, MEDIUM mid-sky, HIGH near the top); and from the base of EVERY object, one single flat dark shadow lying along the ground toward the card's SHADOW SIDE, its length matching the card's SHADOW LENGTH relative to that object's own height (about double its height, about the same as its height, or about half its height). Name each object in standing order with its colour and relative height in the prompt. End with: 'Flat paper-cut illustration, crisp edges, exactly one shadow per object, no other shadows, no text, no letters, no numbers, no clouds hiding the sun.' Output the prompt only.",
+        "maxTokens": "600",
+        "reasoningEffort": "low"
+      },
+      "w": 280,
+      "name": "Painting brief - GLM turns the sun card into a flat-elevation prompt",
+      "sizes": {
+        "system": 150
+      }
+    },
+    {
+      "id": "paint",
+      "type": "image",
+      "x": 1160,
+      "y": 280,
+      "fields": {
+        "model": "meta/muse-image/text-to-image",
+        "size": "16:9",
+        "variations": "1"
+      },
+      "w": 280,
+      "name": "Scene picture - Muse paints the elevation and its shadows"
+    },
+    {
+      "id": "surveyor",
+      "type": "vision",
+      "x": 1520,
+      "y": 280,
+      "fields": {
+        "model": "google/gemini-3.8-flash",
+        "q": "You are the blind surveyor in a shadow-check pipeline. This image should be a flat side-elevation scene: upright objects standing in a row on one horizontal ground line, a sun disc in the sky, and a dark shadow lying along the ground from the base of each object. Measure only what you can see; do not guess what was intended. First say which side of the sky the sun is on: SUN SEEN: LEFT, RIGHT, or NONE. Then list the upright objects in order from left to right - ignore the sun, the sea, the sky and any flat backdrop - and for each one report: its name as you see it; SHADOW SIDE: whether its ground shadow stretches to the LEFT or RIGHT of its base, BOTH, or NONE if it has no ground shadow; and SHADOW LENGTH: the shadow's length compared with that object's own height, in exactly one of these categories: none, about half (clearly shorter than the object is tall, roughly a third to three quarters), about the same (roughly three quarters to one and a half times), about double (roughly one and a half to two and a half times), much longer (more than about two and a half times). Also report ORPHAN SHADOWS: ground shadows that belong to no object, as a count. Output exactly this shape and nothing else:\nSUN SEEN: <LEFT, RIGHT or NONE>\nOBJECTS SEEN: <the number of upright objects you listed>\n1. <object name> - SHADOW SIDE: <LEFT, RIGHT, BOTH or NONE>; SHADOW LENGTH: <category>\n(one line per object, in left-to-right order)\nORPHAN SHADOWS: <count>"
+      },
+      "w": 280,
+      "name": "Survey card - Gemini measures sun, shadow sides and length ratios blind",
+      "sizes": {
+        "q": 150
+      }
+    },
+    {
+      "id": "j1",
+      "type": "join",
+      "x": 1880,
+      "y": 480,
+      "fields": {
+        "sep": "\n\nSURVEY CARD (a blind surveyor measured the rendered picture; it never saw the sun card):\n"
+      },
+      "w": 200,
+      "name": "Sun card + survey card"
+    },
+    {
+      "id": "checker",
+      "type": "llm",
+      "x": 2240,
+      "y": 640,
+      "fields": {
+        "model": "z-ai/glm-5.3-flash",
+        "system": "You are a shadow auditor. The input gives a SUN CARD (SUN SIDE, ELEVATION, SHADOW SIDE, SHADOW LENGTH as a category, and 5 numbered OBJECTS with heights, in left-to-right standing order), then 'SURVEY CARD' with a blind surveyor's measurements of the rendered picture (SUN SEEN, OBJECTS SEEN, one line per object with its SHADOW SIDE and SHADOW LENGTH category, ORPHAN SHADOWS). The length categories in order are: none, about half, about the same, about double, much longer. Match the surveyor's objects to the card's objects by their left-to-right order (names may differ in wording; position is the match). Do these checks in order and output exactly these lines:\n1. 'SUN: MATCH' if SUN SEEN equals the card's SUN SIDE, otherwise 'SUN: WRONG - card <side>, seen <side or none>'.\n2. 'DIRECTION: X of 5 shadows fall on the planned side' - count the matched objects whose SHADOW SIDE equals the card's SHADOW SIDE (BOTH and NONE never count); then 'WRONG SIDE: ' followed by each failing object's card number and what was seen, comma-separated, or 'none'.\n3. 'LENGTH: X of 5 in band' - for each matched object compare the surveyor's SHADOW LENGTH category with the card's SHADOW LENGTH category: MATCH if identical, NEAR if exactly one category step away in the ordered list, OFF if further or none; count only MATCH in X; then 'NEAR: ' followed by the card numbers that were NEAR, or 'none'; then 'OFF: ' followed by each OFF object's card number and the category seen, comma-separated, or 'none'.\n4. 'OBJECTS: X of 5 seen' - the number of card objects the surveyor listed (OBJECTS SEEN, capped at 5); then 'ORPHANS: <the surveyor's ORPHAN SHADOWS count>'.\n5. 'Summary: sun <match/wrong>, direction X of 5, lengths <X> match / <Y> near / <Z> off, orphans <n>.'\nIf either card is incomplete, still output all five lines with your best counts and say 'incomplete card' in the Summary. Never output nothing. Compare only the texts; do not invent measurements. Output the audit only.",
+        "maxTokens": "1200",
+        "reasoningEffort": "low"
+      },
+      "w": 280,
+      "name": "Shadow audit - GLM scores measured shadows against the sun card",
+      "sizes": {
+        "system": 150
+      }
+    },
+    {
+      "id": "j2",
+      "type": "join",
+      "x": 2240,
+      "y": 300,
+      "fields": {
+        "sep": "\n\nSHADOW AUDIT:\n"
+      },
+      "w": 200,
+      "name": "Sun card, survey card + shadow audit"
+    },
+    {
+      "id": "audit",
+      "type": "decide",
+      "x": 2600,
+      "y": 300,
+      "fields": {
+        "model": "perplexity/pplx-decider-v1.2",
+        "mode": "choose",
+        "question": "The image should be a flat side-elevation scene lit by one sun from a planned side at a planned elevation, so every object's ground shadow should fall on the planned side at a planned length relative to its height. The text gives the SUN CARD, a blind SURVEY CARD measuring the rendered picture (sun side seen, each object's shadow side and length category), and a SHADOW AUDIT scoring the survey against the card. Which verdict fits? 'sun obeyed' means the sun side matches, all or nearly all shadows fall on the planned side, and their lengths match or nearly match the planned category. 'shadows drifted' means the sun and most shadow directions are right but lengths are off, or one or two shadows fall on the wrong side or are missing. 'wrong sun' means the sun is on the wrong side, or most shadows fall opposite the planned side - the picture is lit by a different sun than planned. 'no shadows' means most objects cast no ground shadow at all. Judge the shadow geometry, not the picture's beauty.",
+        "options": "sun obeyed\nshadows drifted\nwrong sun\nno shadows"
+      },
+      "w": 280,
+      "name": "Sun obeyed - audited",
+      "sizes": {
+        "question": 130
+      }
+    }
+  ],
+  "links": [
+    {
+      "id": "l1",
+      "from": {
+        "node": "scene",
+        "port": "text"
+      },
+      "to": {
+        "node": "director",
+        "port": "prompt"
+      }
+    },
+    {
+      "id": "l2",
+      "from": {
+        "node": "director",
+        "port": "text"
+      },
+      "to": {
+        "node": "j0",
+        "port": "b"
+      }
+    },
+    {
+      "id": "l12",
+      "from": {
+        "node": "scene",
+        "port": "text"
+      },
+      "to": {
+        "node": "j0",
+        "port": "a"
+      }
+    },
+    {
+      "id": "l13",
+      "from": {
+        "node": "j0",
+        "port": "text"
+      },
+      "to": {
+        "node": "stylist",
+        "port": "prompt"
+      }
+    },
+    {
+      "id": "l3",
+      "from": {
+        "node": "stylist",
+        "port": "text"
+      },
+      "to": {
+        "node": "paint",
+        "port": "prompt"
+      }
+    },
+    {
+      "id": "l4",
+      "from": {
+        "node": "paint",
+        "port": "image"
+      },
+      "to": {
+        "node": "surveyor",
+        "port": "image"
+      }
+    },
+    {
+      "id": "l5",
+      "from": {
+        "node": "director",
+        "port": "text"
+      },
+      "to": {
+        "node": "j1",
+        "port": "a"
+      }
+    },
+    {
+      "id": "l6",
+      "from": {
+        "node": "surveyor",
+        "port": "text"
+      },
+      "to": {
+        "node": "j1",
+        "port": "b"
+      }
+    },
+    {
+      "id": "l7",
+      "from": {
+        "node": "j1",
+        "port": "text"
+      },
+      "to": {
+        "node": "checker",
+        "port": "prompt"
+      }
+    },
+    {
+      "id": "l8",
+      "from": {
+        "node": "j1",
+        "port": "text"
+      },
+      "to": {
+        "node": "j2",
+        "port": "a"
+      }
+    },
+    {
+      "id": "l9",
+      "from": {
+        "node": "checker",
+        "port": "text"
+      },
+      "to": {
+        "node": "j2",
+        "port": "b"
+      }
+    },
+    {
+      "id": "l10",
+      "from": {
+        "node": "j2",
+        "port": "text"
+      },
+      "to": {
+        "node": "audit",
+        "port": "text"
+      }
+    },
+    {
+      "id": "l11",
+      "from": {
+        "node": "paint",
+        "port": "image"
+      },
+      "to": {
+        "node": "audit",
+        "port": "img1"
+      }
+    }
+  ],
+  "nid": 30,
+  "lid": 31,
+  "view": {
+    "panX": 40,
+    "panY": 40,
+    "scale": 0.5
+  }
+}

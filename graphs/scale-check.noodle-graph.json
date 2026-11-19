@@ -1,0 +1,308 @@
+{
+  "v": 1,
+  "nodes": [
+    {
+      "id": "c1",
+      "type": "comment",
+      "x": 60,
+      "y": 30,
+      "fields": {
+        "text": "Are they the right sizes? This flow lines six familiar objects up against a wall and audits the one thing a pretty render can fake: how tall each thing is next to the others. A GLM director writes a SCALE CARD - six objects chosen from a menu with canonical real-world heights in centimetres, at least 20 cm apart, ordered tallest to shortest. A second GLM turns the card into a painter prompt for a flat side elevation - one row, one ground line, no depth staggering to hide behind - and Muse paints the line-up. A blind Gemini surveyor then measures each rendered object's height as a percentage of the tallest object's height in the picture. A GLM auditor computes each object's expected share from the card's centimetres and scores identity, in-band scale and height order - and reads the signed errors for mean regression, the known generator failure where small objects swell and large ones shrink toward a typical size. A Decide judge gives the headline: true to scale, sizes drifted, mean regression, or wrong line-up. See recipes/scale-check.md."
+      },
+      "w": 900,
+      "name": "Scale check, proportion-audited - a line-up, its real-world heights, and a mean-regression test"
+    },
+    {
+      "id": "setting",
+      "type": "text",
+      "x": 60,
+      "y": 300,
+      "fields": {
+        "text": "A plain pale-grey studio wall behind a flat pale floor, seen straight from the side in bright even daylight - an empty height-chart backdrop with one straight horizontal ground line where the floor meets the wall, and nothing else in frame."
+      },
+      "w": 300,
+      "name": "Setting"
+    },
+    {
+      "id": "director",
+      "type": "llm",
+      "x": 440,
+      "y": 280,
+      "fields": {
+        "model": "z-ai/glm-5.3-flash",
+        "system": "You are a scale director. Given a SETTING, design a SCALE CARD for ONE line-up of exactly 6 objects standing side by side on the ground line in the setting. Choose 6 DIFFERENT objects from this menu ONLY, using the menu's canonical real-world height for each, exactly as given:\nbookshelf 200 cm; refrigerator 185 cm; floor lamp 160 cm; potted olive tree 140 cm; bicycle 105 cm; guitar 100 cm; armchair 90 cm; suitcase 70 cm; medium dog 55 cm; stool 45 cm; sitting cat 40 cm; watering can 30 cm.\nRules: the 6 chosen heights must differ pairwise by at least 20 cm. Give each object a distinct colour (a finish, fabric or coat colour). Order the card from TALLEST (rank 1) to SHORTEST (rank 6). Output exactly this shape and nothing else:\nRANK 1: <object> | <colour> | HEIGHT: <cm> cm\nRANK 2: <object> | <colour> | HEIGHT: <cm> cm\nRANK 3: <object> | <colour> | HEIGHT: <cm> cm\nRANK 4: <object> | <colour> | HEIGHT: <cm> cm\nRANK 5: <object> | <colour> | HEIGHT: <cm> cm\nRANK 6: <object> | <colour> | HEIGHT: <cm> cm",
+        "maxTokens": "400",
+        "reasoningEffort": "low"
+      },
+      "w": 280,
+      "name": "Scale card - GLM picks six objects with canonical heights in cm",
+      "sizes": {
+        "system": 150
+      }
+    },
+    {
+      "id": "j0",
+      "type": "join",
+      "x": 800,
+      "y": 480,
+      "fields": {
+        "sep": "\n\nSCALE CARD (the six objects, their colours and real-world heights in cm; its exact wording must reach the painter):\n"
+      },
+      "w": 200,
+      "name": "Setting + scale card"
+    },
+    {
+      "id": "stylist",
+      "type": "llm",
+      "x": 800,
+      "y": 280,
+      "fields": {
+        "model": "z-ai/glm-5.3-flash",
+        "system": "You turn a SCALE CARD into ONE prompt for an AI image generator. The input gives a SETTING first, then 'SCALE CARD' with 6 ranks tallest to shortest, each an object with a colour and a HEIGHT in cm. Write the prompt so the generator paints: a flat side elevation (seen straight from the side, no perspective, no people) of the setting, with the 6 carded objects standing in ONE single row on the same ground line, left to right in card order (tallest first), side by side and NOT overlapping, every object standing on the ground line and drawn at its TRUE relative height - for each object, state its height in the prompt as a plain comparison with the tallest object (for example 'the bicycle reaches a little over half the height of the bookshelf'), computed from the card's cm values, and keep every object's colour from the card. No other objects anywhere. End with: 'Photorealistic flat side view, even daylight, six objects in a row on one ground line at true relative heights, no text, no letters, no numbers, no people.' Output the prompt only.",
+        "maxTokens": "600",
+        "reasoningEffort": "low"
+      },
+      "w": 280,
+      "name": "Painting brief - GLM turns the scale card into a side-elevation prompt",
+      "sizes": {
+        "system": 150
+      }
+    },
+    {
+      "id": "paint",
+      "type": "image",
+      "x": 1160,
+      "y": 280,
+      "fields": {
+        "model": "meta/muse-image/text-to-image",
+        "size": "1:1",
+        "variations": "1"
+      },
+      "w": 280,
+      "name": "Line-up - Muse paints the six objects at true relative heights"
+    },
+    {
+      "id": "surveyor",
+      "type": "vision",
+      "x": 1520,
+      "y": 280,
+      "fields": {
+        "model": "google/gemini-3.8-flash",
+        "q": "You are the surveyor in a scale-check pipeline. You see a picture of objects standing in a row on one ground line, seen from the side. List the objects LEFT TO RIGHT as they appear. For each object, measure its height IN THE PICTURE: from the ground line at its base to its highest point, expressed as a whole-number percentage of the height of the TALLEST object in the picture (the tallest object is 100). Output one line per object in exactly this shape:\nOBJECT SEEN: <object> | <colour> | HEIGHT SEEN: <whole number>\nThen output exactly these two lines:\nEXTRA OBJECTS: <any objects in the picture beyond the ones you listed, or 'none'>\nOBJECT COUNT: <how many objects stand in the row>"
+      },
+      "w": 280,
+      "name": "Survey - Gemini measures each object's height share, blind",
+      "sizes": {
+        "q": 150
+      }
+    },
+    {
+      "id": "j1",
+      "type": "join",
+      "x": 1880,
+      "y": 180,
+      "fields": {
+        "sep": "\n\nSURVEY (a blind surveyor measured the rendered line-up's heights; it never saw the scale card):\n"
+      },
+      "w": 200,
+      "name": "Scale card + survey"
+    },
+    {
+      "id": "checker",
+      "type": "llm",
+      "x": 2240,
+      "y": 400,
+      "fields": {
+        "model": "z-ai/glm-5.3-flash",
+        "system": "You are a scale auditor. The input gives a SCALE CARD (6 ranks tallest to shortest, each with an object, a colour and a HEIGHT in cm), then 'SURVEY' with a blind surveyor's measurements of the rendered line-up (each object's HEIGHT SEEN as a percentage of the tallest object's picture height). Work in this order and output exactly these lines:\nFirst compute for each card rank its EXPECTED SHARE: the rank's HEIGHT divided by rank 1's HEIGHT, times 100, rounded to the nearest whole number (rank 1's expected share is 100).\n1. 'IDENTITY: X of 6' - one point per card object the survey lists with a matching colour (near object and colour names count). Then 'MISSING: ' followed by each card object the survey does not list, or 'none'; and 'EXTRA: ' followed by the survey's EXTRA OBJECTS, or 'none'.\n2. 'SCALE: X of 6' - one point per matched object whose HEIGHT SEEN is within 15 points of its EXPECTED SHARE (absolute difference 15 or less).\n3. 'OFF BY: ' followed by each out-of-band matched object as '<object> <signed difference>' where the signed difference is HEIGHT SEEN minus EXPECTED SHARE with its + or - sign, comma-separated, or 'none' if all matched objects are in band.\n4. 'ORDER: X of 5' - for each adjacent pair of ranks (1-2, 2-3, 3-4, 4-5, 5-6), one point if both objects were seen AND the taller rank's HEIGHT SEEN is strictly greater than the shorter rank's HEIGHT SEEN. Then 'INVERSIONS: ' followed by each pair that failed as 'RANK <n>-RANK <n+1>', comma-separated, or 'none'.\n5. 'REGRESSION: <present, absent or none>' - 'present' if at least one object from ranks 4-6 is oversized (signed difference greater than +15) AND at least one object from ranks 2-3 is undersized (signed difference less than -15): the small drawn too big while the large are drawn too small. 'absent' if some object is out of band but that pattern does not hold. 'none' if SCALE is 6 of 6.\n6. 'Summary: identity <X> of 6, scale <X> of 6, order <X> of 5, regression <present, absent or none>.'\nIf any card is incomplete, still output all six lines with your best judgement and say 'incomplete card' in the Summary. Never output nothing. Compare only the texts and the arithmetic; do not invent readings. Output the audit only.",
+        "maxTokens": "1200",
+        "reasoningEffort": "low"
+      },
+      "w": 280,
+      "name": "Scale audit - GLM scores proportions and tests for mean regression",
+      "sizes": {
+        "system": 150
+      }
+    },
+    {
+      "id": "j2",
+      "type": "join",
+      "x": 2240,
+      "y": 180,
+      "fields": {
+        "sep": "\n\nSCALE AUDIT:\n"
+      },
+      "w": 200,
+      "name": "Card, survey + scale audit"
+    },
+    {
+      "id": "audit",
+      "type": "decide",
+      "x": 2600,
+      "y": 180,
+      "fields": {
+        "model": "perplexity/pplx-decider-v1.2",
+        "mode": "choose",
+        "question": "The picture should show the 6 planned objects in a row on one ground line, each at its true relative height. The text gives the SCALE CARD (real-world heights in cm), a blind SURVEY measuring each rendered object's height as a share of the tallest, and a SCALE AUDIT scoring identity, in-band scale, height order, and whether the errors show mean regression (small objects drawn too big, large ones too small). Which verdict fits? 'true to scale' means identity is 6 of 6 and scale is 6 of 6. 'mean regression' means the audit's REGRESSION line says present, whatever the scale score. 'sizes drifted' means identity is at least 4 of 6, REGRESSION is not present, but scale falls short. 'wrong line-up' means identity is 3 of 6 or less. Judge the proportions, not the picture's beauty.",
+        "options": "true to scale\nsizes drifted\nmean regression\nwrong line-up"
+      },
+      "w": 280,
+      "name": "True to scale - audited",
+      "sizes": {
+        "question": 130
+      }
+    }
+  ],
+  "links": [
+    {
+      "id": "l1",
+      "from": {
+        "node": "setting",
+        "port": "text"
+      },
+      "to": {
+        "node": "director",
+        "port": "prompt"
+      }
+    },
+    {
+      "id": "l2",
+      "from": {
+        "node": "director",
+        "port": "text"
+      },
+      "to": {
+        "node": "j0",
+        "port": "b"
+      }
+    },
+    {
+      "id": "l12",
+      "from": {
+        "node": "setting",
+        "port": "text"
+      },
+      "to": {
+        "node": "j0",
+        "port": "a"
+      }
+    },
+    {
+      "id": "l13",
+      "from": {
+        "node": "j0",
+        "port": "text"
+      },
+      "to": {
+        "node": "stylist",
+        "port": "prompt"
+      }
+    },
+    {
+      "id": "l3",
+      "from": {
+        "node": "stylist",
+        "port": "text"
+      },
+      "to": {
+        "node": "paint",
+        "port": "prompt"
+      }
+    },
+    {
+      "id": "l4",
+      "from": {
+        "node": "paint",
+        "port": "image"
+      },
+      "to": {
+        "node": "surveyor",
+        "port": "image"
+      }
+    },
+    {
+      "id": "l7",
+      "from": {
+        "node": "director",
+        "port": "text"
+      },
+      "to": {
+        "node": "j1",
+        "port": "a"
+      }
+    },
+    {
+      "id": "l8",
+      "from": {
+        "node": "surveyor",
+        "port": "text"
+      },
+      "to": {
+        "node": "j1",
+        "port": "b"
+      }
+    },
+    {
+      "id": "l11",
+      "from": {
+        "node": "j1",
+        "port": "text"
+      },
+      "to": {
+        "node": "checker",
+        "port": "prompt"
+      }
+    },
+    {
+      "id": "l14",
+      "from": {
+        "node": "j1",
+        "port": "text"
+      },
+      "to": {
+        "node": "j2",
+        "port": "a"
+      }
+    },
+    {
+      "id": "l15",
+      "from": {
+        "node": "checker",
+        "port": "text"
+      },
+      "to": {
+        "node": "j2",
+        "port": "b"
+      }
+    },
+    {
+      "id": "l16",
+      "from": {
+        "node": "j2",
+        "port": "text"
+      },
+      "to": {
+        "node": "audit",
+        "port": "text"
+      }
+    },
+    {
+      "id": "l17",
+      "from": {
+        "node": "paint",
+        "port": "image"
+      },
+      "to": {
+        "node": "audit",
+        "port": "img1"
+      }
+    }
+  ],
+  "nid": 30,
+  "lid": 31,
+  "view": {
+    "panX": 40,
+    "panY": 40,
+    "scale": 0.5
+  }
+}
