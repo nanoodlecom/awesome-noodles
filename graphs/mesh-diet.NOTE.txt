@@ -1,0 +1,40 @@
+Mesh Diet — photo → game-budget mesh (Demand Watch cycle 6, shipped 2026-11-19)
+
+WHAT IT DOES
+One photo of one object becomes a mesh an engine will accept. Idol Max Turbo
+rebuilds the photo as a textured mesh of exactly 30,000 triangles; Hyper3D Low
+Poly (new on NanoGPT 2026-11-18) then retopologizes it down to a face budget
+you set — 4,000 in the demo, inside its 200-10,000 range — with UVs and PBR
+textures carried over. A Gemini surveyor first writes down the silhouette
+features that must survive the cut, and a GLM guide closes with the budget
+table and the honest edges. Already have a heavy GLB? Wire it straight into
+the Low Poly node's model input and skip the rebuild — retopology is the
+point, the rebuild is just the demo's way of guaranteeing a heavy mesh.
+
+THE PROOF IS COUNTABLE (parsed from the actual GLB files, not the marketing)
+Probe (2026-11-19): 30,000 triangles in → 3,876 out (target 4,000).
+Saved run below: 30,000 in → 3,929 out. Automatic retopology lands NEAR its
+target, not on it — the guide says so, and the counts are printed here so
+anyone can re-parse the files and check. Silhouette verified by rendering
+both meshes from three angles: wings, coiled tail, antlered head and plinth
+all read at ~4k triangles; the whiskers and teeth merge, as the survey
+predicted.
+
+COSTS (measured, exact)
+Low Poly step: $0.20 flat per generation. Full demo run: $0.40342 — survey
+$0.00342 + Idol Max Turbo $0.20 + Low Poly $0.20 + guide $0. Note the Turbo
+line: its catalog pricing is variant-based and the PBR variant
+(static_pbr) bills $0.20, not the $0.10 base — the PBR-on graph pays the
+PBR price.
+
+THE HONEST EDGES (also in the guide)
+Automatic retopology is not hand retopology: a character that must deform
+at the joints still wants edge loops a person designs. Props, environment
+pieces and LODs are the claim. And the diet is in triangles, not megabytes —
+the saved diet GLB is 11.8 MB against the heavy mesh's 10.0 MB, because the
+transferred textures are as large as the source's; texture resolution is a
+separate lever.
+
+DEMO
+The same golden dragon statue photo as Photo to Game-Ready Mesh, so the two
+examples read as one story: generate heavy, then diet to budget.
