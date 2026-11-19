@@ -18,6 +18,7 @@ Do not hand-edit these files — run `node scripts/make-recipes.mjs` after chang
 | [Clip to comic, order-checked](clip-to-comic.md) | [`graphs/clip-to-comic.noodle-graph.json`](../graphs/clip-to-comic.noodle-graph.json) | needs Clip |
 | [A composer that watches your film](composer-watches-your-film.md) | [`graphs/composer-watches-your-film.noodle-graph.json`](../graphs/composer-watches-your-film.noodle-graph.json) | defaults in graph |
 | [Cover version, lyric-checked](cover-version.md) | [`graphs/cover-version.noodle-graph.json`](../graphs/cover-version.noodle-graph.json) | defaults in graph |
+| [Cutaway check, interior-audited](cutaway-check.md) | [`graphs/cutaway-check.noodle-graph.json`](../graphs/cutaway-check.noodle-graph.json) | defaults in graph |
 | [Droste check, recursion-audited](droste-check.md) | [`graphs/droste-check.noodle-graph.json`](../graphs/droste-check.noodle-graph.json) | defaults in graph |
 | [Edit with references](edit-with-references.md) | [`graphs/edit-with-references.noodle-graph.json`](../graphs/edit-with-references.noodle-graph.json) | needs Main photo, Reference 1 · outfit, Reference 2 · accessory, Reference 3 · companion |
 | [Exploded check, disassembly-audited](exploded-check.md) | [`graphs/exploded-check.noodle-graph.json`](../graphs/exploded-check.noodle-graph.json) | defaults in graph |
