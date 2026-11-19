@@ -32,6 +32,7 @@ Do not hand-edit these files — run `node scripts/make-recipes.mjs` after chang
 | [Idea to 3D model](idea-to-3d-model.md) | [`graphs/idea-to-3d-model.noodle-graph.json`](../graphs/idea-to-3d-model.noodle-graph.json) | defaults in graph |
 | [Maze run, solve-checked](maze-solve-audit.md) | [`graphs/maze-solve-audit.noodle-graph.json`](../graphs/maze-solve-audit.noodle-graph.json) | defaults in graph |
 | [Menu to plate, checked](menu-to-plate.md) | [`graphs/menu-to-plate.noodle-graph.json`](../graphs/menu-to-plate.noodle-graph.json) | needs Menu photo |
+| [Mesh diet](mesh-diet.md) | [`graphs/mesh-diet.noodle-graph.json`](../graphs/mesh-diet.noodle-graph.json) | needs Object photo |
 | [Metro map, station-checked](metro-map-audit.md) | [`graphs/metro-map-audit.noodle-graph.json`](../graphs/metro-map-audit.noodle-graph.json) | defaults in graph |
 | [Mirror check, reflection-audited](mirror-check.md) | [`graphs/mirror-check.noodle-graph.json`](../graphs/mirror-check.noodle-graph.json) | defaults in graph |
 | [Negative space check, figure-ground-audited](negative-space-check.md) | [`graphs/negative-space-check.noodle-graph.json`](../graphs/negative-space-check.noodle-graph.json) | defaults in graph |
