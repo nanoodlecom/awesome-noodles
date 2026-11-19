@@ -1,0 +1,457 @@
+{
+  "v": 1,
+  "nodes": [
+    {
+      "id": "c1",
+      "type": "comment",
+      "x": 60,
+      "y": 30,
+      "fields": {
+        "text": "What is INSIDE the thing? A GLM director writes a CUTAWAY CARD: one subject from a short menu (espresso machine, observation beehive, tower clock, ant farm, grand piano), the exterior SHELL and the cut that must open it, and exactly 5 canonical interior parts, each with a named position inside the shell. A second GLM turns the card into a painter prompt for a straight-on cutaway: shell opened, interior parts in place at their carded positions, no labels or text. Muse paints it. Then a blind Gemini surveyor inventories only the interior parts actually visible inside the shell, where each sits, whether the shell is OPEN, PARTIAL or CLOSED, and any invented interior parts. A GLM auditor scores INTERIOR (parts present inside), PLACEMENT (parts at their carded in-shell positions), SHELL, and EXTRA invented interiors. Then the loop closes: a GLM editor turns the audit into concrete edit notes that may change only the interior and the shell opening, Muse Edit repaints, and a second blind survey plus the same auditor re-score the corrected cutaway. A Decide judge headlines round 1 as a side output - but the flow does not end in text. Its deliverable is the corrected cutaway. See recipes/cutaway-check.md."
+      },
+      "w": 900,
+      "name": "Cutaway check, interior-audited - a hidden interior revealed inside an opened shell, surveyed blind, and a fix round that repairs only the interior"
+    },
+    {
+      "id": "setting",
+      "type": "text",
+      "x": 60,
+      "y": 300,
+      "fields": {
+        "text": "One single familiar object on a plain neutral studio background, seen straight-on at eye level, whole and closed from the outside, evenly lit, no people, no other objects, and no text, labels or numbers anywhere yet. Its inside is completely hidden by its exterior shell."
+      },
+      "w": 300,
+      "name": "Subject setting"
+    },
+    {
+      "id": "director",
+      "type": "llm",
+      "x": 440,
+      "y": 280,
+      "fields": {
+        "model": "z-ai/glm-5.3-flash",
+        "system": "You are a cutaway director. Given a SUBJECT SETTING (one closed object on a plain background), design a CUTAWAY CARD: the hidden interior that a cutaway picture must reveal. Choose ONE subject from this menu ONLY:\nvintage espresso machine; glass observation beehive; mechanical tower clock; glass ant farm (formicarium); grand piano with its lid raised.\nWrite the SHELL line: the object's exterior shell in a few words, and the CUT: exactly how the shell must be opened in the picture (for example 'front panel removed', 'glass front panel looking straight in', 'top and side cut away', 'lid raised and side panel removed') so the interior can be seen straight-on, in place.\nThen list exactly 5 canonical INTERIOR parts that really belong inside that subject - parts a knowledgeable person would name, not decorations. For each part give: its name, its POSITION inside the shell using exactly one of these nine zones: top-left, top-centre, top-right, centre-left, centre, centre-right, bottom-left, bottom-centre, bottom-right - and a short visible description (shape, material, colour). Use five DIFFERENT zones. The positions must be functionally plausible: heavy or source parts where they belong, working parts where they act.\nOutput exactly this shape and nothing else:\nSUBJECT: <subject>\nSHELL: <exterior shell> | CUT: <how the shell is opened>\nPART 1: <part name> | <zone> | <visible description>\nPART 2: <part name> | <zone> | <visible description>\nPART 3: <part name> | <zone> | <visible description>\nPART 4: <part name> | <zone> | <visible description>\nPART 5: <part name> | <zone> | <visible description>",
+        "maxTokens": "500",
+        "reasoningEffort": "low"
+      },
+      "w": 280,
+      "name": "Cutaway card - GLM picks a subject, its shell and five hidden interior parts with positions",
+      "sizes": {
+        "system": 150
+      }
+    },
+    {
+      "id": "j0",
+      "type": "join",
+      "x": 800,
+      "y": 480,
+      "fields": {
+        "sep": "\n\nCUTAWAY CARD (the subject, its shell and cut, and the five hidden interior parts with their in-shell positions; its exact wording must reach the painter):\n"
+      },
+      "w": 200,
+      "name": "Setting + cutaway card"
+    },
+    {
+      "id": "stylist",
+      "type": "llm",
+      "x": 800,
+      "y": 280,
+      "fields": {
+        "model": "z-ai/glm-5.3-flash",
+        "system": "You turn a CUTAWAY CARD into ONE prompt for an AI image generator. The input gives a SUBJECT SETTING first, then 'CUTAWAY CARD' with a SUBJECT, a SHELL line with its CUT, and 5 interior parts (name | zone | description). Write the prompt so the generator paints a clean, straight-on cutaway view of that subject: the shell opened exactly as the CUT says, so the interior is visible in place, straight-on at eye level on the same plain neutral background. Every one of the 5 carded interior parts must be clearly visible inside the shell, at its carded zone position, looking like its description, connected and in place - NOT exploded, NOT separated, NOT laid out beside the object. The shell's exterior must still read as the same subject around the opening. The cardinal rule: NO labels, NO text, NO letters, NO numbers, NO arrows and NO leader lines anywhere - this is a picture, not a diagram. End with: 'Clean straight-on cutaway illustration, interior parts in place inside the opened shell, no text, no labels, no arrows, no people.' Output the prompt only.",
+        "maxTokens": "700",
+        "reasoningEffort": "low"
+      },
+      "w": 280,
+      "name": "Cutaway brief - GLM turns the card into a cutaway painter prompt",
+      "sizes": {
+        "system": 150
+      }
+    },
+    {
+      "id": "paint",
+      "type": "image",
+      "x": 1160,
+      "y": 280,
+      "fields": {
+        "model": "meta/muse-image/text-to-image",
+        "size": "16:9",
+        "variations": "1"
+      },
+      "w": 280,
+      "name": "Cutaway - Muse paints the opened shell and its hidden interior"
+    },
+    {
+      "id": "surveyor",
+      "type": "vision",
+      "x": 1520,
+      "y": 280,
+      "fields": {
+        "model": "google/gemini-3.8-flash",
+        "q": "You are a surveyor looking at a cutaway picture of one object. You do not know what interior was planned - inventory only what you actually see. First, 'SHELL:' plus OPEN (the exterior is cut or removed so the inside is clearly visible), PARTIAL (some opening but the inside is mostly hidden), or CLOSED (a whole closed object, inside not visible), followed by a few words on the opening you see. Then 'INTERIOR:' and, for each distinct interior part you can see INSIDE the shell (up to 8 lines), output: '<part name in your own words> | <its position inside the shell: top-left, top-centre, top-right, centre-left, centre, centre-right, bottom-left, bottom-centre or bottom-right> | <short visible description>'. List parts inside the shell only - exterior features do not count. If the shell is CLOSED and you can see no interior parts, write 'INTERIOR: none'. Finally, 'OUTSIDE:' plus any interior-looking parts drawn OUTSIDE or beside the shell, or 'none'. Output exactly this shape:\nSHELL: <OPEN, PARTIAL or CLOSED> - <the opening you see>\nINTERIOR:\n<part> | <zone> | <description>\n(continue for every interior part inside the shell)\nOUTSIDE: <parts outside the shell, or none>"
+      },
+      "w": 280,
+      "name": "Interior survey - Gemini inventories the parts actually inside the shell, blind",
+      "sizes": {
+        "q": 150
+      }
+    },
+    {
+      "id": "j1",
+      "type": "join",
+      "x": 1880,
+      "y": 180,
+      "fields": {
+        "sep": "\n\nINTERIOR SURVEY (a blind surveyor inventoried only the parts actually visible inside the shell; it never saw the cutaway card):\n"
+      },
+      "w": 200,
+      "name": "Cutaway card + interior survey"
+    },
+    {
+      "id": "checker",
+      "type": "llm",
+      "x": 2240,
+      "y": 400,
+      "fields": {
+        "model": "z-ai/glm-5.3-flash",
+        "system": "You are a cutaway auditor. The input gives a CUTAWAY CARD (SUBJECT, SHELL with CUT, and 5 parts as name | zone | description), then 'INTERIOR SURVEY' with a blind surveyor's SHELL verdict, its INTERIOR list (part | zone | description for parts seen inside the shell), and an OUTSIDE line. Score part by part, matching surveyor parts to card parts by identity (the same part in the surveyor's own words counts; near-names for the same physical part count). Work in this order and output exactly these lines:\n1. 'SHELL: ' plus the surveyor's SHELL verdict word (OPEN, PARTIAL or CLOSED), copied.\n2. 'INTERIOR: X of 5' - one point per card part the surveyor listed INSIDE the shell. A part listed only on the OUTSIDE line does NOT count - it escaped its shell.\n3. 'PLACEMENT: X of 5' - among the parts counted in INTERIOR, one point per part whose surveyor zone is the card's zone for that part. A part present but in a different zone earns INTERIOR but not PLACEMENT.\n4. 'MISSING: ' followed by the card names of parts not counted in INTERIOR, separated by '; ', or 'none'.\n5. 'EXTRA: ' followed by the surveyor's interior parts that match no card part, plus any parts on the OUTSIDE line, separated by '; ', or 'none'.\n6. 'Summary: ' followed by one sentence restating shell, interior and placement.\nOutput exactly these lines and nothing else.",
+        "maxTokens": "1200",
+        "reasoningEffort": "low"
+      },
+      "w": 280,
+      "name": "Cutaway audit - GLM scores interior presence, in-shell placement and the shell opening",
+      "sizes": {
+        "system": 150
+      }
+    },
+    {
+      "id": "j2",
+      "type": "join",
+      "x": 2240,
+      "y": 180,
+      "fields": {
+        "sep": "\n\nCUTAWAY AUDIT:\n"
+      },
+      "w": 200,
+      "name": "Card, interior survey + cutaway audit"
+    },
+    {
+      "id": "audit",
+      "type": "decide",
+      "x": 2600,
+      "y": 180,
+      "fields": {
+        "model": "perplexity/pplx-decider-v1.2",
+        "mode": "choose",
+        "question": "The picture should be a straight-on cutaway of the planned subject: shell opened as carded, all 5 planned interior parts visible in place inside the shell at their planned positions, no invented interior parts and none outside the shell, and no text or labels. The text gives the CUTAWAY CARD (subject, shell and cut, 5 parts with zones), a blind INTERIOR SURVEY (shell verdict, parts seen inside with zones, parts outside), and a CUTAWAY AUDIT scoring shell, interior and placement. Which verdict fits? 'interior revealed' means SHELL is OPEN, INTERIOR is 5 of 5, PLACEMENT is 5 of 5 and EXTRA is none. 'shell closed' means SHELL is CLOSED, or INTERIOR is 1 of 5 or less - the painter left the thing shut. 'parts misplaced' means INTERIOR is 4 or 5 of 5 but PLACEMENT is 3 of 5 or less, or EXTRA is not none. 'wrong subject' means the subject or shell is not the carded one, or INTERIOR is 2 or 3 of 5 with SHELL OPEN or PARTIAL. Judge whether the hidden interior was revealed in place, not the picture's beauty.",
+        "options": "interior revealed\nparts misplaced\nshell closed\nwrong subject"
+      },
+      "w": 280,
+      "name": "Interior revealed - audited",
+      "sizes": {
+        "question": 130
+      }
+    },
+    {
+      "id": "editor",
+      "type": "llm",
+      "x": 2600,
+      "y": 520,
+      "fields": {
+        "model": "z-ai/glm-5.3-flash",
+        "system": "You are the cutaway editor in an interior pipeline. The input gives a CUTAWAY CARD (SUBJECT, SHELL with CUT, 5 parts with zones), a blind INTERIOR SURVEY (shell verdict, parts inside, parts outside), and a CUTAWAY AUDIT scoring shell, interior and placement. Write ONE edit instruction for an image-editing model that will receive the painted cutaway itself. Rules:\n- Address the editor directly and write in imperatives: 'Edit this picture: ...'\n- The frame is the scope: open by demanding the subject, the shell's exterior, the background, the straight-on view, the light and the framing stay exactly the same, with the shell opened exactly as the card's CUT says.\n- State the FULL target end state, not just the deltas: all 5 carded interior parts clearly visible in place inside the shell, each at its carded zone, looking like its carded description, connected and in place - not exploded, not beside the object - and no interior parts that are not on the card, and no labels, text, letters, numbers, arrows or leader lines anywhere.\n- Then name the audit's specific failures as extra demands: for every MISSING part, name it, its zone and its description and demand it be shown there; for every part present in the wrong zone, demand it be moved to its carded zone; for every EXTRA part, demand its complete removal; if the SHELL was PARTIAL or CLOSED, demand the cut be opened as carded; parts already present at the right zone must be left alone - name them as keepers.\n- End with: 'Change nothing except the interior parts and the shell opening named here. Clean straight-on cutaway illustration, no text, no labels, no arrows, no people.'\nOutput the single edit instruction only - no preamble, no list, no explanation.",
+        "maxTokens": "350",
+        "reasoningEffort": "low"
+      },
+      "w": 280,
+      "name": "Edit notes - GLM turns the cutaway audit into interior-bounded fix instructions",
+      "sizes": {
+        "system": 150
+      }
+    },
+    {
+      "id": "fix",
+      "type": "edit",
+      "x": 2960,
+      "y": 520,
+      "fields": {
+        "model": "meta/muse-image/edit",
+        "size": "auto"
+      },
+      "w": 280,
+      "name": "Corrected cutaway - Muse Edit repairs the interior and the shell opening"
+    },
+    {
+      "id": "surveyor2",
+      "type": "vision",
+      "x": 3320,
+      "y": 520,
+      "fields": {
+        "model": "google/gemini-3.8-flash",
+        "q": "You are a surveyor looking at a cutaway picture of one object. You do not know what interior was planned - inventory only what you actually see. First, 'SHELL:' plus OPEN (the exterior is cut or removed so the inside is clearly visible), PARTIAL (some opening but the inside is mostly hidden), or CLOSED (a whole closed object, inside not visible), followed by a few words on the opening you see. Then 'INTERIOR:' and, for each distinct interior part you can see INSIDE the shell (up to 8 lines), output: '<part name in your own words> | <its position inside the shell: top-left, top-centre, top-right, centre-left, centre, centre-right, bottom-left, bottom-centre or bottom-right> | <short visible description>'. List parts inside the shell only - exterior features do not count. If the shell is CLOSED and you can see no interior parts, write 'INTERIOR: none'. Finally, 'OUTSIDE:' plus any interior-looking parts drawn OUTSIDE or beside the shell, or 'none'. Output exactly this shape:\nSHELL: <OPEN, PARTIAL or CLOSED> - <the opening you see>\nINTERIOR:\n<part> | <zone> | <description>\n(continue for every interior part inside the shell)\nOUTSIDE: <parts outside the shell, or none>"
+      },
+      "w": 280,
+      "name": "Re-survey - Gemini inventories the corrected cutaway's interior blind",
+      "sizes": {
+        "q": 150
+      }
+    },
+    {
+      "id": "j4",
+      "type": "join",
+      "x": 3680,
+      "y": 420,
+      "fields": {
+        "sep": "\n\nINTERIOR SURVEY (a blind surveyor inventoried only the parts actually visible inside the corrected picture's shell; it never saw the cutaway card):\n"
+      },
+      "w": 200,
+      "name": "Cutaway card + re-survey"
+    },
+    {
+      "id": "checker2",
+      "type": "llm",
+      "x": 4040,
+      "y": 520,
+      "fields": {
+        "model": "z-ai/glm-5.3-flash",
+        "system": "You are a cutaway auditor. The input gives a CUTAWAY CARD (SUBJECT, SHELL with CUT, and 5 parts as name | zone | description), then 'INTERIOR SURVEY' with a blind surveyor's SHELL verdict, its INTERIOR list (part | zone | description for parts seen inside the shell), and an OUTSIDE line. Score part by part, matching surveyor parts to card parts by identity (the same part in the surveyor's own words counts; near-names for the same physical part count). Work in this order and output exactly these lines:\n1. 'SHELL: ' plus the surveyor's SHELL verdict word (OPEN, PARTIAL or CLOSED), copied.\n2. 'INTERIOR: X of 5' - one point per card part the surveyor listed INSIDE the shell. A part listed only on the OUTSIDE line does NOT count - it escaped its shell.\n3. 'PLACEMENT: X of 5' - among the parts counted in INTERIOR, one point per part whose surveyor zone is the card's zone for that part. A part present but in a different zone earns INTERIOR but not PLACEMENT.\n4. 'MISSING: ' followed by the card names of parts not counted in INTERIOR, separated by '; ', or 'none'.\n5. 'EXTRA: ' followed by the surveyor's interior parts that match no card part, plus any parts on the OUTSIDE line, separated by '; ', or 'none'.\n6. 'Summary: ' followed by one sentence restating shell, interior and placement.\nOutput exactly these lines and nothing else.",
+        "maxTokens": "1200",
+        "reasoningEffort": "low"
+      },
+      "w": 280,
+      "name": "Cutaway re-audit - GLM scores the corrected cutaway against the same card",
+      "sizes": {
+        "system": 150
+      }
+    }
+  ],
+  "links": [
+    {
+      "id": "l1",
+      "from": {
+        "node": "setting",
+        "port": "text"
+      },
+      "to": {
+        "node": "director",
+        "port": "prompt"
+      }
+    },
+    {
+      "id": "l2",
+      "from": {
+        "node": "director",
+        "port": "text"
+      },
+      "to": {
+        "node": "j0",
+        "port": "b"
+      }
+    },
+    {
+      "id": "l12",
+      "from": {
+        "node": "setting",
+        "port": "text"
+      },
+      "to": {
+        "node": "j0",
+        "port": "a"
+      }
+    },
+    {
+      "id": "l13",
+      "from": {
+        "node": "j0",
+        "port": "text"
+      },
+      "to": {
+        "node": "stylist",
+        "port": "prompt"
+      }
+    },
+    {
+      "id": "l3",
+      "from": {
+        "node": "stylist",
+        "port": "text"
+      },
+      "to": {
+        "node": "paint",
+        "port": "prompt"
+      }
+    },
+    {
+      "id": "l4",
+      "from": {
+        "node": "paint",
+        "port": "image"
+      },
+      "to": {
+        "node": "surveyor",
+        "port": "image"
+      }
+    },
+    {
+      "id": "l7",
+      "from": {
+        "node": "director",
+        "port": "text"
+      },
+      "to": {
+        "node": "j1",
+        "port": "a"
+      }
+    },
+    {
+      "id": "l8",
+      "from": {
+        "node": "surveyor",
+        "port": "text"
+      },
+      "to": {
+        "node": "j1",
+        "port": "b"
+      }
+    },
+    {
+      "id": "l11",
+      "from": {
+        "node": "j1",
+        "port": "text"
+      },
+      "to": {
+        "node": "checker",
+        "port": "prompt"
+      }
+    },
+    {
+      "id": "l14",
+      "from": {
+        "node": "j1",
+        "port": "text"
+      },
+      "to": {
+        "node": "j2",
+        "port": "a"
+      }
+    },
+    {
+      "id": "l15",
+      "from": {
+        "node": "checker",
+        "port": "text"
+      },
+      "to": {
+        "node": "j2",
+        "port": "b"
+      }
+    },
+    {
+      "id": "l16",
+      "from": {
+        "node": "j2",
+        "port": "text"
+      },
+      "to": {
+        "node": "audit",
+        "port": "text"
+      }
+    },
+    {
+      "id": "l17",
+      "from": {
+        "node": "paint",
+        "port": "image"
+      },
+      "to": {
+        "node": "audit",
+        "port": "img1"
+      }
+    },
+    {
+      "id": "l18",
+      "from": {
+        "node": "j2",
+        "port": "text"
+      },
+      "to": {
+        "node": "editor",
+        "port": "prompt"
+      }
+    },
+    {
+      "id": "l19",
+      "from": {
+        "node": "editor",
+        "port": "text"
+      },
+      "to": {
+        "node": "fix",
+        "port": "prompt"
+      }
+    },
+    {
+      "id": "l20",
+      "from": {
+        "node": "paint",
+        "port": "image"
+      },
+      "to": {
+        "node": "fix",
+        "port": "image"
+      }
+    },
+    {
+      "id": "l21",
+      "from": {
+        "node": "fix",
+        "port": "image"
+      },
+      "to": {
+        "node": "surveyor2",
+        "port": "image"
+      }
+    },
+    {
+      "id": "l22",
+      "from": {
+        "node": "director",
+        "port": "text"
+      },
+      "to": {
+        "node": "j4",
+        "port": "a"
+      }
+    },
+    {
+      "id": "l23",
+      "from": {
+        "node": "surveyor2",
+        "port": "text"
+      },
+      "to": {
+        "node": "j4",
+        "port": "b"
+      }
+    },
+    {
+      "id": "l24",
+      "from": {
+        "node": "j4",
+        "port": "text"
+      },
+      "to": {
+        "node": "checker2",
+        "port": "prompt"
+      }
+    }
+  ],
+  "nid": 30,
+  "lid": 38,
+  "view": {
+    "panX": 40,
+    "panY": 40,
+    "scale": 0.5
+  }
+}
