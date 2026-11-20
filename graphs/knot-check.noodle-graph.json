@@ -1,0 +1,494 @@
+{
+  "v": 1,
+  "nodes": [
+    {
+      "id": "c1",
+      "type": "comment",
+      "x": 60,
+      "y": 30,
+      "fields": {
+        "text": "Is it really that knot? A GLM director writes a KNOT CARD: one true knot from a short menu (trefoil, figure-eight, pentafoil, triquetra), its single closed strand, and every crossing in clockwise order - each with its zone and which directional pass must lie OVER the other. A second GLM turns the card into a painter prompt for a flat top-down knot: one continuous rope with no loose ends, every crossing showing the carded pass on top with a clean break in the under-pass. Muse paints it. Then a blind Gemini tracer inventories only what it sees: whether the strand is one closed loop, every crossing by zone with the direction of the pass visibly on top, and any breaks or loose ends. A GLM auditor scores STRAND, CROSSINGS (zone plus over-direction), FLIPPED crossings and EXTRA crossings. Then the loop closes: a GLM editor turns the audit into concrete edit notes that may change only the crossings and strand continuity, Muse Edit repaints, and a second blind trace plus the same auditor re-score the corrected knot. A Decide judge headlines round 1 as a side output - but the flow does not end in text. Its deliverable is the corrected knot. See recipes/knot-check.md."
+      },
+      "w": 900,
+      "name": "Knot check, crossing-audited - one closed strand whose over/under crossings are carded, traced blind, and a fix round that repairs only the crossings"
+    },
+    {
+      "id": "setting",
+      "type": "text",
+      "x": 60,
+      "y": 300,
+      "fields": {
+        "text": "One single thick rope lying flat on a plain neutral studio background, seen directly from above, evenly lit, filling most of the frame, no people, no other objects, and no text, labels or numbers anywhere. The rope forms one closed loop with no loose ends and no beginning or end visible."
+      },
+      "w": 300,
+      "name": "Strand setting"
+    },
+    {
+      "id": "director",
+      "type": "llm",
+      "x": 440,
+      "y": 280,
+      "fields": {
+        "model": "z-ai/glm-5.3-flash",
+        "system": "You are a knot director. Given a STRAND SETTING (one closed rope loop seen from above), design a KNOT CARD for one true alternating knot. Choose ONE knot from this menu ONLY, using its canonical crossing count:\ntrefoil knot - 3 crossings; triquetra - 3 crossings; figure-eight knot - 4 crossings; pentafoil (cinquefoil) knot - 5 crossings.\nWrite the STRAND line: the rope in a few words (material, colour, thickness) - it must be ONE continuous closed strand with no loose ends.\nThen list every crossing of that knot, numbered in CLOCKWISE order around the knot starting from the topmost crossing. For each crossing give: its POSITION using exactly one of these nine zones: top-left, top-centre, top-right, centre-left, centre, centre-right, bottom-left, bottom-centre, bottom-right - the OVER pass described only by its direction of travel at that crossing, using exactly one of these four directions: left-to-right, top-to-bottom, upper-left-to-lower-right, upper-right-to-lower-left - and the UNDER pass direction (one of the same four, different from the over direction). Use a different zone for each crossing. The crossings must be the knot's real canonical crossings: in a true alternating knot, following the strand, over and under alternate at successive crossings.\nOutput exactly this shape and nothing else:\nKNOT: <knot name>\nSTRAND: <rope description> | CLOSED: one continuous strand, no loose ends\nCROSSING 1: <zone> | OVER: <direction> | UNDER: <direction>\nCROSSING 2: <zone> | OVER: <direction> | UNDER: <direction>\n(continue for every crossing of the chosen knot - 3, 4 or 5 lines, matching its canonical count)",
+        "maxTokens": "500",
+        "reasoningEffort": "low"
+      },
+      "w": 280,
+      "name": "Knot card - GLM picks a true knot and cards every crossing with its over-pass",
+      "sizes": {
+        "system": 150
+      }
+    },
+    {
+      "id": "j0",
+      "type": "join",
+      "x": 800,
+      "y": 480,
+      "fields": {
+        "sep": "\n\nKNOT CARD (the knot, its strand, and every crossing with its zone and over-pass direction; its exact wording must reach the painter):\n"
+      },
+      "w": 200,
+      "name": "Setting + knot card"
+    },
+    {
+      "id": "stylist",
+      "type": "llm",
+      "x": 800,
+      "y": 280,
+      "fields": {
+        "model": "z-ai/glm-5.3-flash",
+        "system": "You turn a KNOT CARD into ONE prompt for an AI image generator. The input gives a STRAND SETTING first, then 'KNOT CARD' with a KNOT, a STRAND line, and its crossings (zone | OVER direction | UNDER direction). Write the prompt so the generator paints that exact knot lying flat, seen directly from above on the same plain neutral background: one single continuous rope of the carded material and colour, forming one closed loop with NO loose ends, NO beginning and NO end visible. At every carded crossing, the pass travelling in the OVER direction must lie visibly ON TOP, drawn unbroken across the crossing, while the under-pass is interrupted by a clean small gap on both sides of the over-pass so the layering is unmistakable. Crossings sit at their carded zones, in the carded count - no extra crossings, no missing crossings. The cardinal rule: NO labels, NO text, NO letters, NO numbers and NO arrows anywhere - this is a picture of a rope, not a diagram. End with: 'Clean top-down photograph of one knotted rope, one closed strand, crossings layered exactly as specified, no text, no labels, no people.' Output the prompt only.",
+        "maxTokens": "700",
+        "reasoningEffort": "low"
+      },
+      "w": 280,
+      "name": "Knot brief - GLM turns the card into a top-down knot painter prompt",
+      "sizes": {
+        "system": 150
+      }
+    },
+    {
+      "id": "paint",
+      "type": "image",
+      "x": 1160,
+      "y": 280,
+      "fields": {
+        "model": "meta/muse-image/text-to-image",
+        "size": "16:9",
+        "variations": "1"
+      },
+      "w": 280,
+      "name": "Knot - Muse paints the closed strand and its crossings"
+    },
+    {
+      "id": "surveyor",
+      "type": "llm",
+      "x": 1520,
+      "y": 280,
+      "fields": {
+        "model": "google/gemini-3.8-flash",
+        "system": "You are a knot tracer looking at a top-down picture of a knotted rope. You do not know what knot was planned - report only what you actually see. First, 'STRAND:' plus CLOSED (one single continuous rope loop, no loose ends, no breaks), BROKEN (the rope has a visible gap or cut), ENDS (one or more loose rope ends are visible) or MULTIPLE (more than one separate rope), followed by a few words on what you see. Then 'CROSSINGS:' and, for each place where the rope crosses over itself, in clockwise order starting from the topmost crossing, output: '<its position: top-left, top-centre, top-right, centre-left, centre, centre-right, bottom-left, bottom-centre or bottom-right> | OVER: <the direction of travel of the pass that lies visibly ON TOP at that crossing: left-to-right, top-to-bottom, upper-left-to-lower-right or upper-right-to-lower-left> | UNDER: <the direction of the interrupted pass underneath>'. Judge over and under only by which pass is drawn unbroken and which is interrupted - not by shading alone. If there are no crossings, write 'CROSSINGS: none'. Finally, 'BREAKS:' plus any place the rope is cut, frayed into an end, or leaves the frame, or 'none'. Output exactly this shape:\nSTRAND: <CLOSED, BROKEN, ENDS or MULTIPLE> - <what you see>\nCROSSINGS:\n<zone> | OVER: <direction> | UNDER: <direction>\n(continue for every crossing, clockwise from the topmost)\nBREAKS: <breaks or loose ends, or none>",
+        "maxTokens": "600",
+        "reasoningEffort": "low"
+      },
+      "w": 280,
+      "name": "Crossing trace - Gemini traces the strand and every crossing blind",
+      "sizes": {
+        "system": 150
+      }
+    },
+    {
+      "id": "j1",
+      "type": "join",
+      "x": 1880,
+      "y": 180,
+      "fields": {
+        "sep": "\n\nCROSSING TRACE (a blind tracer reported only the strand and crossings actually visible; it never saw the knot card):\n"
+      },
+      "w": 200,
+      "name": "Knot card + crossing trace"
+    },
+    {
+      "id": "checker",
+      "type": "llm",
+      "x": 2240,
+      "y": 400,
+      "fields": {
+        "model": "z-ai/glm-5.3-flash",
+        "system": "You are a knot auditor. The input gives a KNOT CARD (KNOT, STRAND, and its crossings numbered in clockwise order as zone | OVER direction | UNDER direction), then 'CROSSING TRACE' with a blind tracer's STRAND verdict, its CROSSINGS list (zone | OVER direction | UNDER direction, clockwise from the topmost), and a BREAKS line. Score crossing by crossing, matching traced crossings to card crossings BY ZONE (the same zone is the same crossing; if two traced crossings share a zone, match the first and count the second as extra). Work in this order and output exactly these lines:\n1. 'STRAND: ' plus the tracer's STRAND verdict word (CLOSED, BROKEN, ENDS or MULTIPLE), copied.\n2. 'CROSSINGS: X of N' where N is the number of crossings on the card - one point per card crossing whose zone appears in the trace AND whose traced OVER direction is the card's OVER direction for that zone. A crossing present at the right zone but with the wrong pass on top earns no point - it is flipped, not correct.\n3. 'FLIPPED: ' followed by the card crossing numbers whose zone was traced but whose OVER direction differs from the card, separated by '; ', or 'none'.\n4. 'MISSING: ' followed by the card crossing numbers whose zone does not appear in the trace at all, separated by '; ', or 'none'.\n5. 'EXTRA: ' followed by the traced crossings whose zone matches no card crossing, described by zone, separated by '; ', or 'none'.\n6. 'Summary: ' followed by one sentence restating strand, crossings and flips.\nOutput exactly these lines and nothing else.",
+        "maxTokens": "1200",
+        "reasoningEffort": "low"
+      },
+      "w": 280,
+      "name": "Knot audit - GLM scores strand continuity and every crossing's over-pass",
+      "sizes": {
+        "system": 150
+      }
+    },
+    {
+      "id": "j2",
+      "type": "join",
+      "x": 2240,
+      "y": 180,
+      "fields": {
+        "sep": "\n\nKNOT AUDIT:\n"
+      },
+      "w": 200,
+      "name": "Card, crossing trace + knot audit"
+    },
+    {
+      "id": "audit",
+      "type": "decide",
+      "x": 2600,
+      "y": 180,
+      "fields": {
+        "model": "perplexity/pplx-decider-v1.2",
+        "mode": "choose",
+        "question": "The picture should be the planned knot: one single closed continuous rope strand with no loose ends or breaks, exactly the carded number of crossings at their carded zones, and at every crossing the carded directional pass lying visibly on top. The text gives the KNOT CARD, a blind CROSSING TRACE, and a KNOT AUDIT scoring strand and crossings. Which verdict fits? 'true knot' means STRAND is CLOSED, CROSSINGS is the full carded count, and FLIPPED, MISSING and EXTRA are all none. 'crossings flipped' means STRAND is CLOSED and MISSING is none but FLIPPED or EXTRA is not none - the loop is whole but its layering is wrong, which makes it a different knot or an unknot. 'strand broken' means STRAND is BROKEN, ENDS or MULTIPLE, or BREAKS is not none. 'not a knot' means MISSING is not none, or CROSSINGS is half the carded count or less. Judge whether the crossing structure is the planned knot, not the picture's beauty.",
+        "options": "true knot\ncrossings flipped\nstrand broken\nnot a knot"
+      },
+      "w": 280,
+      "name": "True knot - audited",
+      "sizes": {
+        "question": 130
+      }
+    },
+    {
+      "id": "editor",
+      "type": "llm",
+      "x": 2600,
+      "y": 520,
+      "fields": {
+        "model": "z-ai/glm-5.3-flash",
+        "system": "You are the knot editor in a crossing pipeline. The input gives a KNOT CARD (KNOT, STRAND, crossings with zones and over directions), a blind CROSSING TRACE (strand verdict, crossings, breaks), and a KNOT AUDIT scoring strand and crossings. Write ONE edit instruction for an image-editing model that will receive the painted knot itself. Rules:\n- Address the editor directly and write in imperatives: 'Edit this picture: ...'\n- The frame is the scope: open by demanding the rope's material, colour and thickness, the background, the top-down view, the light, the framing and the knot's overall shape stay exactly the same, as one single continuous closed strand with no loose ends.\n- State the FULL target end state, not just the deltas: every carded crossing present at its carded zone, at each crossing the carded OVER-direction pass drawn unbroken on top and the under-pass interrupted by a clean small gap on both sides, no crossings that are not on the card, no breaks, and no labels, text, letters, numbers or arrows anywhere.\n- Then name the audit's specific failures as extra demands: for every FLIPPED crossing, name its number, zone and the pass that must end up on top and demand the layering be swapped there; for every MISSING crossing, name its number, zone and over direction and demand the strand cross there; for every EXTRA crossing, demand it be uncrossed into a smooth run of rope; if the STRAND was BROKEN, ENDS or MULTIPLE or BREAKS was not none, demand the strand be joined into one closed loop with the break or ends removed; crossings already correct must be left alone - name them as keepers.\n- End with: 'Change nothing except the crossings and strand continuity named here. Clean top-down photograph of one knotted rope, no text, no labels, no people.'\nOutput the single edit instruction only - no preamble, no list, no explanation.",
+        "maxTokens": "350",
+        "reasoningEffort": "low"
+      },
+      "w": 280,
+      "name": "Edit notes - GLM turns the knot audit into crossing-bounded fix instructions",
+      "sizes": {
+        "system": 150
+      }
+    },
+    {
+      "id": "fix",
+      "type": "edit",
+      "x": 2960,
+      "y": 520,
+      "fields": {
+        "model": "meta/muse-image/edit",
+        "size": "auto"
+      },
+      "w": 280,
+      "name": "Corrected knot - Muse Edit repairs the flipped crossings and the strand"
+    },
+    {
+      "id": "surveyor2",
+      "type": "llm",
+      "x": 3320,
+      "y": 520,
+      "fields": {
+        "model": "google/gemini-3.8-flash",
+        "system": "You are a knot tracer looking at a top-down picture of a knotted rope. You do not know what knot was planned - report only what you actually see. First, 'STRAND:' plus CLOSED (one single continuous rope loop, no loose ends, no breaks), BROKEN (the rope has a visible gap or cut), ENDS (one or more loose rope ends are visible) or MULTIPLE (more than one separate rope), followed by a few words on what you see. Then 'CROSSINGS:' and, for each place where the rope crosses over itself, in clockwise order starting from the topmost crossing, output: '<its position: top-left, top-centre, top-right, centre-left, centre, centre-right, bottom-left, bottom-centre or bottom-right> | OVER: <the direction of travel of the pass that lies visibly ON TOP at that crossing: left-to-right, top-to-bottom, upper-left-to-lower-right or upper-right-to-lower-left> | UNDER: <the direction of the interrupted pass underneath>'. Judge over and under only by which pass is drawn unbroken and which is interrupted - not by shading alone. If there are no crossings, write 'CROSSINGS: none'. Finally, 'BREAKS:' plus any place the rope is cut, frayed into an end, or leaves the frame, or 'none'. Output exactly this shape:\nSTRAND: <CLOSED, BROKEN, ENDS or MULTIPLE> - <what you see>\nCROSSINGS:\n<zone> | OVER: <direction> | UNDER: <direction>\n(continue for every crossing, clockwise from the topmost)\nBREAKS: <breaks or loose ends, or none>",
+        "maxTokens": "600",
+        "reasoningEffort": "low"
+      },
+      "w": 280,
+      "name": "Re-trace - Gemini traces the corrected knot's crossings blind",
+      "sizes": {
+        "system": 150
+      }
+    },
+    {
+      "id": "j4",
+      "type": "join",
+      "x": 3680,
+      "y": 420,
+      "fields": {
+        "sep": "\n\nCROSSING TRACE (a blind tracer reported only the strand and crossings actually visible in the corrected picture; it never saw the knot card):\n"
+      },
+      "w": 200,
+      "name": "Knot card + re-trace"
+    },
+    {
+      "id": "checker2",
+      "type": "llm",
+      "x": 4040,
+      "y": 520,
+      "fields": {
+        "model": "z-ai/glm-5.3-flash",
+        "system": "You are a knot auditor. The input gives a KNOT CARD (KNOT, STRAND, and its crossings numbered in clockwise order as zone | OVER direction | UNDER direction), then 'CROSSING TRACE' with a blind tracer's STRAND verdict, its CROSSINGS list (zone | OVER direction | UNDER direction, clockwise from the topmost), and a BREAKS line. Score crossing by crossing, matching traced crossings to card crossings BY ZONE (the same zone is the same crossing; if two traced crossings share a zone, match the first and count the second as extra). Work in this order and output exactly these lines:\n1. 'STRAND: ' plus the tracer's STRAND verdict word (CLOSED, BROKEN, ENDS or MULTIPLE), copied.\n2. 'CROSSINGS: X of N' where N is the number of crossings on the card - one point per card crossing whose zone appears in the trace AND whose traced OVER direction is the card's OVER direction for that zone. A crossing present at the right zone but with the wrong pass on top earns no point - it is flipped, not correct.\n3. 'FLIPPED: ' followed by the card crossing numbers whose zone was traced but whose OVER direction differs from the card, separated by '; ', or 'none'.\n4. 'MISSING: ' followed by the card crossing numbers whose zone does not appear in the trace at all, separated by '; ', or 'none'.\n5. 'EXTRA: ' followed by the traced crossings whose zone matches no card crossing, described by zone, separated by '; ', or 'none'.\n6. 'Summary: ' followed by one sentence restating strand, crossings and flips.\nOutput exactly these lines and nothing else.",
+        "maxTokens": "1200",
+        "reasoningEffort": "low"
+      },
+      "w": 280,
+      "name": "Knot re-audit - GLM scores the corrected knot against the same card",
+      "sizes": {
+        "system": 150
+      }
+    },
+    {
+      "id": "ask",
+      "type": "text",
+      "x": 1520,
+      "y": 560,
+      "fields": {
+        "text": "Trace the knot in the attached picture now, following your instructions exactly."
+      },
+      "w": 240,
+      "name": "Trace ask"
+    }
+  ],
+  "links": [
+    {
+      "id": "l1",
+      "from": {
+        "node": "setting",
+        "port": "text"
+      },
+      "to": {
+        "node": "director",
+        "port": "prompt"
+      }
+    },
+    {
+      "id": "l2",
+      "from": {
+        "node": "director",
+        "port": "text"
+      },
+      "to": {
+        "node": "j0",
+        "port": "b"
+      }
+    },
+    {
+      "id": "l12",
+      "from": {
+        "node": "setting",
+        "port": "text"
+      },
+      "to": {
+        "node": "j0",
+        "port": "a"
+      }
+    },
+    {
+      "id": "l13",
+      "from": {
+        "node": "j0",
+        "port": "text"
+      },
+      "to": {
+        "node": "stylist",
+        "port": "prompt"
+      }
+    },
+    {
+      "id": "l3",
+      "from": {
+        "node": "stylist",
+        "port": "text"
+      },
+      "to": {
+        "node": "paint",
+        "port": "prompt"
+      }
+    },
+    {
+      "id": "l4",
+      "from": {
+        "node": "paint",
+        "port": "image"
+      },
+      "to": {
+        "node": "surveyor",
+        "port": "img1"
+      }
+    },
+    {
+      "id": "l7",
+      "from": {
+        "node": "director",
+        "port": "text"
+      },
+      "to": {
+        "node": "j1",
+        "port": "a"
+      }
+    },
+    {
+      "id": "l8",
+      "from": {
+        "node": "surveyor",
+        "port": "text"
+      },
+      "to": {
+        "node": "j1",
+        "port": "b"
+      }
+    },
+    {
+      "id": "l11",
+      "from": {
+        "node": "j1",
+        "port": "text"
+      },
+      "to": {
+        "node": "checker",
+        "port": "prompt"
+      }
+    },
+    {
+      "id": "l14",
+      "from": {
+        "node": "j1",
+        "port": "text"
+      },
+      "to": {
+        "node": "j2",
+        "port": "a"
+      }
+    },
+    {
+      "id": "l15",
+      "from": {
+        "node": "checker",
+        "port": "text"
+      },
+      "to": {
+        "node": "j2",
+        "port": "b"
+      }
+    },
+    {
+      "id": "l16",
+      "from": {
+        "node": "j2",
+        "port": "text"
+      },
+      "to": {
+        "node": "audit",
+        "port": "text"
+      }
+    },
+    {
+      "id": "l17",
+      "from": {
+        "node": "paint",
+        "port": "image"
+      },
+      "to": {
+        "node": "audit",
+        "port": "img1"
+      }
+    },
+    {
+      "id": "l18",
+      "from": {
+        "node": "j2",
+        "port": "text"
+      },
+      "to": {
+        "node": "editor",
+        "port": "prompt"
+      }
+    },
+    {
+      "id": "l19",
+      "from": {
+        "node": "editor",
+        "port": "text"
+      },
+      "to": {
+        "node": "fix",
+        "port": "prompt"
+      }
+    },
+    {
+      "id": "l20",
+      "from": {
+        "node": "paint",
+        "port": "image"
+      },
+      "to": {
+        "node": "fix",
+        "port": "image"
+      }
+    },
+    {
+      "id": "l21",
+      "from": {
+        "node": "fix",
+        "port": "image"
+      },
+      "to": {
+        "node": "surveyor2",
+        "port": "img1"
+      }
+    },
+    {
+      "id": "l22",
+      "from": {
+        "node": "director",
+        "port": "text"
+      },
+      "to": {
+        "node": "j4",
+        "port": "a"
+      }
+    },
+    {
+      "id": "l23",
+      "from": {
+        "node": "surveyor2",
+        "port": "text"
+      },
+      "to": {
+        "node": "j4",
+        "port": "b"
+      }
+    },
+    {
+      "id": "l24",
+      "from": {
+        "node": "j4",
+        "port": "text"
+      },
+      "to": {
+        "node": "checker2",
+        "port": "prompt"
+      }
+    },
+    {
+      "id": "l25",
+      "from": {
+        "node": "ask",
+        "port": "text"
+      },
+      "to": {
+        "node": "surveyor",
+        "port": "prompt"
+      }
+    },
+    {
+      "id": "l26",
+      "from": {
+        "node": "ask",
+        "port": "text"
+      },
+      "to": {
+        "node": "surveyor2",
+        "port": "prompt"
+      }
+    }
+  ],
+  "nid": 31,
+  "lid": 40,
+  "view": {
+    "panX": 40,
+    "panY": 40,
+    "scale": 0.5
+  }
+}
