@@ -1,0 +1,43 @@
+Photo → Editable Layers — the decomposition is real; read the seam note before rating it.
+
+One photo in → Seedream 5.0 Flash Layerize (bytedance/seedream/v5/flash/layerize,
+$0.027 FLAT at any size) → a stack of named layers: a clean base plate (every element
+lifted out, holes inpainted), the background, and each foreground element as its own
+RGBA PNG with a name, a description and a bounding box. Stack them at their
+coordinates and the original rebuilds. A vision survey up front names what should
+separate; a GLM guide at the end says what to do with the stack.
+
+PROVEN ON THE PROBE (2026-11-20, marble bust photo, runs/layerize/ in the lane's
+workspace): 4 layers back — z0 base plate, z1 "dark background", z2 "stone pedestal",
+z3 "marble bust main subject" (a true cutout, pedestal excluded). Recomposition of
+z1+z2+z3 at their boxes vs the source: mean abs diff 12.08/255, 87.6% of pixels
+within 25. Every billed run cost exactly $0.027.
+
+HONEST EDGES:
+- Some photos REFUSE: upstream 422 "could not be processed for layer decomposition"
+  (the candle product shot did; the bust did not). Refusals are NOT charged. Identical
+  requests can also flake 200/422/200 — retrying is free until one lands. The flakiness
+  concentrates on REMOTE-URL image inputs; inlined (data-URL) inputs land first try.
+  Hosted-MCP note: hosted policy refuses uploads and field-carried media URLs, so a
+  hosted graph must generate its photo in-graph and feed it inline.
+- The model RE-SEGMENTS every run: layer names and boundaries shift between runs, and
+  recomposition is close, not pixel-perfect — measured mean abs diff 6.65/255 on the
+  executors lane's best merged-state run and 27.30 on another (probe run: 12.08).
+- The route needs an edit node: generation (image) nodes never forward the photo.
+- Alpha is a soft photographic cutout, not vector-crisp; text and fine hair separate
+  worst. The base plate behind an element is regenerated inpaint — plausible, not the
+  original pixels.
+- Layer count is the model's call (4 for the bust); you cannot request a count.
+
+THE SEAM THIS SHIP WAITED ON (fixed 2026-11-20, whole stack): the NanoGPT response
+carries every layer URL + metadata, but the executors' edit nodes originally kept
+only the first returned image (keptFirst) — a graph saw only the base plate. Mikkel
+funded the fix the same day he saw the probe report; it landed on JS (0.13.3, PR #78),
+Py (0.7.2, PR #31), Rust (public main), the editor's embedded engine (#869/#877/#878)
+and nanoodle-mcp (#261) together. Edit nodes now return image + images + layers
+(metadata aligned by index). THIS SAVED RUN (merged Py executor, exact graph in this
+repo): 4 layers back — z0 base plate, z1 "dark background", z2 "ancient marble bust",
+z3 "statue pedestal" — recomposition mean abs diff 14.26/255, 82.3% of pixels within
+25; total cost $0.0273531625 exact (survey $0.0003531625 + layerize $0.027 + guide $0).
+Names and z-order shifted vs the probe run (there the bust was z3) — the variance
+above is real, in both directions.
