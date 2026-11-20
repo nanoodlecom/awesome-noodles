@@ -1,0 +1,505 @@
+{
+ "v": 1,
+ "nodes": [
+  {
+   "id": "c1",
+   "type": "comment",
+   "x": 60,
+   "y": 30,
+   "fields": {
+    "text": "Can a picture OBEY THE LAW OF THE LEVER? A GLM director picks one balance-beam rig from a spec menu printed in its own prompt (four rigs; every load given as an object, a weight in kg and a resting zone - CLOSE, MID or FAR from the central fulcrum - with each side's torque printed: torque = weight x zone distance, CLOSE 1, MID 2, FAR 3) and copies out a RIG CARD with the torque sums and the PREDICTION the law forces: the side with the greater torque goes down, equal torques balance level. One rig is a leverage upset - a light load far out tips a heavy load sitting close in. A second GLM turns the card into one photograph prompt for a wooden beam on a triangular fulcrum, the loads resting on the beam at their carded zones, the beam settled exactly as the prediction says, and no printed words, numbers or labels anywhere, because print would cheat the physics: the weights must exist only as objects. Muse paints it. A blind Gemini reader, who never saw the card, reports only what it can see: which end of the beam sits lower (or LEVEL), and every object on each side with its zone. A GLM auditor recomputes the torques from the card, scores OBJECTS and ZONES against the card, and scores TILT - the reader's observed settle against the prediction the arithmetic forced. A Decide judge headlines round 1. That verdict is not the deliverable: a GLM editor turns the audit into one concrete edit instruction (gated - on a perfect audit it must demand a verbatim unchanged copy), Muse Edit repairs the rig, and a blind re-read plus the same auditor re-score the corrected picture against the same card. The corrected rig is the flow's final output."
+   },
+   "w": 900,
+   "name": "Balance check"
+  },
+  {
+   "id": "setting",
+   "type": "text",
+   "x": 60,
+   "y": 300,
+   "fields": {
+    "text": "A straight-on studio photograph of a balance-beam rig in a bright, plain workshop: one long sturdy wooden beam resting across the top of a single triangular wooden fulcrum at its exact centre, a plain floor line beneath, everyday heavy objects as loads resting on top of the beam, no people, and no printed words, numbers or labels anywhere yet."
+   },
+   "w": 300,
+   "name": "Rig setting"
+  },
+  {
+   "id": "director",
+   "type": "llm",
+   "x": 440,
+   "y": 280,
+   "fields": {
+    "model": "z-ai/glm-5.3-flash",
+    "system": "You are a physics demonstrator. Given a RIG SETTING, design a RIG CARD for one balance-beam rig. Choose ONE rig from this menu ONLY, and copy its spec EXACTLY - every object, every weight, every zone, every torque:\n\nMENU (zone distances: CLOSE = 1, MID = 2, FAR = 3; torque = weight x zone distance):\n1. FAIR WEIGHTS - LEFT: brass kettlebell, 4 kg, at MID (torque 8). RIGHT: iron dumbbell, 8 kg, at CLOSE (torque 8). TORQUE LEFT 8, TORQUE RIGHT 8, PREDICTION: LEVEL.\n2. LEVERAGE UPSET - LEFT: stone block, 9 kg, at CLOSE (torque 9). RIGHT: metal watering can, 4 kg, at FAR (torque 12). TORQUE LEFT 9, TORQUE RIGHT 12, PREDICTION: RIGHT DOWN.\n3. HEAVY SIDE DROPS - LEFT: red toolbox, 5 kg, at FAR (torque 15). RIGHT: stack of books, 3 kg, at MID (torque 6). TORQUE LEFT 15, TORQUE RIGHT 6, PREDICTION: LEFT DOWN.\n4. TWO AGAINST ONE - LEFT: brass kettlebell, 3 kg, at MID (torque 6) and iron dumbbell, 2 kg, at FAR (torque 6). RIGHT: stone block, 6 kg, at MID (torque 12). TORQUE LEFT 12, TORQUE RIGHT 12, PREDICTION: LEVEL.\n\nOutput ONLY the card, in exactly this format, copying the chosen rig's numbers without changing any of them:\nRIG: <the rig name>\nLEFT: <object>, <weight> kg, at <ZONE> (torque <t>)[; <object>, <weight> kg, at <ZONE> (torque <t>)]\nRIGHT: <object>, <weight> kg, at <ZONE> (torque <t>)[; <object>, <weight> kg, at <ZONE> (torque <t>)]\nTORQUE LEFT: <sum>\nTORQUE RIGHT: <sum>\nPREDICTION: <LEVEL or LEFT DOWN or RIGHT DOWN>\nLOADS: <total number of objects>\nNo other text.",
+    "maxTokens": "500",
+    "reasoningEffort": "low"
+   },
+   "w": 280,
+   "name": "Rig card - GLM picks a rig and copies its exact load, weight and zone spec",
+   "sizes": {
+    "system": 150
+   }
+  },
+  {
+   "id": "j0",
+   "type": "join",
+   "x": 800,
+   "y": 480,
+   "fields": {
+    "sep": "\n\nRIG CARD (the loads, their weights and zones, the torque sums and the prediction; its exact wording must reach the photographer):\n"
+   },
+   "w": 200,
+   "name": "Setting + rig card"
+  },
+  {
+   "id": "stylist",
+   "type": "llm",
+   "x": 800,
+   "y": 280,
+   "fields": {
+    "model": "z-ai/glm-5.3-flash",
+    "system": "You turn a RIG CARD into ONE prompt for an AI image generator. The input gives a RIG SETTING first, then 'RIG CARD' with the loads, their zones and a PREDICTION. Write a single-paragraph prompt for a straight-on studio photograph of the rig, demanding all of this:\n- One long sturdy wooden beam resting across the top of a single triangular wooden fulcrum at its exact centre, a plain floor line beneath, bright plain workshop background, no people.\n- Every carded load resting ON TOP of the beam on its carded side, at its carded zone, described in plain positions: CLOSE means just beside the fulcrum, MID means halfway between the fulcrum and that end of the beam, FAR means at the very end of the beam. Name each object exactly as the card names it (brass kettlebell, iron dumbbell, stone block, metal watering can, red toolbox, stack of books). Do NOT state any weights, numbers or the word torque - the loads are objects, not labels.\n- The beam settled EXACTLY as the card's PREDICTION says: for LEFT DOWN, the left end of the beam rests clearly lower than the right, the beam sloping down to the left; for RIGHT DOWN, mirror that; for LEVEL, the beam perfectly horizontal, both ends at the same height. The lowered end must nearly touch the floor; the raised end clearly lifted.\n- No printed words, numbers, labels, signs or markings anywhere in the picture.\nOutput ONLY the image prompt, one paragraph, no preamble.",
+    "maxTokens": "700",
+    "reasoningEffort": "low"
+   },
+   "w": 280,
+   "name": "Photo brief - GLM turns the card into a balance-rig painter prompt",
+   "sizes": {
+    "system": 150
+   }
+  },
+  {
+   "id": "paint",
+   "type": "image",
+   "x": 1160,
+   "y": 280,
+   "fields": {
+    "model": "meta/muse-image/text-to-image",
+    "size": "16:9",
+    "variations": "1"
+   },
+   "w": 280,
+   "name": "Rig - Muse paints the settled beam"
+  },
+  {
+   "id": "surveyor",
+   "type": "llm",
+   "x": 1520,
+   "y": 280,
+   "fields": {
+    "model": "google/gemini-3.8-flash",
+    "system": "You are a rig observer examining a photograph of a balance beam. You do not know what was planned - report only what you actually see, in exactly this format:\nTILT: <LEFT DOWN if the left end of the beam sits clearly lower than the right; RIGHT DOWN if the right end sits clearly lower; LEVEL if the beam looks horizontal>\nLEFT LOADS: <every object resting on the beam to the LEFT of the central fulcrum, leftmost first, each as '<object name> at <ZONE>' where ZONE is CLOSE (just beside the fulcrum), MID (halfway between fulcrum and that end) or FAR (at the very end); write 'none' if the left half is empty>\nRIGHT LOADS: <same for the right half>\nEXTRA: <anything on the beam that is not a load, a second fulcrum, a load resting on the floor instead of the beam, or any printed word or number you can see; 'none' if there is nothing of the kind>\nJudge zones by the object's centre against the fulcrum and the beam end. Do not guess weights - you cannot see weight, only objects and positions. If the beam's tilt is slight but visible, call the lower side; call LEVEL only if the beam is genuinely horizontal.",
+    "maxTokens": "900",
+    "reasoningEffort": "low"
+   },
+   "w": 280,
+   "name": "Rig read - Gemini reports the tilt and the loads, blind",
+   "sizes": {
+    "system": 150
+   }
+  },
+  {
+   "id": "j1",
+   "type": "join",
+   "x": 1880,
+   "y": 180,
+   "fields": {
+    "sep": "\n\nRIG READ (a blind observer reported only what it could see - the tilt and the loads by side and zone; it never saw the rig card):\n"
+   },
+   "w": 200,
+   "name": "Rig card + rig read"
+  },
+  {
+   "id": "checker",
+   "type": "llm",
+   "x": 2240,
+   "y": 400,
+   "fields": {
+    "model": "z-ai/glm-5.3-flash",
+    "system": "You are a physics auditor. The input gives a RIG CARD (RIG, LEFT and RIGHT load lines with each load's weight in kg and zone, TORQUE LEFT, TORQUE RIGHT, PREDICTION, LOADS) and then a RIG READ from a blind observer (TILT, LEFT LOADS, RIGHT LOADS, EXTRA). Zone distances: CLOSE = 1, MID = 2, FAR = 3; torque = weight x zone distance; the side with the greater total torque goes down, equal torques balance LEVEL. The observer cannot see weights - match its objects to the card's loads by name (a near name for the same object counts as that load: 'kettlebell' for 'brass kettlebell', 'dumbbell' for 'iron dumbbell', 'watering can' for 'metal watering can', 'books' for 'stack of books', 'toolbox' for 'red toolbox', 'stone' or 'block' for 'stone block'). Score in exactly this format:\nTORQUE MATH: <VALID if the card's per-load torques, side sums and PREDICTION all follow the rule above; INVALID with the correct values if any does not>\nOBJECTS: <number of carded loads the read found on their carded side> of <LOADS>\nZONES: <number of those loads whose read zone equals their carded zone> of <LOADS>\nTILT: <MATCH if the read's TILT equals the card's PREDICTION; WRONG WAY if the read names the opposite side down; LEVEL MISMATCH if exactly one of read and prediction is LEVEL>\nEXTRA: <the read's EXTRA, or 'none'>\nSUMMARY: <one short line naming what held and what failed>\nScore strictly from the two texts. Do not excuse a wrong tilt because the loads look heavy or light - the torques decide.",
+    "maxTokens": "1200",
+    "reasoningEffort": "low"
+   },
+   "w": 280,
+   "name": "Rig audit - GLM recomputes the torques and scores objects, zones and tilt",
+   "sizes": {
+    "system": 150
+   }
+  },
+  {
+   "id": "j2",
+   "type": "join",
+   "x": 2240,
+   "y": 180,
+   "fields": {
+    "sep": "\n\nRIG AUDIT:\n"
+   },
+   "w": 200,
+   "name": "Card, rig read + rig audit"
+  },
+  {
+   "id": "audit",
+   "type": "decide",
+   "x": 2600,
+   "y": 180,
+   "fields": {
+    "model": "perplexity/pplx-decider-v1.2",
+    "mode": "choose",
+    "question": "The picture should be a balance beam settled exactly as the rig card's physics prediction demands: the carded loads on their carded sides at their carded zones, and the beam tilted the way the torques force (or level when the torques are equal). The audit in the text scores the blind read against the card. Choose the one label that best fits the round-1 picture.",
+    "options": "physics holds\ntilt wrong way\nstuck level\nloads misplaced\nrig unreadable"
+   },
+   "w": 280,
+   "name": "Physics holds - audited",
+   "sizes": {
+    "question": 130
+   }
+  },
+  {
+   "id": "editor",
+   "type": "llm",
+   "x": 2600,
+   "y": 520,
+   "fields": {
+    "model": "z-ai/glm-5.3-flash",
+    "system": "You are the rig editor in a balance-beam pipeline. The input gives a RIG CARD, a blind RIG READ and a RIG AUDIT of the round-1 picture. Write ONE edit instruction for an image editor working on that picture, in at most 90 words.\nIf the audit shows a perfect rig (OBJECTS and ZONES at full count, TILT: MATCH, TORQUE MATH: VALID, EXTRA: none), output exactly this and nothing else: 'Reproduce this photograph completely unchanged - same beam, same fulcrum, same loads in the same positions, same tilt, same background. Do not move, add, remove or restyle anything.'\nOtherwise: first state the full target end state - the card's loads on their carded sides at their carded zones on one beam on one central triangular fulcrum, the beam settled as the card's PREDICTION says (name which end sits lower, or perfectly horizontal for LEVEL), no printed words or numbers - then add the audit's specific failures as concrete demands, locating each fix by the load's name (for example: 'move the watering can to the very end of the right half', 'tilt the beam so the right end rests lower, nearly touching the floor'). Never ask for any weight, number or label to be printed.",
+    "maxTokens": "350",
+    "reasoningEffort": "low"
+   },
+   "w": 280,
+   "name": "Edit notes - GLM turns the rig audit into load-level fix instructions",
+   "sizes": {
+    "system": 150
+   }
+  },
+  {
+   "id": "fix",
+   "type": "edit",
+   "x": 2960,
+   "y": 520,
+   "fields": {
+    "model": "meta/muse-image/edit",
+    "size": "auto"
+   },
+   "w": 280,
+   "name": "Corrected rig - Muse Edit repairs the loads, zones and tilt"
+  },
+  {
+   "id": "surveyor2",
+   "type": "llm",
+   "x": 3320,
+   "y": 520,
+   "fields": {
+    "model": "google/gemini-3.8-flash",
+    "system": "You are a rig observer examining a photograph of a balance beam. You do not know what was planned - report only what you actually see, in exactly this format:\nTILT: <LEFT DOWN if the left end of the beam sits clearly lower than the right; RIGHT DOWN if the right end sits clearly lower; LEVEL if the beam looks horizontal>\nLEFT LOADS: <every object resting on the beam to the LEFT of the central fulcrum, leftmost first, each as '<object name> at <ZONE>' where ZONE is CLOSE (just beside the fulcrum), MID (halfway between fulcrum and that end) or FAR (at the very end); write 'none' if the left half is empty>\nRIGHT LOADS: <same for the right half>\nEXTRA: <anything on the beam that is not a load, a second fulcrum, a load resting on the floor instead of the beam, or any printed word or number you can see; 'none' if there is nothing of the kind>\nJudge zones by the object's centre against the fulcrum and the beam end. Do not guess weights - you cannot see weight, only objects and positions. If the beam's tilt is slight but visible, call the lower side; call LEVEL only if the beam is genuinely horizontal.",
+    "maxTokens": "900",
+    "reasoningEffort": "low"
+   },
+   "w": 280,
+   "name": "Re-read - Gemini reports the corrected rig's tilt and loads, blind",
+   "sizes": {
+    "system": 150
+   }
+  },
+  {
+   "id": "j4",
+   "type": "join",
+   "x": 3680,
+   "y": 420,
+   "fields": {
+    "sep": "\n\nRIG READ (a blind observer reported only what it could see in the corrected picture - the tilt and the loads by side and zone; it never saw the rig card):\n"
+   },
+   "w": 200,
+   "name": "Rig card + re-read"
+  },
+  {
+   "id": "checker2",
+   "type": "llm",
+   "x": 4040,
+   "y": 520,
+   "fields": {
+    "model": "z-ai/glm-5.3-flash",
+    "system": "You are a physics auditor. The input gives a RIG CARD (RIG, LEFT and RIGHT load lines with each load's weight in kg and zone, TORQUE LEFT, TORQUE RIGHT, PREDICTION, LOADS) and then a RIG READ from a blind observer (TILT, LEFT LOADS, RIGHT LOADS, EXTRA). Zone distances: CLOSE = 1, MID = 2, FAR = 3; torque = weight x zone distance; the side with the greater total torque goes down, equal torques balance LEVEL. The observer cannot see weights - match its objects to the card's loads by name (a near name for the same object counts as that load: 'kettlebell' for 'brass kettlebell', 'dumbbell' for 'iron dumbbell', 'watering can' for 'metal watering can', 'books' for 'stack of books', 'toolbox' for 'red toolbox', 'stone' or 'block' for 'stone block'). Score in exactly this format:\nTORQUE MATH: <VALID if the card's per-load torques, side sums and PREDICTION all follow the rule above; INVALID with the correct values if any does not>\nOBJECTS: <number of carded loads the read found on their carded side> of <LOADS>\nZONES: <number of those loads whose read zone equals their carded zone> of <LOADS>\nTILT: <MATCH if the read's TILT equals the card's PREDICTION; WRONG WAY if the read names the opposite side down; LEVEL MISMATCH if exactly one of read and prediction is LEVEL>\nEXTRA: <the read's EXTRA, or 'none'>\nSUMMARY: <one short line naming what held and what failed>\nScore strictly from the two texts. Do not excuse a wrong tilt because the loads look heavy or light - the torques decide.",
+    "maxTokens": "1200",
+    "reasoningEffort": "low"
+   },
+   "w": 280,
+   "name": "Rig re-audit - GLM scores the corrected rig against the same card",
+   "sizes": {
+    "system": 150
+   }
+  },
+  {
+   "id": "ask",
+   "type": "text",
+   "x": 1160,
+   "y": 520,
+   "fields": {
+    "text": "Observe the balance-beam rig in the attached picture now, following your instructions exactly."
+   },
+   "w": 240,
+   "name": "Observe ask"
+  },
+  {
+   "id": "ask2",
+   "type": "text",
+   "x": 2960,
+   "y": 900,
+   "fields": {
+    "text": "Observe the balance-beam rig in the attached picture now, following your instructions exactly."
+   },
+   "w": 240,
+   "name": "Re-observe ask"
+  }
+ ],
+ "links": [
+  {
+   "id": "l1",
+   "from": {
+    "node": "setting",
+    "port": "text"
+   },
+   "to": {
+    "node": "director",
+    "port": "prompt"
+   }
+  },
+  {
+   "id": "l2",
+   "from": {
+    "node": "director",
+    "port": "text"
+   },
+   "to": {
+    "node": "j0",
+    "port": "b"
+   }
+  },
+  {
+   "id": "l12",
+   "from": {
+    "node": "setting",
+    "port": "text"
+   },
+   "to": {
+    "node": "j0",
+    "port": "a"
+   }
+  },
+  {
+   "id": "l13",
+   "from": {
+    "node": "j0",
+    "port": "text"
+   },
+   "to": {
+    "node": "stylist",
+    "port": "prompt"
+   }
+  },
+  {
+   "id": "l3",
+   "from": {
+    "node": "stylist",
+    "port": "text"
+   },
+   "to": {
+    "node": "paint",
+    "port": "prompt"
+   }
+  },
+  {
+   "id": "l4",
+   "from": {
+    "node": "paint",
+    "port": "image"
+   },
+   "to": {
+    "node": "surveyor",
+    "port": "img1"
+   }
+  },
+  {
+   "id": "l7",
+   "from": {
+    "node": "director",
+    "port": "text"
+   },
+   "to": {
+    "node": "j1",
+    "port": "a"
+   }
+  },
+  {
+   "id": "l8",
+   "from": {
+    "node": "surveyor",
+    "port": "text"
+   },
+   "to": {
+    "node": "j1",
+    "port": "b"
+   }
+  },
+  {
+   "id": "l11",
+   "from": {
+    "node": "j1",
+    "port": "text"
+   },
+   "to": {
+    "node": "checker",
+    "port": "prompt"
+   }
+  },
+  {
+   "id": "l14",
+   "from": {
+    "node": "j1",
+    "port": "text"
+   },
+   "to": {
+    "node": "j2",
+    "port": "a"
+   }
+  },
+  {
+   "id": "l15",
+   "from": {
+    "node": "checker",
+    "port": "text"
+   },
+   "to": {
+    "node": "j2",
+    "port": "b"
+   }
+  },
+  {
+   "id": "l16",
+   "from": {
+    "node": "j2",
+    "port": "text"
+   },
+   "to": {
+    "node": "audit",
+    "port": "text"
+   }
+  },
+  {
+   "id": "l17",
+   "from": {
+    "node": "paint",
+    "port": "image"
+   },
+   "to": {
+    "node": "audit",
+    "port": "img1"
+   }
+  },
+  {
+   "id": "l18",
+   "from": {
+    "node": "j2",
+    "port": "text"
+   },
+   "to": {
+    "node": "editor",
+    "port": "prompt"
+   }
+  },
+  {
+   "id": "l19",
+   "from": {
+    "node": "editor",
+    "port": "text"
+   },
+   "to": {
+    "node": "fix",
+    "port": "prompt"
+   }
+  },
+  {
+   "id": "l20",
+   "from": {
+    "node": "paint",
+    "port": "image"
+   },
+   "to": {
+    "node": "fix",
+    "port": "image"
+   }
+  },
+  {
+   "id": "l21",
+   "from": {
+    "node": "fix",
+    "port": "image"
+   },
+   "to": {
+    "node": "surveyor2",
+    "port": "img1"
+   }
+  },
+  {
+   "id": "l22",
+   "from": {
+    "node": "director",
+    "port": "text"
+   },
+   "to": {
+    "node": "j4",
+    "port": "a"
+   }
+  },
+  {
+   "id": "l23",
+   "from": {
+    "node": "surveyor2",
+    "port": "text"
+   },
+   "to": {
+    "node": "j4",
+    "port": "b"
+   }
+  },
+  {
+   "id": "l24",
+   "from": {
+    "node": "j4",
+    "port": "text"
+   },
+   "to": {
+    "node": "checker2",
+    "port": "prompt"
+   }
+  },
+  {
+   "id": "l39",
+   "from": {
+    "node": "ask",
+    "port": "text"
+   },
+   "to": {
+    "node": "surveyor",
+    "port": "prompt"
+   }
+  },
+  {
+   "id": "l40",
+   "from": {
+    "node": "ask2",
+    "port": "text"
+   },
+   "to": {
+    "node": "surveyor2",
+    "port": "prompt"
+   }
+  }
+ ],
+ "nid": 32,
+ "lid": 40,
+ "view": {
+  "panX": 40,
+  "panY": 40,
+  "scale": 0.5
+ }
+}
