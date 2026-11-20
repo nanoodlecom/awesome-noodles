@@ -31,7 +31,7 @@
    "type": "text",
    "name": "Script \u2014 what the photo says",
    "fields": {
-    "text": "Direction: an ancient marble emperor, woken after two thousand years. Low, gravelly, impatient, brisk and clipped \u2014 no lingering. One short pause at the ellipsis, hard emphasis on NOW. Script: Two thousand years silent... and you wake me NOW?"
+    "text": "Direction: an ancient marble emperor, woken after two thousand years. An old man's voice \u2014 low, gravelly, stone-dry, impatient, brisk and clipped \u2014 no lingering. One short pause at the ellipsis, hard emphasis on NOW. Script: Two thousand years silent... and you wake me NOW?"
    },
    "w": 340,
    "x": -40,
@@ -40,10 +40,10 @@
   {
    "id": "voice",
    "type": "tts",
-   "name": "Voice \u2014 Sulafat performs the script",
+   "name": "Voice \u2014 Algenib performs the script",
    "fields": {
     "model": "gemini-3.1-flash-tts-preview",
-    "voice": "Sulafat",
+    "voice": "Algenib",
     "response_format": "wav"
    },
    "w": 340,
