@@ -45,6 +45,7 @@ Do not hand-edit these files — run `node scripts/make-recipes.mjs` after chang
 | [Perspective check, convergence-audited](perspective-check.md) | [`graphs/perspective-check.noodle-graph.json`](../graphs/perspective-check.noodle-graph.json) | defaults in graph |
 | [Pet portrait, likeness-checked](pet-portrait-studio.md) | [`graphs/pet-portrait-studio.noodle-graph.json`](../graphs/pet-portrait-studio.noodle-graph.json) | needs Pet photo |
 | [Photo to 3D splat](photo-to-3d-splat.md) | [`graphs/photo-to-3d-splat.noodle-graph.json`](../graphs/photo-to-3d-splat.noodle-graph.json) | needs Object photo |
+| [Photo to editable layers](photo-to-editable-layers.md) | [`graphs/photo-to-editable-layers.noodle-graph.json`](../graphs/photo-to-editable-layers.noodle-graph.json) | needs Photo |
 | [Photo to game-ready mesh](photo-to-game-ready-mesh.md) | [`graphs/photo-to-game-ready-mesh.noodle-graph.json`](../graphs/photo-to-game-ready-mesh.noodle-graph.json) | needs Object photo |
 | [Photo to scene mesh](photo-to-scene-mesh.md) | [`graphs/photo-to-scene-mesh.noodle-graph.json`](../graphs/photo-to-scene-mesh.noodle-graph.json) | needs Scene photo |
 | [Pictogram check, meaning-audited](pictogram-check.md) | [`graphs/pictogram-check.noodle-graph.json`](../graphs/pictogram-check.noodle-graph.json) | defaults in graph |
