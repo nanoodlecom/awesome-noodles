@@ -1,0 +1,457 @@
+{
+    "v": 1,
+    "nodes": [
+        {
+            "id": "c1",
+            "type": "comment",
+            "x": 60,
+            "y": 30,
+            "fields": {
+                "text": "Can a picture OBEY A CHEMICAL LAW? A GLM director picks one small molecule from a spec menu printed in its own prompt (methanol, ethanol, acetic acid, benzene) and copies out a MOLECULE CARD: the exact atom count per element and the exact bond list - every bond as an element pair with its order, single or double. A second GLM turns the card into a painter prompt for a ball-and-stick model: spheres in CPK colours (carbon charcoal, hydrogen white, oxygen red), one rod for a single bond, two parallel rods for a double bond - and NO element letters or labels anywhere, because print would cheat the colour code. Muse paints it. Then a blind Gemini reader, who never saw the molecule or the card, enumerates every sphere in reading order with its element by colour, and every rod connection with its rod count. A GLM auditor rebuilds the graph and scores ATOMS per element, BONDS as an element-pair-and-order multiset, VALENCE atom by atom (a carbon's bond orders must sum to 4, an oxygen's to 2, a hydrogen's to 1), RING size, the DECODED FORMULA, and LABEL LEAK. Then the loop closes: a GLM editor turns the audit into bond-level edit notes, Muse Edit repairs the model, and a second blind read plus the same auditor re-score the corrected model. A Decide judge headlines round 1 as a side output - but the flow does not end in text. Its deliverable is the corrected model. See recipes/molecule-check.md."
+            },
+            "w": 900,
+            "name": "Molecule check, valence-audited - a molecule carded as atoms and bonds, painted as a ball-and-stick model, read back as a graph, and a fix round that repairs the chemistry"
+        },
+        {
+            "id": "setting",
+            "type": "text",
+            "x": 60,
+            "y": 300,
+            "fields": {
+                "text": "A single ball-and-stick molecular model floating centred on a plain matte dark slate background, seen straight-on, evenly lit, filling most of the frame, no people, no other objects, and no text, letters, labels or symbols anywhere yet."
+            },
+            "w": 300,
+            "name": "Model setting"
+        },
+        {
+            "id": "director",
+            "type": "llm",
+            "x": 440,
+            "y": 280,
+            "fields": {
+                "model": "z-ai/glm-5.3-flash",
+                "system": "You are a chemistry director. Given a MODEL SETTING, design a MOLECULE CARD for one small molecule. Choose ONE molecule from this menu ONLY, and copy its spec EXACTLY as printed - never invent atoms or bonds:\\nMETHANOL | formula CH4O | atoms: carbon 1; hydrogen 4; oxygen 1 | total atoms 6 | bonds: carbon-oxygen single x1; carbon-hydrogen single x3; oxygen-hydrogen single x1 | total bonds 5 | ring: none\\nETHANOL | formula C2H6O | atoms: carbon 2; hydrogen 6; oxygen 1 | total atoms 9 | bonds: carbon-carbon single x1; carbon-oxygen single x1; carbon-hydrogen single x5; oxygen-hydrogen single x1 | total bonds 8 | ring: none\\nACETIC ACID | formula C2H4O2 | atoms: carbon 2; hydrogen 4; oxygen 2 | total atoms 8 | bonds: carbon-carbon single x1; carbon-oxygen double x1; carbon-oxygen single x1; carbon-hydrogen single x3; oxygen-hydrogen single x1 | total bonds 7 | ring: none\\nBENZENE | formula C6H6 | atoms: carbon 6; hydrogen 6; oxygen 0 | total atoms 12 | bonds: carbon-carbon single x3; carbon-carbon double x3 (alternating around the ring); carbon-hydrogen single x6 | total bonds 12 | ring: 6\\nThen write a FRAME line: the model's finish in a few words (for example 'glossy plastic ball-and-stick model on a matte dark slate background') - one finish, nothing else in the scene.\\nOutput exactly this shape and nothing else:\\nMOLECULE: <the chosen molecule's name>\\nFORMULA: <its formula, copied>\\nATOMS: carbon <n>; hydrogen <n>; oxygen <n> | total <N>\\nBONDS: <the menu line's bond list, copied word for word> | total <B>\\nRING: <none, or 6>\\nFRAME: <model finish>",
+                "maxTokens": "500",
+                "reasoningEffort": "low"
+            },
+            "w": 280,
+            "name": "Molecule card - GLM picks a molecule and copies its exact atom and bond spec",
+            "sizes": {
+                "system": 150
+            }
+        },
+        {
+            "id": "j0",
+            "type": "join",
+            "x": 800,
+            "y": 480,
+            "fields": {
+                "sep": "\n\nMOLECULE CARD (the molecule, its exact atom counts and its exact bond list with orders; its exact wording must reach the painter):\n"
+            },
+            "w": 200,
+            "name": "Setting + molecule card"
+        },
+        {
+            "id": "stylist",
+            "type": "llm",
+            "x": 800,
+            "y": 280,
+            "fields": {
+                "model": "z-ai/glm-5.3-flash",
+                "system": "You turn a MOLECULE CARD into ONE prompt for an AI image generator. The input gives a MODEL SETTING first, then 'MOLECULE CARD' with a MOLECULE, FORMULA, ATOMS line (counts per element and a total), BONDS line (each bond as an element pair with its order - single or double - and a multiplicity, plus a total) and a RING line. Write the prompt so the generator paints exactly that molecule as a ball-and-stick model from the FRAME line, centred on the same plain matte dark background: one sphere per atom, coloured by element - carbon spheres dark charcoal grey, hydrogen spheres white and noticeably smaller, oxygen spheres red. Every carded bond is drawn as rods joining the two spheres: a single bond is ONE straight grey rod, a double bond is TWO thin parallel grey rods side by side. The atoms must be arranged so every carded bond is visible and no spheres overlap or hide a rod: for a chain, lay the heavy atoms (carbon and oxygen) in a gentle zigzag with hydrogens fanned out around them; for benzene, a flat regular hexagon ring of six carbons with the double bonds alternating around the ring and one hydrogen pointing outward from each carbon. The cardinal rules: the element letters and the molecule's name must NEVER appear - NO printed letters, NO words, NO labels, NO symbols anywhere in the picture; the molecule exists only as coloured spheres and rods. Do not name the molecule or its formula in the prompt except inside the per-bond instructions. End with: 'Clean straight-on studio photograph of a ball-and-stick molecular model, coloured spheres and rods only, no printed text, no letters, no labels, no people.' Output the prompt only.",
+                "maxTokens": "700",
+                "reasoningEffort": "low"
+            },
+            "w": 280,
+            "name": "Model brief - GLM turns the card into a ball-and-stick painter prompt",
+            "sizes": {
+                "system": 150
+            }
+        },
+        {
+            "id": "paint",
+            "type": "image",
+            "x": 1160,
+            "y": 280,
+            "fields": {
+                "model": "meta/muse-image/text-to-image",
+                "size": "16:9",
+                "variations": "1"
+            },
+            "w": 280,
+            "name": "Model - Muse paints the ball-and-stick molecule"
+        },
+        {
+            "id": "surveyor",
+            "type": "vision",
+            "x": 1520,
+            "y": 280,
+            "fields": {
+                "model": "google/gemini-3.8-flash",
+                "q": "You are a molecular reader examining a ball-and-stick model. You do not know what molecule was planned - report only the spheres and rods you actually see. Identify each sphere by colour: a dark charcoal grey or black sphere is carbon; a white sphere is hydrogen; a red sphere is oxygen; any other colour is 'other'. First, 'ATOMS SEEN:' plus the total number of spheres. Then 'COUNTS: carbon <n>; hydrogen <n>; oxygen <n>; other <n>'. Then enumerate every sphere in reading order - topmost row first, left to right within a row - as R1, R2, R3 and so on. For each, output 'R<n>: <element> | rods: <the R-numbers of the spheres it is joined to, each followed by x1 if ONE rod joins them or x2 if TWO parallel rods join them, separated by commas>' or 'R<n>: <element> | rods: none' if it is joined to nothing. List every connection from BOTH spheres it joins. Judge a connection by rods that visibly touch both spheres - spheres merely near each other are not bonded. Finally, 'LABELS:' plus any printed letters, words or symbols visible anywhere in the picture, quoted, or 'none'. Output exactly this shape:\\nATOMS SEEN: <number>\\nCOUNTS: carbon <n>; hydrogen <n>; oxygen <n>; other <n>\\nR1: <element> | rods: <connections>\\n(continue for every sphere)\\nLABELS: <quoted text, or none>"
+            },
+            "w": 280,
+            "name": "Graph read - Gemini enumerates the model's spheres and rods, blind",
+            "sizes": {
+                "q": 150
+            }
+        },
+        {
+            "id": "j1",
+            "type": "join",
+            "x": 1880,
+            "y": 180,
+            "fields": {
+                "sep": "\n\nGRAPH READ (a blind reader reported only the spheres and rods it could see, atom by atom; it never saw the molecule card):\n"
+            },
+            "w": 200,
+            "name": "Molecule card + graph read"
+        },
+        {
+            "id": "checker",
+            "type": "llm",
+            "x": 2240,
+            "y": 400,
+            "fields": {
+                "model": "z-ai/glm-5.3-flash",
+                "system": "You are a chemistry auditor. The input gives a MOLECULE CARD (MOLECULE, FORMULA, an ATOMS line with counts per element and a total, a BONDS line listing each bond type as '<element>-<element> <single or double> x<count>' with a total, and a RING line), then 'GRAPH READ' with a blind reader's ATOMS SEEN, COUNTS, one R line per sphere (element, and its rod connections as R-numbers with x1 for one rod or x2 for two parallel rods), and a LABELS line.\\nBuild the card's bond multiset from its BONDS line: each entry is an unordered element pair plus an order (single or double) with its multiplicity; the total bond instances are the card's BONDS total. Build the reader's bond multiset from its R lines: take each connection ONCE (from the lower-numbered sphere's line), its type is the unordered pair of the two spheres' elements plus its order (x1 = single, x2 = double).\\nScore in this order and output exactly these lines:\\n1. 'ATOMS: X of Y' - Y is the card's total atoms; X is the sum over carbon, hydrogen, oxygen and other of the smaller of the reader's count and the card's count for that element (the card's 'other' count is 0).\\n2. 'MISSING ATOMS: ' followed by '<element> x<n>' for every element whose reader count is below the card's, separated by '; ', or 'none'.\\n3. 'EXTRA ATOMS: ' followed by '<element> x<n>' for every element whose reader count is above the card's (including other), separated by '; ', or 'none'.\\n4. 'BONDS: X of Y' - Y is the card's total bond instances; X is the sum over bond types of the smaller of the reader's count and the card's count for that type.\\n5. 'BOND ERRORS: ' followed by 'missing <element>-<element> <order> x<n>' and 'extra <element>-<element> <order> x<n>' entries for every type where the counts differ, separated by '; ', or 'none'.\\n6. 'VALENCE: ' - for each reader sphere, sum its rod counts (x1 counts 1, x2 counts 2, counting every connection listed on that sphere's own line). Carbon must sum to 4, oxygen to 2, hydrogen to 1. If every sphere of a known element meets its number, output 'VALENCE: VALID'. Otherwise output 'VALENCE: VIOLATED - ' followed by 'R<n> (<element>) sums to <s>, must be <v>' for every violating sphere, separated by '; '.\\n7. 'RING: ' - find the smallest closed loop of spheres joined by rods in the reader's graph (a loop of length 3 or more; if there is none, the reader ring is none). Output 'RING: reader <size or none>, card <the card's RING value> - MATCH' if they agree, else '- MISMATCH'.\\n8. 'DECODED FORMULA: ' followed by the formula built from the reader's COUNTS in carbon, hydrogen, oxygen order: each element's letter (C, H, O) followed by its count, omitting the count when it is 1 and omitting elements whose count is 0; if other is above 0, append ' + other x<n>'.\\n9. 'LABEL LEAK: ' plus the reader's LABELS content, copied.\\n10. 'Summary: ' followed by one sentence restating atoms, bonds, valence and the decoded formula.\\nOutput exactly these lines and nothing else.",
+                "maxTokens": "1200",
+                "reasoningEffort": "low"
+            },
+            "w": 280,
+            "name": "Molecule audit - GLM rebuilds the graph and scores atoms, bonds, valence and ring",
+            "sizes": {
+                "system": 150
+            }
+        },
+        {
+            "id": "j2",
+            "type": "join",
+            "x": 2240,
+            "y": 180,
+            "fields": {
+                "sep": "\n\nMOLECULE AUDIT:\n"
+            },
+            "w": 200,
+            "name": "Card, graph read + molecule audit"
+        },
+        {
+            "id": "audit",
+            "type": "decide",
+            "x": 2600,
+            "y": 180,
+            "fields": {
+                "model": "perplexity/pplx-decider-v1.2",
+                "mode": "choose",
+                "question": "The picture should be a ball-and-stick model of exactly the carded molecule: the carded count of spheres per element in CPK colours (carbon charcoal, hydrogen white, oxygen red), every carded bond drawn as rods (one rod for single, two parallel rods for double), every atom's bond orders summing to its valence (carbon 4, oxygen 2, hydrogen 1), the carded ring, and no printed letters, labels or name anywhere. The text gives the MOLECULE CARD, a blind GRAPH READ, and a MOLECULE AUDIT scoring atoms, bonds, valence, ring, the decoded formula and label leak. Which verdict fits? 'chemically exact' means ATOMS and BONDS are both full, VALENCE is VALID, RING is MATCH and LABEL LEAK is none. 'label cheat' means LABEL LEAK is not none - element letters, symbols or the molecule's name appear in print, however good the spheres are. 'atoms drifted' means the atom counts are wrong (missing or extra spheres) but at least half the bonds are right. 'bonds drifted' means the atom counts are all correct but bonds, valence or ring are wrong. 'wrong molecule' means fewer than half the atoms or fewer than half the bonds are right. Judge whether the chemistry itself is the planned molecule, not the picture's beauty.",
+                "options": "chemically exact\natoms drifted\nbonds drifted\nlabel cheat\nwrong molecule"
+            },
+            "w": 280,
+            "name": "Chemically exact - audited",
+            "sizes": {
+                "question": 130
+            }
+        },
+        {
+            "id": "editor",
+            "type": "llm",
+            "x": 2600,
+            "y": 520,
+            "fields": {
+                "model": "z-ai/glm-5.3-flash",
+                "system": "You are the chemistry editor in a molecule pipeline. The input gives a MOLECULE CARD (MOLECULE, FORMULA, ATOMS, BONDS, RING, FRAME), a blind GRAPH READ (spheres enumerated R1 onward with elements and rod connections), and a MOLECULE AUDIT scoring atoms, bonds, valence, ring, decoded formula and label leak. Write ONE edit instruction for an image-editing model that will receive the painted model itself. Rules:\\n- Address the editor directly and write in imperatives: 'Edit this picture: ...'\\n- The frame is the scope: open by demanding the model's finish, the background, the straight-on view, the light, the framing and every sphere and rod the audit found correct stay exactly the same.\\n- State the FULL target end state, not just the deltas: exactly the card's atom counts per element in CPK colours (carbon dark charcoal grey, hydrogen small white, oxygen red), every carded bond present with its carded order (one rod single, two parallel rods double) and no bond that is not on the card, every atom's bond orders summing to its valence (carbon 4, oxygen 2, hydrogen 1), the carded ring (a flat six-carbon ring for benzene, no ring otherwise), and no printed letters, words, labels or symbols anywhere.\\n- Then name the audit's specific failures as extra demands, locating each by the reader's description (the sphere's element and what it is joined to): for every MISSING ATOM, name its element and the atom it must bond to and demand a sphere be added there with the right rod; for every EXTRA ATOM, demand that sphere and its rods be removed; for every missing bond, demand the rod (or second parallel rod) be drawn between the two spheres it joins; for every extra bond, demand the rod be removed; for every VALENCE violation, name the sphere and demand its rods be made to sum to its valence; if LABEL LEAK is not none, demand every printed character be removed completely. Spheres and bonds already correct must be left untouched - say so.\\n- End with: 'Change nothing except the spheres and rods named here. Clean straight-on studio photograph of a ball-and-stick molecular model, coloured spheres and rods only, no printed text, no letters, no labels, no people.'\\nOutput the single edit instruction only - no preamble, no list, no explanation.",
+                "maxTokens": "350",
+                "reasoningEffort": "low"
+            },
+            "w": 280,
+            "name": "Edit notes - GLM turns the molecule audit into bond-level fix instructions",
+            "sizes": {
+                "system": 150
+            }
+        },
+        {
+            "id": "fix",
+            "type": "edit",
+            "x": 2960,
+            "y": 520,
+            "fields": {
+                "model": "meta/muse-image/edit",
+                "size": "auto"
+            },
+            "w": 280,
+            "name": "Corrected model - Muse Edit repairs the atoms, bonds and valence"
+        },
+        {
+            "id": "surveyor2",
+            "type": "vision",
+            "x": 3320,
+            "y": 520,
+            "fields": {
+                "model": "google/gemini-3.8-flash",
+                "q": "You are a molecular reader examining a ball-and-stick model. You do not know what molecule was planned - report only the spheres and rods you actually see. Identify each sphere by colour: a dark charcoal grey or black sphere is carbon; a white sphere is hydrogen; a red sphere is oxygen; any other colour is 'other'. First, 'ATOMS SEEN:' plus the total number of spheres. Then 'COUNTS: carbon <n>; hydrogen <n>; oxygen <n>; other <n>'. Then enumerate every sphere in reading order - topmost row first, left to right within a row - as R1, R2, R3 and so on. For each, output 'R<n>: <element> | rods: <the R-numbers of the spheres it is joined to, each followed by x1 if ONE rod joins them or x2 if TWO parallel rods join them, separated by commas>' or 'R<n>: <element> | rods: none' if it is joined to nothing. List every connection from BOTH spheres it joins. Judge a connection by rods that visibly touch both spheres - spheres merely near each other are not bonded. Finally, 'LABELS:' plus any printed letters, words or symbols visible anywhere in the picture, quoted, or 'none'. Output exactly this shape:\\nATOMS SEEN: <number>\\nCOUNTS: carbon <n>; hydrogen <n>; oxygen <n>; other <n>\\nR1: <element> | rods: <connections>\\n(continue for every sphere)\\nLABELS: <quoted text, or none>"
+            },
+            "w": 280,
+            "name": "Re-read - Gemini enumerates the corrected model's spheres and rods, blind",
+            "sizes": {
+                "q": 150
+            }
+        },
+        {
+            "id": "j4",
+            "type": "join",
+            "x": 3680,
+            "y": 420,
+            "fields": {
+                "sep": "\n\nGRAPH READ (a blind reader reported only the spheres and rods it could see in the corrected picture, atom by atom; it never saw the molecule card):\n"
+            },
+            "w": 200,
+            "name": "Molecule card + re-read"
+        },
+        {
+            "id": "checker2",
+            "type": "llm",
+            "x": 4040,
+            "y": 520,
+            "fields": {
+                "model": "z-ai/glm-5.3-flash",
+                "system": "You are a chemistry auditor. The input gives a MOLECULE CARD (MOLECULE, FORMULA, an ATOMS line with counts per element and a total, a BONDS line listing each bond type as '<element>-<element> <single or double> x<count>' with a total, and a RING line), then 'GRAPH READ' with a blind reader's ATOMS SEEN, COUNTS, one R line per sphere (element, and its rod connections as R-numbers with x1 for one rod or x2 for two parallel rods), and a LABELS line.\\nBuild the card's bond multiset from its BONDS line: each entry is an unordered element pair plus an order (single or double) with its multiplicity; the total bond instances are the card's BONDS total. Build the reader's bond multiset from its R lines: take each connection ONCE (from the lower-numbered sphere's line), its type is the unordered pair of the two spheres' elements plus its order (x1 = single, x2 = double).\\nScore in this order and output exactly these lines:\\n1. 'ATOMS: X of Y' - Y is the card's total atoms; X is the sum over carbon, hydrogen, oxygen and other of the smaller of the reader's count and the card's count for that element (the card's 'other' count is 0).\\n2. 'MISSING ATOMS: ' followed by '<element> x<n>' for every element whose reader count is below the card's, separated by '; ', or 'none'.\\n3. 'EXTRA ATOMS: ' followed by '<element> x<n>' for every element whose reader count is above the card's (including other), separated by '; ', or 'none'.\\n4. 'BONDS: X of Y' - Y is the card's total bond instances; X is the sum over bond types of the smaller of the reader's count and the card's count for that type.\\n5. 'BOND ERRORS: ' followed by 'missing <element>-<element> <order> x<n>' and 'extra <element>-<element> <order> x<n>' entries for every type where the counts differ, separated by '; ', or 'none'.\\n6. 'VALENCE: ' - for each reader sphere, sum its rod counts (x1 counts 1, x2 counts 2, counting every connection listed on that sphere's own line). Carbon must sum to 4, oxygen to 2, hydrogen to 1. If every sphere of a known element meets its number, output 'VALENCE: VALID'. Otherwise output 'VALENCE: VIOLATED - ' followed by 'R<n> (<element>) sums to <s>, must be <v>' for every violating sphere, separated by '; '.\\n7. 'RING: ' - find the smallest closed loop of spheres joined by rods in the reader's graph (a loop of length 3 or more; if there is none, the reader ring is none). Output 'RING: reader <size or none>, card <the card's RING value> - MATCH' if they agree, else '- MISMATCH'.\\n8. 'DECODED FORMULA: ' followed by the formula built from the reader's COUNTS in carbon, hydrogen, oxygen order: each element's letter (C, H, O) followed by its count, omitting the count when it is 1 and omitting elements whose count is 0; if other is above 0, append ' + other x<n>'.\\n9. 'LABEL LEAK: ' plus the reader's LABELS content, copied.\\n10. 'Summary: ' followed by one sentence restating atoms, bonds, valence and the decoded formula.\\nOutput exactly these lines and nothing else.",
+                "maxTokens": "1200",
+                "reasoningEffort": "low"
+            },
+            "w": 280,
+            "name": "Molecule re-audit - GLM rebuilds the corrected graph and scores it against the same card",
+            "sizes": {
+                "system": 150
+            }
+        }
+    ],
+    "links": [
+        {
+            "id": "l1",
+            "from": {
+                "node": "setting",
+                "port": "text"
+            },
+            "to": {
+                "node": "director",
+                "port": "prompt"
+            }
+        },
+        {
+            "id": "l2",
+            "from": {
+                "node": "director",
+                "port": "text"
+            },
+            "to": {
+                "node": "j0",
+                "port": "b"
+            }
+        },
+        {
+            "id": "l12",
+            "from": {
+                "node": "setting",
+                "port": "text"
+            },
+            "to": {
+                "node": "j0",
+                "port": "a"
+            }
+        },
+        {
+            "id": "l13",
+            "from": {
+                "node": "j0",
+                "port": "text"
+            },
+            "to": {
+                "node": "stylist",
+                "port": "prompt"
+            }
+        },
+        {
+            "id": "l3",
+            "from": {
+                "node": "stylist",
+                "port": "text"
+            },
+            "to": {
+                "node": "paint",
+                "port": "prompt"
+            }
+        },
+        {
+            "id": "l4",
+            "from": {
+                "node": "paint",
+                "port": "image"
+            },
+            "to": {
+                "node": "surveyor",
+                "port": "image"
+            }
+        },
+        {
+            "id": "l7",
+            "from": {
+                "node": "director",
+                "port": "text"
+            },
+            "to": {
+                "node": "j1",
+                "port": "a"
+            }
+        },
+        {
+            "id": "l8",
+            "from": {
+                "node": "surveyor",
+                "port": "text"
+            },
+            "to": {
+                "node": "j1",
+                "port": "b"
+            }
+        },
+        {
+            "id": "l11",
+            "from": {
+                "node": "j1",
+                "port": "text"
+            },
+            "to": {
+                "node": "checker",
+                "port": "prompt"
+            }
+        },
+        {
+            "id": "l14",
+            "from": {
+                "node": "j1",
+                "port": "text"
+            },
+            "to": {
+                "node": "j2",
+                "port": "a"
+            }
+        },
+        {
+            "id": "l15",
+            "from": {
+                "node": "checker",
+                "port": "text"
+            },
+            "to": {
+                "node": "j2",
+                "port": "b"
+            }
+        },
+        {
+            "id": "l16",
+            "from": {
+                "node": "j2",
+                "port": "text"
+            },
+            "to": {
+                "node": "audit",
+                "port": "text"
+            }
+        },
+        {
+            "id": "l17",
+            "from": {
+                "node": "paint",
+                "port": "image"
+            },
+            "to": {
+                "node": "audit",
+                "port": "img1"
+            }
+        },
+        {
+            "id": "l18",
+            "from": {
+                "node": "j2",
+                "port": "text"
+            },
+            "to": {
+                "node": "editor",
+                "port": "prompt"
+            }
+        },
+        {
+            "id": "l19",
+            "from": {
+                "node": "editor",
+                "port": "text"
+            },
+            "to": {
+                "node": "fix",
+                "port": "prompt"
+            }
+        },
+        {
+            "id": "l20",
+            "from": {
+                "node": "paint",
+                "port": "image"
+            },
+            "to": {
+                "node": "fix",
+                "port": "image"
+            }
+        },
+        {
+            "id": "l21",
+            "from": {
+                "node": "fix",
+                "port": "image"
+            },
+            "to": {
+                "node": "surveyor2",
+                "port": "image"
+            }
+        },
+        {
+            "id": "l22",
+            "from": {
+                "node": "director",
+                "port": "text"
+            },
+            "to": {
+                "node": "j4",
+                "port": "a"
+            }
+        },
+        {
+            "id": "l23",
+            "from": {
+                "node": "surveyor2",
+                "port": "text"
+            },
+            "to": {
+                "node": "j4",
+                "port": "b"
+            }
+        },
+        {
+            "id": "l24",
+            "from": {
+                "node": "j4",
+                "port": "text"
+            },
+            "to": {
+                "node": "checker2",
+                "port": "prompt"
+            }
+        }
+    ],
+    "nid": 30,
+    "lid": 38,
+    "view": {
+        "panX": 40,
+        "panY": 40,
+        "scale": 0.5
+    }
+}
