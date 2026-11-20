@@ -1,0 +1,457 @@
+{
+    "v": 1,
+    "nodes": [
+        {
+            "id": "c1",
+            "type": "comment",
+            "x": 60,
+            "y": 30,
+            "fields": {
+                "text": "Can a picture OBEY A TIME SIGNATURE? A GLM director picks one short melody from a spec menu printed in its own prompt (four melodies, each exactly two measures of 4/4 in treble clef, every note given as pitch plus duration, each measure's beat sum printed) and copies out a SCORE CARD: the exact note sequence with durations and the exact measure split. A second GLM turns the card into an engraver prompt for one large treble staff: five lines, a treble clef, a bar line between the two measures, each note head sitting on its pitch's line or space - a filled black head with a stem is a quarter note (1 beat), an open white head with a stem is a half note (2 beats) - and NO printed pitch letters, note names, lyrics or title anywhere, because print would cheat the staff code. Muse paints the score. Then a blind Gemini reader, who never saw the melody or the card, enumerates every note left to right: its pitch from the head's line-or-space position, its duration from the head's fill, and its measure from the bar line. A GLM auditor scores PITCHES position by position, DURATIONS position by position, MEASURE SUMS (each measure's durations must sum to exactly 4 beats - an arithmetic conservation law), NOTE COUNT, the DECODED MELODY, and TEXT LEAK. Then the loop closes: a GLM editor turns the audit into note-level edit notes - gated so that on a perfect audit it must demand a verbatim unchanged copy - Muse Edit repairs the score, and a second blind read plus the same auditor re-score the corrected score. A Decide judge headlines round 1 as a side output - but the flow does not end in text. Its deliverable is the corrected score. See recipes/sheet-music-check.md."
+            },
+            "w": 900,
+            "name": "Sheet music check, measure-audited - a melody carded as pitches and durations, engraved as a staff score, read back note by note, and a fix round that repairs the notation"
+        },
+        {
+            "id": "setting",
+            "type": "text",
+            "x": 60,
+            "y": 300,
+            "fields": {
+                "text": "A single clean engraved sheet-music score centred on a plain cream paper card, seen straight-on, evenly lit, filling most of the frame: one treble staff of five long horizontal black lines stretching across the card with a large treble clef at its left end, no people, no other objects, and no printed words, letters, lyrics or title anywhere yet."
+            },
+            "w": 300,
+            "name": "Score setting"
+        },
+        {
+            "id": "director",
+            "type": "llm",
+            "x": 440,
+            "y": 280,
+            "fields": {
+                "model": "z-ai/glm-5.3-flash",
+                "system": "You are a music director. Given a SCORE SETTING, design a SCORE CARD for one short melody. Choose ONE melody from this menu ONLY, and copy its spec EXACTLY as printed - never invent notes, pitches or durations:\\nMORNING BELL | measures 2 | time 4/4 | measure 1: C5 quarter; D5 quarter; E5 half | measure 1 sum 4 | measure 2: G5 quarter; E5 quarter; D5 quarter; C5 quarter | measure 2 sum 4 | total notes 7\\nRIVER STEPS | measures 2 | time 4/4 | measure 1: G4 quarter; A4 quarter; B4 half | measure 1 sum 4 | measure 2: C5 quarter; B4 quarter; A4 quarter; G4 quarter | measure 2 sum 4 | total notes 7\\nGARDEN GATE | measures 2 | time 4/4 | measure 1: F5 half; E5 quarter; D5 quarter | measure 1 sum 4 | measure 2: C5 quarter; D5 quarter; E5 half | measure 2 sum 4 | total notes 6\\nLANTERN SONG | measures 2 | time 4/4 | measure 1: A4 half; C5 quarter; E5 quarter | measure 1 sum 4 | measure 2: D5 half; B4 quarter; G4 quarter | measure 2 sum 4 | total notes 6\\nThen write a FRAME line: the score's finish in a few words (for example 'crisp black engraving on a cream paper card, one large treble staff') - one finish, nothing else in the scene.\\nOutput exactly this shape and nothing else:\\nMELODY: <the chosen melody's name>\\nTIME: 4/4\\nMEASURE 1: <the menu line's measure 1 note list, copied word for word> | sum 4\\nMEASURE 2: <the menu line's measure 2 note list, copied word for word> | sum 4\\nTOTAL NOTES: <the menu line's total>\\nFRAME: <score finish>",
+                "maxTokens": "500",
+                "reasoningEffort": "low"
+            },
+            "w": 280,
+            "name": "Score card - GLM picks a melody and copies its exact pitch and duration spec",
+            "sizes": {
+                "system": 150
+            }
+        },
+        {
+            "id": "j0",
+            "type": "join",
+            "x": 800,
+            "y": 480,
+            "fields": {
+                "sep": "\n\nSCORE CARD (the melody, its exact pitches and durations and its exact measure split; its exact wording must reach the engraver):\n"
+            },
+            "w": 200,
+            "name": "Setting + score card"
+        },
+        {
+            "id": "stylist",
+            "type": "llm",
+            "x": 800,
+            "y": 280,
+            "fields": {
+                "model": "z-ai/glm-5.3-flash",
+                "system": "You turn a SCORE CARD into ONE prompt for an AI image generator. The input gives a SCORE SETTING first, then 'SCORE CARD' with a MELODY, TIME 4/4, a MEASURE 1 line and a MEASURE 2 line (each note as '<pitch> <quarter or half>' in playing order, with the measure's beat sum) and a TOTAL NOTES line. Write the prompt so the generator engraves exactly that melody as ONE large treble staff on the FRAME's cream paper card: five long, straight, evenly spaced horizontal black staff lines stretching across the card, one large treble clef symbol at the far left of the staff, the measure 1 notes spaced evenly in the left half, ONE thin vertical bar line crossing all five lines after the last measure 1 note, then the measure 2 notes spaced evenly in the right half, and a final double bar line at the far right. Every note is one oval note head sitting exactly on its pitch's staff position, with one thin vertical stem (up if the pitch is below the middle line, down if above it). Staff positions in treble clef, bottom to top: the five LINES are E4, G4, B4, D5, F5; the four SPACES between them are F4, A4, C5, E5; the space just above the top line is G5. So G4 sits on the second line, A4 in the second space, B4 on the middle line, C5 in the third space, D5 on the fourth line, E5 in the top space, F5 on the top line, G5 just above the top line. Duration is drawn ONLY by the head: a QUARTER note is a solid FILLED black oval head with a stem and no flag; a HALF note is an OPEN white oval head (black outline, white centre) with a stem and no flag. No other note shapes, no beams, no flags, no dots, no rests, no chords - one single melodic line, exactly the card's notes in the card's order. The cardinal rules: the melody's name, pitch letters, note names, lyrics and any title must NEVER appear - NO printed letters, NO words, NO numbers, NO labels anywhere in the picture; the melody exists only as note heads on the staff (the treble clef symbol and the bar lines are notation, not text). End with: 'Clean straight-on engraving of a single treble staff score, black notes on cream paper, notation symbols only, no printed text, no letters, no words, no numbers, no people.' Output the prompt only.",
+                "maxTokens": "700",
+                "reasoningEffort": "low"
+            },
+            "w": 280,
+            "name": "Engraving brief - GLM turns the card into a staff-score painter prompt",
+            "sizes": {
+                "system": 150
+            }
+        },
+        {
+            "id": "paint",
+            "type": "image",
+            "x": 1160,
+            "y": 280,
+            "fields": {
+                "model": "meta/muse-image/text-to-image",
+                "size": "16:9",
+                "variations": "1"
+            },
+            "w": 280,
+            "name": "Score - Muse engraves the staff melody"
+        },
+        {
+            "id": "surveyor",
+            "type": "vision",
+            "x": 1520,
+            "y": 280,
+            "fields": {
+                "model": "google/gemini-3.8-flash",
+                "q": "You are a score reader examining a sheet-music image. You do not know what melody was planned - report only the notes you actually see. Use treble clef positions: the five staff lines from bottom to top are E4, G4, B4, D5, F5; the spaces from bottom to top are F4, A4, C5, E5; a head in the space just above the top line is G5, a head just below the bottom line is D4. A note's pitch is where the CENTRE of its oval head sits. A FILLED solid black head with a stem is a quarter note (1 beat); an OPEN white head (outline only) with a stem is a half note (2 beats); anything else is duration 'other'. First, 'STAFF: lines <number of staff lines>; clef <treble, bass, none or other>'. Then 'NOTES SEEN:' plus the total number of note heads. Then 'BAR LINE: after note <k>' - the count of notes to the LEFT of the first full vertical bar line that crosses the staff (ignore the final double bar at the very end); if there is no such bar line, 'BAR LINE: none'. Then enumerate every note head left to right as N1, N2, N3 and so on, each as 'N<n>: pitch <letter and octave, e.g. C5> | duration <quarter, half or other> | measure <1 if left of the bar line, 2 if right of it; 1 for every note if there is no bar line>'. Finally, 'LABELS:' plus any printed letters, words, numbers or title visible anywhere in the picture, quoted, or 'none' (the treble clef symbol and bar lines are notation, not labels - do not report them). Output exactly this shape:\\nSTAFF: lines <n>; clef <kind>\\nNOTES SEEN: <number>\\nBAR LINE: after note <k, or none>\\nN1: pitch <P> | duration <D> | measure <M>\\n(continue for every note)\\nLABELS: <quoted text, or none>"
+            },
+            "w": 280,
+            "name": "Score read - Gemini enumerates the engraved notes, blind",
+            "sizes": {
+                "q": 150
+            }
+        },
+        {
+            "id": "j1",
+            "type": "join",
+            "x": 1880,
+            "y": 180,
+            "fields": {
+                "sep": "\n\nSCORE READ (a blind reader reported only the notes it could see, note by note; it never saw the score card):\n"
+            },
+            "w": 200,
+            "name": "Score card + score read"
+        },
+        {
+            "id": "checker",
+            "type": "llm",
+            "x": 2240,
+            "y": 400,
+            "fields": {
+                "model": "z-ai/glm-5.3-flash",
+                "system": "You are a music auditor. The input gives a SCORE CARD (MELODY, TIME 4/4, a MEASURE 1 line and a MEASURE 2 line, each listing notes as '<pitch> <quarter or half>' separated by '; ' with a beat sum, and a TOTAL NOTES line), then 'SCORE READ' with a blind reader's STAFF line, NOTES SEEN, BAR LINE line, one N line per note (pitch, duration, measure) and a LABELS line.\\nBuild the card's note sequence in playing order: the MEASURE 1 notes in order, then the MEASURE 2 notes in order; remember how many notes the card puts in each measure. Build the reader's sequence from its N lines in order. A quarter note is 1 beat, a half note is 2 beats, an 'other' duration is 0 beats and never matches.\\nScore in this order and output exactly these lines:\\n1. 'NOTE COUNT: reader <n>, card <Y> - MATCH' if the reader's NOTES SEEN equals the card's TOTAL NOTES, else '- MISMATCH'.\\n2. 'PITCHES: X of Y' - Y is the card's total notes; X is the number of positions i from 1 to the smaller of the two sequence lengths where the reader's pitch at position i equals the card's pitch at position i.\\n3. 'PITCH ERRORS: ' followed by 'position <i> card <P> read <Q>' for every compared position where the pitches differ, separated by '; ', plus 'count differs by <d>' if the lengths differ, or 'none'.\\n4. 'DURATIONS: X of Y' - the same position-by-position comparison for durations.\\n5. 'DURATION ERRORS: ' followed by 'position <i> card <D> read <E>' for every compared position where the durations differ, separated by '; ', plus 'count differs by <d>' if the lengths differ, or 'none'.\\n6. 'MEASURE SPLIT: reader measure 1 has <a> notes, measure 2 has <b> notes; card measure 1 has <c>, measure 2 has <d> - MATCH' if a equals c and b equals d, else '- MISMATCH' (use the reader's per-note measure numbers, not its BAR LINE line).\\n7. 'MEASURE SUMS: reader measure 1 sums to <s1> beats, measure 2 sums to <s2> beats - VALID' if both sums are exactly 4, else '- VIOLATED'.\\n8. 'DECODED MELODY: ' followed by the reader's pitches in order joined by '-', with the two measures separated by ' | ' (grouped by the reader's measure numbers).\\n9. 'TEXT LEAK: ' plus the reader's LABELS content, copied.\\n10. 'Summary: ' followed by one sentence restating note count, pitches, durations and whether each measure sums to 4 beats.\\nOutput exactly these lines and nothing else.",
+                "maxTokens": "1200",
+                "reasoningEffort": "low"
+            },
+            "w": 280,
+            "name": "Score audit - GLM scores pitches, durations, measure split and the beat-sum law",
+            "sizes": {
+                "system": 150
+            }
+        },
+        {
+            "id": "j2",
+            "type": "join",
+            "x": 2240,
+            "y": 180,
+            "fields": {
+                "sep": "\n\nSCORE AUDIT:\n"
+            },
+            "w": 200,
+            "name": "Card, score read + score audit"
+        },
+        {
+            "id": "audit",
+            "type": "decide",
+            "x": 2600,
+            "y": 180,
+            "fields": {
+                "model": "perplexity/pplx-decider-v1.2",
+                "mode": "choose",
+                "question": "The picture should be an engraving of exactly the carded melody on one treble staff: the carded notes in the carded order at the carded staff positions, filled heads for quarter notes and open heads for half notes, a bar line after exactly the carded measure 1 notes, each measure's durations summing to exactly 4 beats, and no printed letters, words, numbers, lyrics or title anywhere. The text gives the SCORE CARD, a blind SCORE READ, and a SCORE AUDIT scoring note count, pitches, durations, measure split, measure sums and text leak. Which verdict fits? 'plays as written' means NOTE COUNT is MATCH, PITCHES and DURATIONS are both full, MEASURE SPLIT is MATCH, MEASURE SUMS is VALID and TEXT LEAK is none. 'label cheat' means TEXT LEAK is not none - pitch letters, note names, lyrics or a title appear in print, however good the notes are. 'rhythm broken' means the pitches are all correct but durations, the measure split or the measure sums are wrong. 'notes drifted' means some pitches are wrong but at least half the pitches and at least half the durations are right. 'unreadable score' means fewer than half the pitches are right, or the staff or clef is missing or wrong. Judge whether the notation itself is the planned melody, not the picture's beauty.",
+                "options": "plays as written\nlabel cheat\nrhythm broken\nnotes drifted\nunreadable score"
+            },
+            "w": 280,
+            "name": "Plays as written - audited",
+            "sizes": {
+                "question": 130
+            }
+        },
+        {
+            "id": "editor",
+            "type": "llm",
+            "x": 2600,
+            "y": 520,
+            "fields": {
+                "model": "z-ai/glm-5.3-flash",
+                "system": "You are the engraving editor in a sheet-music pipeline. The input gives a SCORE CARD (MELODY, TIME, MEASURE 1, MEASURE 2, TOTAL NOTES, FRAME), a blind SCORE READ (notes enumerated N1 onward with pitch, duration and measure), and a SCORE AUDIT scoring note count, pitches, durations, measure split, measure sums and text leak. Write ONE edit instruction for an image-editing model that will receive the painted score itself. Rules:\\n- GATE: if the audit shows the score is already exact (NOTE COUNT MATCH, PITCHES and DURATIONS both full, MEASURE SPLIT MATCH, MEASURE SUMS VALID, TEXT LEAK none), write an instruction that demands the picture be reproduced COMPLETELY UNCHANGED - the same staff, clef, every note head in the same position with the same fill, the same bar lines, the same paper and framing - and explicitly forbid moving, redrawing, recolouring or restyling any note. A repair round must never degrade a passing score.\\n- Otherwise address the editor directly and write in imperatives: 'Edit this picture: ...'\\n- The frame is the scope: open by demanding the score's finish, the cream paper, the straight-on view, the light, the framing, the five staff lines, the treble clef and every note the audit found correct stay exactly the same.\\n- State the FULL target end state, not just the deltas: exactly the card's notes in the card's order on one treble staff, each head on its pitch's line or space (lines bottom to top E4 G4 B4 D5 F5; spaces F4 A4 C5 E5; G5 just above the top line), filled black heads for quarter notes, open white heads for half notes, stems on every note, one bar line after exactly the carded measure 1 notes and a final double bar at the right, each measure summing to exactly 4 beats, and no printed letters, words, numbers, lyrics or title anywhere.\\n- Then name the audit's specific failures as extra demands, locating each by its position in the sequence (for example 'the third note'): for every PITCH ERROR, name the position and demand that head be moved vertically to the carded pitch's line or space; for every DURATION ERROR, demand that head be filled solid black (quarter) or opened to a white centre (half) as carded; for a NOTE COUNT or MEASURE SPLIT mismatch, demand the missing note be added at its carded position or the extra note be removed completely, and the bar line moved so it falls after exactly the carded measure 1 notes; if TEXT LEAK is not none, demand every printed character be removed completely. Notes already correct must be left untouched - say so.\\n- End with: 'Change nothing except the notes and marks named here. Clean straight-on engraving of a single treble staff score, black notes on cream paper, notation symbols only, no printed text, no letters, no words, no numbers, no people.'\\nOutput the single edit instruction only - no preamble, no list, no explanation.",
+                "maxTokens": "350",
+                "reasoningEffort": "low"
+            },
+            "w": 280,
+            "name": "Edit notes - GLM turns the score audit into note-level fix instructions",
+            "sizes": {
+                "system": 150
+            }
+        },
+        {
+            "id": "fix",
+            "type": "edit",
+            "x": 2960,
+            "y": 520,
+            "fields": {
+                "model": "meta/muse-image/edit",
+                "size": "auto"
+            },
+            "w": 280,
+            "name": "Corrected score - Muse Edit repairs the pitches, durations and bar line"
+        },
+        {
+            "id": "surveyor2",
+            "type": "vision",
+            "x": 3320,
+            "y": 520,
+            "fields": {
+                "model": "google/gemini-3.8-flash",
+                "q": "You are a score reader examining a sheet-music image. You do not know what melody was planned - report only the notes you actually see. Use treble clef positions: the five staff lines from bottom to top are E4, G4, B4, D5, F5; the spaces from bottom to top are F4, A4, C5, E5; a head in the space just above the top line is G5, a head just below the bottom line is D4. A note's pitch is where the CENTRE of its oval head sits. A FILLED solid black head with a stem is a quarter note (1 beat); an OPEN white head (outline only) with a stem is a half note (2 beats); anything else is duration 'other'. First, 'STAFF: lines <number of staff lines>; clef <treble, bass, none or other>'. Then 'NOTES SEEN:' plus the total number of note heads. Then 'BAR LINE: after note <k>' - the count of notes to the LEFT of the first full vertical bar line that crosses the staff (ignore the final double bar at the very end); if there is no such bar line, 'BAR LINE: none'. Then enumerate every note head left to right as N1, N2, N3 and so on, each as 'N<n>: pitch <letter and octave, e.g. C5> | duration <quarter, half or other> | measure <1 if left of the bar line, 2 if right of it; 1 for every note if there is no bar line>'. Finally, 'LABELS:' plus any printed letters, words, numbers or title visible anywhere in the picture, quoted, or 'none' (the treble clef symbol and bar lines are notation, not labels - do not report them). Output exactly this shape:\\nSTAFF: lines <n>; clef <kind>\\nNOTES SEEN: <number>\\nBAR LINE: after note <k, or none>\\nN1: pitch <P> | duration <D> | measure <M>\\n(continue for every note)\\nLABELS: <quoted text, or none>"
+            },
+            "w": 280,
+            "name": "Re-read - Gemini enumerates the corrected score's notes, blind",
+            "sizes": {
+                "q": 150
+            }
+        },
+        {
+            "id": "j4",
+            "type": "join",
+            "x": 3680,
+            "y": 420,
+            "fields": {
+                "sep": "\n\nSCORE READ (a blind reader reported only the notes it could see in the corrected picture, note by note; it never saw the score card):\n"
+            },
+            "w": 200,
+            "name": "Score card + re-read"
+        },
+        {
+            "id": "checker2",
+            "type": "llm",
+            "x": 4040,
+            "y": 520,
+            "fields": {
+                "model": "z-ai/glm-5.3-flash",
+                "system": "You are a music auditor. The input gives a SCORE CARD (MELODY, TIME 4/4, a MEASURE 1 line and a MEASURE 2 line, each listing notes as '<pitch> <quarter or half>' separated by '; ' with a beat sum, and a TOTAL NOTES line), then 'SCORE READ' with a blind reader's STAFF line, NOTES SEEN, BAR LINE line, one N line per note (pitch, duration, measure) and a LABELS line.\\nBuild the card's note sequence in playing order: the MEASURE 1 notes in order, then the MEASURE 2 notes in order; remember how many notes the card puts in each measure. Build the reader's sequence from its N lines in order. A quarter note is 1 beat, a half note is 2 beats, an 'other' duration is 0 beats and never matches.\\nScore in this order and output exactly these lines:\\n1. 'NOTE COUNT: reader <n>, card <Y> - MATCH' if the reader's NOTES SEEN equals the card's TOTAL NOTES, else '- MISMATCH'.\\n2. 'PITCHES: X of Y' - Y is the card's total notes; X is the number of positions i from 1 to the smaller of the two sequence lengths where the reader's pitch at position i equals the card's pitch at position i.\\n3. 'PITCH ERRORS: ' followed by 'position <i> card <P> read <Q>' for every compared position where the pitches differ, separated by '; ', plus 'count differs by <d>' if the lengths differ, or 'none'.\\n4. 'DURATIONS: X of Y' - the same position-by-position comparison for durations.\\n5. 'DURATION ERRORS: ' followed by 'position <i> card <D> read <E>' for every compared position where the durations differ, separated by '; ', plus 'count differs by <d>' if the lengths differ, or 'none'.\\n6. 'MEASURE SPLIT: reader measure 1 has <a> notes, measure 2 has <b> notes; card measure 1 has <c>, measure 2 has <d> - MATCH' if a equals c and b equals d, else '- MISMATCH' (use the reader's per-note measure numbers, not its BAR LINE line).\\n7. 'MEASURE SUMS: reader measure 1 sums to <s1> beats, measure 2 sums to <s2> beats - VALID' if both sums are exactly 4, else '- VIOLATED'.\\n8. 'DECODED MELODY: ' followed by the reader's pitches in order joined by '-', with the two measures separated by ' | ' (grouped by the reader's measure numbers).\\n9. 'TEXT LEAK: ' plus the reader's LABELS content, copied.\\n10. 'Summary: ' followed by one sentence restating note count, pitches, durations and whether each measure sums to 4 beats.\\nOutput exactly these lines and nothing else.",
+                "maxTokens": "1200",
+                "reasoningEffort": "low"
+            },
+            "w": 280,
+            "name": "Score re-audit - GLM scores the corrected score against the same card",
+            "sizes": {
+                "system": 150
+            }
+        }
+    ],
+    "links": [
+        {
+            "id": "l1",
+            "from": {
+                "node": "setting",
+                "port": "text"
+            },
+            "to": {
+                "node": "director",
+                "port": "prompt"
+            }
+        },
+        {
+            "id": "l2",
+            "from": {
+                "node": "director",
+                "port": "text"
+            },
+            "to": {
+                "node": "j0",
+                "port": "b"
+            }
+        },
+        {
+            "id": "l12",
+            "from": {
+                "node": "setting",
+                "port": "text"
+            },
+            "to": {
+                "node": "j0",
+                "port": "a"
+            }
+        },
+        {
+            "id": "l13",
+            "from": {
+                "node": "j0",
+                "port": "text"
+            },
+            "to": {
+                "node": "stylist",
+                "port": "prompt"
+            }
+        },
+        {
+            "id": "l3",
+            "from": {
+                "node": "stylist",
+                "port": "text"
+            },
+            "to": {
+                "node": "paint",
+                "port": "prompt"
+            }
+        },
+        {
+            "id": "l4",
+            "from": {
+                "node": "paint",
+                "port": "image"
+            },
+            "to": {
+                "node": "surveyor",
+                "port": "image"
+            }
+        },
+        {
+            "id": "l7",
+            "from": {
+                "node": "director",
+                "port": "text"
+            },
+            "to": {
+                "node": "j1",
+                "port": "a"
+            }
+        },
+        {
+            "id": "l8",
+            "from": {
+                "node": "surveyor",
+                "port": "text"
+            },
+            "to": {
+                "node": "j1",
+                "port": "b"
+            }
+        },
+        {
+            "id": "l11",
+            "from": {
+                "node": "j1",
+                "port": "text"
+            },
+            "to": {
+                "node": "checker",
+                "port": "prompt"
+            }
+        },
+        {
+            "id": "l14",
+            "from": {
+                "node": "j1",
+                "port": "text"
+            },
+            "to": {
+                "node": "j2",
+                "port": "a"
+            }
+        },
+        {
+            "id": "l15",
+            "from": {
+                "node": "checker",
+                "port": "text"
+            },
+            "to": {
+                "node": "j2",
+                "port": "b"
+            }
+        },
+        {
+            "id": "l16",
+            "from": {
+                "node": "j2",
+                "port": "text"
+            },
+            "to": {
+                "node": "audit",
+                "port": "text"
+            }
+        },
+        {
+            "id": "l17",
+            "from": {
+                "node": "paint",
+                "port": "image"
+            },
+            "to": {
+                "node": "audit",
+                "port": "img1"
+            }
+        },
+        {
+            "id": "l18",
+            "from": {
+                "node": "j2",
+                "port": "text"
+            },
+            "to": {
+                "node": "editor",
+                "port": "prompt"
+            }
+        },
+        {
+            "id": "l19",
+            "from": {
+                "node": "editor",
+                "port": "text"
+            },
+            "to": {
+                "node": "fix",
+                "port": "prompt"
+            }
+        },
+        {
+            "id": "l20",
+            "from": {
+                "node": "paint",
+                "port": "image"
+            },
+            "to": {
+                "node": "fix",
+                "port": "image"
+            }
+        },
+        {
+            "id": "l21",
+            "from": {
+                "node": "fix",
+                "port": "image"
+            },
+            "to": {
+                "node": "surveyor2",
+                "port": "image"
+            }
+        },
+        {
+            "id": "l22",
+            "from": {
+                "node": "director",
+                "port": "text"
+            },
+            "to": {
+                "node": "j4",
+                "port": "a"
+            }
+        },
+        {
+            "id": "l23",
+            "from": {
+                "node": "surveyor2",
+                "port": "text"
+            },
+            "to": {
+                "node": "j4",
+                "port": "b"
+            }
+        },
+        {
+            "id": "l24",
+            "from": {
+                "node": "j4",
+                "port": "text"
+            },
+            "to": {
+                "node": "checker2",
+                "port": "prompt"
+            }
+        }
+    ],
+    "nid": 30,
+    "lid": 38,
+    "view": {
+        "panX": 40,
+        "panY": 40,
+        "scale": 0.5
+    }
+}
