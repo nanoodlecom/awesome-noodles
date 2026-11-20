@@ -83,17 +83,19 @@
         },
         {
             "id": "surveyor",
-            "type": "vision",
+            "type": "llm",
             "x": 1520,
             "y": 280,
             "fields": {
                 "model": "google/gemini-3.8-flash",
-                "q": "You are a score reader examining a sheet-music image. You do not know what melody was planned - report only the notes you actually see. Use treble clef positions: the five staff lines from bottom to top are E4, G4, B4, D5, F5; the spaces from bottom to top are F4, A4, C5, E5; a head in the space just above the top line is G5, a head just below the bottom line is D4. A note's pitch is where the CENTRE of its oval head sits. A FILLED solid black head with a stem is a quarter note (1 beat); an OPEN white head (outline only) with a stem is a half note (2 beats); anything else is duration 'other'. First, 'STAFF: lines <number of staff lines>; clef <treble, bass, none or other>'. Then 'NOTES SEEN:' plus the total number of note heads. Then 'BAR LINE: after note <k>' - the count of notes to the LEFT of the first full vertical bar line that crosses the staff (ignore the final double bar at the very end); if there is no such bar line, 'BAR LINE: none'. Then enumerate every note head left to right as N1, N2, N3 and so on, each as 'N<n>: pitch <letter and octave, e.g. C5> | duration <quarter, half or other> | measure <1 if left of the bar line, 2 if right of it; 1 for every note if there is no bar line>'. Finally, 'LABELS:' plus any printed letters, words, numbers or title visible anywhere in the picture, quoted, or 'none' (the treble clef symbol and bar lines are notation, not labels - do not report them). Output exactly this shape:\\nSTAFF: lines <n>; clef <kind>\\nNOTES SEEN: <number>\\nBAR LINE: after note <k, or none>\\nN1: pitch <P> | duration <D> | measure <M>\\n(continue for every note)\\nLABELS: <quoted text, or none>"
+                "system": "You are a score reader examining a sheet-music image. You do not know what melody was planned - report only the notes you actually see. Use treble clef positions: the five staff lines from bottom to top are E4, G4, B4, D5, F5; the spaces from bottom to top are F4, A4, C5, E5; a head in the space just above the top line is G5, a head just below the bottom line is D4. A note's pitch is where the CENTRE of its oval head sits. A FILLED solid black head with a stem is a quarter note (1 beat); an OPEN white head (outline only) with a stem is a half note (2 beats); anything else is duration 'other'. First, 'STAFF: lines <number of staff lines>; clef <treble, bass, none or other>'. Then 'NOTES SEEN:' plus the total number of note heads. Then 'BAR LINE: after note <k>' - the count of notes to the LEFT of the first full vertical bar line that crosses the staff (ignore the final double bar at the very end); if there is no such bar line, 'BAR LINE: none'. Then enumerate every note head left to right as N1, N2, N3 and so on, each as 'N<n>: pitch <letter and octave, e.g. C5> | duration <quarter, half or other> | measure <1 if left of the bar line, 2 if right of it; 1 for every note if there is no bar line>'. Finally, 'LABELS:' plus any printed letters, words, numbers or title visible anywhere in the picture, quoted, or 'none' (the treble clef symbol and bar lines are notation, not labels - do not report them). Output exactly this shape:\\nSTAFF: lines <n>; clef <kind>\\nNOTES SEEN: <number>\\nBAR LINE: after note <k, or none>\\nN1: pitch <P> | duration <D> | measure <M>\\n(continue for every note)\\nLABELS: <quoted text, or none>",
+                "maxTokens": "900",
+                "reasoningEffort": "low"
             },
             "w": 280,
             "name": "Score read - Gemini enumerates the engraved notes, blind",
             "sizes": {
-                "q": 150
+                "system": 150
             }
         },
         {
@@ -183,17 +185,19 @@
         },
         {
             "id": "surveyor2",
-            "type": "vision",
+            "type": "llm",
             "x": 3320,
             "y": 520,
             "fields": {
                 "model": "google/gemini-3.8-flash",
-                "q": "You are a score reader examining a sheet-music image. You do not know what melody was planned - report only the notes you actually see. Use treble clef positions: the five staff lines from bottom to top are E4, G4, B4, D5, F5; the spaces from bottom to top are F4, A4, C5, E5; a head in the space just above the top line is G5, a head just below the bottom line is D4. A note's pitch is where the CENTRE of its oval head sits. A FILLED solid black head with a stem is a quarter note (1 beat); an OPEN white head (outline only) with a stem is a half note (2 beats); anything else is duration 'other'. First, 'STAFF: lines <number of staff lines>; clef <treble, bass, none or other>'. Then 'NOTES SEEN:' plus the total number of note heads. Then 'BAR LINE: after note <k>' - the count of notes to the LEFT of the first full vertical bar line that crosses the staff (ignore the final double bar at the very end); if there is no such bar line, 'BAR LINE: none'. Then enumerate every note head left to right as N1, N2, N3 and so on, each as 'N<n>: pitch <letter and octave, e.g. C5> | duration <quarter, half or other> | measure <1 if left of the bar line, 2 if right of it; 1 for every note if there is no bar line>'. Finally, 'LABELS:' plus any printed letters, words, numbers or title visible anywhere in the picture, quoted, or 'none' (the treble clef symbol and bar lines are notation, not labels - do not report them). Output exactly this shape:\\nSTAFF: lines <n>; clef <kind>\\nNOTES SEEN: <number>\\nBAR LINE: after note <k, or none>\\nN1: pitch <P> | duration <D> | measure <M>\\n(continue for every note)\\nLABELS: <quoted text, or none>"
+                "system": "You are a score reader examining a sheet-music image. You do not know what melody was planned - report only the notes you actually see. Use treble clef positions: the five staff lines from bottom to top are E4, G4, B4, D5, F5; the spaces from bottom to top are F4, A4, C5, E5; a head in the space just above the top line is G5, a head just below the bottom line is D4. A note's pitch is where the CENTRE of its oval head sits. A FILLED solid black head with a stem is a quarter note (1 beat); an OPEN white head (outline only) with a stem is a half note (2 beats); anything else is duration 'other'. First, 'STAFF: lines <number of staff lines>; clef <treble, bass, none or other>'. Then 'NOTES SEEN:' plus the total number of note heads. Then 'BAR LINE: after note <k>' - the count of notes to the LEFT of the first full vertical bar line that crosses the staff (ignore the final double bar at the very end); if there is no such bar line, 'BAR LINE: none'. Then enumerate every note head left to right as N1, N2, N3 and so on, each as 'N<n>: pitch <letter and octave, e.g. C5> | duration <quarter, half or other> | measure <1 if left of the bar line, 2 if right of it; 1 for every note if there is no bar line>'. Finally, 'LABELS:' plus any printed letters, words, numbers or title visible anywhere in the picture, quoted, or 'none' (the treble clef symbol and bar lines are notation, not labels - do not report them). Output exactly this shape:\\nSTAFF: lines <n>; clef <kind>\\nNOTES SEEN: <number>\\nBAR LINE: after note <k, or none>\\nN1: pitch <P> | duration <D> | measure <M>\\n(continue for every note)\\nLABELS: <quoted text, or none>",
+                "maxTokens": "900",
+                "reasoningEffort": "low"
             },
             "w": 280,
             "name": "Re-read - Gemini enumerates the corrected score's notes, blind",
             "sizes": {
-                "q": 150
+                "system": 150
             }
         },
         {
@@ -223,6 +227,28 @@
             "sizes": {
                 "system": 150
             }
+        },
+        {
+            "id": "ask",
+            "type": "text",
+            "x": 1160,
+            "y": 520,
+            "fields": {
+                "text": "Read the score in the attached picture now, following your instructions exactly."
+            },
+            "w": 240,
+            "name": "Read ask"
+        },
+        {
+            "id": "ask2",
+            "type": "text",
+            "x": 2960,
+            "y": 900,
+            "fields": {
+                "text": "Read the score in the attached picture now, following your instructions exactly."
+            },
+            "w": 240,
+            "name": "Re-read ask"
         }
     ],
     "links": [
@@ -289,7 +315,7 @@
             },
             "to": {
                 "node": "surveyor",
-                "port": "image"
+                "port": "img1"
             }
         },
         {
@@ -410,7 +436,7 @@
             },
             "to": {
                 "node": "surveyor2",
-                "port": "image"
+                "port": "img1"
             }
         },
         {
@@ -445,10 +471,32 @@
                 "node": "checker2",
                 "port": "prompt"
             }
+        },
+        {
+            "id": "l39",
+            "from": {
+                "node": "ask",
+                "port": "text"
+            },
+            "to": {
+                "node": "surveyor",
+                "port": "prompt"
+            }
+        },
+        {
+            "id": "l40",
+            "from": {
+                "node": "ask2",
+                "port": "text"
+            },
+            "to": {
+                "node": "surveyor2",
+                "port": "prompt"
+            }
         }
     ],
-    "nid": 30,
-    "lid": 38,
+    "nid": 32,
+    "lid": 40,
     "view": {
         "panX": 40,
         "panY": 40,
