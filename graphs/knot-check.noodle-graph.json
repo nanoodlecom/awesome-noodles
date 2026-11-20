@@ -83,17 +83,19 @@
     },
     {
       "id": "surveyor",
-      "type": "vision",
+      "type": "llm",
       "x": 1520,
       "y": 280,
       "fields": {
         "model": "google/gemini-3.8-flash",
-        "q": "You are a knot tracer looking at a top-down picture of a knotted rope. You do not know what knot was planned - report only what you actually see. First, 'STRAND:' plus CLOSED (one single continuous rope loop, no loose ends, no breaks), BROKEN (the rope has a visible gap or cut), ENDS (one or more loose rope ends are visible) or MULTIPLE (more than one separate rope), followed by a few words on what you see. Then 'CROSSINGS:' and, for each place where the rope crosses over itself, in clockwise order starting from the topmost crossing, output: '<its position: top-left, top-centre, top-right, centre-left, centre, centre-right, bottom-left, bottom-centre or bottom-right> | OVER: <the direction of travel of the pass that lies visibly ON TOP at that crossing: left-to-right, top-to-bottom, upper-left-to-lower-right or upper-right-to-lower-left> | UNDER: <the direction of the interrupted pass underneath>'. Judge over and under only by which pass is drawn unbroken and which is interrupted - not by shading alone. If there are no crossings, write 'CROSSINGS: none'. Finally, 'BREAKS:' plus any place the rope is cut, frayed into an end, or leaves the frame, or 'none'. Output exactly this shape:\nSTRAND: <CLOSED, BROKEN, ENDS or MULTIPLE> - <what you see>\nCROSSINGS:\n<zone> | OVER: <direction> | UNDER: <direction>\n(continue for every crossing, clockwise from the topmost)\nBREAKS: <breaks or loose ends, or none>"
+        "system": "You are a knot tracer looking at a top-down picture of a knotted rope. You do not know what knot was planned - report only what you actually see. First, 'STRAND:' plus CLOSED (one single continuous rope loop, no loose ends, no breaks), BROKEN (the rope has a visible gap or cut), ENDS (one or more loose rope ends are visible) or MULTIPLE (more than one separate rope), followed by a few words on what you see. Then 'CROSSINGS:' and, for each place where the rope crosses over itself, in clockwise order starting from the topmost crossing, output: '<its position: top-left, top-centre, top-right, centre-left, centre, centre-right, bottom-left, bottom-centre or bottom-right> | OVER: <the direction of travel of the pass that lies visibly ON TOP at that crossing: left-to-right, top-to-bottom, upper-left-to-lower-right or upper-right-to-lower-left> | UNDER: <the direction of the interrupted pass underneath>'. Judge over and under only by which pass is drawn unbroken and which is interrupted - not by shading alone. If there are no crossings, write 'CROSSINGS: none'. Finally, 'BREAKS:' plus any place the rope is cut, frayed into an end, or leaves the frame, or 'none'. Output exactly this shape:\nSTRAND: <CLOSED, BROKEN, ENDS or MULTIPLE> - <what you see>\nCROSSINGS:\n<zone> | OVER: <direction> | UNDER: <direction>\n(continue for every crossing, clockwise from the topmost)\nBREAKS: <breaks or loose ends, or none>",
+        "maxTokens": "600",
+        "reasoningEffort": "low"
       },
       "w": 280,
       "name": "Crossing trace - Gemini traces the strand and every crossing blind",
       "sizes": {
-        "q": 150
+        "system": 150
       }
     },
     {
@@ -183,17 +185,19 @@
     },
     {
       "id": "surveyor2",
-      "type": "vision",
+      "type": "llm",
       "x": 3320,
       "y": 520,
       "fields": {
         "model": "google/gemini-3.8-flash",
-        "q": "You are a knot tracer looking at a top-down picture of a knotted rope. You do not know what knot was planned - report only what you actually see. First, 'STRAND:' plus CLOSED (one single continuous rope loop, no loose ends, no breaks), BROKEN (the rope has a visible gap or cut), ENDS (one or more loose rope ends are visible) or MULTIPLE (more than one separate rope), followed by a few words on what you see. Then 'CROSSINGS:' and, for each place where the rope crosses over itself, in clockwise order starting from the topmost crossing, output: '<its position: top-left, top-centre, top-right, centre-left, centre, centre-right, bottom-left, bottom-centre or bottom-right> | OVER: <the direction of travel of the pass that lies visibly ON TOP at that crossing: left-to-right, top-to-bottom, upper-left-to-lower-right or upper-right-to-lower-left> | UNDER: <the direction of the interrupted pass underneath>'. Judge over and under only by which pass is drawn unbroken and which is interrupted - not by shading alone. If there are no crossings, write 'CROSSINGS: none'. Finally, 'BREAKS:' plus any place the rope is cut, frayed into an end, or leaves the frame, or 'none'. Output exactly this shape:\nSTRAND: <CLOSED, BROKEN, ENDS or MULTIPLE> - <what you see>\nCROSSINGS:\n<zone> | OVER: <direction> | UNDER: <direction>\n(continue for every crossing, clockwise from the topmost)\nBREAKS: <breaks or loose ends, or none>"
+        "system": "You are a knot tracer looking at a top-down picture of a knotted rope. You do not know what knot was planned - report only what you actually see. First, 'STRAND:' plus CLOSED (one single continuous rope loop, no loose ends, no breaks), BROKEN (the rope has a visible gap or cut), ENDS (one or more loose rope ends are visible) or MULTIPLE (more than one separate rope), followed by a few words on what you see. Then 'CROSSINGS:' and, for each place where the rope crosses over itself, in clockwise order starting from the topmost crossing, output: '<its position: top-left, top-centre, top-right, centre-left, centre, centre-right, bottom-left, bottom-centre or bottom-right> | OVER: <the direction of travel of the pass that lies visibly ON TOP at that crossing: left-to-right, top-to-bottom, upper-left-to-lower-right or upper-right-to-lower-left> | UNDER: <the direction of the interrupted pass underneath>'. Judge over and under only by which pass is drawn unbroken and which is interrupted - not by shading alone. If there are no crossings, write 'CROSSINGS: none'. Finally, 'BREAKS:' plus any place the rope is cut, frayed into an end, or leaves the frame, or 'none'. Output exactly this shape:\nSTRAND: <CLOSED, BROKEN, ENDS or MULTIPLE> - <what you see>\nCROSSINGS:\n<zone> | OVER: <direction> | UNDER: <direction>\n(continue for every crossing, clockwise from the topmost)\nBREAKS: <breaks or loose ends, or none>",
+        "maxTokens": "600",
+        "reasoningEffort": "low"
       },
       "w": 280,
       "name": "Re-trace - Gemini traces the corrected knot's crossings blind",
       "sizes": {
-        "q": 150
+        "system": 150
       }
     },
     {
@@ -223,6 +227,17 @@
       "sizes": {
         "system": 150
       }
+    },
+    {
+      "id": "ask",
+      "type": "text",
+      "x": 1520,
+      "y": 560,
+      "fields": {
+        "text": "Trace the knot in the attached picture now, following your instructions exactly."
+      },
+      "w": 240,
+      "name": "Trace ask"
     }
   ],
   "links": [
@@ -289,7 +304,7 @@
       },
       "to": {
         "node": "surveyor",
-        "port": "image"
+        "port": "img1"
       }
     },
     {
@@ -410,7 +425,7 @@
       },
       "to": {
         "node": "surveyor2",
-        "port": "image"
+        "port": "img1"
       }
     },
     {
@@ -445,10 +460,32 @@
         "node": "checker2",
         "port": "prompt"
       }
+    },
+    {
+      "id": "l25",
+      "from": {
+        "node": "ask",
+        "port": "text"
+      },
+      "to": {
+        "node": "surveyor",
+        "port": "prompt"
+      }
+    },
+    {
+      "id": "l26",
+      "from": {
+        "node": "ask",
+        "port": "text"
+      },
+      "to": {
+        "node": "surveyor2",
+        "port": "prompt"
+      }
     }
   ],
-  "nid": 30,
-  "lid": 38,
+  "nid": 31,
+  "lid": 40,
   "view": {
     "panX": 40,
     "panY": 40,
