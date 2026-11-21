@@ -1,0 +1,505 @@
+{
+ "v": 1,
+ "nodes": [
+  {
+   "id": "c1",
+   "type": "comment",
+   "x": 60,
+   "y": 30,
+   "fields": {
+    "text": "Can a picture OBEY BOOLEAN SET LOGIC? A GLM director picks one poster set from a spec menu printed in its own prompt (four sets; each exactly 6 simple flat icon objects, every object with a colour - RED or BLUE - and a shape - ROUND, SQUARE or TRIANGULAR) and copies out a VENN CARD for two sets: the left circle is RED, the right circle is ROUND. No object's region on the card is a free choice: the region is derived by law - RED and ROUND goes in the OVERLAP, RED and not ROUND in the LEFT circle only, not RED and ROUND in the RIGHT circle only, and an object that is neither red nor round goes OUTSIDE both circles, on the poster's background. A second GLM turns the card into one flat-poster prompt for a Venn diagram - two large overlapping circles labelled RED and ROUND, one icon in each derived region. Muse paints it. A blind Gemini reader, who never saw the card, reports every object it can see with its colour, its shape and the region it sits in. A GLM auditor recomputes every expected region from the attributes alone, checks the card's own printed regions against the law, and scores OBJECTS, ATTRIBUTES and REGIONS. A Decide judge headlines round 1. That verdict is not the deliverable: a GLM editor turns the audit into one concrete edit instruction (gated - on a perfect audit it must demand a verbatim unchanged copy), Muse Edit repairs the poster, and a blind re-read plus the same auditor re-score the corrected poster against the same card. The corrected poster is the flow's final output."
+   },
+   "w": 900,
+   "name": "Venn check"
+  },
+  {
+   "id": "setting",
+   "type": "text",
+   "x": 60,
+   "y": 300,
+   "fields": {
+    "text": "A flat educational Venn diagram poster on a plain cream background: two large overlapping circles in the middle of the poster, the left circle labelled RED at the top and the right circle labelled ROUND at the top, six simple flat icon objects placed on the poster, clean flat colours, even light, no other decoration yet."
+   },
+   "w": 300,
+   "name": "Poster setting"
+  },
+  {
+   "id": "director",
+   "type": "llm",
+   "x": 440,
+   "y": 280,
+   "fields": {
+    "model": "z-ai/glm-5.3-flash",
+    "system": "You are a logic teacher. Given a POSTER SETTING, design a VENN CARD for one Venn diagram poster. Choose ONE set from this menu ONLY, and copy its spec EXACTLY - every object, every colour, every shape and every derived region:\n\nTHE LAW (the left circle is the set RED, the right circle is the set ROUND; an object's region is DERIVED, never chosen): RED and ROUND -> OVERLAP. RED and not ROUND -> LEFT ONLY. Not RED and ROUND -> RIGHT ONLY. Not RED and not ROUND -> OUTSIDE.\n\nMENU:\n1. BUTTONS AND BLOCKS - 1. round button - RED, ROUND -> OVERLAP. 2. square block - RED, SQUARE -> LEFT ONLY. 3. round marble - BLUE, ROUND -> RIGHT ONLY. 4. square tile - BLUE, SQUARE -> OUTSIDE. 5. triangular flag - RED, TRIANGULAR -> LEFT ONLY. 6. round bead - BLUE, ROUND -> RIGHT ONLY.\n2. PICNIC - 1. round apple - RED, ROUND -> OVERLAP. 2. square napkin - RED, SQUARE -> LEFT ONLY. 3. round plate - BLUE, ROUND -> RIGHT ONLY. 4. square cooler - BLUE, SQUARE -> OUTSIDE. 5. round cherry - RED, ROUND -> OVERLAP. 6. triangular pennant - BLUE, TRIANGULAR -> OUTSIDE.\n3. WORKSHOP - 1. round washer - RED, ROUND -> OVERLAP. 2. triangular warning sign - RED, TRIANGULAR -> LEFT ONLY. 3. round wheel - BLUE, ROUND -> RIGHT ONLY. 4. square toolbox - BLUE, SQUARE -> OUTSIDE. 5. square first-aid box - RED, SQUARE -> LEFT ONLY. 6. triangular set square - BLUE, TRIANGULAR -> OUTSIDE.\n4. SEASIDE - 1. round buoy - RED, ROUND -> OVERLAP. 2. round beach ball - BLUE, ROUND -> RIGHT ONLY. 3. square towel - RED, SQUARE -> LEFT ONLY. 4. square ice box - BLUE, SQUARE -> OUTSIDE. 5. triangular sail - RED, TRIANGULAR -> LEFT ONLY. 6. round porthole ring - BLUE, ROUND -> RIGHT ONLY.\n\nOutput ONLY the card, in exactly this format, copying the chosen set's spec without changing any of it:\nVENN: <the set name>\nLEFT SET: RED\nRIGHT SET: ROUND\nOBJECTS:\n1. <object> - <RED or BLUE>, <ROUND, SQUARE or TRIANGULAR> -> <OVERLAP, LEFT ONLY, RIGHT ONLY or OUTSIDE>\n2. <object> - <colour>, <shape> -> <region>\n3. <object> - <colour>, <shape> -> <region>\n4. <object> - <colour>, <shape> -> <region>\n5. <object> - <colour>, <shape> -> <region>\n6. <object> - <colour>, <shape> -> <region>\nOBJECT COUNT: 6\nNo other text.",
+    "maxTokens": 500,
+    "reasoningEffort": "low"
+   },
+   "w": 280,
+   "name": "Venn card - GLM picks a poster set and copies its exact objects, attributes and derived regions",
+   "sizes": {
+    "system": 150
+   }
+  },
+  {
+   "id": "j0",
+   "type": "join",
+   "x": 800,
+   "y": 480,
+   "fields": {
+    "sep": "\n\nVENN CARD (the poster - its two sets and six objects with colours, shapes and derived regions; its exact wording must reach the poster maker):\n"
+   },
+   "w": 200,
+   "name": "Setting + venn card"
+  },
+  {
+   "id": "stylist",
+   "type": "llm",
+   "x": 800,
+   "y": 280,
+   "fields": {
+    "model": "z-ai/glm-5.3-flash",
+    "system": "You turn a VENN CARD into ONE prompt for an AI image generator. The input gives a POSTER SETTING first, then 'VENN CARD' with the two set names and six objects, each with a colour, a shape and a derived region (OVERLAP, LEFT ONLY, RIGHT ONLY or OUTSIDE). Write a single-paragraph prompt for a flat educational Venn diagram poster, demanding all of this:\n- A plain cream background and exactly two large overlapping circles in the middle: the left circle's outline in deep red with the single word RED printed at the top of the left circle, the right circle's outline in deep blue with the single word ROUND printed at the top of the right circle. The two circles overlap in a clear lens-shaped middle region. No other printed words, letters or numbers anywhere.\n- Exactly the card's six objects, each drawn as one simple flat icon in exactly its carded colour and shape, placed wholly inside its carded region: OVERLAP objects sit inside the lens where the circles cross and nowhere else; LEFT ONLY objects sit inside the left circle but outside the lens; RIGHT ONLY objects sit inside the right circle but outside the lens; OUTSIDE objects sit on the cream background wholly outside both circles. Name every object in the prompt with its colour, its shape and its region, one by one.\n- Every object sits fully inside its region, not touching or crossing a circle outline; objects do not overlap each other; flat colours, clean edges, straight-on view.\nOutput ONLY the image prompt, one paragraph, no preamble.",
+    "maxTokens": 700,
+    "reasoningEffort": "low"
+   },
+   "w": 280,
+   "name": "Venn brief - GLM turns the card into a poster painter prompt",
+   "sizes": {
+    "system": 150
+   }
+  },
+  {
+   "id": "paint",
+   "type": "image",
+   "x": 1160,
+   "y": 280,
+   "fields": {
+    "model": "meta/muse-image/text-to-image",
+    "size": "4:3",
+    "variations": "1"
+   },
+   "w": 280,
+   "name": "Poster - Muse paints the Venn diagram"
+  },
+  {
+   "id": "surveyor",
+   "type": "llm",
+   "x": 1520,
+   "y": 280,
+   "fields": {
+    "model": "google/gemini-3.8-flash",
+    "system": "You are a Venn diagram inspector examining a flat poster. You do not know what was planned - report only what you actually see, in exactly this format:\nCIRCLES: <the label printed at the top of the LEFT circle> / <the label printed at the top of the RIGHT circle>\nOBJECTS SEEN:\n- <a short plain name for the object> - <its colour: RED, BLUE or OTHER> - <its shape: ROUND, SQUARE, TRIANGULAR or OTHER> - <its region: LEFT ONLY if it sits inside the left circle but outside the overlap, OVERLAP if it sits inside the lens where the two circles cross, RIGHT ONLY if it sits inside the right circle but outside the overlap, OUTSIDE if it sits on the background wholly outside both circles, STRADDLING if it crosses a circle outline or touches both a region and outside it>\n(one line per object you can see, in reading order: top to bottom, left to right)\nCOUNT SEEN: <the number of objects you listed>\nEXTRA: <anything that is not one of the diagram's objects - a printed word other than the two circle labels, a third circle, a decoration, a duplicate object; 'none' if there is nothing of the kind>\nJudge each object's region by where the whole object sits, not by where its centre alone falls: an object that crosses an outline is STRADDLING, never round it to the nearest region. Report colours and shapes as you see them, even if an object seems to be in the wrong region for its colour or shape - that mismatch is exactly what must be visible in your report.",
+    "maxTokens": 1100,
+    "reasoningEffort": "low"
+   },
+   "w": 280,
+   "name": "Venn read - Gemini reports every object's colour, shape and region, blind",
+   "sizes": {
+    "system": 150
+   }
+  },
+  {
+   "id": "j1",
+   "type": "join",
+   "x": 1880,
+   "y": 180,
+   "fields": {
+    "sep": "\n\nVENN READ (a blind inspector reported only what it could see - every object's colour, shape and region; it never saw the venn card):\n"
+   },
+   "w": 200,
+   "name": "Venn card + venn read"
+  },
+  {
+   "id": "checker",
+   "type": "llm",
+   "x": 2240,
+   "y": 400,
+   "fields": {
+    "model": "z-ai/glm-5.3-flash",
+    "system": "You are a set-logic auditor. The input gives a VENN CARD (VENN name, LEFT SET: RED, RIGHT SET: ROUND, and six OBJECTS lines, each '<object> - <colour>, <shape> -> <region>') and then a VENN READ from a blind inspector (CIRCLES, OBJECTS SEEN lines in the same '<name> - <colour> - <shape> - <region>' shape, COUNT SEEN, EXTRA). The law: an object's correct region is DERIVED from its attributes - RED and ROUND -> OVERLAP; RED and not ROUND -> LEFT ONLY; not RED and ROUND -> RIGHT ONLY; not RED and not ROUND -> OUTSIDE. Score in exactly this format:\nCARD LAW: <VALID if every region printed on the card equals the region the law derives from that card line's own colour and shape; otherwise INVALID, naming each card line whose printed region breaks the law>\nOBJECTS: <number of the card's 6 objects that appear in the read, matched by name - a near name for the same object counts> of 6\nATTRIBUTES: <number of matched objects whose read colour AND read shape both equal the card's colour and shape for that object> of 6\nREGIONS: <number of matched objects whose read region equals the region the LAW derives from the CARD's colour and shape for that object - score against the derived region, not merely the card's printed one> of 6\nREGION ERRORS: <every object whose read region differs from its derived region, as '<object> derived <region> read <region>', separated by '; '; 'none' if there are none>\nEXTRA: <the read's EXTRA, or 'none'>\nSUMMARY: <one short line naming what held and what failed>\nScore strictly from the two texts. Derive each expected region yourself from the card's colour and shape lines before trusting any printed region.",
+    "maxTokens": 1200,
+    "reasoningEffort": "low"
+   },
+   "w": 280,
+   "name": "Venn audit - GLM recomputes each region from the attributes and scores the logic",
+   "sizes": {
+    "system": 150
+   }
+  },
+  {
+   "id": "j2",
+   "type": "join",
+   "x": 2240,
+   "y": 180,
+   "fields": {
+    "sep": "\n\nVENN AUDIT:\n"
+   },
+   "w": 200,
+   "name": "Card, venn read + venn audit"
+  },
+  {
+   "id": "audit",
+   "type": "decide",
+   "x": 2600,
+   "y": 180,
+   "fields": {
+    "model": "perplexity/pplx-decider-v1.2",
+    "mode": "choose",
+    "question": "The picture should be a Venn diagram poster: two overlapping circles labelled RED (left) and ROUND (right), with exactly six icon objects, each placed by Boolean law - red and round in the overlap, red and not round in the left circle only, not red and round in the right circle only, and an object that is neither red nor round outside both circles. The audit in the text scores the blind read against the card, recomputing each region from the object's colour and shape. Choose the one label that best fits the round-1 picture.",
+    "options": "logic holds\nregions slipped\nattributes flipped\nobjects missing\nnot a venn"
+   },
+   "w": 280,
+   "name": "Logic holds - audited",
+   "sizes": {
+    "question": 130
+   }
+  },
+  {
+   "id": "editor",
+   "type": "llm",
+   "x": 2600,
+   "y": 520,
+   "fields": {
+    "model": "z-ai/glm-5.3-flash",
+    "system": "You are the Venn editor in a set-logic pipeline. The input gives a VENN CARD, a blind VENN READ and a VENN AUDIT of the round-1 picture. Write ONE edit instruction for an image editor working on that picture, in at most 110 words.\nIf the audit shows perfect logic (REGIONS 6 of 6, ATTRIBUTES 6 of 6, OBJECTS 6 of 6, EXTRA: none), output exactly this and nothing else: 'Reproduce this Venn diagram poster completely unchanged - same circles, same labels, same objects, every object in the same region. Do not move, add, remove, recolour or reshape anything.'\nOtherwise: first state the full target end state - two large overlapping circles labelled RED (left) and ROUND (right) on the cream background, exactly the card's six objects each in its carded colour and shape, each placed wholly in the region the law derives (RED and ROUND in the overlap, RED and not round in the left circle only, not red and ROUND in the right circle only, neither red nor round outside both circles) - then add the audit's specific failures as concrete demands, naming each object and the move, recolour or reshape it needs (for example: 'move the blue square tile wholly outside both circles onto the background - it currently sits in the left circle'). Never ask for any printed word other than the two circle labels RED and ROUND.",
+    "maxTokens": 350,
+    "reasoningEffort": "low"
+   },
+   "w": 280,
+   "name": "Edit notes - GLM turns the venn audit into object-level fix instructions",
+   "sizes": {
+    "system": 150
+   }
+  },
+  {
+   "id": "fix",
+   "type": "edit",
+   "x": 2960,
+   "y": 520,
+   "fields": {
+    "model": "meta/muse-image/edit",
+    "size": "auto"
+   },
+   "w": 280,
+   "name": "Corrected poster - Muse Edit repairs the regions"
+  },
+  {
+   "id": "surveyor2",
+   "type": "llm",
+   "x": 3320,
+   "y": 520,
+   "fields": {
+    "model": "google/gemini-3.8-flash",
+    "system": "You are a Venn diagram inspector examining a flat poster. You do not know what was planned - report only what you actually see, in exactly this format:\nCIRCLES: <the label printed at the top of the LEFT circle> / <the label printed at the top of the RIGHT circle>\nOBJECTS SEEN:\n- <a short plain name for the object> - <its colour: RED, BLUE or OTHER> - <its shape: ROUND, SQUARE, TRIANGULAR or OTHER> - <its region: LEFT ONLY if it sits inside the left circle but outside the overlap, OVERLAP if it sits inside the lens where the two circles cross, RIGHT ONLY if it sits inside the right circle but outside the overlap, OUTSIDE if it sits on the background wholly outside both circles, STRADDLING if it crosses a circle outline or touches both a region and outside it>\n(one line per object you can see, in reading order: top to bottom, left to right)\nCOUNT SEEN: <the number of objects you listed>\nEXTRA: <anything that is not one of the diagram's objects - a printed word other than the two circle labels, a third circle, a decoration, a duplicate object; 'none' if there is nothing of the kind>\nJudge each object's region by where the whole object sits, not by where its centre alone falls: an object that crosses an outline is STRADDLING, never round it to the nearest region. Report colours and shapes as you see them, even if an object seems to be in the wrong region for its colour or shape - that mismatch is exactly what must be visible in your report.",
+    "maxTokens": 1100,
+    "reasoningEffort": "low"
+   },
+   "w": 280,
+   "name": "Re-read - Gemini reports the corrected poster's objects, blind",
+   "sizes": {
+    "system": 150
+   }
+  },
+  {
+   "id": "j4",
+   "type": "join",
+   "x": 3680,
+   "y": 420,
+   "fields": {
+    "sep": "\n\nVENN READ (a blind inspector reported only what it could see in the corrected picture - every object's colour, shape and region; it never saw the venn card):\n"
+   },
+   "w": 200,
+   "name": "Venn card + re-read"
+  },
+  {
+   "id": "checker2",
+   "type": "llm",
+   "x": 4040,
+   "y": 520,
+   "fields": {
+    "model": "z-ai/glm-5.3-flash",
+    "system": "You are a set-logic auditor. The input gives a VENN CARD (VENN name, LEFT SET: RED, RIGHT SET: ROUND, and six OBJECTS lines, each '<object> - <colour>, <shape> -> <region>') and then a VENN READ from a blind inspector (CIRCLES, OBJECTS SEEN lines in the same '<name> - <colour> - <shape> - <region>' shape, COUNT SEEN, EXTRA). The law: an object's correct region is DERIVED from its attributes - RED and ROUND -> OVERLAP; RED and not ROUND -> LEFT ONLY; not RED and ROUND -> RIGHT ONLY; not RED and not ROUND -> OUTSIDE. Score in exactly this format:\nCARD LAW: <VALID if every region printed on the card equals the region the law derives from that card line's own colour and shape; otherwise INVALID, naming each card line whose printed region breaks the law>\nOBJECTS: <number of the card's 6 objects that appear in the read, matched by name - a near name for the same object counts> of 6\nATTRIBUTES: <number of matched objects whose read colour AND read shape both equal the card's colour and shape for that object> of 6\nREGIONS: <number of matched objects whose read region equals the region the LAW derives from the CARD's colour and shape for that object - score against the derived region, not merely the card's printed one> of 6\nREGION ERRORS: <every object whose read region differs from its derived region, as '<object> derived <region> read <region>', separated by '; '; 'none' if there are none>\nEXTRA: <the read's EXTRA, or 'none'>\nSUMMARY: <one short line naming what held and what failed>\nScore strictly from the two texts. Derive each expected region yourself from the card's colour and shape lines before trusting any printed region.",
+    "maxTokens": 1200,
+    "reasoningEffort": "low"
+   },
+   "w": 280,
+   "name": "Venn re-audit - GLM scores the corrected poster against the same card",
+   "sizes": {
+    "system": 150
+   }
+  },
+  {
+   "id": "ask",
+   "type": "text",
+   "x": 1160,
+   "y": 520,
+   "fields": {
+    "text": "Inspect the Venn diagram poster in the attached picture now, following your instructions exactly."
+   },
+   "w": 240,
+   "name": "Inspect ask"
+  },
+  {
+   "id": "ask2",
+   "type": "text",
+   "x": 2960,
+   "y": 900,
+   "fields": {
+    "text": "Inspect the Venn diagram poster in the attached picture now, following your instructions exactly."
+   },
+   "w": 240,
+   "name": "Re-inspect ask"
+  }
+ ],
+ "links": [
+  {
+   "id": "l1",
+   "from": {
+    "node": "setting",
+    "port": "text"
+   },
+   "to": {
+    "node": "director",
+    "port": "prompt"
+   }
+  },
+  {
+   "id": "l2",
+   "from": {
+    "node": "director",
+    "port": "text"
+   },
+   "to": {
+    "node": "j0",
+    "port": "b"
+   }
+  },
+  {
+   "id": "l12",
+   "from": {
+    "node": "setting",
+    "port": "text"
+   },
+   "to": {
+    "node": "j0",
+    "port": "a"
+   }
+  },
+  {
+   "id": "l13",
+   "from": {
+    "node": "j0",
+    "port": "text"
+   },
+   "to": {
+    "node": "stylist",
+    "port": "prompt"
+   }
+  },
+  {
+   "id": "l3",
+   "from": {
+    "node": "stylist",
+    "port": "text"
+   },
+   "to": {
+    "node": "paint",
+    "port": "prompt"
+   }
+  },
+  {
+   "id": "l4",
+   "from": {
+    "node": "paint",
+    "port": "image"
+   },
+   "to": {
+    "node": "surveyor",
+    "port": "img1"
+   }
+  },
+  {
+   "id": "l7",
+   "from": {
+    "node": "director",
+    "port": "text"
+   },
+   "to": {
+    "node": "j1",
+    "port": "a"
+   }
+  },
+  {
+   "id": "l8",
+   "from": {
+    "node": "surveyor",
+    "port": "text"
+   },
+   "to": {
+    "node": "j1",
+    "port": "b"
+   }
+  },
+  {
+   "id": "l11",
+   "from": {
+    "node": "j1",
+    "port": "text"
+   },
+   "to": {
+    "node": "checker",
+    "port": "prompt"
+   }
+  },
+  {
+   "id": "l14",
+   "from": {
+    "node": "j1",
+    "port": "text"
+   },
+   "to": {
+    "node": "j2",
+    "port": "a"
+   }
+  },
+  {
+   "id": "l15",
+   "from": {
+    "node": "checker",
+    "port": "text"
+   },
+   "to": {
+    "node": "j2",
+    "port": "b"
+   }
+  },
+  {
+   "id": "l16",
+   "from": {
+    "node": "j2",
+    "port": "text"
+   },
+   "to": {
+    "node": "audit",
+    "port": "text"
+   }
+  },
+  {
+   "id": "l17",
+   "from": {
+    "node": "paint",
+    "port": "image"
+   },
+   "to": {
+    "node": "audit",
+    "port": "img1"
+   }
+  },
+  {
+   "id": "l18",
+   "from": {
+    "node": "j2",
+    "port": "text"
+   },
+   "to": {
+    "node": "editor",
+    "port": "prompt"
+   }
+  },
+  {
+   "id": "l19",
+   "from": {
+    "node": "editor",
+    "port": "text"
+   },
+   "to": {
+    "node": "fix",
+    "port": "prompt"
+   }
+  },
+  {
+   "id": "l20",
+   "from": {
+    "node": "paint",
+    "port": "image"
+   },
+   "to": {
+    "node": "fix",
+    "port": "image"
+   }
+  },
+  {
+   "id": "l21",
+   "from": {
+    "node": "fix",
+    "port": "image"
+   },
+   "to": {
+    "node": "surveyor2",
+    "port": "img1"
+   }
+  },
+  {
+   "id": "l22",
+   "from": {
+    "node": "director",
+    "port": "text"
+   },
+   "to": {
+    "node": "j4",
+    "port": "a"
+   }
+  },
+  {
+   "id": "l23",
+   "from": {
+    "node": "surveyor2",
+    "port": "text"
+   },
+   "to": {
+    "node": "j4",
+    "port": "b"
+   }
+  },
+  {
+   "id": "l24",
+   "from": {
+    "node": "j4",
+    "port": "text"
+   },
+   "to": {
+    "node": "checker2",
+    "port": "prompt"
+   }
+  },
+  {
+   "id": "l39",
+   "from": {
+    "node": "ask",
+    "port": "text"
+   },
+   "to": {
+    "node": "surveyor",
+    "port": "prompt"
+   }
+  },
+  {
+   "id": "l40",
+   "from": {
+    "node": "ask2",
+    "port": "text"
+   },
+   "to": {
+    "node": "surveyor2",
+    "port": "prompt"
+   }
+  }
+ ],
+ "nid": 32,
+ "lid": 40,
+ "view": {
+  "panX": 40,
+  "panY": 40,
+  "scale": 0.5
+ }
+}
