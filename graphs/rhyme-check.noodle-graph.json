@@ -1,0 +1,502 @@
+{
+ "v": 1,
+ "nodes": [
+  {
+   "id": "c1",
+   "type": "comment",
+   "x": 60,
+   "y": 30,
+   "fields": {
+    "text": "Can a spoken poem KEEP ITS FORM? A GLM director picks one poem spec from a menu printed in its own prompt (four themes; every spec is scheme AABB with exactly 8 syllables per line and four carded line-ending words - the two rhyme pairs spelled out) and copies out a POEM CARD. A GLM poet writes exactly four lines on the theme, each exactly 8 syllables, each ending with its carded word. MiniMax Speech reads the poem aloud. Whisper transcribes the audio blind - it never saw the poem. A GLM auditor scores two channels: FORM (the written poem against the card: end words in place, syllables counted line by line) and EAR (the transcript against the poem: the four end words heard in order, words kept through the voice). A Decide judge headlines round 1. That verdict is not the deliverable: a GLM editor rewrites only the failing lines (gated - on a perfect audit it must reproduce the poem verbatim), MiniMax Speech re-reads the corrected poem, Whisper re-transcribes it, and the same auditor re-scores both channels. The corrected spoken poem is the flow's final output."
+   },
+   "w": 900,
+   "name": "Rhyme check"
+  },
+  {
+   "id": "setting",
+   "type": "text",
+   "x": 60,
+   "y": 280,
+   "fields": {
+    "text": "A four-line spoken poem for a children's poetry corner, about a lighthouse keeper's cat who watches the harbour at night."
+   },
+   "w": 280,
+   "name": "Poem setting"
+  },
+  {
+   "id": "director",
+   "type": "llm",
+   "x": 440,
+   "y": 280,
+   "fields": {
+    "model": "z-ai/glm-5.3-flash",
+    "system": "You are a poetry editor. Given a POEM SETTING, design a POEM CARD for one four-line spoken poem. Choose ONE spec from this menu ONLY, and copy its spec EXACTLY - the theme, the scheme, the meter and all four end words:\n\nMENU:\n1. LIGHTHOUSE CAT - THEME: a lighthouse keeper's cat watching the harbour at night. END WORDS: line 1 light, line 2 night, line 3 sea, line 4 free.\n2. MARKET GARDENER - THEME: a gardener planting seeds after spring rain. END WORDS: line 1 rain, line 2 grain, line 3 sun, line 4 run.\n3. LITTLE TRAIN - THEME: a small train climbing to a hill town at dawn. END WORDS: line 1 track, line 2 back, line 3 hill, line 4 still.\n4. WINTER FOX - THEME: a fox crossing a snowy wood at dusk. END WORDS: line 1 snow, line 2 glow, line 3 pine, line 4 shine.\n\nEvery spec uses SCHEME: AABB (line 1 rhymes with line 2, line 3 rhymes with line 4 - the end words above are the rhyme pairs) and METER: exactly 8 syllables in every line.\n\nOutput ONLY the card, in exactly this format, copying the chosen spec without changing any of it:\nPOEM: <the spec name>\nTHEME: <the theme>\nSCHEME: AABB\nMETER: 8 syllables every line\nEND WORDS: 1 <word> / 2 <word> / 3 <word> / 4 <word>\nLINE COUNT: 4\nNo other text.",
+    "maxTokens": 500,
+    "reasoningEffort": "low"
+   },
+   "w": 280,
+   "name": "Poem card - GLM picks a poem spec and copies its scheme, meter and end words",
+   "sizes": {
+    "system": 150
+   }
+  },
+  {
+   "id": "j0",
+   "type": "join",
+   "x": 800,
+   "y": 480,
+   "fields": {
+    "sep": "\n\nPOEM CARD (the spec - its theme, scheme, meter and four end words; its exact wording must reach the poet):\n"
+   },
+   "w": 200,
+   "name": "Setting + poem card"
+  },
+  {
+   "id": "poet",
+   "type": "llm",
+   "x": 1100,
+   "y": 280,
+   "fields": {
+    "model": "z-ai/glm-5.3-flash",
+    "system": "You are a poet. The input gives a POEM SETTING first, then a POEM CARD (theme, SCHEME: AABB, METER: exactly 8 syllables every line, and four END WORDS). Write the poem: exactly 4 lines, on the card's theme, where:\n- line 1 ends with END WORD 1, line 2 ends with END WORD 2, line 3 ends with END WORD 3, line 4 ends with END WORD 4 - the carded word is the LAST word of its line, with no punctuation after it;\n- every line has EXACTLY 8 syllables - count each line syllable by syllable before you finish (a syllable is one vowel sound; a silent final e adds none);\n- the poem is simple, vivid and made to be read aloud to children.\nOutput ONLY the 4 lines, one per line, no title, no preamble, no punctuation at the end of any line.",
+    "maxTokens": 300,
+    "reasoningEffort": "low"
+   },
+   "w": 280,
+   "name": "Poem - GLM writes four lines, 8 syllables each, ending on the carded words",
+   "sizes": {
+    "system": 150
+   }
+  },
+  {
+   "id": "voice",
+   "type": "tts",
+   "x": 1480,
+   "y": 280,
+   "fields": {
+    "model": "Minimax-Speech-2.8-HD",
+    "voice": "Deep_Voice_Man",
+    "response_format": "mp3"
+   },
+   "w": 280,
+   "name": "Reading - MiniMax Speech reads the poem aloud",
+   "sizes": {
+    "prompt": 0
+   }
+  },
+  {
+   "id": "hearback",
+   "type": "transcribe",
+   "x": 1860,
+   "y": 280,
+   "fields": {
+    "model": "whisper-1",
+    "language": "auto"
+   },
+   "w": 280,
+   "name": "Heard back - Whisper transcribes the reading, blind"
+  },
+  {
+   "id": "j1",
+   "type": "join",
+   "x": 2240,
+   "y": 480,
+   "fields": {
+    "sep": "\n\nTRANSCRIPT (what a blind listener heard when the poem was read aloud; it never saw the poem):\n"
+   },
+   "w": 200,
+   "name": "Poem + transcript"
+  },
+  {
+   "id": "j2",
+   "type": "join",
+   "x": 2240,
+   "y": 180,
+   "fields": {
+    "sep": "\n\nPOEM AND TRANSCRIPT (the poem as written first, then its blind transcript):\n"
+   },
+   "w": 200,
+   "name": "Card + poem and transcript"
+  },
+  {
+   "id": "checker",
+   "type": "llm",
+   "x": 2600,
+   "y": 180,
+   "fields": {
+    "model": "z-ai/glm-5.3-flash",
+    "system": "You are a poetry-form auditor. The input gives a POEM CARD (POEM name, THEME, SCHEME: AABB, METER: 8 syllables every line, END WORDS for lines 1-4), then the POEM as written (exactly the four lines the poet produced), then a TRANSCRIPT - what a blind listener model heard when the poem was read aloud; it never saw the poem. Score in exactly this format:\nEND WORDS: <number of the poem's 4 lines whose last word is exactly the card's end word for that line, ignoring capitalisation> of 4\nMETER: <number of the poem's 4 lines that have exactly 8 syllables> of 4\nMETER DETAIL: L1 <count> / L2 <count> / L3 <count> / L4 <count>\nHEARD END WORDS: <number of the card's 4 end words that appear in the transcript in card order, as whole words, ignoring capitalisation and punctuation> of 4\nWORDS KEPT: <number of the poem's words that the transcript carries in the same order with the same value - a number heard as words counts as kept> of <the poem's total word count>\nSUMMARY: <one short line naming what held and what failed, and on which channel - FORM for the written poem, EAR for the hearing>\nCount syllables carefully, word by word: a syllable is one vowel sound, a silent final e adds none, and -ed adds a syllable only when it sounds as its own beat. Score strictly from the texts given. A rhyme is in place only when the end words are the card's words - near rhymes do not count.",
+    "maxTokens": 800,
+    "reasoningEffort": "low"
+   },
+   "w": 280,
+   "name": "Form audit - GLM scores end words, meter and what the ear kept",
+   "sizes": {
+    "system": 150
+   }
+  },
+  {
+   "id": "j3",
+   "type": "join",
+   "x": 2960,
+   "y": 480,
+   "fields": {
+    "sep": "\n\nFORM AUDIT:\n"
+   },
+   "w": 200,
+   "name": "Card, poem, transcript + form audit"
+  },
+  {
+   "id": "audit",
+   "type": "decide",
+   "x": 3320,
+   "y": 180,
+   "fields": {
+    "model": "perplexity/pplx-decider-v1.2",
+    "mode": "choose",
+    "question": "The poem should be a four-line poem on the card's theme in AABB form: line 1 ends with the card's first end word, line 2 with its rhyming pair, line 3 with the third end word and line 4 with its rhyming pair, and every line has exactly 8 syllables. The audit in the text scores the written poem's form against the card and what a blind transcription heard of the spoken reading. Choose the one label that best fits the round-1 poem.",
+    "options": "rhymes true\nrhyme slipped\nmeter broke\nvoice garbled it\nnot a poem"
+   },
+   "w": 280,
+   "name": "Rhymes true - audited",
+   "sizes": {
+    "question": 130
+   }
+  },
+  {
+   "id": "editor",
+   "type": "llm",
+   "x": 3320,
+   "y": 480,
+   "fields": {
+    "model": "z-ai/glm-5.3-flash",
+    "system": "You are the poetry editor in a form-audit pipeline. The input gives a POEM CARD, the round-1 POEM, its blind TRANSCRIPT and its FORM AUDIT. Output the CORRECTED POEM: exactly 4 lines and nothing else - no title, no preamble, no notes.\nIf the audit is perfect (END WORDS 4 of 4, METER 4 of 4, HEARD END WORDS 4 of 4), output the round-1 poem VERBATIM, line for line, changing nothing.\nOtherwise rewrite ONLY what failed, keeping the card's theme and every line that already passes:\n- a line whose end word is wrong or whose syllable count is not 8 must be rewritten to end with its carded end word at exactly 8 syllables;\n- a line that passes FORM but whose end word was not heard (an EAR failure) may be rewritten with simpler, clearer words around the same carded end word - the end word itself never changes;\n- count every rewritten line syllable by syllable (a syllable is one vowel sound; a silent final e adds none) and end it with its carded word, no punctuation after it.",
+    "maxTokens": 300,
+    "reasoningEffort": "low"
+   },
+   "w": 280,
+   "name": "Corrected poem - GLM rewrites only the failing lines",
+   "sizes": {
+    "system": 150
+   }
+  },
+  {
+   "id": "voice2",
+   "type": "tts",
+   "x": 3680,
+   "y": 280,
+   "fields": {
+    "model": "Minimax-Speech-2.8-HD",
+    "voice": "Deep_Voice_Man",
+    "response_format": "mp3"
+   },
+   "w": 280,
+   "name": "Corrected reading - MiniMax Speech re-reads the corrected poem",
+   "sizes": {
+    "prompt": 0
+   }
+  },
+  {
+   "id": "hearback2",
+   "type": "transcribe",
+   "x": 4040,
+   "y": 280,
+   "fields": {
+    "model": "whisper-1",
+    "language": "auto"
+   },
+   "w": 280,
+   "name": "Heard back again - Whisper transcribes the corrected reading, blind"
+  },
+  {
+   "id": "j4",
+   "type": "join",
+   "x": 4400,
+   "y": 480,
+   "fields": {
+    "sep": "\n\nTRANSCRIPT (what a blind listener heard when the corrected poem was read aloud; it never saw the poem):\n"
+   },
+   "w": 200,
+   "name": "Corrected poem + re-transcript"
+  },
+  {
+   "id": "j5",
+   "type": "join",
+   "x": 4400,
+   "y": 180,
+   "fields": {
+    "sep": "\n\nPOEM AND TRANSCRIPT (the corrected poem as written first, then its blind transcript):\n"
+   },
+   "w": 200,
+   "name": "Card + corrected poem and transcript"
+  },
+  {
+   "id": "checker2",
+   "type": "llm",
+   "x": 4760,
+   "y": 180,
+   "fields": {
+    "model": "z-ai/glm-5.3-flash",
+    "system": "You are a poetry-form auditor. The input gives a POEM CARD (POEM name, THEME, SCHEME: AABB, METER: 8 syllables every line, END WORDS for lines 1-4), then the POEM as written (exactly the four lines the poet produced), then a TRANSCRIPT - what a blind listener model heard when the poem was read aloud; it never saw the poem. Score in exactly this format:\nEND WORDS: <number of the poem's 4 lines whose last word is exactly the card's end word for that line, ignoring capitalisation> of 4\nMETER: <number of the poem's 4 lines that have exactly 8 syllables> of 4\nMETER DETAIL: L1 <count> / L2 <count> / L3 <count> / L4 <count>\nHEARD END WORDS: <number of the card's 4 end words that appear in the transcript in card order, as whole words, ignoring capitalisation and punctuation> of 4\nWORDS KEPT: <number of the poem's words that the transcript carries in the same order with the same value - a number heard as words counts as kept> of <the poem's total word count>\nSUMMARY: <one short line naming what held and what failed, and on which channel - FORM for the written poem, EAR for the hearing>\nCount syllables carefully, word by word: a syllable is one vowel sound, a silent final e adds none, and -ed adds a syllable only when it sounds as its own beat. Score strictly from the texts given. A rhyme is in place only when the end words are the card's words - near rhymes do not count.",
+    "maxTokens": 800,
+    "reasoningEffort": "low"
+   },
+   "w": 280,
+   "name": "Form re-audit - GLM scores the corrected poem against the same card",
+   "sizes": {
+    "system": 150
+   }
+  }
+ ],
+ "links": [
+  {
+   "id": "l1",
+   "from": {
+    "node": "setting",
+    "port": "text"
+   },
+   "to": {
+    "node": "director",
+    "port": "prompt"
+   }
+  },
+  {
+   "id": "l2",
+   "from": {
+    "node": "setting",
+    "port": "text"
+   },
+   "to": {
+    "node": "j0",
+    "port": "a"
+   }
+  },
+  {
+   "id": "l3",
+   "from": {
+    "node": "director",
+    "port": "text"
+   },
+   "to": {
+    "node": "j0",
+    "port": "b"
+   }
+  },
+  {
+   "id": "l4",
+   "from": {
+    "node": "j0",
+    "port": "text"
+   },
+   "to": {
+    "node": "poet",
+    "port": "prompt"
+   }
+  },
+  {
+   "id": "l5",
+   "from": {
+    "node": "poet",
+    "port": "text"
+   },
+   "to": {
+    "node": "voice",
+    "port": "prompt"
+   }
+  },
+  {
+   "id": "l6",
+   "from": {
+    "node": "voice",
+    "port": "audio"
+   },
+   "to": {
+    "node": "hearback",
+    "port": "audio"
+   }
+  },
+  {
+   "id": "l7",
+   "from": {
+    "node": "poet",
+    "port": "text"
+   },
+   "to": {
+    "node": "j1",
+    "port": "a"
+   }
+  },
+  {
+   "id": "l8",
+   "from": {
+    "node": "hearback",
+    "port": "text"
+   },
+   "to": {
+    "node": "j1",
+    "port": "b"
+   }
+  },
+  {
+   "id": "l9",
+   "from": {
+    "node": "director",
+    "port": "text"
+   },
+   "to": {
+    "node": "j2",
+    "port": "a"
+   }
+  },
+  {
+   "id": "l10",
+   "from": {
+    "node": "j1",
+    "port": "text"
+   },
+   "to": {
+    "node": "j2",
+    "port": "b"
+   }
+  },
+  {
+   "id": "l11",
+   "from": {
+    "node": "j2",
+    "port": "text"
+   },
+   "to": {
+    "node": "checker",
+    "port": "prompt"
+   }
+  },
+  {
+   "id": "l12",
+   "from": {
+    "node": "j2",
+    "port": "text"
+   },
+   "to": {
+    "node": "j3",
+    "port": "a"
+   }
+  },
+  {
+   "id": "l13",
+   "from": {
+    "node": "checker",
+    "port": "text"
+   },
+   "to": {
+    "node": "j3",
+    "port": "b"
+   }
+  },
+  {
+   "id": "l14",
+   "from": {
+    "node": "j3",
+    "port": "text"
+   },
+   "to": {
+    "node": "audit",
+    "port": "text"
+   }
+  },
+  {
+   "id": "l15",
+   "from": {
+    "node": "j3",
+    "port": "text"
+   },
+   "to": {
+    "node": "editor",
+    "port": "prompt"
+   }
+  },
+  {
+   "id": "l16",
+   "from": {
+    "node": "editor",
+    "port": "text"
+   },
+   "to": {
+    "node": "voice2",
+    "port": "prompt"
+   }
+  },
+  {
+   "id": "l17",
+   "from": {
+    "node": "voice2",
+    "port": "audio"
+   },
+   "to": {
+    "node": "hearback2",
+    "port": "audio"
+   }
+  },
+  {
+   "id": "l18",
+   "from": {
+    "node": "editor",
+    "port": "text"
+   },
+   "to": {
+    "node": "j4",
+    "port": "a"
+   }
+  },
+  {
+   "id": "l19",
+   "from": {
+    "node": "hearback2",
+    "port": "text"
+   },
+   "to": {
+    "node": "j4",
+    "port": "b"
+   }
+  },
+  {
+   "id": "l20",
+   "from": {
+    "node": "director",
+    "port": "text"
+   },
+   "to": {
+    "node": "j5",
+    "port": "a"
+   }
+  },
+  {
+   "id": "l21",
+   "from": {
+    "node": "j4",
+    "port": "text"
+   },
+   "to": {
+    "node": "j5",
+    "port": "b"
+   }
+  },
+  {
+   "id": "l22",
+   "from": {
+    "node": "j5",
+    "port": "text"
+   },
+   "to": {
+    "node": "checker2",
+    "port": "prompt"
+   }
+  }
+ ],
+ "nid": 40,
+ "lid": 40,
+ "view": {
+  "panX": 40,
+  "panY": 40,
+  "scale": 0.5
+ }
+}
