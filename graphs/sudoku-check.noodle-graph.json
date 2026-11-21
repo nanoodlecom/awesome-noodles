@@ -1,0 +1,533 @@
+{
+ "v": 1,
+ "nodes": [
+  {
+   "id": "c1",
+   "type": "comment",
+   "x": 60,
+   "y": 30,
+   "fields": {
+    "text": "Can a picture SOLVE A SUDOKU - and can a judge prove it without ever seeing the answer? A GLM director picks one 4x4 Sudoku from a spec menu printed in its own prompt (four puzzles; each has exactly 7 given digits and exactly one completion) and copies out a SUDOKU CARD carrying the givens grid only - the card contains no solution. A second GLM, the solver, must compute the unique completion from the givens alone: in a 4x4 Sudoku every row, every column and every 2x2 box must hold the digits 1, 2, 3 and 4 exactly once. A third GLM turns the solved grid into one painter prompt for a large flat Sudoku poster - thin cell lines, thick box borders, one bold digit per cell. Muse paints it. A blind Gemini reader, who never saw the card or the solution, transcribes the painted grid cell by cell. A GLM auditor then scores the transcription against the LAW and the card's givens alone - givens kept, rows all-different, columns all-different, boxes all-different, grid complete - because the puzzle's solution is unique, a complete grid that keeps the givens and breaks no unit IS the solution, so no answer key is ever shown to a judge. A Decide judge headlines round 1. That verdict is not the deliverable: a GLM editor turns the audit into cell-level edit notes, deriving each broken cell's forced digit from the givens and the law (gated - on a perfect audit it must demand a verbatim unchanged copy), Muse Edit repairs the poster, and a blind re-read plus the same auditor re-score the corrected poster against the same card. The corrected poster is the flow's final output."
+   },
+   "w": 900,
+   "name": "Sudoku check"
+  },
+  {
+   "id": "setting",
+   "type": "text",
+   "x": 60,
+   "y": 300,
+   "fields": {
+    "text": "A large flat printed Sudoku poster on a plain cream background, straight-on view: a square 4x4 grid of 16 big cells, thin grey lines between cells and thick black lines around each 2x2 box, one large bold black digit centred in every cell, no other decoration yet."
+   },
+   "w": 300,
+   "name": "Poster setting"
+  },
+  {
+   "id": "director",
+   "type": "llm",
+   "x": 440,
+   "y": 280,
+   "fields": {
+    "model": "z-ai/glm-5.3-flash",
+    "system": "You are a puzzle editor. Given a POSTER SETTING, design a SUDOKU CARD for one 4x4 Sudoku poster. Choose ONE puzzle from this menu ONLY, and copy its givens grid EXACTLY - every given digit in its exact cell, every dot a dot:\n\nTHE LAW (for the solver who comes after you): the grid is 4 rows by 4 columns; every row, every column and every 2x2 box must end up holding the digits 1, 2, 3 and 4 exactly once. Each menu puzzle has exactly 7 givens and exactly one completion.\n\nMENU (rows are given top to bottom; a dot means the cell starts empty):\n1. CORNERS\n1 . . 4\n. 4 . .\n2 1 . .\n4 . . 1\n2. BOOKENDS\n2 1 . 3\n. . . .\n. 4 . .\n3 2 . 4\n3. CROSSROADS\n3 4 . 1\n. . 4 .\n. 1 . 2\n. . 1 .\n4. STAIRCASE\n. 3 1 .\n2 . 3 .\n3 4 . .\n. . . 3\n\nOutput ONLY the card, in exactly this format, copying the chosen puzzle's givens grid without changing any of it:\nSUDOKU: <the puzzle name>\nGIVENS:\n<row 1: four tokens separated by single spaces - each a digit 1-4 or a dot>\n<row 2: four tokens separated by single spaces>\n<row 3: four tokens separated by single spaces>\n<row 4: four tokens separated by single spaces>\nGIVEN COUNT: 7\nNo other text.",
+    "maxTokens": 500,
+    "reasoningEffort": "low"
+   },
+   "w": 280,
+   "name": "Sudoku card - GLM picks a puzzle and copies its exact givens grid",
+   "sizes": {
+    "system": 150
+   }
+  },
+  {
+   "id": "j0",
+   "type": "join",
+   "x": 800,
+   "y": 480,
+   "fields": {
+    "sep": "\n\nSUDOKU CARD (the puzzle - its name and its givens grid; its exact wording must reach the solver):\n"
+   },
+   "w": 200,
+   "name": "Setting + sudoku card"
+  },
+  {
+   "id": "stylist",
+   "type": "llm",
+   "x": 1160,
+   "y": 280,
+   "fields": {
+    "model": "z-ai/glm-5.3-flash",
+    "system": "You turn a SOLVED GRID into ONE prompt for an AI image generator. The input is a solved 4x4 Sudoku grid (four lines after 'SOLVED GRID:', each four digits separated by single spaces, rows top to bottom). Write a single-paragraph prompt for a large flat Sudoku poster, demanding all of this:\n- A plain cream background and one large square 4x4 grid in the middle, straight-on view: thin grey lines between the 16 cells, thick black lines around the outer border and around each 2x2 box (a thick vertical line between columns 2 and 3, a thick horizontal line between rows 2 and 3).\n- Exactly one digit per cell: a large, bold, black, perfectly legible digit centred in each cell, and the digits are exactly the solved grid's digits, cell for cell, row by row - name every row's four digits in the prompt, in order, so all 16 digits are spelled out.\n- No other printed words, letters, numbers or symbols anywhere; no hands, pencils, shadows or decoration; flat even light, crisp edges.\nOutput ONLY the image prompt, one paragraph, no preamble.",
+    "maxTokens": 700,
+    "reasoningEffort": "low"
+   },
+   "w": 280,
+   "name": "Sudoku brief - GLM turns the solved grid into a poster painter prompt",
+   "sizes": {
+    "system": 150
+   }
+  },
+  {
+   "id": "paint",
+   "type": "image",
+   "x": 1520,
+   "y": 280,
+   "fields": {
+    "model": "meta/muse-image/text-to-image",
+    "size": "1:1",
+    "variations": "1"
+   },
+   "w": 280,
+   "name": "Poster - Muse paints the completed Sudoku grid"
+  },
+  {
+   "id": "surveyor",
+   "type": "llm",
+   "x": 1880,
+   "y": 280,
+   "fields": {
+    "model": "google/gemini-3.8-flash",
+    "system": "You are a Sudoku inspector examining a flat poster. You do not know what was planned - report only what you actually see, in exactly this format:\nGRID READ:\nROW 1: <four tokens separated by single spaces - the digit you see in each cell of the top row, left to right; a dot . if the cell is empty; a question mark ? if a mark is present but illegible>\nROW 2: <four tokens, second row>\nROW 3: <four tokens, third row>\nROW 4: <four tokens, bottom row>\nEXTRA: <anything that is not the grid and its 16 digits - a printed word, an extra digit outside the grid, a second grid, a decoration, a digit straddling two cells; 'none' if there is nothing of the kind>\nRead each cell by its position in the grid (rows top to bottom, columns left to right), not by the order digits catch your eye. Report the digit you actually see even if it duplicates a neighbour or looks wrong for the puzzle - that mismatch is exactly what must be visible in your report.",
+    "maxTokens": 1100,
+    "reasoningEffort": "low"
+   },
+   "w": 280,
+   "name": "Sudoku read - Gemini transcribes every cell of the painted grid, blind",
+   "sizes": {
+    "system": 150
+   }
+  },
+  {
+   "id": "j1",
+   "type": "join",
+   "x": 2240,
+   "y": 180,
+   "fields": {
+    "sep": "\n\nSUDOKU READ (a blind inspector transcribed only what it could see - the digit in every cell; it never saw the sudoku card or the solution):\n"
+   },
+   "w": 200,
+   "name": "Sudoku card + sudoku read"
+  },
+  {
+   "id": "checker",
+   "type": "llm",
+   "x": 2600,
+   "y": 400,
+   "fields": {
+    "model": "z-ai/glm-5.3-flash",
+    "system": "You are a Sudoku auditor. The input gives a SUDOKU CARD (SUDOKU name, a GIVENS grid of four rows - each four tokens separated by single spaces, a digit 1-4 or a dot - and GIVEN COUNT: 7) and then a SUDOKU READ from a blind inspector (GRID READ with ROW 1 to ROW 4 in the same token shape, plus EXTRA). The law: a completed 4x4 Sudoku holds the digits 1, 2, 3 and 4 exactly once in every row, every column and every 2x2 box (box 1 = rows 1-2, cols 1-2; box 2 = rows 1-2, cols 3-4; box 3 = rows 3-4, cols 1-2; box 4 = rows 3-4, cols 3-4). The card's puzzle has exactly one solution, so a complete read that keeps every given and breaks no unit is that solution - you need no answer key. Score in exactly this format:\nGIVENS: <number of the card's 7 given digits that appear at the same cell in the read> of 7\nROWS: <number of the 4 read rows whose four tokens are exactly the digits 1, 2, 3, 4 in some order> of 4\nCOLUMNS: <number of the 4 read columns whose four tokens are exactly the digits 1, 2, 3, 4 in some order> of 4\nBOXES: <number of the 4 read boxes whose four tokens are exactly the digits 1, 2, 3, 4 in some order> of 4\nCOMPLETE: <YES if all 16 read cells are digits; NO otherwise>\nERRORS: <every problem, named by cell as R<row>C<column> - each given that moved or changed, each duplicated or missing digit per broken row, column or box, each blank or illegible cell - separated by '; '; 'none' if there are none>\nEXTRA: <the read's EXTRA, or 'none'>\nSUMMARY: <one short line naming what held and what failed>\nScore strictly from the two texts. Check every unit yourself, cell by cell; do not assume a unit is fine because its neighbours are.",
+    "maxTokens": 1200,
+    "reasoningEffort": "low"
+   },
+   "w": 280,
+   "name": "Sudoku audit - GLM scores givens, rows, columns and boxes against the law",
+   "sizes": {
+    "system": 150
+   }
+  },
+  {
+   "id": "j2",
+   "type": "join",
+   "x": 2600,
+   "y": 180,
+   "fields": {
+    "sep": "\n\nSUDOKU AUDIT:\n"
+   },
+   "w": 200,
+   "name": "Card, sudoku read + sudoku audit"
+  },
+  {
+   "id": "audit",
+   "type": "decide",
+   "x": 2960,
+   "y": 180,
+   "fields": {
+    "model": "perplexity/pplx-decider-v1.2",
+    "mode": "choose",
+    "question": "The picture should be a completed 4x4 Sudoku poster: a square grid with thin cell lines and thick 2x2 box lines, one bold digit in each of the 16 cells, every row, column and 2x2 box holding the digits 1, 2, 3 and 4 exactly once, and the puzzle's 7 given digits unmoved in their cells. The audit in the text scores a blind transcription of the poster against the givens card and the Sudoku law. Choose the one label that best fits the round-1 picture.",
+    "options": "solution holds\nunits broken\ngivens moved\ncells blank\nnot a sudoku"
+   },
+   "w": 280,
+   "name": "Solution holds - audited",
+   "sizes": {
+    "question": 130
+   }
+  },
+  {
+   "id": "editor",
+   "type": "llm",
+   "x": 2960,
+   "y": 520,
+   "fields": {
+    "model": "z-ai/glm-5.3-flash",
+    "system": "You are the Sudoku editor in a puzzle pipeline. The input gives a SUDOKU CARD, a blind SUDOKU READ and a SUDOKU AUDIT of the round-1 picture. Write ONE edit instruction for an image editor working on that picture, in at most 140 words.\nIf the audit shows a perfect solution (GIVENS 7 of 7, ROWS 4 of 4, COLUMNS 4 of 4, BOXES 4 of 4, COMPLETE: YES, EXTRA: none), output exactly this and nothing else: 'Reproduce this Sudoku poster completely unchanged - same grid, same lines, same digit in every cell. Do not move, add, remove or change any digit.'\nOtherwise: solve the card's puzzle yourself from its givens (every row, column and 2x2 box must hold 1, 2, 3 and 4 exactly once; the solution is unique) and state the full target end state - the completed grid, row by row - then add the audit's specific failures as concrete cell-level demands, naming each broken cell as R<row>C<column> with the digit it must show and the digit it shows now (for example: 'set R2C3 to 1 - it currently shows 3'). Never ask for any printed word, letter or symbol other than the grid's digits.",
+    "maxTokens": 450,
+    "reasoningEffort": "low"
+   },
+   "w": 280,
+   "name": "Edit notes - GLM derives each broken cell's forced digit and writes the fix",
+   "sizes": {
+    "system": 150
+   }
+  },
+  {
+   "id": "fix",
+   "type": "edit",
+   "x": 3320,
+   "y": 520,
+   "fields": {
+    "model": "meta/muse-image/edit",
+    "size": "auto"
+   },
+   "w": 280,
+   "name": "Corrected poster - Muse Edit repairs the broken cells"
+  },
+  {
+   "id": "surveyor2",
+   "type": "llm",
+   "x": 3680,
+   "y": 520,
+   "fields": {
+    "model": "google/gemini-3.8-flash",
+    "system": "You are a Sudoku inspector examining a flat poster. You do not know what was planned - report only what you actually see, in exactly this format:\nGRID READ:\nROW 1: <four tokens separated by single spaces - the digit you see in each cell of the top row, left to right; a dot . if the cell is empty; a question mark ? if a mark is present but illegible>\nROW 2: <four tokens, second row>\nROW 3: <four tokens, third row>\nROW 4: <four tokens, bottom row>\nEXTRA: <anything that is not the grid and its 16 digits - a printed word, an extra digit outside the grid, a second grid, a decoration, a digit straddling two cells; 'none' if there is nothing of the kind>\nRead each cell by its position in the grid (rows top to bottom, columns left to right), not by the order digits catch your eye. Report the digit you actually see even if it duplicates a neighbour or looks wrong for the puzzle - that mismatch is exactly what must be visible in your report.",
+    "maxTokens": 1100,
+    "reasoningEffort": "low"
+   },
+   "w": 280,
+   "name": "Re-read - Gemini transcribes the corrected poster's grid, blind",
+   "sizes": {
+    "system": 150
+   }
+  },
+  {
+   "id": "j4",
+   "type": "join",
+   "x": 4040,
+   "y": 420,
+   "fields": {
+    "sep": "\n\nSUDOKU READ (a blind inspector transcribed only what it could see in the corrected picture - the digit in every cell; it never saw the sudoku card or the solution):\n"
+   },
+   "w": 200,
+   "name": "Sudoku card + re-read"
+  },
+  {
+   "id": "checker2",
+   "type": "llm",
+   "x": 4400,
+   "y": 520,
+   "fields": {
+    "model": "z-ai/glm-5.3-flash",
+    "system": "You are a Sudoku auditor. The input gives a SUDOKU CARD (SUDOKU name, a GIVENS grid of four rows - each four tokens separated by single spaces, a digit 1-4 or a dot - and GIVEN COUNT: 7) and then a SUDOKU READ from a blind inspector (GRID READ with ROW 1 to ROW 4 in the same token shape, plus EXTRA). The law: a completed 4x4 Sudoku holds the digits 1, 2, 3 and 4 exactly once in every row, every column and every 2x2 box (box 1 = rows 1-2, cols 1-2; box 2 = rows 1-2, cols 3-4; box 3 = rows 3-4, cols 1-2; box 4 = rows 3-4, cols 3-4). The card's puzzle has exactly one solution, so a complete read that keeps every given and breaks no unit is that solution - you need no answer key. Score in exactly this format:\nGIVENS: <number of the card's 7 given digits that appear at the same cell in the read> of 7\nROWS: <number of the 4 read rows whose four tokens are exactly the digits 1, 2, 3, 4 in some order> of 4\nCOLUMNS: <number of the 4 read columns whose four tokens are exactly the digits 1, 2, 3, 4 in some order> of 4\nBOXES: <number of the 4 read boxes whose four tokens are exactly the digits 1, 2, 3, 4 in some order> of 4\nCOMPLETE: <YES if all 16 read cells are digits; NO otherwise>\nERRORS: <every problem, named by cell as R<row>C<column> - each given that moved or changed, each duplicated or missing digit per broken row, column or box, each blank or illegible cell - separated by '; '; 'none' if there are none>\nEXTRA: <the read's EXTRA, or 'none'>\nSUMMARY: <one short line naming what held and what failed>\nScore strictly from the two texts. Check every unit yourself, cell by cell; do not assume a unit is fine because its neighbours are.",
+    "maxTokens": 1200,
+    "reasoningEffort": "low"
+   },
+   "w": 280,
+   "name": "Sudoku re-audit - GLM scores the corrected poster against the same card and law",
+   "sizes": {
+    "system": 150
+   }
+  },
+  {
+   "id": "ask",
+   "type": "text",
+   "x": 1520,
+   "y": 520,
+   "fields": {
+    "text": "Inspect the Sudoku poster in the attached picture now, following your instructions exactly."
+   },
+   "w": 240,
+   "name": "Inspect ask"
+  },
+  {
+   "id": "ask2",
+   "type": "text",
+   "x": 3320,
+   "y": 900,
+   "fields": {
+    "text": "Inspect the Sudoku poster in the attached picture now, following your instructions exactly."
+   },
+   "w": 240,
+   "name": "Re-inspect ask"
+  },
+  {
+   "id": "solver",
+   "type": "llm",
+   "x": 1160,
+   "y": 480,
+   "fields": {
+    "model": "z-ai/glm-5.3-flash",
+    "system": "You are a Sudoku solver. The input gives a POSTER SETTING first, then a SUDOKU CARD with a GIVENS grid for a 4x4 Sudoku (rows top to bottom; each row is four tokens separated by single spaces - a digit 1-4 or a dot for an empty cell). Solve the puzzle: fill every dot so that every row, every column and every 2x2 box (top-left cells R1-2 C1-2, top-right R1-2 C3-4, bottom-left R3-4 C1-2, bottom-right R3-4 C3-4) holds the digits 1, 2, 3 and 4 exactly once, and every given digit stays in its cell. The puzzle has exactly one solution - find it by logic, checking each candidate digit against its row, column and box.\nOutput ONLY the solved grid, in exactly this format:\nSOLVED GRID:\n<row 1: four digits separated by single spaces>\n<row 2: four digits separated by single spaces>\n<row 3: four digits separated by single spaces>\n<row 4: four digits separated by single spaces>\nNo other text.",
+    "maxTokens": 1200,
+    "reasoningEffort": "low"
+   },
+   "w": 280,
+   "name": "Solution - GLM solves the puzzle from the givens alone",
+   "sizes": {
+    "system": 150
+   }
+  }
+ ],
+ "links": [
+  {
+   "id": "l1",
+   "from": {
+    "node": "setting",
+    "port": "text"
+   },
+   "to": {
+    "node": "director",
+    "port": "prompt"
+   }
+  },
+  {
+   "id": "l2",
+   "from": {
+    "node": "director",
+    "port": "text"
+   },
+   "to": {
+    "node": "j0",
+    "port": "b"
+   }
+  },
+  {
+   "id": "l12",
+   "from": {
+    "node": "setting",
+    "port": "text"
+   },
+   "to": {
+    "node": "j0",
+    "port": "a"
+   }
+  },
+  {
+   "id": "l13",
+   "from": {
+    "node": "j0",
+    "port": "text"
+   },
+   "to": {
+    "node": "solver",
+    "port": "prompt"
+   }
+  },
+  {
+   "id": "l3",
+   "from": {
+    "node": "stylist",
+    "port": "text"
+   },
+   "to": {
+    "node": "paint",
+    "port": "prompt"
+   }
+  },
+  {
+   "id": "l4",
+   "from": {
+    "node": "paint",
+    "port": "image"
+   },
+   "to": {
+    "node": "surveyor",
+    "port": "img1"
+   }
+  },
+  {
+   "id": "l7",
+   "from": {
+    "node": "director",
+    "port": "text"
+   },
+   "to": {
+    "node": "j1",
+    "port": "a"
+   }
+  },
+  {
+   "id": "l8",
+   "from": {
+    "node": "surveyor",
+    "port": "text"
+   },
+   "to": {
+    "node": "j1",
+    "port": "b"
+   }
+  },
+  {
+   "id": "l11",
+   "from": {
+    "node": "j1",
+    "port": "text"
+   },
+   "to": {
+    "node": "checker",
+    "port": "prompt"
+   }
+  },
+  {
+   "id": "l14",
+   "from": {
+    "node": "j1",
+    "port": "text"
+   },
+   "to": {
+    "node": "j2",
+    "port": "a"
+   }
+  },
+  {
+   "id": "l15",
+   "from": {
+    "node": "checker",
+    "port": "text"
+   },
+   "to": {
+    "node": "j2",
+    "port": "b"
+   }
+  },
+  {
+   "id": "l16",
+   "from": {
+    "node": "j2",
+    "port": "text"
+   },
+   "to": {
+    "node": "audit",
+    "port": "text"
+   }
+  },
+  {
+   "id": "l17",
+   "from": {
+    "node": "paint",
+    "port": "image"
+   },
+   "to": {
+    "node": "audit",
+    "port": "img1"
+   }
+  },
+  {
+   "id": "l18",
+   "from": {
+    "node": "j2",
+    "port": "text"
+   },
+   "to": {
+    "node": "editor",
+    "port": "prompt"
+   }
+  },
+  {
+   "id": "l19",
+   "from": {
+    "node": "editor",
+    "port": "text"
+   },
+   "to": {
+    "node": "fix",
+    "port": "prompt"
+   }
+  },
+  {
+   "id": "l20",
+   "from": {
+    "node": "paint",
+    "port": "image"
+   },
+   "to": {
+    "node": "fix",
+    "port": "image"
+   }
+  },
+  {
+   "id": "l21",
+   "from": {
+    "node": "fix",
+    "port": "image"
+   },
+   "to": {
+    "node": "surveyor2",
+    "port": "img1"
+   }
+  },
+  {
+   "id": "l22",
+   "from": {
+    "node": "director",
+    "port": "text"
+   },
+   "to": {
+    "node": "j4",
+    "port": "a"
+   }
+  },
+  {
+   "id": "l23",
+   "from": {
+    "node": "surveyor2",
+    "port": "text"
+   },
+   "to": {
+    "node": "j4",
+    "port": "b"
+   }
+  },
+  {
+   "id": "l24",
+   "from": {
+    "node": "j4",
+    "port": "text"
+   },
+   "to": {
+    "node": "checker2",
+    "port": "prompt"
+   }
+  },
+  {
+   "id": "l39",
+   "from": {
+    "node": "ask",
+    "port": "text"
+   },
+   "to": {
+    "node": "surveyor",
+    "port": "prompt"
+   }
+  },
+  {
+   "id": "l40",
+   "from": {
+    "node": "ask2",
+    "port": "text"
+   },
+   "to": {
+    "node": "surveyor2",
+    "port": "prompt"
+   }
+  },
+  {
+   "id": "l13b",
+   "from": {
+    "node": "solver",
+    "port": "text"
+   },
+   "to": {
+    "node": "stylist",
+    "port": "prompt"
+   }
+  }
+ ],
+ "nid": 32,
+ "lid": 40,
+ "view": {
+  "panX": 40,
+  "panY": 40,
+  "scale": 0.5
+ }
+}

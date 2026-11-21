@@ -63,6 +63,7 @@ Do not hand-edit these files — run `node scripts/make-recipes.mjs` after chang
 | [Stereo check, disparity-audited](stereo-check.md) | [`graphs/stereo-check.noodle-graph.json`](../graphs/stereo-check.noodle-graph.json) | defaults in graph |
 | [Storyboard relay](storyboard-relay.md) | [`graphs/storyboard-relay.noodle-graph.json`](../graphs/storyboard-relay.noodle-graph.json) | defaults in graph |
 | [Subject anywhere, preservation-audited](subject-anywhere.md) | [`graphs/subject-anywhere.noodle-graph.json`](../graphs/subject-anywhere.noodle-graph.json) | needs Product photo |
+| [Sudoku check, constraint-audited](sudoku-check.md) | [`graphs/sudoku-check.noodle-graph.json`](../graphs/sudoku-check.noodle-graph.json) | defaults in graph |
 | [Talking photo](talking-photo.md) | [`graphs/talking-photo.noodle-graph.json`](../graphs/talking-photo.noodle-graph.json) | needs Subject photo |
 | [Tile check, seam-audited](tile-check.md) | [`graphs/tile-check.noodle-graph.json`](../graphs/tile-check.noodle-graph.json) | defaults in graph |
 | [Turnaround check, viewpoint-audited](turnaround-check.md) | [`graphs/turnaround-check.noodle-graph.json`](../graphs/turnaround-check.noodle-graph.json) | defaults in graph |
