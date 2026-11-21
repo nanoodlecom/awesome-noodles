@@ -1,0 +1,505 @@
+{
+ "v": 1,
+ "nodes": [
+  {
+   "id": "c1",
+   "type": "comment",
+   "x": 60,
+   "y": 30,
+   "fields": {
+    "text": "Can a picture OBEY THE PARITY LAW OF PLAIN WEAVE? A GLM director picks one woven swatch from a spec menu printed in its own prompt (four swatches; each a WARP family - vertical strands of one colour and material, exactly 5 strands - a WEFT family - horizontal strands of a contrasting colour and material, exactly 4 strands - and a START state: which family lies on top at the top-left crossing) and copies out a WEAVE CARD with the full 4-row by 5-column over/under grid the plain-weave law forces: at every crossing exactly one family lies on top, and the top family flips at every step right and at every step down. A second GLM turns the card into one macro-photograph prompt for a woven swatch filling the frame - thick yarn strands, the over strand at each crossing visibly continuous, the under strand diving beneath it - with no printed words, letters or labels anywhere, because print would cheat the weave: the crossings must exist only as yarn. Muse paints it. A blind Gemini reader, who never saw the card, reports only what it can see: each family's colour and strand count, and which family lies on top at every one of the 20 crossings, row by row. A GLM auditor recomputes the parity grid from the card's start state, scores PARITY cell by cell, START, WARP and WEFT, and EXTRA. A Decide judge headlines round 1. That verdict is not the deliverable: a GLM editor turns the audit into one concrete edit instruction (gated - on a perfect audit it must demand a verbatim unchanged copy), Muse Edit repairs the crossings, and a blind re-read plus the same auditor re-score the corrected swatch against the same card. The corrected swatch is the flow's final output."
+   },
+   "w": 900,
+   "name": "Weave check"
+  },
+  {
+   "id": "setting",
+   "type": "text",
+   "x": 60,
+   "y": 300,
+   "fields": {
+    "text": "An extreme close-up photograph of a small hand-woven fabric swatch filling the whole frame edge to edge: thick soft yarn strands woven in plain weave, one family of strands running vertically and one running horizontally, every crossing crisp and readable, even light, no hands, no loom, no tools, and no printed words, letters or labels anywhere yet."
+   },
+   "w": 300,
+   "name": "Swatch setting"
+  },
+  {
+   "id": "director",
+   "type": "llm",
+   "x": 440,
+   "y": 280,
+   "fields": {
+    "model": "z-ai/glm-5.3-flash",
+    "system": "You are a weaver. Given a SWATCH SETTING, design a WEAVE CARD for one plain-weave swatch. Choose ONE swatch from this menu ONLY, and copy its spec EXACTLY - every colour, every material, every strand count, the start state and the whole grid:\n\nMENU (W = the warp strand lies ON TOP at that crossing, F = the weft strand lies ON TOP; rows run top to bottom, columns left to right; the grid is forced by plain-weave parity - the top family flips at every step right and at every step down):\n1. RUST AND CREAM - WARP: rust-red wool, vertical, 5 strands. WEFT: cream wool, horizontal, 4 strands. START: WARP OVER at top-left. GRID: R1: W F W F W / R2: F W F W F / R3: W F W F W / R4: F W F W F.\n2. INDIGO AND OCHRE - WARP: deep indigo cotton, vertical, 5 strands. WEFT: ochre cotton, horizontal, 4 strands. START: WEFT OVER at top-left. GRID: R1: F W F W F / R2: W F W F W / R3: F W F W F / R4: W F W F W.\n3. FOREST AND SKY - WARP: forest-green wool, vertical, 5 strands. WEFT: pale sky-blue wool, horizontal, 4 strands. START: WARP OVER at top-left. GRID: R1: W F W F W / R2: F W F W F / R3: W F W F W / R4: F W F W F.\n4. CHARCOAL AND ROSE - WARP: charcoal-grey cotton, vertical, 5 strands. WEFT: dusty rose cotton, horizontal, 4 strands. START: WEFT OVER at top-left. GRID: R1: F W F W F / R2: W F W F W / R3: F W F W F / R4: W F W F W.\n\nOutput ONLY the card, in exactly this format, copying the chosen swatch's spec without changing any of it:\nWEAVE: <the swatch name>\nWARP: <colour and material>, vertical, 5 strands\nWEFT: <colour and material>, horizontal, 4 strands\nSTART: <WARP OVER or WEFT OVER> at top-left\nGRID:\nR1: <five cells, W or F, separated by single spaces>\nR2: <five cells>\nR3: <five cells>\nR4: <five cells>\nCROSSINGS: 20\nNo other text.",
+    "maxTokens": 500,
+    "reasoningEffort": "low"
+   },
+   "w": 280,
+   "name": "Weave card - GLM picks a swatch and copies its exact family, start and grid spec",
+   "sizes": {
+    "system": 150
+   }
+  },
+  {
+   "id": "j0",
+   "type": "join",
+   "x": 800,
+   "y": 480,
+   "fields": {
+    "sep": "\n\nWEAVE CARD (the swatch - its warp and weft families, the start state and the parity grid; its exact wording must reach the weaver):\n"
+   },
+   "w": 200,
+   "name": "Setting + weave card"
+  },
+  {
+   "id": "stylist",
+   "type": "llm",
+   "x": 800,
+   "y": 280,
+   "fields": {
+    "model": "z-ai/glm-5.3-flash",
+    "system": "You turn a WEAVE CARD into ONE prompt for an AI image generator. The input gives a SWATCH SETTING first, then 'WEAVE CARD' with the warp and weft families, the start state and the over/under GRID (W = warp on top, F = weft on top; rows top to bottom, columns left to right). Write a single-paragraph prompt for an extreme close-up photograph of the woven swatch, demanding all of this:\n- The swatch fills the whole frame edge to edge: exactly 5 thick vertical warp strands in the card's warp colour and material, exactly 4 thick horizontal weft strands in the card's weft colour and material, evenly spaced, straight, running the full height and width of the frame.\n- Plain weave executed exactly as the GRID says: at every crossing, the family the grid puts on top runs visibly CONTINUOUS and unbroken over the other, and the under strand disappears beneath it and re-emerges on the far side. Spell the grid out crossing by crossing in the prompt (for example: 'top row, left to right: warp over, weft over, warp over, weft over, warp over; second row: weft over, warp over, ...'). The top-left crossing must match the card's START.\n- Thick soft yarn with visible fibre texture, even light, every crossing crisp and readable, straight-on view.\n- No printed words, letters, numbers or labels anywhere; no hands, no loom, no tools, no border or background beyond the swatch itself.\nOutput ONLY the image prompt, one paragraph, no preamble.",
+    "maxTokens": 700,
+    "reasoningEffort": "low"
+   },
+   "w": 280,
+   "name": "Weave brief - GLM turns the card into a swatch painter prompt",
+   "sizes": {
+    "system": 150
+   }
+  },
+  {
+   "id": "paint",
+   "type": "image",
+   "x": 1160,
+   "y": 280,
+   "fields": {
+    "model": "meta/muse-image/text-to-image",
+    "size": "1:1",
+    "variations": "1"
+   },
+   "w": 280,
+   "name": "Swatch - Muse paints the woven crossings"
+  },
+  {
+   "id": "surveyor",
+   "type": "llm",
+   "x": 1520,
+   "y": 280,
+   "fields": {
+    "model": "google/gemini-3.8-flash",
+    "system": "You are a weave inspector examining a close-up photograph of a woven swatch. You do not know what was planned - report only what you actually see, in exactly this format:\nWARP SEEN: <the colour of the VERTICAL strands> , <number> strands\nWEFT SEEN: <the colour of the HORIZONTAL strands> , <number> strands\nGRID SEEN:\nR1: <five cells, left to right, separated by single spaces: W if the VERTICAL strand lies on top at that crossing, F if the HORIZONTAL strand lies on top, ? if you genuinely cannot tell>\nR2: <five cells>\nR3: <five cells>\nR4: <five cells>\nEXTRA: <anything that is not yarn - a printed word or letter, a hand, a tool, a strand running diagonally, a loose end inside the frame; 'none' if there is nothing of the kind>\nRows run top to bottom: R1 is the topmost horizontal strand's row of crossings, R4 the bottommost. Judge each crossing by which strand is visibly continuous and unbroken on top and which one dives underneath. Count strands by the distinct parallel strands you can trace across the frame. Do not assume the weave alternates - report the crossings as you see them, even if two neighbours come out the same.",
+    "maxTokens": 1100,
+    "reasoningEffort": "low"
+   },
+   "w": 280,
+   "name": "Weave read - Gemini reports families, counts and the over/under grid, blind",
+   "sizes": {
+    "system": 150
+   }
+  },
+  {
+   "id": "j1",
+   "type": "join",
+   "x": 1880,
+   "y": 180,
+   "fields": {
+    "sep": "\n\nWEAVE READ (a blind inspector reported only what it could see - the strand families, counts and which family lies on top at every crossing; it never saw the weave card):\n"
+   },
+   "w": 200,
+   "name": "Weave card + weave read"
+  },
+  {
+   "id": "checker",
+   "type": "llm",
+   "x": 2240,
+   "y": 400,
+   "fields": {
+    "model": "z-ai/glm-5.3-flash",
+    "system": "You are a weaving auditor. The input gives a WEAVE CARD (WEAVE, WARP and WEFT lines with colours, materials and strand counts, START, a GRID of W/F cells in 4 rows of 5, CROSSINGS) and then a WEAVE READ from a blind inspector (WARP SEEN, WEFT SEEN, GRID SEEN in the same cell format, EXTRA). The plain-weave law: at every crossing exactly one family is on top, and the top family flips at every step right and at every step down - so the card's grid must be exactly the parity grid its START forces (START WARP OVER means cell (row, column), counting from 1 at the top-left, is W when row+column is even and F when it is odd; START WEFT OVER swaps that). Score in exactly this format:\nPARITY: <number of the 20 crossings where GRID SEEN matches the card's GRID cell for cell; a '?' cell never matches> of 20\nPARITY ERRORS: <every mismatching cell as 'R<row>C<column> card <W or F> read <W, F or ?>', separated by '; '; 'none' if there are none>\nSTART: <MATCH if GRID SEEN's R1 first cell equals the card grid's R1 first cell; MISMATCH otherwise>\nWARP: <MATCH if the read's vertical colour names the card's warp colour (a near name for the same colour counts) AND its strand count is 5; otherwise WRONG with what the read reported>\nWEFT: <MATCH if the read's horizontal colour names the card's weft colour (near name counts) AND its strand count is 4; otherwise WRONG with what the read reported>\nEXTRA: <the read's EXTRA, or 'none'>\nSUMMARY: <one short line naming what held and what failed>\nScore strictly from the two texts. Recompute the parity grid from the START yourself and check the card against it before trusting the card's printed grid; if the card's grid itself breaks parity, say so in the SUMMARY.",
+    "maxTokens": 1200,
+    "reasoningEffort": "low"
+   },
+   "w": 280,
+   "name": "Weave audit - GLM recomputes the parity grid and scores every crossing",
+   "sizes": {
+    "system": 150
+   }
+  },
+  {
+   "id": "j2",
+   "type": "join",
+   "x": 2240,
+   "y": 180,
+   "fields": {
+    "sep": "\n\nWEAVE AUDIT:\n"
+   },
+   "w": 200,
+   "name": "Card, weave read + weave audit"
+  },
+  {
+   "id": "audit",
+   "type": "decide",
+   "x": 2600,
+   "y": 180,
+   "fields": {
+    "model": "perplexity/pplx-decider-v1.2",
+    "mode": "choose",
+    "question": "The picture should be a plain-weave swatch: exactly 5 vertical warp strands and 4 horizontal weft strands in the card's colours, with the family on top at every one of the 20 crossings following the card's parity grid (alternating at every step right and down from the carded start corner). The audit in the text scores the blind read against the card. Choose the one label that best fits the round-1 picture.",
+    "options": "weaves true\nparity slips\nfamilies swapped\nstrands miscounted\nnot a weave"
+   },
+   "w": 280,
+   "name": "Weaves true - audited",
+   "sizes": {
+    "question": 130
+   }
+  },
+  {
+   "id": "editor",
+   "type": "llm",
+   "x": 2600,
+   "y": 520,
+   "fields": {
+    "model": "z-ai/glm-5.3-flash",
+    "system": "You are the weave editor in a plain-weave pipeline. The input gives a WEAVE CARD, a blind WEAVE READ and a WEAVE AUDIT of the round-1 picture. Write ONE edit instruction for an image editor working on that picture, in at most 110 words.\nIf the audit shows a perfect weave (PARITY 20 of 20, START: MATCH, WARP: MATCH, WEFT: MATCH, EXTRA: none), output exactly this and nothing else: 'Reproduce this woven swatch completely unchanged - same strands, same colours, same crossings, the same family on top at every crossing. Do not move, add, remove, recolour or reweave anything.'\nOtherwise: first state the full target end state - exactly 5 vertical warp strands in the card's warp colour and exactly 4 horizontal weft strands in the card's weft colour, plain weave with the top family alternating at every step right and down from the card's START corner, no printed words or letters - then add the audit's specific failures as concrete demands, locating each fix by row and column (for example: 'at row 2 column 3, bring the vertical warp strand up over the horizontal weft strand so it runs continuous across that crossing'). Never ask for any word, letter or label to be printed.",
+    "maxTokens": 350,
+    "reasoningEffort": "low"
+   },
+   "w": 280,
+   "name": "Edit notes - GLM turns the weave audit into crossing-level fix instructions",
+   "sizes": {
+    "system": 150
+   }
+  },
+  {
+   "id": "fix",
+   "type": "edit",
+   "x": 2960,
+   "y": 520,
+   "fields": {
+    "model": "meta/muse-image/edit",
+    "size": "auto"
+   },
+   "w": 280,
+   "name": "Corrected swatch - Muse Edit repairs the crossings"
+  },
+  {
+   "id": "surveyor2",
+   "type": "llm",
+   "x": 3320,
+   "y": 520,
+   "fields": {
+    "model": "google/gemini-3.8-flash",
+    "system": "You are a weave inspector examining a close-up photograph of a woven swatch. You do not know what was planned - report only what you actually see, in exactly this format:\nWARP SEEN: <the colour of the VERTICAL strands> , <number> strands\nWEFT SEEN: <the colour of the HORIZONTAL strands> , <number> strands\nGRID SEEN:\nR1: <five cells, left to right, separated by single spaces: W if the VERTICAL strand lies on top at that crossing, F if the HORIZONTAL strand lies on top, ? if you genuinely cannot tell>\nR2: <five cells>\nR3: <five cells>\nR4: <five cells>\nEXTRA: <anything that is not yarn - a printed word or letter, a hand, a tool, a strand running diagonally, a loose end inside the frame; 'none' if there is nothing of the kind>\nRows run top to bottom: R1 is the topmost horizontal strand's row of crossings, R4 the bottommost. Judge each crossing by which strand is visibly continuous and unbroken on top and which one dives underneath. Count strands by the distinct parallel strands you can trace across the frame. Do not assume the weave alternates - report the crossings as you see them, even if two neighbours come out the same.",
+    "maxTokens": 1100,
+    "reasoningEffort": "low"
+   },
+   "w": 280,
+   "name": "Re-read - Gemini reports the corrected swatch's grid, blind",
+   "sizes": {
+    "system": 150
+   }
+  },
+  {
+   "id": "j4",
+   "type": "join",
+   "x": 3680,
+   "y": 420,
+   "fields": {
+    "sep": "\n\nWEAVE READ (a blind inspector reported only what it could see in the corrected picture - the strand families, counts and which family lies on top at every crossing; it never saw the weave card):\n"
+   },
+   "w": 200,
+   "name": "Weave card + re-read"
+  },
+  {
+   "id": "checker2",
+   "type": "llm",
+   "x": 4040,
+   "y": 520,
+   "fields": {
+    "model": "z-ai/glm-5.3-flash",
+    "system": "You are a weaving auditor. The input gives a WEAVE CARD (WEAVE, WARP and WEFT lines with colours, materials and strand counts, START, a GRID of W/F cells in 4 rows of 5, CROSSINGS) and then a WEAVE READ from a blind inspector (WARP SEEN, WEFT SEEN, GRID SEEN in the same cell format, EXTRA). The plain-weave law: at every crossing exactly one family is on top, and the top family flips at every step right and at every step down - so the card's grid must be exactly the parity grid its START forces (START WARP OVER means cell (row, column), counting from 1 at the top-left, is W when row+column is even and F when it is odd; START WEFT OVER swaps that). Score in exactly this format:\nPARITY: <number of the 20 crossings where GRID SEEN matches the card's GRID cell for cell; a '?' cell never matches> of 20\nPARITY ERRORS: <every mismatching cell as 'R<row>C<column> card <W or F> read <W, F or ?>', separated by '; '; 'none' if there are none>\nSTART: <MATCH if GRID SEEN's R1 first cell equals the card grid's R1 first cell; MISMATCH otherwise>\nWARP: <MATCH if the read's vertical colour names the card's warp colour (a near name for the same colour counts) AND its strand count is 5; otherwise WRONG with what the read reported>\nWEFT: <MATCH if the read's horizontal colour names the card's weft colour (near name counts) AND its strand count is 4; otherwise WRONG with what the read reported>\nEXTRA: <the read's EXTRA, or 'none'>\nSUMMARY: <one short line naming what held and what failed>\nScore strictly from the two texts. Recompute the parity grid from the START yourself and check the card against it before trusting the card's printed grid; if the card's grid itself breaks parity, say so in the SUMMARY.",
+    "maxTokens": 1200,
+    "reasoningEffort": "low"
+   },
+   "w": 280,
+   "name": "Weave re-audit - GLM scores the corrected swatch against the same card",
+   "sizes": {
+    "system": 150
+   }
+  },
+  {
+   "id": "ask",
+   "type": "text",
+   "x": 1160,
+   "y": 520,
+   "fields": {
+    "text": "Inspect the woven swatch in the attached picture now, following your instructions exactly."
+   },
+   "w": 240,
+   "name": "Inspect ask"
+  },
+  {
+   "id": "ask2",
+   "type": "text",
+   "x": 2960,
+   "y": 900,
+   "fields": {
+    "text": "Inspect the woven swatch in the attached picture now, following your instructions exactly."
+   },
+   "w": 240,
+   "name": "Re-inspect ask"
+  }
+ ],
+ "links": [
+  {
+   "id": "l1",
+   "from": {
+    "node": "setting",
+    "port": "text"
+   },
+   "to": {
+    "node": "director",
+    "port": "prompt"
+   }
+  },
+  {
+   "id": "l2",
+   "from": {
+    "node": "director",
+    "port": "text"
+   },
+   "to": {
+    "node": "j0",
+    "port": "b"
+   }
+  },
+  {
+   "id": "l12",
+   "from": {
+    "node": "setting",
+    "port": "text"
+   },
+   "to": {
+    "node": "j0",
+    "port": "a"
+   }
+  },
+  {
+   "id": "l13",
+   "from": {
+    "node": "j0",
+    "port": "text"
+   },
+   "to": {
+    "node": "stylist",
+    "port": "prompt"
+   }
+  },
+  {
+   "id": "l3",
+   "from": {
+    "node": "stylist",
+    "port": "text"
+   },
+   "to": {
+    "node": "paint",
+    "port": "prompt"
+   }
+  },
+  {
+   "id": "l4",
+   "from": {
+    "node": "paint",
+    "port": "image"
+   },
+   "to": {
+    "node": "surveyor",
+    "port": "img1"
+   }
+  },
+  {
+   "id": "l7",
+   "from": {
+    "node": "director",
+    "port": "text"
+   },
+   "to": {
+    "node": "j1",
+    "port": "a"
+   }
+  },
+  {
+   "id": "l8",
+   "from": {
+    "node": "surveyor",
+    "port": "text"
+   },
+   "to": {
+    "node": "j1",
+    "port": "b"
+   }
+  },
+  {
+   "id": "l11",
+   "from": {
+    "node": "j1",
+    "port": "text"
+   },
+   "to": {
+    "node": "checker",
+    "port": "prompt"
+   }
+  },
+  {
+   "id": "l14",
+   "from": {
+    "node": "j1",
+    "port": "text"
+   },
+   "to": {
+    "node": "j2",
+    "port": "a"
+   }
+  },
+  {
+   "id": "l15",
+   "from": {
+    "node": "checker",
+    "port": "text"
+   },
+   "to": {
+    "node": "j2",
+    "port": "b"
+   }
+  },
+  {
+   "id": "l16",
+   "from": {
+    "node": "j2",
+    "port": "text"
+   },
+   "to": {
+    "node": "audit",
+    "port": "text"
+   }
+  },
+  {
+   "id": "l17",
+   "from": {
+    "node": "paint",
+    "port": "image"
+   },
+   "to": {
+    "node": "audit",
+    "port": "img1"
+   }
+  },
+  {
+   "id": "l18",
+   "from": {
+    "node": "j2",
+    "port": "text"
+   },
+   "to": {
+    "node": "editor",
+    "port": "prompt"
+   }
+  },
+  {
+   "id": "l19",
+   "from": {
+    "node": "editor",
+    "port": "text"
+   },
+   "to": {
+    "node": "fix",
+    "port": "prompt"
+   }
+  },
+  {
+   "id": "l20",
+   "from": {
+    "node": "paint",
+    "port": "image"
+   },
+   "to": {
+    "node": "fix",
+    "port": "image"
+   }
+  },
+  {
+   "id": "l21",
+   "from": {
+    "node": "fix",
+    "port": "image"
+   },
+   "to": {
+    "node": "surveyor2",
+    "port": "img1"
+   }
+  },
+  {
+   "id": "l22",
+   "from": {
+    "node": "director",
+    "port": "text"
+   },
+   "to": {
+    "node": "j4",
+    "port": "a"
+   }
+  },
+  {
+   "id": "l23",
+   "from": {
+    "node": "surveyor2",
+    "port": "text"
+   },
+   "to": {
+    "node": "j4",
+    "port": "b"
+   }
+  },
+  {
+   "id": "l24",
+   "from": {
+    "node": "j4",
+    "port": "text"
+   },
+   "to": {
+    "node": "checker2",
+    "port": "prompt"
+   }
+  },
+  {
+   "id": "l39",
+   "from": {
+    "node": "ask",
+    "port": "text"
+   },
+   "to": {
+    "node": "surveyor",
+    "port": "prompt"
+   }
+  },
+  {
+   "id": "l40",
+   "from": {
+    "node": "ask2",
+    "port": "text"
+   },
+   "to": {
+    "node": "surveyor2",
+    "port": "prompt"
+   }
+  }
+ ],
+ "nid": 32,
+ "lid": 40,
+ "view": {
+  "panX": 40,
+  "panY": 40,
+  "scale": 0.5
+ }
+}
