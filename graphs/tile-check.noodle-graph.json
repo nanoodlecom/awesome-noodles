@@ -1,0 +1,505 @@
+{
+ "v": 1,
+ "nodes": [
+  {
+   "id": "c1",
+   "type": "comment",
+   "x": 60,
+   "y": 30,
+   "fields": {
+    "text": "Can a picture be a TRUE SEAMLESS TILE? A GLM director picks one tile design from a spec menu printed in its own prompt (four designs; each a background, one main motif, exactly three supporting elements with in-tile positions, and two EDGE CROSSINGS: one element exits the tile's right edge at a stated height and re-enters at the left at the same height, and one element is cut by the top edge at a stated position and continues at the bottom) and copies out a TILE CARD. A second GLM turns the card into one prompt for a flat pattern shown as a 2 by 2 repeat of that single tile - four identical copies, same orientation, no rotation, no mirroring, no grid lines - and Muse paints it. A blind Gemini reader, who never saw the card, reports each quadrant's motif and elements, whether elements crossing the centre vertical and horizontal seams continue aligned across them, and whether elements cut at the outer edges WRAP (a right-edge exit matching a left-edge entry at the same height, a top exit matching a bottom entry). A GLM auditor scores COPIES, MOTIF, ELEMENTS, SEAM V, SEAM H and WRAP against the card. A Decide judge headlines round 1. That verdict is not the deliverable: a GLM editor turns the audit into one concrete edit instruction (gated - on a perfect audit it must demand a verbatim unchanged copy), Muse Edit repairs the pattern, and a blind re-read plus the same auditor re-score the corrected pattern against the same card. The corrected 2 by 2 pattern - a tile that could actually repeat forever - is the flow's final output."
+   },
+   "w": 900,
+   "name": "Tile check"
+  },
+  {
+   "id": "setting",
+   "type": "text",
+   "x": 60,
+   "y": 300,
+   "fields": {
+    "text": "A flat, straight-on seamless repeating surface pattern that fills the whole frame edge to edge, shown as a 2 by 2 repeat of one single tile design (four identical copies in a grid: top-left, top-right, bottom-left, bottom-right), bold flat colours, crisp clean shapes, no text, no borders or grid lines between the copies, no shadows, no three-dimensional objects - a clean fabric or wallpaper pattern."
+   },
+   "w": 300,
+   "name": "Pattern setting"
+  },
+  {
+   "id": "director",
+   "type": "llm",
+   "x": 440,
+   "y": 280,
+   "fields": {
+    "model": "z-ai/glm-5.3-flash",
+    "system": "You are a surface-pattern designer. Given a PATTERN SETTING, design a TILE CARD for one seamless tile. Choose ONE design from this menu ONLY, and copy its spec EXACTLY - every colour, every element, every position, every crossing:\n\nMENU:\n1. MIDNIGHT VINE - BACKGROUND: deep teal. MOTIF: one large cream moonflower bloom at the centre-left of the tile. ELEMENTS: (1) one curling green vine tendril at the top-right, (2) two small gold stars at the top-left and bottom-right, (3) one pair of sage leaves at the bottom-left. CROSSING RIGHT-LEFT: the vine tendril exits the RIGHT edge at the upper third and re-enters at the LEFT edge at the upper third. CROSSING TOP-BOTTOM: one gold star is cut in half by the TOP edge at the centre and its other half continues at the BOTTOM edge at the centre.\n2. CITRUS GROVE - BACKGROUND: warm cream. MOTIF: one large orange half-slice at the centre-right of the tile. ELEMENTS: (1) one green leaf sprig at the top-left, (2) three tiny white blossoms scattered at the left, (3) one thin brown branch line running along the lower third. CROSSING RIGHT-LEFT: the branch line exits the LEFT edge at the lower third and re-enters at the RIGHT edge at the lower third. CROSSING TOP-BOTTOM: one white blossom is cut in half by the BOTTOM edge right of centre and its other half continues at the TOP edge right of centre.\n3. WAVE AND GULL - BACKGROUND: pale sand. MOTIF: one bold indigo wave curl at the centre of the tile. ELEMENTS: (1) one white gull at the top-right, (2) two small white foam circles at the bottom-left, (3) one small red sun dot at the top-left. CROSSING RIGHT-LEFT: the wave's foam edge exits the RIGHT edge at the middle and re-enters at the LEFT edge at the middle. CROSSING TOP-BOTTOM: the red sun dot is cut in half by the TOP edge left of centre and its other half continues at the BOTTOM edge left of centre.\n4. KITE PAPER - BACKGROUND: soft sky blue. MOTIF: one red diamond kite at the centre-left of the tile. ELEMENTS: (1) one long curling kite string trailing to the bottom-right, (2) two small white clouds at the top-right and bottom-left, (3) three tiny yellow ribbon bows along the string. CROSSING RIGHT-LEFT: one white cloud is cut in half by the RIGHT edge at the lower quarter and its other half continues at the LEFT edge at the lower quarter. CROSSING TOP-BOTTOM: the kite string exits the BOTTOM edge at the centre and re-enters at the TOP edge at the centre.\n\nOutput EXACTLY this shape, copying the chosen design's spec word for word in the values:\nTILE: <design name>\nBACKGROUND: <colour>\nMOTIF: <the main motif and its position in the tile>\nELEMENTS: <the three supporting elements with their positions, separated by semicolons>\nCROSSING RIGHT-LEFT: <the element, the edge it exits, its height, and that it re-enters at the opposite edge at the same height>\nCROSSING TOP-BOTTOM: <the element, the edge that cuts it, its position, and that it continues at the opposite edge at the same position>\nREPEAT: 2 by 2, same orientation, no rotation, no mirroring\nNo other text.",
+    "maxTokens": 500,
+    "reasoningEffort": "low"
+   },
+   "w": 280,
+   "name": "Tile card - GLM picks a tile design and copies its exact motif, elements and crossings",
+   "sizes": {
+    "system": 150
+   }
+  },
+  {
+   "id": "j0",
+   "type": "join",
+   "x": 800,
+   "y": 480,
+   "fields": {
+    "sep": "\n\nTILE CARD (the tile design - its background, motif, elements and edge crossings; its exact wording must reach the pattern maker):\n"
+   },
+   "w": 200,
+   "name": "Setting + tile card"
+  },
+  {
+   "id": "stylist",
+   "type": "llm",
+   "x": 800,
+   "y": 280,
+   "fields": {
+    "model": "z-ai/glm-5.3-flash",
+    "system": "You turn a TILE CARD into ONE prompt for an AI image generator. The input gives a PATTERN SETTING first, then 'TILE CARD' with one tile design. Write a single-paragraph prompt for a flat seamless pattern image, demanding all of this:\n- The whole square frame is a 2 by 2 repeat of the ONE tile from the card: four copies of exactly the same tile design in a grid (top-left, top-right, bottom-left, bottom-right), every copy the same size, the same orientation, never rotated, never mirrored, no borders, frames or grid lines between the copies.\n- Each copy shows the card's background colour, its main motif at its carded position inside the tile, and its three supporting elements at their carded positions - identical in all four copies.\n- The card's RIGHT-LEFT crossing element exits each tile's right edge at its carded height and re-enters at the left edge at the same height, so across the vertical centre seam of the picture the element continues in one unbroken line, and the part cut at the picture's right edge matches the part cut at its left edge at the same height.\n- The card's TOP-BOTTOM crossing element is cut by each tile's top edge at its carded position and continues at the bottom edge at the same position, so across the horizontal centre seam it continues unbroken, and the part cut at the picture's top edge matches the part cut at its bottom edge.\n- Flat bold colours, crisp clean shapes, a clean fabric or wallpaper pattern, filling the frame edge to edge; no text, no letters, no numbers, no shadows, no three-dimensional objects, no photograph of a room or fabric - the pattern itself, straight-on.\nOutput ONLY the prompt paragraph.",
+    "maxTokens": 700,
+    "reasoningEffort": "low"
+   },
+   "w": 280,
+   "name": "Pattern brief - GLM turns the card into a seamless-pattern painter prompt",
+   "sizes": {
+    "system": 150
+   }
+  },
+  {
+   "id": "paint",
+   "type": "image",
+   "x": 1160,
+   "y": 280,
+   "fields": {
+    "model": "meta/muse-image/text-to-image",
+    "size": "1:1",
+    "variations": "1"
+   },
+   "w": 280,
+   "name": "Pattern - Muse paints the 2 by 2 tile repeat"
+  },
+  {
+   "id": "surveyor",
+   "type": "llm",
+   "x": 1520,
+   "y": 280,
+   "fields": {
+    "model": "google/gemini-3.8-flash",
+    "system": "You are a pattern inspector examining a flat 2 by 2 repeating pattern (four copies of one tile: top-left TL, top-right TR, bottom-left BL, bottom-right BR). You do not know what was planned - report only what you actually see, in exactly this format:\nQUADRANT TL: MOTIF <the main central motif you see in this quadrant and its position, or NONE>; ELEMENTS <every supporting element you see in this quadrant, comma-separated, or NONE>\nQUADRANT TR: MOTIF <same>; ELEMENTS <same>\nQUADRANT BL: MOTIF <same>; ELEMENTS <same>\nQUADRANT BR: MOTIF <same>; ELEMENTS <same>\nSEAM V: <look at the vertical centre line of the whole picture, where the left tiles meet the right tiles: name any element that crosses that line and say CONTINUES if it runs across aligned and unbroken, OFFSET if it crosses but is shifted or mismatched, BREAKS if an element reaches the line and stops or its other half is missing; if nothing crosses, write NOTHING CROSSES>\nSEAM H: <the same for the horizontal centre line, where the top tiles meet the bottom tiles: CONTINUES, OFFSET, BREAKS, or NOTHING CROSSES, naming the element>\nWRAP: <compare the outer edges: an element cut at the RIGHT edge should match an element cut at the LEFT edge at the same height, and one cut at the TOP edge should match one cut at the BOTTOM edge at the same sideways position. Write MATCH if both pairs match, PARTIAL if only one pair matches, BROKEN if neither matches, or NO CUTS if no element is cut at any outer edge>\nEXTRA: <anything in the pattern that is not a motif or a repeated supporting element - borders, grid lines, text, one-off objects - or 'none'>\nBe literal and brief. Judge each quadrant on its own. Do not invent elements you cannot see.",
+    "maxTokens": 1100,
+    "reasoningEffort": "low"
+   },
+   "w": 280,
+   "name": "Pattern read - Gemini reports the quadrants, seams and wrap, blind",
+   "sizes": {
+    "system": 150
+   }
+  },
+  {
+   "id": "j1",
+   "type": "join",
+   "x": 1880,
+   "y": 180,
+   "fields": {
+    "sep": "\n\nPATTERN READ (a blind inspector reported only what it could see - the four quadrants, the seams and the wrap; it never saw the tile card):\n"
+   },
+   "w": 200,
+   "name": "Tile card + pattern read"
+  },
+  {
+   "id": "checker",
+   "type": "llm",
+   "x": 2240,
+   "y": 400,
+   "fields": {
+    "model": "z-ai/glm-5.3-flash",
+    "system": "You are a pattern auditor. The input gives a TILE CARD (TILE, BACKGROUND, MOTIF, ELEMENTS, CROSSING RIGHT-LEFT, CROSSING TOP-BOTTOM, REPEAT) and then a PATTERN READ from a blind inspector (QUADRANT TL/TR/BL/BR with MOTIF and ELEMENTS, SEAM V, SEAM H, WRAP, EXTRA). Score the read against the card and output EXACTLY this shape:\nCARD: VALID if the card's two crossings and repeat line are present and self-consistent, otherwise INVALID - <one line why>\nCOPIES: <X> of 4 - a quadrant counts as a copy if its reported motif and elements match the card's motif and elements for one tile (near-names for the same element count; a quadrant with the motif rotated or mirrored does NOT count)\nMOTIF: <X> of 4 - quadrants whose motif matches the card's motif at roughly its carded position\nELEMENTS: <X> of 3 - the card's three supporting elements that the read reports in EVERY quadrant\nSEAM V: <CONTINUES if the read's SEAM V says the crossing element runs across the vertical centre seam aligned; OFFSET if it crosses shifted; BREAKS if it stops, is missing its other half, or nothing crosses>\nSEAM H: <CONTINUES, OFFSET or BREAKS, the same rule applied to the read's SEAM H and the card's TOP-BOTTOM crossing>\nWRAP: <MATCH, PARTIAL or BROKEN, copied from the read's WRAP verdict; if the read says NO CUTS, score BROKEN because the card demands cut elements at the outer edges>\nEXTRA: <the read's EXTRA items, or 'none'>\nSummary: copies <X> of 4, motif <X> of 4, elements <X> of 3, seam V <verdict>, seam H <verdict>, wrap <verdict>.\nJudge only from the two texts. If the read is ambiguous about a quadrant or a seam, score it as failing that line and say so in that line. No markdown, no extra lines.",
+    "maxTokens": 1200,
+    "reasoningEffort": "low"
+   },
+   "w": 280,
+   "name": "Tile audit - GLM scores copies, seams and wrap against the card",
+   "sizes": {
+    "system": 150
+   }
+  },
+  {
+   "id": "j2",
+   "type": "join",
+   "x": 2240,
+   "y": 180,
+   "fields": {
+    "sep": "\n\nTILE AUDIT:\n"
+   },
+   "w": 200,
+   "name": "Card, pattern read + tile audit"
+  },
+  {
+   "id": "audit",
+   "type": "decide",
+   "x": 2600,
+   "y": 180,
+   "fields": {
+    "model": "perplexity/pplx-decider-v1.2",
+    "mode": "choose",
+    "question": "The picture should be a flat 2 by 2 repeat of the tile on the card: four identical copies in the same orientation, the motif and elements in every copy, the carded crossing elements continuing unbroken across both centre seams, and the elements cut at the outer edges wrapping (right edge matching left, top matching bottom). The audit in the text scores the blind read against the card. Choose the one label that best fits the round-1 picture.",
+    "options": "tiles seamlessly\ncopies drifted\nseams broken\nwrap broken\nnot a pattern"
+   },
+   "w": 280,
+   "name": "Tiles seamlessly - audited",
+   "sizes": {
+    "question": 130
+   }
+  },
+  {
+   "id": "editor",
+   "type": "llm",
+   "x": 2600,
+   "y": 520,
+   "fields": {
+    "model": "z-ai/glm-5.3-flash",
+    "system": "You are the pattern editor in a seamless-tile pipeline. The input gives a TILE CARD, a blind PATTERN READ and a TILE AUDIT of the round-1 picture. Write ONE edit instruction for an image editor working on that picture, in at most 90 words.\nIf the audit shows a perfect tile (COPIES 4 of 4, MOTIF 4 of 4, ELEMENTS 3 of 3, SEAM V: CONTINUES, SEAM H: CONTINUES, WRAP: MATCH, EXTRA: none), output exactly this and nothing else: 'Reproduce this pattern exactly, unchanged in every detail.'\nOtherwise: name the final end state the corrected picture must show - the card's background, motif and three elements identical in all four quadrants at their carded positions, the RIGHT-LEFT crossing element continuing unbroken across the vertical centre seam and wrapping at the outer left/right edges, the TOP-BOTTOM crossing element continuing across the horizontal centre seam and wrapping at the top/bottom edges. Name each failing quadrant, seam or wrap from the audit as a concrete demand. Forbid changing the motif, the background colour, or any quadrant the audit passed, and forbid rotation, mirroring, borders, grid lines and text. Output ONLY the instruction.",
+    "maxTokens": 350,
+    "reasoningEffort": "low"
+   },
+   "w": 280,
+   "name": "Edit notes - GLM turns the tile audit into seam-and-copy fix instructions",
+   "sizes": {
+    "system": 150
+   }
+  },
+  {
+   "id": "fix",
+   "type": "edit",
+   "x": 2960,
+   "y": 520,
+   "fields": {
+    "model": "meta/muse-image/edit",
+    "size": "auto"
+   },
+   "w": 280,
+   "name": "Corrected pattern - Muse Edit repairs the copies, seams and wrap"
+  },
+  {
+   "id": "surveyor2",
+   "type": "llm",
+   "x": 3320,
+   "y": 520,
+   "fields": {
+    "model": "google/gemini-3.8-flash",
+    "system": "You are a pattern inspector examining a flat 2 by 2 repeating pattern (four copies of one tile: top-left TL, top-right TR, bottom-left BL, bottom-right BR). You do not know what was planned - report only what you actually see, in exactly this format:\nQUADRANT TL: MOTIF <the main central motif you see in this quadrant and its position, or NONE>; ELEMENTS <every supporting element you see in this quadrant, comma-separated, or NONE>\nQUADRANT TR: MOTIF <same>; ELEMENTS <same>\nQUADRANT BL: MOTIF <same>; ELEMENTS <same>\nQUADRANT BR: MOTIF <same>; ELEMENTS <same>\nSEAM V: <look at the vertical centre line of the whole picture, where the left tiles meet the right tiles: name any element that crosses that line and say CONTINUES if it runs across aligned and unbroken, OFFSET if it crosses but is shifted or mismatched, BREAKS if an element reaches the line and stops or its other half is missing; if nothing crosses, write NOTHING CROSSES>\nSEAM H: <the same for the horizontal centre line, where the top tiles meet the bottom tiles: CONTINUES, OFFSET, BREAKS, or NOTHING CROSSES, naming the element>\nWRAP: <compare the outer edges: an element cut at the RIGHT edge should match an element cut at the LEFT edge at the same height, and one cut at the TOP edge should match one cut at the BOTTOM edge at the same sideways position. Write MATCH if both pairs match, PARTIAL if only one pair matches, BROKEN if neither matches, or NO CUTS if no element is cut at any outer edge>\nEXTRA: <anything in the pattern that is not a motif or a repeated supporting element - borders, grid lines, text, one-off objects - or 'none'>\nBe literal and brief. Judge each quadrant on its own. Do not invent elements you cannot see.",
+    "maxTokens": 1100,
+    "reasoningEffort": "low"
+   },
+   "w": 280,
+   "name": "Re-read - Gemini reports the corrected pattern's quadrants, seams and wrap, blind",
+   "sizes": {
+    "system": 150
+   }
+  },
+  {
+   "id": "j4",
+   "type": "join",
+   "x": 3680,
+   "y": 420,
+   "fields": {
+    "sep": "\n\nPATTERN READ (a blind inspector reported only what it could see in the corrected picture - the four quadrants, the seams and the wrap; it never saw the tile card):\n"
+   },
+   "w": 200,
+   "name": "Tile card + re-read"
+  },
+  {
+   "id": "checker2",
+   "type": "llm",
+   "x": 4040,
+   "y": 520,
+   "fields": {
+    "model": "z-ai/glm-5.3-flash",
+    "system": "You are a pattern auditor. The input gives a TILE CARD (TILE, BACKGROUND, MOTIF, ELEMENTS, CROSSING RIGHT-LEFT, CROSSING TOP-BOTTOM, REPEAT) and then a PATTERN READ from a blind inspector (QUADRANT TL/TR/BL/BR with MOTIF and ELEMENTS, SEAM V, SEAM H, WRAP, EXTRA). Score the read against the card and output EXACTLY this shape:\nCARD: VALID if the card's two crossings and repeat line are present and self-consistent, otherwise INVALID - <one line why>\nCOPIES: <X> of 4 - a quadrant counts as a copy if its reported motif and elements match the card's motif and elements for one tile (near-names for the same element count; a quadrant with the motif rotated or mirrored does NOT count)\nMOTIF: <X> of 4 - quadrants whose motif matches the card's motif at roughly its carded position\nELEMENTS: <X> of 3 - the card's three supporting elements that the read reports in EVERY quadrant\nSEAM V: <CONTINUES if the read's SEAM V says the crossing element runs across the vertical centre seam aligned; OFFSET if it crosses shifted; BREAKS if it stops, is missing its other half, or nothing crosses>\nSEAM H: <CONTINUES, OFFSET or BREAKS, the same rule applied to the read's SEAM H and the card's TOP-BOTTOM crossing>\nWRAP: <MATCH, PARTIAL or BROKEN, copied from the read's WRAP verdict; if the read says NO CUTS, score BROKEN because the card demands cut elements at the outer edges>\nEXTRA: <the read's EXTRA items, or 'none'>\nSummary: copies <X> of 4, motif <X> of 4, elements <X> of 3, seam V <verdict>, seam H <verdict>, wrap <verdict>.\nJudge only from the two texts. If the read is ambiguous about a quadrant or a seam, score it as failing that line and say so in that line. No markdown, no extra lines.",
+    "maxTokens": 1200,
+    "reasoningEffort": "low"
+   },
+   "w": 280,
+   "name": "Tile re-audit - GLM scores the corrected pattern against the same card",
+   "sizes": {
+    "system": 150
+   }
+  },
+  {
+   "id": "ask",
+   "type": "text",
+   "x": 1160,
+   "y": 520,
+   "fields": {
+    "text": "Inspect the repeating pattern in the attached picture now, following your instructions exactly."
+   },
+   "w": 240,
+   "name": "Inspect ask"
+  },
+  {
+   "id": "ask2",
+   "type": "text",
+   "x": 2960,
+   "y": 900,
+   "fields": {
+    "text": "Inspect the repeating pattern in the attached picture now, following your instructions exactly."
+   },
+   "w": 240,
+   "name": "Re-inspect ask"
+  }
+ ],
+ "links": [
+  {
+   "id": "l1",
+   "from": {
+    "node": "setting",
+    "port": "text"
+   },
+   "to": {
+    "node": "director",
+    "port": "prompt"
+   }
+  },
+  {
+   "id": "l2",
+   "from": {
+    "node": "director",
+    "port": "text"
+   },
+   "to": {
+    "node": "j0",
+    "port": "b"
+   }
+  },
+  {
+   "id": "l12",
+   "from": {
+    "node": "setting",
+    "port": "text"
+   },
+   "to": {
+    "node": "j0",
+    "port": "a"
+   }
+  },
+  {
+   "id": "l13",
+   "from": {
+    "node": "j0",
+    "port": "text"
+   },
+   "to": {
+    "node": "stylist",
+    "port": "prompt"
+   }
+  },
+  {
+   "id": "l3",
+   "from": {
+    "node": "stylist",
+    "port": "text"
+   },
+   "to": {
+    "node": "paint",
+    "port": "prompt"
+   }
+  },
+  {
+   "id": "l4",
+   "from": {
+    "node": "paint",
+    "port": "image"
+   },
+   "to": {
+    "node": "surveyor",
+    "port": "img1"
+   }
+  },
+  {
+   "id": "l7",
+   "from": {
+    "node": "director",
+    "port": "text"
+   },
+   "to": {
+    "node": "j1",
+    "port": "a"
+   }
+  },
+  {
+   "id": "l8",
+   "from": {
+    "node": "surveyor",
+    "port": "text"
+   },
+   "to": {
+    "node": "j1",
+    "port": "b"
+   }
+  },
+  {
+   "id": "l11",
+   "from": {
+    "node": "j1",
+    "port": "text"
+   },
+   "to": {
+    "node": "checker",
+    "port": "prompt"
+   }
+  },
+  {
+   "id": "l14",
+   "from": {
+    "node": "j1",
+    "port": "text"
+   },
+   "to": {
+    "node": "j2",
+    "port": "a"
+   }
+  },
+  {
+   "id": "l15",
+   "from": {
+    "node": "checker",
+    "port": "text"
+   },
+   "to": {
+    "node": "j2",
+    "port": "b"
+   }
+  },
+  {
+   "id": "l16",
+   "from": {
+    "node": "j2",
+    "port": "text"
+   },
+   "to": {
+    "node": "audit",
+    "port": "text"
+   }
+  },
+  {
+   "id": "l17",
+   "from": {
+    "node": "paint",
+    "port": "image"
+   },
+   "to": {
+    "node": "audit",
+    "port": "img1"
+   }
+  },
+  {
+   "id": "l18",
+   "from": {
+    "node": "j2",
+    "port": "text"
+   },
+   "to": {
+    "node": "editor",
+    "port": "prompt"
+   }
+  },
+  {
+   "id": "l19",
+   "from": {
+    "node": "editor",
+    "port": "text"
+   },
+   "to": {
+    "node": "fix",
+    "port": "prompt"
+   }
+  },
+  {
+   "id": "l20",
+   "from": {
+    "node": "paint",
+    "port": "image"
+   },
+   "to": {
+    "node": "fix",
+    "port": "image"
+   }
+  },
+  {
+   "id": "l21",
+   "from": {
+    "node": "fix",
+    "port": "image"
+   },
+   "to": {
+    "node": "surveyor2",
+    "port": "img1"
+   }
+  },
+  {
+   "id": "l22",
+   "from": {
+    "node": "director",
+    "port": "text"
+   },
+   "to": {
+    "node": "j4",
+    "port": "a"
+   }
+  },
+  {
+   "id": "l23",
+   "from": {
+    "node": "surveyor2",
+    "port": "text"
+   },
+   "to": {
+    "node": "j4",
+    "port": "b"
+   }
+  },
+  {
+   "id": "l24",
+   "from": {
+    "node": "j4",
+    "port": "text"
+   },
+   "to": {
+    "node": "checker2",
+    "port": "prompt"
+   }
+  },
+  {
+   "id": "l39",
+   "from": {
+    "node": "ask",
+    "port": "text"
+   },
+   "to": {
+    "node": "surveyor",
+    "port": "prompt"
+   }
+  },
+  {
+   "id": "l40",
+   "from": {
+    "node": "ask2",
+    "port": "text"
+   },
+   "to": {
+    "node": "surveyor2",
+    "port": "prompt"
+   }
+  }
+ ],
+ "nid": 32,
+ "lid": 40,
+ "view": {
+  "panX": 40,
+  "panY": 40,
+  "scale": 0.5
+ }
+}
