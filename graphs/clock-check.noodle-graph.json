@@ -1,0 +1,505 @@
+{
+ "v": 1,
+ "nodes": [
+  {
+   "id": "c1",
+   "type": "comment",
+   "x": 60,
+   "y": 30,
+   "fields": {
+    "text": "Can a picture TELL THE TIME IT WAS TOLD TO TELL? A GLM director picks one clock from a spec menu printed in its own prompt (four clocks; each a target time whose two hand positions are derived, not chosen - the minute hand sits at the exact minute mark, the hour hand sits the matching fraction of the way from one numeral to the next) and copies out a CLOCK CARD carrying the target time and both derived hand positions. A second GLM turns the card into one painter prompt for a handsome flat wall-clock poster - big round face, black numerals 1 to 12, a short thick hour hand and a long thin minute hand, no second hand. Muse paints it. A blind Gemini reader, who never saw the card, reads the painted clock the way a person does - which numeral each hand points at or between - and states the time it shows. A GLM auditor then scores the read against the card in MINUTES: the absolute error between the read time and the target time, the hour hand's span, the minute hand's mark. A Decide judge headlines round 1. That verdict is not the deliverable: a GLM editor turns the audit into one concrete edit instruction (gated - on an exact audit it must demand a verbatim unchanged copy), Muse Edit moves the hands, and a blind re-read plus the same auditor re-score the corrected clock against the same card. The corrected clock is the flow's final output."
+   },
+   "w": 900,
+   "name": "Clock check"
+  },
+  {
+   "id": "setting",
+   "type": "text",
+   "x": 60,
+   "y": 300,
+   "fields": {
+    "text": "A flat poster of one handsome round wall clock centred on a plain cream background, straight-on view: a large white clock face with a thin black rim, bold black numerals 1 to 12 in their usual places, small tick marks for the minutes, one short thick black hour hand and one long thin black minute hand from a black centre dot, no second hand, no brand name, no other words or decoration yet."
+   },
+   "w": 300,
+   "name": "Poster setting"
+  },
+  {
+   "id": "director",
+   "type": "llm",
+   "x": 440,
+   "y": 280,
+   "fields": {
+    "model": "z-ai/glm-5.3-flash",
+    "system": "You are a clockmaker. Given a POSTER SETTING, design a CLOCK CARD for one wall-clock poster. Choose ONE clock from this menu ONLY, and copy its spec EXACTLY - the time and both derived hand positions:\n\nTHE LAW (the hand positions are DERIVED from the time, never chosen): the minute hand points at the exact minute mark - minute MM sits MM/60 of the way around the dial. The hour hand moves continuously: at H:MM it sits MM/60 of the way from numeral H to numeral H+1 (with 12 followed by 1).\n\nMENU:\n1. HARBOUR BELL - TIME: 7:24. MINUTE HAND: at the 24-minute mark, just before the 5 numeral. HOUR HAND: two-fifths of the way from 7 to 8.\n2. TEATIME - TIME: 4:37. MINUTE HAND: at the 37-minute mark, just past the 7 numeral. HOUR HAND: three-fifths of the way from 4 to 5.\n3. NIGHT TRAIN - TIME: 10:08. MINUTE HAND: at the 8-minute mark, between the 1 and 2 numerals, nearer the 2. HOUR HAND: just past the 10 numeral.\n4. MARKET OPEN - TIME: 2:51. MINUTE HAND: at the 51-minute mark, just before the 11 numeral. HOUR HAND: most of the way from 2 to 3, close to the 3.\n\nOutput ONLY the card, in exactly this format, copying the chosen clock's spec without changing any of it:\nCLOCK: <the clock name>\nTIME: <H:MM exactly as carded>\nMINUTE HAND: <the minute-hand line exactly as carded>\nHOUR HAND: <the hour-hand line exactly as carded>\nNUMERALS: 1 to 12, all present\nNo other text.",
+    "maxTokens": 500,
+    "reasoningEffort": "low"
+   },
+   "w": 280,
+   "name": "Clock card - GLM picks a clock and copies its derived hand positions",
+   "sizes": {
+    "system": 150
+   }
+  },
+  {
+   "id": "j0",
+   "type": "join",
+   "x": 800,
+   "y": 480,
+   "fields": {
+    "sep": "\n\nCLOCK CARD (the clock - its target time and both derived hand positions; its exact wording must reach the poster maker):\n"
+   },
+   "w": 200,
+   "name": "Setting + clock card"
+  },
+  {
+   "id": "stylist",
+   "type": "llm",
+   "x": 800,
+   "y": 280,
+   "fields": {
+    "model": "z-ai/glm-5.3-flash",
+    "system": "You turn a CLOCK CARD into ONE prompt for an AI image generator. The input gives a POSTER SETTING first, then a 'CLOCK CARD' with a target time and the two derived hand positions. Write a single-paragraph prompt for a flat wall-clock poster, demanding all of this:\n- One large round clock face centred on a plain cream background, thin black rim, white face, bold black numerals 1 to 12 all present in their usual places, small minute tick marks, a black centre dot, and NO other printed words, letters, numbers or decoration anywhere. No second hand and no third hand of any kind.\n- Exactly two hands, visually distinct: a SHORT THICK black hour hand and a LONG THIN black minute hand.\n- The minute hand pointing exactly at the card's minute mark, described in the prompt with the card's own position words (for example 'at the 24-minute mark, just before the 5 numeral').\n- The hour hand at the card's derived fraction between its two numerals, described with the card's own words (for example 'two-fifths of the way from the 7 to the 8') - never snapped onto a numeral unless the card says so.\n- Flat colours, clean edges, straight-on view, even light; the clock fills most of the frame.\nOutput ONLY the image prompt, one paragraph, no preamble.",
+    "maxTokens": 700,
+    "reasoningEffort": "low"
+   },
+   "w": 280,
+   "name": "Clock brief - GLM turns the card into a poster painter prompt",
+   "sizes": {
+    "system": 150
+   }
+  },
+  {
+   "id": "paint",
+   "type": "image",
+   "x": 1160,
+   "y": 280,
+   "fields": {
+    "model": "meta/muse-image/text-to-image",
+    "size": "1:1",
+    "variations": "1"
+   },
+   "w": 280,
+   "name": "Clock poster - Muse paints the wall clock at the carded time"
+  },
+  {
+   "id": "surveyor",
+   "type": "llm",
+   "x": 1520,
+   "y": 280,
+   "fields": {
+    "model": "google/gemini-3.8-flash",
+    "system": "You are a clock inspector examining a picture of an analogue wall clock. You do not know what time was planned - read the clock the way a person does and report only what you actually see, in exactly this format:\nNUMERALS: <'all 12 present' or the list of any numerals missing, duplicated or unreadable>\nHOUR HAND: <where the SHORT THICK hand points: 'at the <N> numeral' or 'between the <N> and <N+1> numerals, about <a fraction in words> of the way'>\nMINUTE HAND: <where the LONG THIN hand points: 'at the <MM>-minute mark' if you can place it exactly, naming the numeral it sits on or just before / just past, e.g. 'just before the 5 numeral'>\nTIME READ: <the time the clock shows, as H:MM - read the hour from the hour hand's span and the minutes from the minute hand's mark; if a hand is missing or there are more than two hands, write 'UNREADABLE' and say why in EXTRA>\nEXTRA: <anything that is not part of a plain two-hand clock face - a second hand, a third hand, printed words or a brand, a decoration, a second clock; 'none' if there is nothing of the kind>\nJudge the hands by where their tips point. The hour hand is the short thick one and the minute hand is the long thin one; if the two hands' lengths seem swapped, say so in EXTRA and still report which is which by length.",
+    "maxTokens": 1100,
+    "reasoningEffort": "low"
+   },
+   "w": 280,
+   "name": "Clock read - Gemini reads the painted clock's time, blind",
+   "sizes": {
+    "system": 150
+   }
+  },
+  {
+   "id": "j1",
+   "type": "join",
+   "x": 1880,
+   "y": 180,
+   "fields": {
+    "sep": "\n\nCLOCK READ (a blind inspector read only what the clock shows - both hand positions and the time they tell; it never saw the clock card):\n"
+   },
+   "w": 200,
+   "name": "Clock card + clock read"
+  },
+  {
+   "id": "checker",
+   "type": "llm",
+   "x": 2240,
+   "y": 400,
+   "fields": {
+    "model": "z-ai/glm-5.3-flash",
+    "system": "You are a horology auditor. The input gives a CLOCK CARD (CLOCK name, TIME target, MINUTE HAND and HOUR HAND lines with the derived positions, NUMERALS line) and then a CLOCK READ from a blind inspector (NUMERALS, HOUR HAND, MINUTE HAND, TIME READ, EXTRA). Score in exactly this format:\nTARGET: <the card's TIME, copied>\nREAD: <the read's TIME READ, copied; UNREADABLE if the read says so>\nERROR MINUTES: <the absolute difference in minutes between READ and TARGET on a 12-hour dial, from 0 to 360 - compute it: convert both times to minutes since 12:00, take the absolute difference, and if it is over 360 subtract it from 720; 0 if UNREADABLE, and say so in the SUMMARY>\nHOUR HAND: <CORRECT if the read's hour hand sits in the same inter-numeral span the card derives (between the target's hour numeral and the next, at roughly the carded fraction) - WRONG otherwise, naming what the read reported>\nMINUTE HAND: <CORRECT if the read's minute mark is within 2 minutes of the target minute - WRONG otherwise, naming the read's mark>\nNUMERALS: <ALL PRESENT if the read found all 12 - otherwise name what the read reported missing or duplicated>\nEXTRA: <the read's EXTRA, or 'none'>\nSUMMARY: <one short line naming what held and what failed>\nScore strictly from the two texts. Recompute the error yourself from the two TIME lines; never copy an error figure from anywhere else.",
+    "maxTokens": 1200,
+    "reasoningEffort": "low"
+   },
+   "w": 280,
+   "name": "Clock audit - GLM scores the read against the card in minutes of error",
+   "sizes": {
+    "system": 150
+   }
+  },
+  {
+   "id": "j2",
+   "type": "join",
+   "x": 2240,
+   "y": 180,
+   "fields": {
+    "sep": "\n\nCLOCK AUDIT:\n"
+   },
+   "w": 200,
+   "name": "Card, clock read + clock audit"
+  },
+  {
+   "id": "audit",
+   "type": "decide",
+   "x": 2600,
+   "y": 180,
+   "fields": {
+    "model": "perplexity/pplx-decider-v1.2",
+    "mode": "choose",
+    "question": "The picture should be a wall-clock poster showing exactly the carded time: a short thick hour hand at the derived fraction between its two numerals and a long thin minute hand at the exact minute mark, with all 12 numerals present and no extra hands or words. The audit in the text scores a blind reading of the clock against the card in minutes of error. Choose the one label that best fits the round-1 picture.",
+    "options": "tells the time\nminutes drifted\nhour hand wrong\nhands swapped\nnot a clock"
+   },
+   "w": 280,
+   "name": "Tells the time - audited",
+   "sizes": {
+    "question": 130
+   }
+  },
+  {
+   "id": "editor",
+   "type": "llm",
+   "x": 2600,
+   "y": 520,
+   "fields": {
+    "model": "z-ai/glm-5.3-flash",
+    "system": "You are the clock editor in a time-check pipeline. The input gives a CLOCK CARD, a blind CLOCK READ and a CLOCK AUDIT of the round-1 picture. Write ONE edit instruction for an image editor working on that picture, in at most 110 words.\nIf the audit shows the exact time (ERROR MINUTES: 0, HOUR HAND: CORRECT, MINUTE HAND: CORRECT, NUMERALS: ALL PRESENT, EXTRA: none), output exactly this and nothing else: 'Reproduce this clock poster completely unchanged - same face, same numerals, both hands exactly where they are. Do not move, add, remove or redraw anything.'\nOtherwise: first state the full target end state - the same clock face with all 12 numerals unchanged, the short thick hour hand at the card's derived position (repeat the card's HOUR HAND words verbatim) and the long thin minute hand at the card's minute mark (repeat the card's MINUTE HAND words verbatim) - then add the audit's specific failures as concrete demands, naming each hand and the move it needs (for example: 'move the minute hand from just past the 6 numeral to the 37-minute mark, just past the 7 numeral'). Never ask for a second hand, a third hand, or any printed word.",
+    "maxTokens": 450,
+    "reasoningEffort": "low"
+   },
+   "w": 280,
+   "name": "Edit notes - GLM turns the audit into hand-move instructions",
+   "sizes": {
+    "system": 150
+   }
+  },
+  {
+   "id": "fix",
+   "type": "edit",
+   "x": 2960,
+   "y": 520,
+   "fields": {
+    "model": "meta/muse-image/edit",
+    "size": "auto"
+   },
+   "w": 280,
+   "name": "Corrected clock - Muse Edit moves the hands to the carded time"
+  },
+  {
+   "id": "surveyor2",
+   "type": "llm",
+   "x": 3320,
+   "y": 520,
+   "fields": {
+    "model": "google/gemini-3.8-flash",
+    "system": "You are a clock inspector examining a picture of an analogue wall clock. You do not know what time was planned - read the clock the way a person does and report only what you actually see, in exactly this format:\nNUMERALS: <'all 12 present' or the list of any numerals missing, duplicated or unreadable>\nHOUR HAND: <where the SHORT THICK hand points: 'at the <N> numeral' or 'between the <N> and <N+1> numerals, about <a fraction in words> of the way'>\nMINUTE HAND: <where the LONG THIN hand points: 'at the <MM>-minute mark' if you can place it exactly, naming the numeral it sits on or just before / just past, e.g. 'just before the 5 numeral'>\nTIME READ: <the time the clock shows, as H:MM - read the hour from the hour hand's span and the minutes from the minute hand's mark; if a hand is missing or there are more than two hands, write 'UNREADABLE' and say why in EXTRA>\nEXTRA: <anything that is not part of a plain two-hand clock face - a second hand, a third hand, printed words or a brand, a decoration, a second clock; 'none' if there is nothing of the kind>\nJudge the hands by where their tips point. The hour hand is the short thick one and the minute hand is the long thin one; if the two hands' lengths seem swapped, say so in EXTRA and still report which is which by length.",
+    "maxTokens": 1100,
+    "reasoningEffort": "low"
+   },
+   "w": 280,
+   "name": "Re-read - Gemini reads the corrected clock's time, blind",
+   "sizes": {
+    "system": 150
+   }
+  },
+  {
+   "id": "j4",
+   "type": "join",
+   "x": 3680,
+   "y": 420,
+   "fields": {
+    "sep": "\n\nCLOCK READ (a blind inspector read only what the corrected clock shows - both hand positions and the time they tell; it never saw the clock card):\n"
+   },
+   "w": 200,
+   "name": "Clock card + re-read"
+  },
+  {
+   "id": "checker2",
+   "type": "llm",
+   "x": 4040,
+   "y": 520,
+   "fields": {
+    "model": "z-ai/glm-5.3-flash",
+    "system": "You are a horology auditor. The input gives a CLOCK CARD (CLOCK name, TIME target, MINUTE HAND and HOUR HAND lines with the derived positions, NUMERALS line) and then a CLOCK READ from a blind inspector (NUMERALS, HOUR HAND, MINUTE HAND, TIME READ, EXTRA). Score in exactly this format:\nTARGET: <the card's TIME, copied>\nREAD: <the read's TIME READ, copied; UNREADABLE if the read says so>\nERROR MINUTES: <the absolute difference in minutes between READ and TARGET on a 12-hour dial, from 0 to 360 - compute it: convert both times to minutes since 12:00, take the absolute difference, and if it is over 360 subtract it from 720; 0 if UNREADABLE, and say so in the SUMMARY>\nHOUR HAND: <CORRECT if the read's hour hand sits in the same inter-numeral span the card derives (between the target's hour numeral and the next, at roughly the carded fraction) - WRONG otherwise, naming what the read reported>\nMINUTE HAND: <CORRECT if the read's minute mark is within 2 minutes of the target minute - WRONG otherwise, naming the read's mark>\nNUMERALS: <ALL PRESENT if the read found all 12 - otherwise name what the read reported missing or duplicated>\nEXTRA: <the read's EXTRA, or 'none'>\nSUMMARY: <one short line naming what held and what failed>\nScore strictly from the two texts. Recompute the error yourself from the two TIME lines; never copy an error figure from anywhere else.",
+    "maxTokens": 1200,
+    "reasoningEffort": "low"
+   },
+   "w": 280,
+   "name": "Clock re-audit - GLM re-scores the corrected clock against the same card",
+   "sizes": {
+    "system": 150
+   }
+  },
+  {
+   "id": "ask",
+   "type": "text",
+   "x": 1160,
+   "y": 520,
+   "fields": {
+    "text": "Inspect the wall clock in the attached picture now, following your instructions exactly."
+   },
+   "w": 240,
+   "name": "Inspect ask"
+  },
+  {
+   "id": "ask2",
+   "type": "text",
+   "x": 2960,
+   "y": 900,
+   "fields": {
+    "text": "Inspect the wall clock in the attached picture now, following your instructions exactly."
+   },
+   "w": 240,
+   "name": "Re-inspect ask"
+  }
+ ],
+ "links": [
+  {
+   "id": "l1",
+   "from": {
+    "node": "setting",
+    "port": "text"
+   },
+   "to": {
+    "node": "director",
+    "port": "prompt"
+   }
+  },
+  {
+   "id": "l2",
+   "from": {
+    "node": "director",
+    "port": "text"
+   },
+   "to": {
+    "node": "j0",
+    "port": "b"
+   }
+  },
+  {
+   "id": "l12",
+   "from": {
+    "node": "setting",
+    "port": "text"
+   },
+   "to": {
+    "node": "j0",
+    "port": "a"
+   }
+  },
+  {
+   "id": "l13",
+   "from": {
+    "node": "j0",
+    "port": "text"
+   },
+   "to": {
+    "node": "stylist",
+    "port": "prompt"
+   }
+  },
+  {
+   "id": "l3",
+   "from": {
+    "node": "stylist",
+    "port": "text"
+   },
+   "to": {
+    "node": "paint",
+    "port": "prompt"
+   }
+  },
+  {
+   "id": "l4",
+   "from": {
+    "node": "paint",
+    "port": "image"
+   },
+   "to": {
+    "node": "surveyor",
+    "port": "img1"
+   }
+  },
+  {
+   "id": "l7",
+   "from": {
+    "node": "director",
+    "port": "text"
+   },
+   "to": {
+    "node": "j1",
+    "port": "a"
+   }
+  },
+  {
+   "id": "l8",
+   "from": {
+    "node": "surveyor",
+    "port": "text"
+   },
+   "to": {
+    "node": "j1",
+    "port": "b"
+   }
+  },
+  {
+   "id": "l11",
+   "from": {
+    "node": "j1",
+    "port": "text"
+   },
+   "to": {
+    "node": "checker",
+    "port": "prompt"
+   }
+  },
+  {
+   "id": "l14",
+   "from": {
+    "node": "j1",
+    "port": "text"
+   },
+   "to": {
+    "node": "j2",
+    "port": "a"
+   }
+  },
+  {
+   "id": "l15",
+   "from": {
+    "node": "checker",
+    "port": "text"
+   },
+   "to": {
+    "node": "j2",
+    "port": "b"
+   }
+  },
+  {
+   "id": "l16",
+   "from": {
+    "node": "j2",
+    "port": "text"
+   },
+   "to": {
+    "node": "audit",
+    "port": "text"
+   }
+  },
+  {
+   "id": "l17",
+   "from": {
+    "node": "paint",
+    "port": "image"
+   },
+   "to": {
+    "node": "audit",
+    "port": "img1"
+   }
+  },
+  {
+   "id": "l18",
+   "from": {
+    "node": "j2",
+    "port": "text"
+   },
+   "to": {
+    "node": "editor",
+    "port": "prompt"
+   }
+  },
+  {
+   "id": "l19",
+   "from": {
+    "node": "editor",
+    "port": "text"
+   },
+   "to": {
+    "node": "fix",
+    "port": "prompt"
+   }
+  },
+  {
+   "id": "l20",
+   "from": {
+    "node": "paint",
+    "port": "image"
+   },
+   "to": {
+    "node": "fix",
+    "port": "image"
+   }
+  },
+  {
+   "id": "l21",
+   "from": {
+    "node": "fix",
+    "port": "image"
+   },
+   "to": {
+    "node": "surveyor2",
+    "port": "img1"
+   }
+  },
+  {
+   "id": "l22",
+   "from": {
+    "node": "director",
+    "port": "text"
+   },
+   "to": {
+    "node": "j4",
+    "port": "a"
+   }
+  },
+  {
+   "id": "l23",
+   "from": {
+    "node": "surveyor2",
+    "port": "text"
+   },
+   "to": {
+    "node": "j4",
+    "port": "b"
+   }
+  },
+  {
+   "id": "l24",
+   "from": {
+    "node": "j4",
+    "port": "text"
+   },
+   "to": {
+    "node": "checker2",
+    "port": "prompt"
+   }
+  },
+  {
+   "id": "l39",
+   "from": {
+    "node": "ask",
+    "port": "text"
+   },
+   "to": {
+    "node": "surveyor",
+    "port": "prompt"
+   }
+  },
+  {
+   "id": "l40",
+   "from": {
+    "node": "ask2",
+    "port": "text"
+   },
+   "to": {
+    "node": "surveyor2",
+    "port": "prompt"
+   }
+  }
+ ],
+ "nid": 32,
+ "lid": 40,
+ "view": {
+  "panX": 40,
+  "panY": 40,
+  "scale": 0.5
+ }
+}
