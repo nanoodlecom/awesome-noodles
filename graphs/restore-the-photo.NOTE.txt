@@ -1,0 +1,25 @@
+Restore the Photo — Demand Watch ship 8 (cycle 12, 2026-11-22). Restoration is a standing paid
+market: human studios charge $20–85 per photo (Thumbtack's average job is $78; severe work runs
+$150–500), Fiverr tiers sit at $15/$35/$75, and even AI apps charge $4.49 a single. This flow runs
+the whole job for about $0.04: a vision survey inventories the damage first, Seedream 5.5 repairs
+it under a hard no-inventions rule, a Pruna upscale restores print size (2896×2896 from a 1k
+repair), and an identity guard compares the result against the original and prints a repair
+ledger — repaired / rebuilt / left alone — with a RESTORE: HELD or DRIFTED verdict.
+
+The demo photo is a generated 1940s portrait with synthetic damage applied locally (three
+vertical scratches, one crossing the face; a torn bottom-left corner; a stain; a crease; sepia
+fade; dust) so the survey and ledger could be graded against known ground truth: the vision
+survey found every planted defect, and the saved run's ledger keys to it item by item.
+
+Honest edges, all found in probing: (1) the first probe restore invented a necklace the guard
+initially passed — the restore prompt now carries a hard no-additions clause and the guard
+checks neck/ears/wrists/background adversarially; the guard is a check, not a guarantee, and the
+guide says so. (2) The guard only keyed its ledger to the survey once the survey text was wired
+as its prompt with the instructions in the system field; an llm node fed on the text port alone
+twice failed to use it (once blind to its images, once inventing its own survey). (3) A leading
+llm node with a wired image intermittently receives no image at all (the model asks for an
+upload) — the survey therefore uses the vision node type, which was reliable in every run.
+(4) Topaz's upscale rejects text prompts (Bloom algorithms only); Pruna's upscale route takes
+the image cleanly at $0.01. (5) A monochrome original stays monochrome — no colorize step.
+Saved run: $0.0394326 exact, single run, verdict RESTORE: HELD, final image verified by eye
+against the original (no necklace, tear rebuilt, identity intact).
