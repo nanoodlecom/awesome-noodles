@@ -1,0 +1,505 @@
+{
+ "v": 1,
+ "nodes": [
+  {
+   "id": "c1",
+   "type": "comment",
+   "x": 60,
+   "y": 30,
+   "fields": {
+    "text": "Can a picture MIX PAINT TRUE? A GLM director picks one mixing chart from a spec menu printed in its own prompt (four charts; each exactly 4 rows, every row two tube pigments from BLUE, RED, YELLOW, WHITE and BLACK plus a ratio - EQUAL, A-HEAVY or B-HEAVY) and copies out a MIX CARD that cards ONLY the sources and the ratio: the result colour is named nowhere in the flow. A second GLM turns the card into one chart-poster prompt - four rows of two source blobs, a plus sign, an equals sign and one larger result blob described only as the single uniform colour produced by thoroughly mixing the two paints in the carded proportion. Muse paints it. A blind Gemini reader, who never saw the card, reports per row both source colours and the result blob's hue family, lightness band and form (UNIFORM, MARBLED or SPLIT). A GLM auditor holds the pigment law - primaries mix to secondaries, white tints, black shades, yellow plus black turns olive, and a heavy side pulls the hue one wheel-step toward itself - derives each expected family and lightness itself, and scores SOURCES, MIXED, HUES and LIGHTNESS. A Decide judge headlines round 1. That verdict is not the deliverable: a GLM editor turns the audit into row-level repaint notes (gated - on a perfect audit it must demand a verbatim unchanged copy), Muse Edit repaints the chart, and a blind re-read plus the same auditor re-score the corrected chart against the same card. The corrected chart is the flow's final output."
+   },
+   "w": 900,
+   "name": "Paint mix check"
+  },
+  {
+   "id": "setting",
+   "type": "text",
+   "x": 60,
+   "y": 300,
+   "fields": {
+    "text": "A flat painter's colour-mixing chart poster on a plain off-white background: four horizontal rows separated by thin grey rules; in each row, two round blobs of tube paint, a black plus sign, a black equals sign and one larger round blob of the mixed paint, with a small printed label in black capitals under each source blob; clean flat colours, even light, no other decoration yet."
+   },
+   "w": 300,
+   "name": "Chart setting"
+  },
+  {
+   "id": "director",
+   "type": "llm",
+   "x": 440,
+   "y": 280,
+   "fields": {
+    "model": "z-ai/glm-5.3-flash",
+    "system": "You are a paint-shop teacher. Given a CHART SETTING, design a MIX CARD for one colour-mixing chart poster. Choose ONE chart from this menu ONLY, and copy its spec EXACTLY - every row, every pigment and every ratio:\n\nMENU:\n1. FIRST MIXES - 1. BLUE + YELLOW - EQUAL. 2. RED + BLUE - EQUAL. 3. RED + YELLOW - EQUAL. 4. BLACK + WHITE - EQUAL.\n2. TINTS AND SHADES - 1. RED + WHITE - EQUAL. 2. BLUE + WHITE - EQUAL. 3. RED + BLACK - EQUAL. 4. BLUE + BLACK - EQUAL.\n3. TILTED MIXES - 1. RED + YELLOW - RED-HEAVY. 2. BLUE + YELLOW - YELLOW-HEAVY. 3. RED + BLUE - BLUE-HEAVY. 4. YELLOW + BLACK - EQUAL.\n4. QUIET COLOURS - 1. BLUE + YELLOW - BLUE-HEAVY. 2. RED + WHITE - RED-HEAVY. 3. YELLOW + WHITE - YELLOW-HEAVY. 4. BLACK + WHITE - BLACK-HEAVY.\n\nThe pigments are tube paints named only BLUE, RED, YELLOW, WHITE and BLACK. A ratio is EQUAL, A-HEAVY (about twice as much of the first pigment as the second) or B-HEAVY (about twice as much of the second as the first); a named heavy side, like RED-HEAVY, means that named pigment is the heavy one. The card NEVER names the colour a mix produces - that colour is derived by the mixing law, not written down.\n\nOutput ONLY the card, in exactly this format, copying the chosen chart's spec without changing any of it:\nCHART: <the chart name>\nROWS:\n1. <PIGMENT> + <PIGMENT> - <EQUAL, A-HEAVY or B-HEAVY, or the heavy pigment's name + -HEAVY exactly as carded>\n2. <row 2 exactly as carded>\n3. <row 3 exactly as carded>\n4. <row 4 exactly as carded>\nROW COUNT: 4\nNo other text.",
+    "maxTokens": 500,
+    "reasoningEffort": "low"
+   },
+   "w": 280,
+   "name": "Mix card - GLM picks a chart and copies its exact rows of sources and ratios",
+   "sizes": {
+    "system": 150
+   }
+  },
+  {
+   "id": "j0",
+   "type": "join",
+   "x": 800,
+   "y": 480,
+   "fields": {
+    "sep": "\n\nMIX CARD (the chart - its four rows of source pigments and ratios; its exact wording must reach the chart maker):\n"
+   },
+   "w": 200,
+   "name": "Setting + mix card"
+  },
+  {
+   "id": "stylist",
+   "type": "llm",
+   "x": 800,
+   "y": 280,
+   "fields": {
+    "model": "z-ai/glm-5.3-flash",
+    "system": "You turn a MIX CARD into ONE prompt for an AI image generator. The input gives a CHART SETTING first, then a 'MIX CARD' with four rows, each naming two tube pigments (BLUE, RED, YELLOW, WHITE or BLACK) and a ratio (EQUAL, A-HEAVY or B-HEAVY, or a named heavy pigment). Write a single-paragraph prompt for a flat colour-mixing chart poster, demanding all of this:\n- A plain off-white background and exactly four horizontal rows separated by thin grey rules, in the card's order, top to bottom. No title, no other printed words, letters or numbers anywhere except the source labels below.\n- In each row, left to right: a round flat blob of the first pigment's paint, a bold black plus sign, a round flat blob of the second pigment's paint, a bold black equals sign, and ONE larger round flat blob of the result. Under each source blob, its pigment name printed in small black capitals exactly as carded (BLUE, RED, YELLOW, WHITE or BLACK). Under the result blob, only the single word RESULT.\n- Each result blob is the single uniform colour produced by THOROUGHLY mixing the row's two paints in the carded proportion (EQUAL: equal amounts; a heavy side: about twice as much of the heavy pigment as of the other). Describe the result blob in exactly those terms - NEVER name, guess or hint at the resulting colour, and never describe it as marbled, streaked, swirled, split or two-tone: it is one flat, even, thoroughly mixed colour.\n- The source blobs are pure unmixed tube paint in exactly their carded colours. Blobs do not touch each other; flat colours, clean round edges, straight-on view.\nName every row in the prompt, one by one, with its two pigments, its ratio and its labels.\nOutput ONLY the image prompt, one paragraph, no preamble.",
+    "maxTokens": 700,
+    "reasoningEffort": "low"
+   },
+   "w": 280,
+   "name": "Mix brief - GLM turns the card into a chart painter prompt, never naming a result colour",
+   "sizes": {
+    "system": 150
+   }
+  },
+  {
+   "id": "paint",
+   "type": "image",
+   "x": 1160,
+   "y": 280,
+   "fields": {
+    "model": "meta/muse-image/text-to-image",
+    "size": "4:3",
+    "variations": "1"
+   },
+   "w": 280,
+   "name": "Chart - Muse paints the mixing chart"
+  },
+  {
+   "id": "surveyor",
+   "type": "llm",
+   "x": 1520,
+   "y": 280,
+   "fields": {
+    "model": "google/gemini-3.8-flash",
+    "system": "You are a paint-chart inspector examining a flat poster. You do not know what was planned - report only what you actually see, in exactly this format:\nROWS SEEN:\nROW 1: A <family> / B <family> / MIX <family> <lightness> <form>\nROW 2: A <family> / B <family> / MIX <family> <lightness> <form>\nROW 3: A <family> / B <family> / MIX <family> <lightness> <form>\nROW 4: A <family> / B <family> / MIX <family> <lightness> <form>\nROWS SEEN COUNT: <the number of rows you listed>\nEXTRA: <anything that is not part of the chart - a title, a fifth row, an extra blob, a decoration, a printed colour name for a result; 'none' if there is nothing of the kind>\nIn each row, A is the left source blob, B is the right source blob and MIX is the larger result blob after the equals sign. A <family> is one of: RED, RED-ORANGE, ORANGE, YELLOW, YELLOW-GREEN, GREEN, BLUE-GREEN, BLUE, BLUE-PURPLE, PURPLE, PINK, BROWN, OLIVE, GREY, WHITE, BLACK. For the MIX blob, <lightness> is PALE, MID or DARK, and <form> is UNIFORM (one single even colour), MARBLED (the two source colours still visible as streaks, swirls or patches) or SPLIT (two distinct colour areas in one blob). Name the colour you actually see in each blob, even when a result looks wrong, unmixed or surprising - that is exactly what must be visible in your report. If a row is missing, write 'ROW <n>: MISSING' for it.",
+    "maxTokens": 1100,
+    "reasoningEffort": "low"
+   },
+   "w": 280,
+   "name": "Mix read - Gemini reports every row's sources and result family, lightness and form, blind",
+   "sizes": {
+    "system": 150
+   }
+  },
+  {
+   "id": "j1",
+   "type": "join",
+   "x": 1880,
+   "y": 180,
+   "fields": {
+    "sep": "\n\nMIX READ (a blind inspector reported only what it could see - every row's source colours and the result blob's family, lightness and form; it never saw the mix card):\n"
+   },
+   "w": 200,
+   "name": "Mix card + mix read"
+  },
+  {
+   "id": "checker",
+   "type": "llm",
+   "x": 2240,
+   "y": 400,
+   "fields": {
+    "model": "z-ai/glm-5.3-flash",
+    "system": "You are a colour-mixing auditor. The input gives a MIX CARD (CHART name and four ROWS lines, each '<PIGMENT> + <PIGMENT> - <ratio>', the pigments drawn from BLUE, RED, YELLOW, WHITE and BLACK) and then a MIX READ from a blind inspector (ROWS SEEN lines in the shape 'ROW n: A <family> / B <family> / MIX <family> <lightness> <form>', ROWS SEEN COUNT, EXTRA).\n\nTHE MIXING LAW (the result colour is DERIVED from the sources and the ratio, never chosen or carded):\n- Hue families, in wheel order: RED, RED-ORANGE, ORANGE, YELLOW, YELLOW-GREEN, GREEN, BLUE-GREEN, BLUE, BLUE-PURPLE, PURPLE, then back to RED. Side families: PINK (red lightened), BROWN, OLIVE (yellow darkened), GREY.\n- Base hue of an EQUAL mix: BLUE+YELLOW = GREEN. RED+BLUE = PURPLE. RED+YELLOW = ORANGE. BLACK+WHITE = GREY. A chromatic pigment + WHITE keeps the chromatic family (a tint), except RED+WHITE = PINK. A chromatic pigment + BLACK keeps the chromatic family (a shade), except YELLOW+BLACK = OLIVE.\n- Ratio shift: when one side is HEAVY in a mix of two chromatic primaries, shift the base hue ONE wheel-step toward the heavy pigment's hue (RED+YELLOW red-heavy: ORANGE -> RED-ORANGE; BLUE+YELLOW yellow-heavy: GREEN -> YELLOW-GREEN; BLUE+YELLOW blue-heavy: GREEN -> BLUE-GREEN; RED+BLUE blue-heavy: PURPLE -> BLUE-PURPLE). No shift for EQUAL mixes, and no hue shift in mixes involving WHITE or BLACK.\n- Lightness: an EQUAL mix of two chromatic primaries is MID. A mix containing WHITE is PALE when EQUAL or WHITE-heavy, and MID when the chromatic side is heavy. A mix containing BLACK (and no WHITE) is DARK. BLACK+WHITE is MID when EQUAL, DARK when BLACK-heavy, PALE when WHITE-heavy.\n\nScore in exactly this format:\nCARD LAW: <VALID if the card has exactly 4 rows and every row names two DIFFERENT pigments from the five with a ratio of EQUAL, A-HEAVY or B-HEAVY (a named heavy pigment counts); otherwise INVALID, naming each offending row>\nSOURCES: <number of the 8 source blobs whose read family equals the carded pigment for that slot (a carded BLUE read as BLUE counts; WHITE read as WHITE and BLACK as BLACK count)> of 8\nMIXED: <number of the 4 result blobs whose read form is UNIFORM> of 4\nHUES: <number of the 4 result blobs whose read MIX family equals the family the LAW derives from that row's carded sources and ratio> of 4\nLIGHTNESS: <number of the 4 result blobs whose read lightness equals the band the LAW derives for that row> of 4\nMIX ERRORS: <every row that lost a MIXED, HUES or LIGHTNESS point, as 'row <n> derived <family> <lightness> uniform, read <family> <lightness> <form>', separated by '; '; 'none' if there are none>\nEXTRA: <the read's EXTRA, or 'none'>\nSUMMARY: <one short line naming what held and what failed>\nScore strictly from the two texts. Derive each expected family and lightness yourself from the card's rows using the law before scoring any row.",
+    "maxTokens": 1200,
+    "reasoningEffort": "low"
+   },
+   "w": 280,
+   "name": "Mix audit - GLM derives each result from the mixing law and scores sources, mixed, hues, lightness",
+   "sizes": {
+    "system": 150
+   }
+  },
+  {
+   "id": "j2",
+   "type": "join",
+   "x": 2240,
+   "y": 180,
+   "fields": {
+    "sep": "\n\nMIX AUDIT:\n"
+   },
+   "w": 200,
+   "name": "Card, mix read + mix audit"
+  },
+  {
+   "id": "audit",
+   "type": "decide",
+   "x": 2600,
+   "y": 180,
+   "fields": {
+    "model": "perplexity/pplx-decider-v1.2",
+    "mode": "choose",
+    "question": "The picture should be a painter's colour-mixing chart: four rows, each with two pure source paint blobs, a plus sign, an equals sign, and one larger result blob showing the single uniform colour that thoroughly mixing the two paints in the carded ratio produces. The result colours are named nowhere - the audit in the text derives each expected hue family and lightness from the pigment mixing law and scores the blind read against that derivation, including whether each result is truly mixed rather than marbled or split. Choose the one label that best fits the round-1 picture.",
+    "options": "mixes true\nhues drifted\nleft unmixed\nsources wrong\nnot a chart"
+   },
+   "w": 280,
+   "name": "Mixes true - audited",
+   "sizes": {
+    "question": 130
+   }
+  },
+  {
+   "id": "editor",
+   "type": "llm",
+   "x": 2600,
+   "y": 520,
+   "fields": {
+    "model": "z-ai/glm-5.3-flash",
+    "system": "You are the paint editor in a colour-mixing pipeline. The input gives a MIX CARD, a blind MIX READ and a MIX AUDIT of the round-1 picture. Write ONE edit instruction for an image editor working on that picture, in at most 110 words.\nTHE MIXING LAW (the result colour is DERIVED from the sources and the ratio, never chosen or carded):\n- Hue families, in wheel order: RED, RED-ORANGE, ORANGE, YELLOW, YELLOW-GREEN, GREEN, BLUE-GREEN, BLUE, BLUE-PURPLE, PURPLE, then back to RED. Side families: PINK (red lightened), BROWN, OLIVE (yellow darkened), GREY.\n- Base hue of an EQUAL mix: BLUE+YELLOW = GREEN. RED+BLUE = PURPLE. RED+YELLOW = ORANGE. BLACK+WHITE = GREY. A chromatic pigment + WHITE keeps the chromatic family (a tint), except RED+WHITE = PINK. A chromatic pigment + BLACK keeps the chromatic family (a shade), except YELLOW+BLACK = OLIVE.\n- Ratio shift: when one side is HEAVY in a mix of two chromatic primaries, shift the base hue ONE wheel-step toward the heavy pigment's hue (RED+YELLOW red-heavy: ORANGE -> RED-ORANGE; BLUE+YELLOW yellow-heavy: GREEN -> YELLOW-GREEN; BLUE+YELLOW blue-heavy: GREEN -> BLUE-GREEN; RED+BLUE blue-heavy: PURPLE -> BLUE-PURPLE). No shift for EQUAL mixes, and no hue shift in mixes involving WHITE or BLACK.\n- Lightness: an EQUAL mix of two chromatic primaries is MID. A mix containing WHITE is PALE when EQUAL or WHITE-heavy, and MID when the chromatic side is heavy. A mix containing BLACK (and no WHITE) is DARK. BLACK+WHITE is MID when EQUAL, DARK when BLACK-heavy, PALE when WHITE-heavy.\nIf the audit shows perfect mixing (SOURCES 8 of 8, MIXED 4 of 4, HUES 4 of 4, LIGHTNESS 4 of 4, EXTRA: none), output exactly this and nothing else: 'Reproduce this colour-mixing chart completely unchanged - same four rows, same source blobs, same labels, same result blobs. Do not move, add, remove or recolour anything.'\nOtherwise: first state the full target end state - four rows in the card's order on the off-white background, each row's two source blobs in exactly their carded pure colours with their printed labels, a plus sign, an equals sign, and one larger result blob that is a single uniform thoroughly mixed colour: for each row name the result the law derives (its family and lightness) - then add the audit's specific failures as concrete row-level demands (for example: 'row 2's result is still marbled red and blue, not mixed: repaint it one uniform MID PURPLE'). Never ask for any printed word other than the source labels and the word RESULT under each result blob.",
+    "maxTokens": 350,
+    "reasoningEffort": "low"
+   },
+   "w": 280,
+   "name": "Edit notes - GLM turns the mix audit into row-level repaint instructions",
+   "sizes": {
+    "system": 150
+   }
+  },
+  {
+   "id": "fix",
+   "type": "edit",
+   "x": 2960,
+   "y": 520,
+   "fields": {
+    "model": "meta/muse-image/edit",
+    "size": "auto"
+   },
+   "w": 280,
+   "name": "Corrected chart - Muse Edit repaints the failed mixes"
+  },
+  {
+   "id": "surveyor2",
+   "type": "llm",
+   "x": 3320,
+   "y": 520,
+   "fields": {
+    "model": "google/gemini-3.8-flash",
+    "system": "You are a paint-chart inspector examining a flat poster. You do not know what was planned - report only what you actually see, in exactly this format:\nROWS SEEN:\nROW 1: A <family> / B <family> / MIX <family> <lightness> <form>\nROW 2: A <family> / B <family> / MIX <family> <lightness> <form>\nROW 3: A <family> / B <family> / MIX <family> <lightness> <form>\nROW 4: A <family> / B <family> / MIX <family> <lightness> <form>\nROWS SEEN COUNT: <the number of rows you listed>\nEXTRA: <anything that is not part of the chart - a title, a fifth row, an extra blob, a decoration, a printed colour name for a result; 'none' if there is nothing of the kind>\nIn each row, A is the left source blob, B is the right source blob and MIX is the larger result blob after the equals sign. A <family> is one of: RED, RED-ORANGE, ORANGE, YELLOW, YELLOW-GREEN, GREEN, BLUE-GREEN, BLUE, BLUE-PURPLE, PURPLE, PINK, BROWN, OLIVE, GREY, WHITE, BLACK. For the MIX blob, <lightness> is PALE, MID or DARK, and <form> is UNIFORM (one single even colour), MARBLED (the two source colours still visible as streaks, swirls or patches) or SPLIT (two distinct colour areas in one blob). Name the colour you actually see in each blob, even when a result looks wrong, unmixed or surprising - that is exactly what must be visible in your report. If a row is missing, write 'ROW <n>: MISSING' for it.",
+    "maxTokens": 1100,
+    "reasoningEffort": "low"
+   },
+   "w": 280,
+   "name": "Re-read - Gemini reports the corrected chart's rows, blind",
+   "sizes": {
+    "system": 150
+   }
+  },
+  {
+   "id": "j4",
+   "type": "join",
+   "x": 3680,
+   "y": 420,
+   "fields": {
+    "sep": "\n\nMIX READ (a blind inspector reported only what it could see in the corrected picture - every row's source colours and the result blob's family, lightness and form; it never saw the mix card):\n"
+   },
+   "w": 200,
+   "name": "Mix card + re-read"
+  },
+  {
+   "id": "checker2",
+   "type": "llm",
+   "x": 4040,
+   "y": 520,
+   "fields": {
+    "model": "z-ai/glm-5.3-flash",
+    "system": "You are a colour-mixing auditor. The input gives a MIX CARD (CHART name and four ROWS lines, each '<PIGMENT> + <PIGMENT> - <ratio>', the pigments drawn from BLUE, RED, YELLOW, WHITE and BLACK) and then a MIX READ from a blind inspector (ROWS SEEN lines in the shape 'ROW n: A <family> / B <family> / MIX <family> <lightness> <form>', ROWS SEEN COUNT, EXTRA).\n\nTHE MIXING LAW (the result colour is DERIVED from the sources and the ratio, never chosen or carded):\n- Hue families, in wheel order: RED, RED-ORANGE, ORANGE, YELLOW, YELLOW-GREEN, GREEN, BLUE-GREEN, BLUE, BLUE-PURPLE, PURPLE, then back to RED. Side families: PINK (red lightened), BROWN, OLIVE (yellow darkened), GREY.\n- Base hue of an EQUAL mix: BLUE+YELLOW = GREEN. RED+BLUE = PURPLE. RED+YELLOW = ORANGE. BLACK+WHITE = GREY. A chromatic pigment + WHITE keeps the chromatic family (a tint), except RED+WHITE = PINK. A chromatic pigment + BLACK keeps the chromatic family (a shade), except YELLOW+BLACK = OLIVE.\n- Ratio shift: when one side is HEAVY in a mix of two chromatic primaries, shift the base hue ONE wheel-step toward the heavy pigment's hue (RED+YELLOW red-heavy: ORANGE -> RED-ORANGE; BLUE+YELLOW yellow-heavy: GREEN -> YELLOW-GREEN; BLUE+YELLOW blue-heavy: GREEN -> BLUE-GREEN; RED+BLUE blue-heavy: PURPLE -> BLUE-PURPLE). No shift for EQUAL mixes, and no hue shift in mixes involving WHITE or BLACK.\n- Lightness: an EQUAL mix of two chromatic primaries is MID. A mix containing WHITE is PALE when EQUAL or WHITE-heavy, and MID when the chromatic side is heavy. A mix containing BLACK (and no WHITE) is DARK. BLACK+WHITE is MID when EQUAL, DARK when BLACK-heavy, PALE when WHITE-heavy.\n\nScore in exactly this format:\nCARD LAW: <VALID if the card has exactly 4 rows and every row names two DIFFERENT pigments from the five with a ratio of EQUAL, A-HEAVY or B-HEAVY (a named heavy pigment counts); otherwise INVALID, naming each offending row>\nSOURCES: <number of the 8 source blobs whose read family equals the carded pigment for that slot (a carded BLUE read as BLUE counts; WHITE read as WHITE and BLACK as BLACK count)> of 8\nMIXED: <number of the 4 result blobs whose read form is UNIFORM> of 4\nHUES: <number of the 4 result blobs whose read MIX family equals the family the LAW derives from that row's carded sources and ratio> of 4\nLIGHTNESS: <number of the 4 result blobs whose read lightness equals the band the LAW derives for that row> of 4\nMIX ERRORS: <every row that lost a MIXED, HUES or LIGHTNESS point, as 'row <n> derived <family> <lightness> uniform, read <family> <lightness> <form>', separated by '; '; 'none' if there are none>\nEXTRA: <the read's EXTRA, or 'none'>\nSUMMARY: <one short line naming what held and what failed>\nScore strictly from the two texts. Derive each expected family and lightness yourself from the card's rows using the law before scoring any row.",
+    "maxTokens": 1200,
+    "reasoningEffort": "low"
+   },
+   "w": 280,
+   "name": "Mix re-audit - GLM scores the corrected chart against the same card",
+   "sizes": {
+    "system": 150
+   }
+  },
+  {
+   "id": "ask",
+   "type": "text",
+   "x": 1160,
+   "y": 520,
+   "fields": {
+    "text": "Inspect the colour-mixing chart in the attached picture now, following your instructions exactly."
+   },
+   "w": 240,
+   "name": "Inspect ask"
+  },
+  {
+   "id": "ask2",
+   "type": "text",
+   "x": 2960,
+   "y": 900,
+   "fields": {
+    "text": "Inspect the colour-mixing chart in the attached picture now, following your instructions exactly."
+   },
+   "w": 240,
+   "name": "Re-inspect ask"
+  }
+ ],
+ "links": [
+  {
+   "id": "l1",
+   "from": {
+    "node": "setting",
+    "port": "text"
+   },
+   "to": {
+    "node": "director",
+    "port": "prompt"
+   }
+  },
+  {
+   "id": "l2",
+   "from": {
+    "node": "director",
+    "port": "text"
+   },
+   "to": {
+    "node": "j0",
+    "port": "b"
+   }
+  },
+  {
+   "id": "l12",
+   "from": {
+    "node": "setting",
+    "port": "text"
+   },
+   "to": {
+    "node": "j0",
+    "port": "a"
+   }
+  },
+  {
+   "id": "l13",
+   "from": {
+    "node": "j0",
+    "port": "text"
+   },
+   "to": {
+    "node": "stylist",
+    "port": "prompt"
+   }
+  },
+  {
+   "id": "l3",
+   "from": {
+    "node": "stylist",
+    "port": "text"
+   },
+   "to": {
+    "node": "paint",
+    "port": "prompt"
+   }
+  },
+  {
+   "id": "l4",
+   "from": {
+    "node": "paint",
+    "port": "image"
+   },
+   "to": {
+    "node": "surveyor",
+    "port": "img1"
+   }
+  },
+  {
+   "id": "l7",
+   "from": {
+    "node": "director",
+    "port": "text"
+   },
+   "to": {
+    "node": "j1",
+    "port": "a"
+   }
+  },
+  {
+   "id": "l8",
+   "from": {
+    "node": "surveyor",
+    "port": "text"
+   },
+   "to": {
+    "node": "j1",
+    "port": "b"
+   }
+  },
+  {
+   "id": "l11",
+   "from": {
+    "node": "j1",
+    "port": "text"
+   },
+   "to": {
+    "node": "checker",
+    "port": "prompt"
+   }
+  },
+  {
+   "id": "l14",
+   "from": {
+    "node": "j1",
+    "port": "text"
+   },
+   "to": {
+    "node": "j2",
+    "port": "a"
+   }
+  },
+  {
+   "id": "l15",
+   "from": {
+    "node": "checker",
+    "port": "text"
+   },
+   "to": {
+    "node": "j2",
+    "port": "b"
+   }
+  },
+  {
+   "id": "l16",
+   "from": {
+    "node": "j2",
+    "port": "text"
+   },
+   "to": {
+    "node": "audit",
+    "port": "text"
+   }
+  },
+  {
+   "id": "l17",
+   "from": {
+    "node": "paint",
+    "port": "image"
+   },
+   "to": {
+    "node": "audit",
+    "port": "img1"
+   }
+  },
+  {
+   "id": "l18",
+   "from": {
+    "node": "j2",
+    "port": "text"
+   },
+   "to": {
+    "node": "editor",
+    "port": "prompt"
+   }
+  },
+  {
+   "id": "l19",
+   "from": {
+    "node": "editor",
+    "port": "text"
+   },
+   "to": {
+    "node": "fix",
+    "port": "prompt"
+   }
+  },
+  {
+   "id": "l20",
+   "from": {
+    "node": "paint",
+    "port": "image"
+   },
+   "to": {
+    "node": "fix",
+    "port": "image"
+   }
+  },
+  {
+   "id": "l21",
+   "from": {
+    "node": "fix",
+    "port": "image"
+   },
+   "to": {
+    "node": "surveyor2",
+    "port": "img1"
+   }
+  },
+  {
+   "id": "l22",
+   "from": {
+    "node": "director",
+    "port": "text"
+   },
+   "to": {
+    "node": "j4",
+    "port": "a"
+   }
+  },
+  {
+   "id": "l23",
+   "from": {
+    "node": "surveyor2",
+    "port": "text"
+   },
+   "to": {
+    "node": "j4",
+    "port": "b"
+   }
+  },
+  {
+   "id": "l24",
+   "from": {
+    "node": "j4",
+    "port": "text"
+   },
+   "to": {
+    "node": "checker2",
+    "port": "prompt"
+   }
+  },
+  {
+   "id": "l39",
+   "from": {
+    "node": "ask",
+    "port": "text"
+   },
+   "to": {
+    "node": "surveyor",
+    "port": "prompt"
+   }
+  },
+  {
+   "id": "l40",
+   "from": {
+    "node": "ask2",
+    "port": "text"
+   },
+   "to": {
+    "node": "surveyor2",
+    "port": "prompt"
+   }
+  }
+ ],
+ "nid": 32,
+ "lid": 40,
+ "view": {
+  "panX": 40,
+  "panY": 40,
+  "scale": 0.5
+ }
+}

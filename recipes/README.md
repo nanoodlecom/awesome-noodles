@@ -42,6 +42,7 @@ Do not hand-edit these files — run `node scripts/make-recipes.mjs` after chang
 | [Molecule check, valence-audited](molecule-check.md) | [`graphs/molecule-check.noodle-graph.json`](../graphs/molecule-check.noodle-graph.json) | defaults in graph |
 | [Negative space check, figure-ground-audited](negative-space-check.md) | [`graphs/negative-space-check.noodle-graph.json`](../graphs/negative-space-check.noodle-graph.json) | defaults in graph |
 | [One photo, whole campaign](one-photo-whole-campaign.md) | [`graphs/one-photo-whole-campaign.noodle-graph.json`](../graphs/one-photo-whole-campaign.noodle-graph.json) | needs Product photo |
+| [Paint mix check, colour-algebra-audited](paint-mix-check.md) | [`graphs/paint-mix-check.noodle-graph.json`](../graphs/paint-mix-check.noodle-graph.json) | defaults in graph |
 | [Paint through music, round-trip](paint-through-music.md) | [`graphs/paint-through-music.noodle-graph.json`](../graphs/paint-through-music.noodle-graph.json) | defaults in graph |
 | [Palette transplant, re-measured](palette-transplant.md) | [`graphs/palette-transplant.noodle-graph.json`](../graphs/palette-transplant.noodle-graph.json) | defaults in graph |
 | [Perspective check, convergence-audited](perspective-check.md) | [`graphs/perspective-check.noodle-graph.json`](../graphs/perspective-check.noodle-graph.json) | defaults in graph |
