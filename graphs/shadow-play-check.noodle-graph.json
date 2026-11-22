@@ -1,0 +1,505 @@
+{
+ "v": 1,
+ "nodes": [
+  {
+   "id": "c1",
+   "type": "comment",
+   "x": 60,
+   "y": 30,
+   "fields": {
+    "text": "Can a shadow TELL THE PICTURE? A GLM director picks one shadow play from a menu printed in its own prompt (four plays; each one bold silhouette - SITTING CAT, RABBIT, SAILBOAT or BIRD IN FLIGHT - exactly four ordinary tabletop objects, the four silhouette parts the shadow must show, a casting line saying which object's shadow mainly forms which part, and a lamp side) and copies out a SHADOW CARD. A second GLM turns the card into a shadow-art photograph prompt: the four objects on a table before a pale wall, one lamp on the carded side, their COMBINED shadow on the wall forming the carded silhouette part by part - while the objects themselves stay ordinary, must not resemble the shape, and no real specimen of the shape may appear. Muse paints the photograph. A blind Gemini reader reports the objects it sees, what the wall shadow most resembles, the silhouette parts it can make out, the direction the shadow falls and whether a real specimen is present. A GLM auditor scores OBJECTS, SHADOW SHAPE (MATCH, PARTIAL or MISS), PARTS, LEAK (a real specimen, or an object itself shaped like the silhouette - the content must arrive by projection or not at all) and LIGHT (the shadow must fall opposite the lamp). A Decide judge headlines round 1. That verdict is not the deliverable: a GLM editor turns the audit into concrete edit notes (gated - on a perfect audit it must demand a verbatim unchanged copy), Muse Edit repaints the photograph, and a blind re-read plus the same auditor re-score the corrected photograph against the same card. The corrected photograph is the flow's final output."
+   },
+   "w": 900,
+   "name": "Shadow play check"
+  },
+  {
+   "id": "setting",
+   "type": "text",
+   "x": 60,
+   "y": 300,
+   "fields": {
+    "text": "A shadow-art photograph in a dim studio: a narrow wooden table in front of a large plain pale wall, lit by a single strong lamp low to one side, so that anything standing on the table casts one big soft-edged shadow on the wall behind it. The table is empty and the wall is blank; nothing is in the scene yet."
+   },
+   "w": 300,
+   "name": "Stage setting"
+  },
+  {
+   "id": "director",
+   "type": "llm",
+   "x": 440,
+   "y": 280,
+   "fields": {
+    "model": "z-ai/glm-5.3-flash",
+    "system": "You are a shadow-play director. Given a STAGE SETTING, design a SHADOW CARD for one shadow-art photograph. Choose ONE play from this menu ONLY, and copy its spec EXACTLY - the shape, every part, every object, every casting line and the light:\n\nMENU:\n1. SITTING CAT - SHADOW SHAPE: SITTING CAT. PARTS: BODY; HEAD; EARS; TAIL. OBJECTS: a rounded metal teapot; a tall bottle with a curved neck; a small round alarm clock; a small potted herb with pointed leaves. CASTING: the teapot's shadow forms the BODY, a big rounded mass; the alarm clock's shadow forms the HEAD, a round shape raised at the front of the body; the herb pot's two tallest pointed leaves form the EARS on top of the head; the curved-neck bottle's shadow forms the TAIL, curling up behind the body. LIGHT: LEFT.\n2. RABBIT - SHADOW SHAPE: RABBIT. PARTS: BODY; HEAD; EARS; NOSE. OBJECTS: a round mixing bowl; a small flowerpot; a pair of long-handled wooden spoons; a tall watering can. CASTING: the mixing bowl's shadow forms the BODY, a low round mass; the flowerpot's shadow forms the HEAD, a smaller round at the front top of the body; the two wooden spoons stand upright behind the head and their shadows form the EARS, two long ovals; the watering can's spout points forward from the head and its shadow forms the NOSE, a small point. LIGHT: RIGHT.\n3. SAILBOAT - SHADOW SHAPE: SAILBOAT. PARTS: HULL; MAST; SAIL; FLAG. OBJECTS: an open book lying flat; a tall candlestick; a triangular folded cloth napkin; a small mug. CASTING: the open book's shadow forms the HULL, a long curved boat shape along the bottom; the candlestick's shadow forms the MAST, one tall straight line rising from the hull; the folded napkin's shadow forms the SAIL, one big triangle against the mast; the mug's handle, raised at the top of the mast, forms the FLAG, a tiny bump at the very top. LIGHT: LEFT.\n4. BIRD IN FLIGHT - SHADOW SHAPE: BIRD IN FLIGHT. PARTS: BODY; RAISED WING; BEAK; TAIL. OBJECTS: a small round bowl; a pair of open kitchen scissors; a curved banana; a feather duster. CASTING: the small bowl's shadow forms the BODY, a plump oval; the open scissors are angled upward behind the body and their shadow forms the RAISED WING, one big pointed wing sweeping up; the banana's curved tip forms the BEAK, a small point at the front of the body; the feather duster's shadow forms the TAIL, a soft fan at the back. LIGHT: RIGHT.\n\nThe card cards a shadow, not a thing: no object on it IS the shape, and the shape exists only as the combined shadow the objects cast on the wall.\n\nOutput ONLY the card, in exactly this format, copying the chosen play's spec without changing any of it:\nPLAY: <the play name>\nSHADOW SHAPE: <the shape exactly as carded>\nPARTS: <the four parts, separated by '; ', exactly as carded>\nOBJECTS: <the four objects, separated by '; ', exactly as carded>\nCASTING: <the casting lines exactly as carded, as one paragraph>\nLIGHT: <LEFT or RIGHT, exactly as carded>\nOBJECT COUNT: 4\nNo other text.",
+    "maxTokens": 600,
+    "reasoningEffort": "low"
+   },
+   "w": 280,
+   "name": "Shadow card - GLM picks a play and copies its shape, parts, objects, casting and light",
+   "sizes": {
+    "system": 150
+   }
+  },
+  {
+   "id": "j0",
+   "type": "join",
+   "x": 800,
+   "y": 480,
+   "fields": {
+    "sep": "\n\nSHADOW CARD (the play - its shape, parts, objects, casting and light; its exact wording must reach the photograph maker):\n\n"
+   },
+   "w": 200,
+   "name": "Setting + shadow card"
+  },
+  {
+   "id": "stylist",
+   "type": "llm",
+   "x": 800,
+   "y": 280,
+   "fields": {
+    "model": "z-ai/glm-5.3-flash",
+    "system": "You turn a SHADOW CARD into ONE prompt for an AI image generator. The input gives a STAGE SETTING first, then a 'SHADOW CARD' with a SHADOW SHAPE, four PARTS, four OBJECTS, CASTING lines and a LIGHT side. Write a single-paragraph prompt for a photorealistic shadow-art photograph, demanding all of this:\n- A narrow wooden table in front of a large plain pale wall in a dim studio, lit by a single strong lamp on the carded side (LIGHT: LEFT means the lamp is low on the left; LIGHT: RIGHT means low on the right), so the objects cast one big shared shadow on the wall, falling on the side opposite the lamp.\n- Exactly the four carded objects stand on the table, each ordinary and clearly recognisable as itself, arranged in a row along the table following the CASTING lines: name every object in the prompt, one by one, with the silhouette part its shadow mainly forms.\n- Their COMBINED shadow on the wall forms one single connected dark silhouette of the carded SHADOW SHAPE, large and clearly readable, showing all four carded PARTS: name the shape and every part in the prompt, and describe the shadow in exactly those terms - one silhouette, not four separate shadows.\n- The objects themselves must NOT resemble the shape, individually or together: nobody looking only at the objects should see the shape in them. No real specimen of the shape (no real animal, no toy, model, picture or statue of it) appears anywhere in the scene. No other objects, no people, no text, letters or labels anywhere.\nOutput ONLY the image prompt, one paragraph, no preamble.",
+    "maxTokens": 800,
+    "reasoningEffort": "low"
+   },
+   "w": 280,
+   "name": "Shadow brief - GLM turns the card into a shadow-art photograph prompt",
+   "sizes": {
+    "system": 150
+   }
+  },
+  {
+   "id": "paint",
+   "type": "image",
+   "x": 1160,
+   "y": 280,
+   "fields": {
+    "model": "meta/muse-image/text-to-image",
+    "size": "4:3",
+    "variations": "1"
+   },
+   "w": 280,
+   "name": "Photograph - Muse paints the shadow play"
+  },
+  {
+   "id": "surveyor",
+   "type": "llm",
+   "x": 1520,
+   "y": 280,
+   "fields": {
+    "model": "google/gemini-3.8-flash",
+    "system": "You are a shadow-play inspector examining a photograph. You do not know what was planned - report only what you actually see, in exactly this format:\nOBJECTS SEEN: <every distinct physical object standing on the table, in left-to-right order, each named by its most common everyday name, separated by '; '; 'none' if there are no objects>\nOBJECT COUNT SEEN: <the number of objects you listed>\nSHADOW SHAPE SEEN: <the one thing the combined shadow on the wall most resembles, in one to three plain words - for example 'sitting cat', 'sailboat', 'bird'; 'shapeless blob' if it resembles nothing recognisable>\nSHADOW PARTS SEEN: <the distinct silhouette features you can clearly make out in the wall shadow, in plain words, separated by '; ' - for example 'round head; two pointed ears; long curving tail; bulky body'; 'none' if the shadow is shapeless>\nSHADOW FALLS: <LEFT if the shadow lies mainly to the left of the objects, RIGHT if mainly to the right, DOWN if mainly below them, NONE if there is no clear shadow>\nREAL SPECIMEN: <YES if an actual example of the thing the shadow resembles is physically present in the scene - a real animal, or a toy, model, statue or picture of it, or any single object itself shaped like it; NO otherwise>\nEXTRA: <anything that is not part of the scene as described - extra objects, people, text or letters, a second light source; 'none' if there is nothing of the kind>\nName what you actually see, even when the shadow looks wrong, faint or surprising - that is exactly what must be visible in your report. Judge the shadow by its outline alone, not by what the objects are.",
+    "maxTokens": 900,
+    "reasoningEffort": "low"
+   },
+   "w": 280,
+   "name": "Shadow read - Gemini reports the objects and what the wall shadow resembles, blind",
+   "sizes": {
+    "system": 150
+   }
+  },
+  {
+   "id": "j1",
+   "type": "join",
+   "x": 1880,
+   "y": 180,
+   "fields": {
+    "sep": "\n\nSHADOW READ (a blind inspector reported only what it could see - the objects, what the wall shadow resembles, its parts, the direction it falls and any real specimen; it never saw the shadow card):\n\n"
+   },
+   "w": 200,
+   "name": "Shadow card + shadow read"
+  },
+  {
+   "id": "checker",
+   "type": "llm",
+   "x": 2240,
+   "y": 400,
+   "fields": {
+    "model": "z-ai/glm-5.3-flash",
+    "system": "You are a shadow-play auditor. The input gives a SHADOW CARD (PLAY name, SHADOW SHAPE, four PARTS, four OBJECTS, CASTING lines, LIGHT side, OBJECT COUNT) and then a SHADOW READ from a blind inspector (OBJECTS SEEN, OBJECT COUNT SEEN, SHADOW SHAPE SEEN, SHADOW PARTS SEEN, SHADOW FALLS, REAL SPECIMEN, EXTRA).\n\nScore in exactly this format:\nCARD LAW: <VALID if the card has exactly one shape, exactly 4 parts, exactly 4 objects and a LIGHT of LEFT or RIGHT; otherwise INVALID, naming each problem>\nOBJECTS: <number of the 4 carded objects that appear in OBJECTS SEEN, counting an object seen under its common synonym (a kettle is not a teapot; a clock counts as an alarm clock)> of 4\nSHADOW SHAPE: <MATCH if SHADOW SHAPE SEEN names the carded shape or its plain synonym (the name alone decides: 'cat' MATCHES 'SITTING CAT', 'rabbit' MATCHES 'RABBIT', 'sailboat' or 'boat with sail' MATCHES 'SAILBOAT', 'bird' MATCHES 'BIRD IN FLIGHT'); PARTIAL if it names a related but different thing (an animal for the cat, a boat without a sail, a winged shape that is not a bird) or the right kind of thing in a form missing its defining feature; MISS if it names something unrelated or a shapeless blob>\nPARTS: <number of the 4 carded parts clearly identifiable in SHADOW PARTS SEEN, counting plain synonyms (pointed ears for EARS, curving tail for TAIL, triangle sail for SAIL, long ears for EARS)> of 4\nLEAK: <NONE if REAL SPECIMEN is NO and no object in OBJECTS SEEN is itself the carded shape or a depiction of it; LEAKED if REAL SPECIMEN is YES or any seen object is itself shaped like the carded shape - the content must arrive by projection, never by presence>\nLIGHT: <CORRECT if the shadow falls opposite the carded lamp side (carded LEFT means the lamp is on the left, so the shadow must fall RIGHT; carded RIGHT means it must fall LEFT); WRONG otherwise, including SHADOW FALLS: NONE>\nSHADOW ERRORS: <every point lost, as short clauses separated by '; ' - name each missing or wrong object, each missing part, a PARTIAL or MISS shape, a leak, a wrong light direction; 'none' if nothing was lost>\nEXTRA: <the read's EXTRA, or 'none'>\nSUMMARY: <one short line naming what held and what failed>\nScore strictly from the two texts. The CASTING lines tell you which object was meant to form which part, but score the parts only from what the blind read could make out in the shadow.",
+    "maxTokens": 1200,
+    "reasoningEffort": "low"
+   },
+   "w": 280,
+   "name": "Shadow audit - GLM scores objects, shadow shape, parts, leak and light against the card",
+   "sizes": {
+    "system": 150
+   }
+  },
+  {
+   "id": "j2",
+   "type": "join",
+   "x": 2240,
+   "y": 180,
+   "fields": {
+    "sep": "\n\nSHADOW AUDIT:\n\n"
+   },
+   "w": 200,
+   "name": "Card, shadow read + shadow audit"
+  },
+  {
+   "id": "audit",
+   "type": "decide",
+   "x": 2600,
+   "y": 180,
+   "fields": {
+    "model": "perplexity/pplx-decider-v1.2",
+    "mode": "choose",
+    "question": "The picture should be a shadow-art photograph: four ordinary objects on a table before a pale wall, lit by one lamp, whose COMBINED shadow on the wall forms one carded silhouette (a sitting cat, a rabbit, a sailboat or a bird in flight) with four carded parts - while no object resembles the shape and no real specimen of it is present. The audit in the text scores the blind read against the card: the objects, the shadow's shape and parts, any leak of the real thing into the scene, and whether the shadow falls opposite the lamp. Choose the one label that best fits the round-1 picture.",
+    "options": "shadow tells it\nshape half-formed\nshadow shapeless\nobjects wrong\nnot a shadow play"
+   },
+   "w": 280,
+   "name": "Shadow tells it - audited",
+   "sizes": {
+    "question": 130
+   }
+  },
+  {
+   "id": "editor",
+   "type": "llm",
+   "x": 2600,
+   "y": 520,
+   "fields": {
+    "model": "z-ai/glm-5.3-flash",
+    "system": "You are the shadow-play editor in a shadow-art pipeline. The input gives a SHADOW CARD, a blind SHADOW READ and a SHADOW AUDIT of the round-1 photograph. Write ONE edit instruction for an image editor working on that photograph, in at most 120 words.\nIf the audit shows a perfect play (OBJECTS 4 of 4, SHADOW SHAPE: MATCH, PARTS 4 of 4, LEAK: NONE, LIGHT: CORRECT, EXTRA: none), output exactly this and nothing else: 'Reproduce this shadow-art photograph completely unchanged - same four objects on the table, same lamp side, same shadow silhouette on the wall. Do not move, add, remove or reshape anything.'\nOtherwise: first state the full target end state - the same dim studio, the card's four objects ordinary and recognisable on the table, the single lamp on the carded side, and their combined shadow on the wall forming one connected silhouette of the carded shape with all four carded parts, named one by one - then add the audit's specific failures as concrete demands (for example: 'the shadow's tail is missing: turn the curved-neck bottle so its shadow curls up behind the body'; 'a real cat sits on the table: remove it - the shape may exist only as shadow'). Shadows change by moving or turning the objects that cast them, so phrase every shadow fix as a small move or turn of the object the CASTING lines assign to that part. Never ask for any object to be reshaped into the shape itself, and never ask for a real specimen, text or letters.",
+    "maxTokens": 400,
+    "reasoningEffort": "low"
+   },
+   "w": 280,
+   "name": "Edit notes - GLM turns the shadow audit into concrete repair instructions",
+   "sizes": {
+    "system": 150
+   }
+  },
+  {
+   "id": "fix",
+   "type": "edit",
+   "x": 2960,
+   "y": 520,
+   "fields": {
+    "model": "meta/muse-image/edit",
+    "size": "auto"
+   },
+   "w": 280,
+   "name": "Corrected photograph - Muse Edit repairs the shadow play"
+  },
+  {
+   "id": "surveyor2",
+   "type": "llm",
+   "x": 3320,
+   "y": 520,
+   "fields": {
+    "model": "google/gemini-3.8-flash",
+    "system": "You are a shadow-play inspector examining a photograph. You do not know what was planned - report only what you actually see, in exactly this format:\nOBJECTS SEEN: <every distinct physical object standing on the table, in left-to-right order, each named by its most common everyday name, separated by '; '; 'none' if there are no objects>\nOBJECT COUNT SEEN: <the number of objects you listed>\nSHADOW SHAPE SEEN: <the one thing the combined shadow on the wall most resembles, in one to three plain words - for example 'sitting cat', 'sailboat', 'bird'; 'shapeless blob' if it resembles nothing recognisable>\nSHADOW PARTS SEEN: <the distinct silhouette features you can clearly make out in the wall shadow, in plain words, separated by '; ' - for example 'round head; two pointed ears; long curving tail; bulky body'; 'none' if the shadow is shapeless>\nSHADOW FALLS: <LEFT if the shadow lies mainly to the left of the objects, RIGHT if mainly to the right, DOWN if mainly below them, NONE if there is no clear shadow>\nREAL SPECIMEN: <YES if an actual example of the thing the shadow resembles is physically present in the scene - a real animal, or a toy, model, statue or picture of it, or any single object itself shaped like it; NO otherwise>\nEXTRA: <anything that is not part of the scene as described - extra objects, people, text or letters, a second light source; 'none' if there is nothing of the kind>\nName what you actually see, even when the shadow looks wrong, faint or surprising - that is exactly what must be visible in your report. Judge the shadow by its outline alone, not by what the objects are.",
+    "maxTokens": 900,
+    "reasoningEffort": "low"
+   },
+   "w": 280,
+   "name": "Re-read - Gemini reports the corrected photograph's objects and shadow, blind",
+   "sizes": {
+    "system": 150
+   }
+  },
+  {
+   "id": "j4",
+   "type": "join",
+   "x": 3680,
+   "y": 420,
+   "fields": {
+    "sep": "\n\nSHADOW READ (a blind inspector reported only what it could see in the corrected photograph - the objects, what the wall shadow resembles, its parts, the direction it falls and any real specimen; it never saw the shadow card):\n\n"
+   },
+   "w": 200,
+   "name": "Shadow card + re-read"
+  },
+  {
+   "id": "checker2",
+   "type": "llm",
+   "x": 4040,
+   "y": 520,
+   "fields": {
+    "model": "z-ai/glm-5.3-flash",
+    "system": "You are a shadow-play auditor. The input gives a SHADOW CARD (PLAY name, SHADOW SHAPE, four PARTS, four OBJECTS, CASTING lines, LIGHT side, OBJECT COUNT) and then a SHADOW READ from a blind inspector (OBJECTS SEEN, OBJECT COUNT SEEN, SHADOW SHAPE SEEN, SHADOW PARTS SEEN, SHADOW FALLS, REAL SPECIMEN, EXTRA).\n\nScore in exactly this format:\nCARD LAW: <VALID if the card has exactly one shape, exactly 4 parts, exactly 4 objects and a LIGHT of LEFT or RIGHT; otherwise INVALID, naming each problem>\nOBJECTS: <number of the 4 carded objects that appear in OBJECTS SEEN, counting an object seen under its common synonym (a kettle is not a teapot; a clock counts as an alarm clock)> of 4\nSHADOW SHAPE: <MATCH if SHADOW SHAPE SEEN names the carded shape or its plain synonym (the name alone decides: 'cat' MATCHES 'SITTING CAT', 'rabbit' MATCHES 'RABBIT', 'sailboat' or 'boat with sail' MATCHES 'SAILBOAT', 'bird' MATCHES 'BIRD IN FLIGHT'); PARTIAL if it names a related but different thing (an animal for the cat, a boat without a sail, a winged shape that is not a bird) or the right kind of thing in a form missing its defining feature; MISS if it names something unrelated or a shapeless blob>\nPARTS: <number of the 4 carded parts clearly identifiable in SHADOW PARTS SEEN, counting plain synonyms (pointed ears for EARS, curving tail for TAIL, triangle sail for SAIL, long ears for EARS)> of 4\nLEAK: <NONE if REAL SPECIMEN is NO and no object in OBJECTS SEEN is itself the carded shape or a depiction of it; LEAKED if REAL SPECIMEN is YES or any seen object is itself shaped like the carded shape - the content must arrive by projection, never by presence>\nLIGHT: <CORRECT if the shadow falls opposite the carded lamp side (carded LEFT means the lamp is on the left, so the shadow must fall RIGHT; carded RIGHT means it must fall LEFT); WRONG otherwise, including SHADOW FALLS: NONE>\nSHADOW ERRORS: <every point lost, as short clauses separated by '; ' - name each missing or wrong object, each missing part, a PARTIAL or MISS shape, a leak, a wrong light direction; 'none' if nothing was lost>\nEXTRA: <the read's EXTRA, or 'none'>\nSUMMARY: <one short line naming what held and what failed>\nScore strictly from the two texts. The CASTING lines tell you which object was meant to form which part, but score the parts only from what the blind read could make out in the shadow.",
+    "maxTokens": 1200,
+    "reasoningEffort": "low"
+   },
+   "w": 280,
+   "name": "Shadow re-audit - GLM scores the corrected photograph against the same card",
+   "sizes": {
+    "system": 150
+   }
+  },
+  {
+   "id": "ask",
+   "type": "text",
+   "x": 1160,
+   "y": 520,
+   "fields": {
+    "text": "Inspect the shadow-art photograph in the attached picture now, following your instructions exactly."
+   },
+   "w": 240,
+   "name": "Inspect ask"
+  },
+  {
+   "id": "ask2",
+   "type": "text",
+   "x": 2960,
+   "y": 900,
+   "fields": {
+    "text": "Inspect the shadow-art photograph in the attached picture now, following your instructions exactly."
+   },
+   "w": 240,
+   "name": "Re-inspect ask"
+  }
+ ],
+ "links": [
+  {
+   "id": "l1",
+   "from": {
+    "node": "setting",
+    "port": "text"
+   },
+   "to": {
+    "node": "director",
+    "port": "prompt"
+   }
+  },
+  {
+   "id": "l2",
+   "from": {
+    "node": "director",
+    "port": "text"
+   },
+   "to": {
+    "node": "j0",
+    "port": "b"
+   }
+  },
+  {
+   "id": "l12",
+   "from": {
+    "node": "setting",
+    "port": "text"
+   },
+   "to": {
+    "node": "j0",
+    "port": "a"
+   }
+  },
+  {
+   "id": "l13",
+   "from": {
+    "node": "j0",
+    "port": "text"
+   },
+   "to": {
+    "node": "stylist",
+    "port": "prompt"
+   }
+  },
+  {
+   "id": "l3",
+   "from": {
+    "node": "stylist",
+    "port": "text"
+   },
+   "to": {
+    "node": "paint",
+    "port": "prompt"
+   }
+  },
+  {
+   "id": "l4",
+   "from": {
+    "node": "paint",
+    "port": "image"
+   },
+   "to": {
+    "node": "surveyor",
+    "port": "img1"
+   }
+  },
+  {
+   "id": "l7",
+   "from": {
+    "node": "director",
+    "port": "text"
+   },
+   "to": {
+    "node": "j1",
+    "port": "a"
+   }
+  },
+  {
+   "id": "l8",
+   "from": {
+    "node": "surveyor",
+    "port": "text"
+   },
+   "to": {
+    "node": "j1",
+    "port": "b"
+   }
+  },
+  {
+   "id": "l11",
+   "from": {
+    "node": "j1",
+    "port": "text"
+   },
+   "to": {
+    "node": "checker",
+    "port": "prompt"
+   }
+  },
+  {
+   "id": "l14",
+   "from": {
+    "node": "j1",
+    "port": "text"
+   },
+   "to": {
+    "node": "j2",
+    "port": "a"
+   }
+  },
+  {
+   "id": "l15",
+   "from": {
+    "node": "checker",
+    "port": "text"
+   },
+   "to": {
+    "node": "j2",
+    "port": "b"
+   }
+  },
+  {
+   "id": "l16",
+   "from": {
+    "node": "j2",
+    "port": "text"
+   },
+   "to": {
+    "node": "audit",
+    "port": "text"
+   }
+  },
+  {
+   "id": "l17",
+   "from": {
+    "node": "paint",
+    "port": "image"
+   },
+   "to": {
+    "node": "audit",
+    "port": "img1"
+   }
+  },
+  {
+   "id": "l18",
+   "from": {
+    "node": "j2",
+    "port": "text"
+   },
+   "to": {
+    "node": "editor",
+    "port": "prompt"
+   }
+  },
+  {
+   "id": "l19",
+   "from": {
+    "node": "editor",
+    "port": "text"
+   },
+   "to": {
+    "node": "fix",
+    "port": "prompt"
+   }
+  },
+  {
+   "id": "l20",
+   "from": {
+    "node": "paint",
+    "port": "image"
+   },
+   "to": {
+    "node": "fix",
+    "port": "image"
+   }
+  },
+  {
+   "id": "l21",
+   "from": {
+    "node": "fix",
+    "port": "image"
+   },
+   "to": {
+    "node": "surveyor2",
+    "port": "img1"
+   }
+  },
+  {
+   "id": "l22",
+   "from": {
+    "node": "director",
+    "port": "text"
+   },
+   "to": {
+    "node": "j4",
+    "port": "a"
+   }
+  },
+  {
+   "id": "l23",
+   "from": {
+    "node": "surveyor2",
+    "port": "text"
+   },
+   "to": {
+    "node": "j4",
+    "port": "b"
+   }
+  },
+  {
+   "id": "l24",
+   "from": {
+    "node": "j4",
+    "port": "text"
+   },
+   "to": {
+    "node": "checker2",
+    "port": "prompt"
+   }
+  },
+  {
+   "id": "l39",
+   "from": {
+    "node": "ask",
+    "port": "text"
+   },
+   "to": {
+    "node": "surveyor",
+    "port": "prompt"
+   }
+  },
+  {
+   "id": "l40",
+   "from": {
+    "node": "ask2",
+    "port": "text"
+   },
+   "to": {
+    "node": "surveyor2",
+    "port": "prompt"
+   }
+  }
+ ],
+ "nid": 32,
+ "lid": 40,
+ "view": {
+  "panX": 40,
+  "panY": 40,
+  "scale": 0.5
+ }
+}
