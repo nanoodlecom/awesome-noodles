@@ -1,0 +1,505 @@
+{
+ "v": 1,
+ "nodes": [
+  {
+   "id": "c1",
+   "type": "comment",
+   "x": 60,
+   "y": 30,
+   "fields": {
+    "text": "Can a thermal camera reading be TRUSTED? A GLM director picks one thermal scene from a menu printed in its own prompt (four scenes; each exactly five objects in a fixed left-to-right slot order, every object with a thermal STATE cue - flame, steam, just-used, ambient or frozen - a RANK from 1 hottest to 5 coldest, a BAND on the fixed thermal scale WHITE > YELLOW > ORANGE > RED > PURPLE > BLUE > BLACK, and one named DECOY whose ordinary-light appearance predicts the wrong band) and copies out a THERMAL CARD. A second GLM turns the card into a thermal-camera image prompt: the five objects in slot order on a near-black cold worktop, each rendered in ONE dominant thermal colour equal to its carded band, identity carried by shape alone, no visible-light material colours, no text and no legend. Muse paints the thermal image. A blind Gemini reader reports, per slot, the object it sees and its dominant band, plus the background band. A GLM auditor scores OBJECTS (identity in slot), BANDS (exact band per object), RANK ORDER (the four adjacent rank pairs must descend the scale with no inversion), DECOY (the counter-stereotype object's band must follow its heat, not its look) and BACKGROUND (must read cold). A Decide judge headlines round 1. That verdict is not the deliverable: a GLM editor turns the audit into concrete recolour notes (gated - on a perfect audit it must demand a verbatim unchanged copy), Muse Edit repaints the thermal image, and a blind re-read plus the same auditor re-score the corrected image against the same card. The corrected thermal image is the flow's final output."
+   },
+   "w": 900,
+   "name": "Thermal check"
+  },
+  {
+   "id": "setting",
+   "type": "text",
+   "x": 60,
+   "y": 300,
+   "fields": {
+    "text": "A thermal-camera view of a plain worktop in a dark room, seen straight on. The background and the empty worktop read near-black dark blue, the coldest thing a thermal camera sees. Nothing is on the worktop yet."
+   },
+   "w": 300,
+   "name": "Bench setting"
+  },
+  {
+   "id": "director",
+   "type": "llm",
+   "x": 440,
+   "y": 280,
+   "fields": {
+    "model": "z-ai/glm-5.3-flash",
+    "system": "You are a thermal-imaging director. The BENCH SETTING you receive is an empty backdrop, not an image and not a scene to match: it names no objects on purpose, because the painter will place the chosen scene's objects onto it afterwards. Do NOT try to match a menu scene to the setting, do NOT refuse, and never ask for a different input. Pick exactly one menu scene freely - any of the four is a correct choice - and copy it out as the card. Given the BENCH SETTING, design a THERMAL CARD for one thermal-camera image. Choose ONE scene from this menu ONLY, and copy its spec EXACTLY - the scene name, every slot, every object, every state, every rank, every band and the decoy line:\n\nTHE SCALE (fixed for every scene): WHITE is hottest, then YELLOW, then ORANGE, then RED, then PURPLE, then BLUE, then BLACK is coldest. Rank 1 is always WHITE, rank 2 YELLOW, rank 3 RED, rank 4 PURPLE, rank 5 BLUE.\n\nMENU:\n1. KITCHEN ROW - SLOT 1: a bowl of ice cubes, frozen solid - RANK 5, BAND: BLUE. SLOT 2: a lit candle in a glass jar, flame burning - RANK 1, BAND: WHITE. SLOT 3: a polished chrome toaster, unplugged and at room temperature - RANK 4, BAND: PURPLE. SLOT 4: a black cast-iron skillet, steaming on a hot hob - RANK 2, BAND: YELLOW. SLOT 5: a mug of steaming hot tea - RANK 3, BAND: RED. DECOY: the black cast-iron skillet - black in ordinary light, which suggests cold, but it is RANK 2, the second hottest thing in the scene; its band must follow its heat, not its colour.\n2. WORKSHOP ROW - SLOT 1: a polished chrome wrench, cold on the bench - RANK 4, BAND: PURPLE. SLOT 2: a freshly welded steel joint, the seam still glowing - RANK 1, BAND: WHITE. SLOT 3: a blue plastic ice pack, straight from the freezer - RANK 5, BAND: BLUE. SLOT 4: a soldering iron, plugged in and hot - RANK 2, BAND: YELLOW. SLOT 5: the motor housing of a drill that has just been running, warm to the touch - RANK 3, BAND: RED. DECOY: the polished chrome wrench - bright shiny metal in ordinary light, which suggests hot glare, but it is RANK 4, merely room temperature; its band must follow its heat, not its shine.\n3. CAMPFIRE ROW - SLOT 1: a baked potato wrapped in foil, hot from the embers - RANK 3, BAND: RED. SLOT 2: a snowball, freshly packed - RANK 5, BAND: BLUE. SLOT 3: a campfire, flames leaping - RANK 1, BAND: WHITE. SLOT 4: a shiny aluminium camping mug, empty and cold - RANK 4, BAND: PURPLE. SLOT 5: a black cast-iron pot of soup, steaming over the fire - RANK 2, BAND: YELLOW. DECOY: the shiny aluminium camping mug - bright reflective metal in ordinary light, which suggests heat glare, but it is RANK 4, cold and empty; its band must follow its heat, not its shine.\n4. BATHROOM ROW - SLOT 1: a basin of steaming hot bath water - RANK 2, BAND: YELLOW. SLOT 2: a cold wet flannel, draped and dripping - RANK 5, BAND: BLUE. SLOT 3: a curling iron, switched on, its barrel at full heat - RANK 1, BAND: WHITE. SLOT 4: a warm towel, fresh off a heated rail - RANK 3, BAND: RED. SLOT 5: a polished chrome tap, cold to the touch - RANK 4, BAND: PURPLE. DECOY: the polished chrome tap - bright shiny metal in ordinary light, which suggests hot glare, but it is RANK 4, at room temperature; its band must follow its heat, not its shine.\n\nThe card cards heat, not looks: an object's band comes only from its rank, never from what colour or how shiny it would be in ordinary light.\n\nOutput ONLY the card, in exactly this format, copying the chosen scene's spec without changing any of it:\nSCENE: <the scene name>\nSCALE: WHITE > YELLOW > ORANGE > RED > PURPLE > BLUE > BLACK\nSLOT 1: <object exactly as carded> - RANK <n>, BAND: <band>\nSLOT 2: <object exactly as carded> - RANK <n>, BAND: <band>\nSLOT 3: <object exactly as carded> - RANK <n>, BAND: <band>\nSLOT 4: <object exactly as carded> - RANK <n>, BAND: <band>\nSLOT 5: <object exactly as carded> - RANK <n>, BAND: <band>\nDECOY: <the decoy line exactly as carded>\nOBJECT COUNT: 5\nNo other text.",
+    "maxTokens": 700,
+    "reasoningEffort": "low"
+   },
+   "w": 280,
+   "name": "Thermal card - GLM picks a scene and copies its slots, ranks, bands and decoy",
+   "sizes": {
+    "system": 150
+   }
+  },
+  {
+   "id": "j0",
+   "type": "join",
+   "x": 800,
+   "y": 480,
+   "fields": {
+    "sep": "\n\nTHERMAL CARD (the scene - its slots, objects, ranks, bands and decoy; its exact wording must reach the image maker):\n\n"
+   },
+   "w": 200,
+   "name": "Setting + thermal card"
+  },
+  {
+   "id": "stylist",
+   "type": "llm",
+   "x": 800,
+   "y": 280,
+   "fields": {
+    "model": "z-ai/glm-5.3-flash",
+    "system": "You turn a THERMAL CARD into ONE prompt for an AI image generator. The input always contains a valid card with five SLOT lines; never refuse and never ask for a different card. The input gives a BENCH SETTING first, then a 'THERMAL CARD' with five SLOT lines (each an object, a RANK and a BAND), a SCALE line and a DECOY line. Write a single-paragraph prompt for a thermal-camera (false-colour infrared) image, demanding all of this:\n- A straight-on thermal-camera view of a plain worktop in a dark room; the background and worktop are near-black dark blue, the coldest reading on the scale.\n- Exactly the five carded objects stand in a row on the worktop in their carded slot order, left to right: name every object in the prompt, one by one, in slot order, each described by its shape and its thermal state cue (flame, steam, glowing seam, frost) so its form is clearly recognisable from its silhouette and shape alone.\n- Each object is rendered in ONE dominant, fairly uniform thermal colour, exactly its carded BAND (WHITE for rank 1, YELLOW for rank 2, RED for rank 3, PURPLE for rank 4, BLUE for rank 5): name each object's band in the prompt as its colour - for example 'the bowl of ice cubes in deep BLUE'. A small hotter core or rim is allowed only where the state cue implies it (a flame's centre, a weld seam), never a second dominant colour.\n- NO visible-light appearance: no object's ordinary colour, material shine or reflectivity may set its thermal colour - polished chrome must NOT be painted bright unless its band says so, and black cast iron must NOT be painted dark when its band is hot. No steam or smoke drawn in grey-white visible-light style; any steam reads as a faint warm wisp in the object's own band family.\n- No other objects, no people, no hands, no text, letters, labels, legend, colour scale bar or temperature numbers anywhere in the image.\nOutput ONLY the image prompt, one paragraph, no preamble.",
+    "maxTokens": 800,
+    "reasoningEffort": "low"
+   },
+   "w": 280,
+   "name": "Thermal brief - GLM turns the card into a thermal-camera image prompt",
+   "sizes": {
+    "system": 150
+   }
+  },
+  {
+   "id": "paint",
+   "type": "image",
+   "x": 1160,
+   "y": 280,
+   "fields": {
+    "model": "meta/muse-image/text-to-image",
+    "size": "4:3",
+    "variations": "1"
+   },
+   "w": 280,
+   "name": "Thermal image - Muse paints the false-colour scene"
+  },
+  {
+   "id": "surveyor",
+   "type": "llm",
+   "x": 1520,
+   "y": 280,
+   "fields": {
+    "model": "google/gemini-3.8-flash",
+    "system": "You are a thermal-image inspector examining a false-colour infrared image. You do not know what was planned - report only what you actually see, in exactly this format:\nREADS: <one entry per object, in left-to-right order, each entry exactly '<object named by its most common everyday name> - <BAND>' where BAND is exactly one of WHITE, YELLOW, ORANGE, RED, PURPLE, BLUE or BLACK, the object's single dominant thermal colour; entries separated by '; '>\nOBJECT COUNT SEEN: <the number of objects you listed>\nBACKGROUND BAND: <exactly one of WHITE, YELLOW, ORANGE, RED, PURPLE, BLUE or BLACK - the dominant colour of the background and worktop>\nEXTRA: <anything that is not part of the scene as described - extra objects, people, hands, text, letters, a legend or scale bar; 'none' if there is nothing of the kind>\nJudge each object's band by the colour that covers most of it, ignoring a small hotter core (a flame centre, a glowing seam) or a thin rim. Name what you actually see, even when a colour looks wrong or surprising - that is exactly what must be visible in your report.",
+    "maxTokens": 900,
+    "reasoningEffort": "low"
+   },
+   "w": 280,
+   "name": "Thermal read - Gemini reports each object's identity and dominant band, blind",
+   "sizes": {
+    "system": 150
+   }
+  },
+  {
+   "id": "j1",
+   "type": "join",
+   "x": 1880,
+   "y": 180,
+   "fields": {
+    "sep": "\n\nTHERMAL READ (a blind inspector reported only what it could see - each object and its dominant thermal band, and the background band; it never saw the thermal card):\n\n"
+   },
+   "w": 200,
+   "name": "Thermal card + thermal read"
+  },
+  {
+   "id": "checker",
+   "type": "llm",
+   "x": 2240,
+   "y": 400,
+   "fields": {
+    "model": "z-ai/glm-5.3-flash",
+    "system": "You are a thermal-imaging auditor. The input gives a THERMAL CARD (SCENE, SCALE, five SLOT lines each with an object, a RANK and a BAND, a DECOY line, OBJECT COUNT) and then a THERMAL READ from a blind inspector (READS entries in left-to-right order, OBJECT COUNT SEEN, BACKGROUND BAND, EXTRA).\nThe scale order, hottest to coldest, is: WHITE, YELLOW, ORANGE, RED, PURPLE, BLUE, BLACK. A band is HOTTER than another if it comes earlier in that list.\n\nScore in exactly this format:\nCARD LAW: <VALID if the card has exactly 5 slots, ranks 1 to 5 each used exactly once, each rank's band matching the fixed assignment (rank 1 WHITE, rank 2 YELLOW, rank 3 RED, rank 4 PURPLE, rank 5 BLUE) and exactly one decoy; otherwise INVALID, naming each problem>\nOBJECTS: <number of the 5 carded objects that appear in READS in their carded slot, counting an object seen under its common synonym (a kettle is not a teapot; a frying pan counts as a skillet)> of 5\nBANDS: <number of the 5 carded objects whose read band exactly equals their carded band> of 5\nRANK ORDER: <number of the 4 adjacent rank pairs (rank 1 vs rank 2, rank 2 vs rank 3, rank 3 vs rank 4, rank 4 vs rank 5) whose READ bands are in the correct scale order - the hotter rank's band strictly earlier on the scale than the colder rank's band; a pair with equal bands or an inverted order scores 0> of 4\nDECOY: <CORRECT if the decoy object's read band exactly equals its carded band; WRONG otherwise>\nBACKGROUND: <CORRECT if BACKGROUND BAND is BLUE or BLACK; WRONG otherwise>\nTHERMAL ERRORS: <every point lost, as short clauses separated by '; ' - name each missing or misplaced object, each wrong band with the band read and the band carded, each inverted or tied rank pair, a wrong decoy, a warm background; 'none' if nothing was lost>\nEXTRA: <the read's EXTRA, or 'none'>\nSUMMARY: <one short line naming what held and what failed>\nScore strictly from the two texts. Match read objects to carded objects by slot position first, and by identity when a slot's object is named differently.",
+    "maxTokens": 1200,
+    "reasoningEffort": "low"
+   },
+   "w": 280,
+   "name": "Thermal audit - GLM scores objects, bands, rank order, decoy and background against the card",
+   "sizes": {
+    "system": 150
+   }
+  },
+  {
+   "id": "j2",
+   "type": "join",
+   "x": 2240,
+   "y": 180,
+   "fields": {
+    "sep": "\n\nTHERMAL AUDIT:\n\n"
+   },
+   "w": 200,
+   "name": "Card, thermal read + thermal audit"
+  },
+  {
+   "id": "audit",
+   "type": "decide",
+   "x": 2600,
+   "y": 180,
+   "fields": {
+    "model": "perplexity/pplx-decider-v1.2",
+    "mode": "choose",
+    "question": "The picture should be a thermal-camera image: five carded objects in a row on a cold near-black worktop, each rendered in one dominant false colour equal to its carded band on the scale white hottest through yellow, red and purple to blue coldest, the bands descending the scale in the carded rank order with no inversion, and the one decoy object - whose ordinary appearance predicts the wrong band - coloured by its heat, not its look. The audit in the text scores the blind read against the card: the objects in their slots, their exact bands, the rank order, the decoy and the background. Choose the one label that best fits the round-1 picture.",
+    "options": "heat reads true\nranks shuffled\nbands drifted\nobjects wrong\nnot a thermal image"
+   },
+   "w": 280,
+   "name": "Heat reads true - audited",
+   "sizes": {
+    "question": 130
+   }
+  },
+  {
+   "id": "editor",
+   "type": "llm",
+   "x": 2600,
+   "y": 520,
+   "fields": {
+    "model": "z-ai/glm-5.3-flash",
+    "system": "You are the thermal-imaging editor in a thermal-camera pipeline. The input gives a THERMAL CARD, a blind THERMAL READ and a THERMAL AUDIT of the round-1 image. Write ONE edit instruction for an image editor working on that image, in at most 120 words.\nIf the audit shows a perfect reading (OBJECTS 5 of 5, BANDS 5 of 5, RANK ORDER 4 of 4, DECOY: CORRECT, BACKGROUND: CORRECT, EXTRA: none), output exactly this and nothing else: 'Reproduce this thermal-camera image completely unchanged - same five objects in the same slots, each in the same dominant thermal colour, same near-black cold background. Do not move, add, remove or recolour anything.'\nOtherwise: first state the full target end state - the same dark worktop and near-black blue background, the card's five objects in their carded slot order, each in ONE dominant thermal colour equal to its carded band, named object by object with its band - then add the audit's specific failures as concrete demands (for example: 'the skillet reads ORANGE: repaint it one uniform YELLOW, it is the second hottest object; keep its shape and slot'). Every fix is a recolouring of a named object to its carded band, or the removal of a named extra; never ask for an object to be moved to a different slot, reshaped, or coloured by its ordinary visible-light appearance.",
+    "maxTokens": 400,
+    "reasoningEffort": "low"
+   },
+   "w": 280,
+   "name": "Edit notes - GLM turns the thermal audit into concrete recolour instructions",
+   "sizes": {
+    "system": 150
+   }
+  },
+  {
+   "id": "fix",
+   "type": "edit",
+   "x": 2960,
+   "y": 520,
+   "fields": {
+    "model": "meta/muse-image/edit",
+    "size": "auto"
+   },
+   "w": 280,
+   "name": "Corrected thermal image - Muse Edit recolours the scene"
+  },
+  {
+   "id": "surveyor2",
+   "type": "llm",
+   "x": 3320,
+   "y": 520,
+   "fields": {
+    "model": "google/gemini-3.8-flash",
+    "system": "You are a thermal-image inspector examining a false-colour infrared image. You do not know what was planned - report only what you actually see, in exactly this format:\nREADS: <one entry per object, in left-to-right order, each entry exactly '<object named by its most common everyday name> - <BAND>' where BAND is exactly one of WHITE, YELLOW, ORANGE, RED, PURPLE, BLUE or BLACK, the object's single dominant thermal colour; entries separated by '; '>\nOBJECT COUNT SEEN: <the number of objects you listed>\nBACKGROUND BAND: <exactly one of WHITE, YELLOW, ORANGE, RED, PURPLE, BLUE or BLACK - the dominant colour of the background and worktop>\nEXTRA: <anything that is not part of the scene as described - extra objects, people, hands, text, letters, a legend or scale bar; 'none' if there is nothing of the kind>\nJudge each object's band by the colour that covers most of it, ignoring a small hotter core (a flame centre, a glowing seam) or a thin rim. Name what you actually see, even when a colour looks wrong or surprising - that is exactly what must be visible in your report.",
+    "maxTokens": 900,
+    "reasoningEffort": "low"
+   },
+   "w": 280,
+   "name": "Re-read - Gemini reports the corrected image's objects and bands, blind",
+   "sizes": {
+    "system": 150
+   }
+  },
+  {
+   "id": "j4",
+   "type": "join",
+   "x": 3680,
+   "y": 420,
+   "fields": {
+    "sep": "\n\nTHERMAL READ (a blind inspector reported only what it could see in the corrected image - each object and its dominant thermal band, and the background band; it never saw the thermal card):\n\n"
+   },
+   "w": 200,
+   "name": "Thermal card + re-read"
+  },
+  {
+   "id": "checker2",
+   "type": "llm",
+   "x": 4040,
+   "y": 520,
+   "fields": {
+    "model": "z-ai/glm-5.3-flash",
+    "system": "You are a thermal-imaging auditor. The input gives a THERMAL CARD (SCENE, SCALE, five SLOT lines each with an object, a RANK and a BAND, a DECOY line, OBJECT COUNT) and then a THERMAL READ from a blind inspector (READS entries in left-to-right order, OBJECT COUNT SEEN, BACKGROUND BAND, EXTRA).\nThe scale order, hottest to coldest, is: WHITE, YELLOW, ORANGE, RED, PURPLE, BLUE, BLACK. A band is HOTTER than another if it comes earlier in that list.\n\nScore in exactly this format:\nCARD LAW: <VALID if the card has exactly 5 slots, ranks 1 to 5 each used exactly once, each rank's band matching the fixed assignment (rank 1 WHITE, rank 2 YELLOW, rank 3 RED, rank 4 PURPLE, rank 5 BLUE) and exactly one decoy; otherwise INVALID, naming each problem>\nOBJECTS: <number of the 5 carded objects that appear in READS in their carded slot, counting an object seen under its common synonym (a kettle is not a teapot; a frying pan counts as a skillet)> of 5\nBANDS: <number of the 5 carded objects whose read band exactly equals their carded band> of 5\nRANK ORDER: <number of the 4 adjacent rank pairs (rank 1 vs rank 2, rank 2 vs rank 3, rank 3 vs rank 4, rank 4 vs rank 5) whose READ bands are in the correct scale order - the hotter rank's band strictly earlier on the scale than the colder rank's band; a pair with equal bands or an inverted order scores 0> of 4\nDECOY: <CORRECT if the decoy object's read band exactly equals its carded band; WRONG otherwise>\nBACKGROUND: <CORRECT if BACKGROUND BAND is BLUE or BLACK; WRONG otherwise>\nTHERMAL ERRORS: <every point lost, as short clauses separated by '; ' - name each missing or misplaced object, each wrong band with the band read and the band carded, each inverted or tied rank pair, a wrong decoy, a warm background; 'none' if nothing was lost>\nEXTRA: <the read's EXTRA, or 'none'>\nSUMMARY: <one short line naming what held and what failed>\nScore strictly from the two texts. Match read objects to carded objects by slot position first, and by identity when a slot's object is named differently.",
+    "maxTokens": 1200,
+    "reasoningEffort": "low"
+   },
+   "w": 280,
+   "name": "Thermal re-audit - GLM scores the corrected image against the same card",
+   "sizes": {
+    "system": 150
+   }
+  },
+  {
+   "id": "ask",
+   "type": "text",
+   "x": 1160,
+   "y": 520,
+   "fields": {
+    "text": "Inspect the thermal-camera image in the attached picture now, following your instructions exactly."
+   },
+   "w": 240,
+   "name": "Inspect ask"
+  },
+  {
+   "id": "ask2",
+   "type": "text",
+   "x": 2960,
+   "y": 900,
+   "fields": {
+    "text": "Inspect the thermal-camera image in the attached picture now, following your instructions exactly."
+   },
+   "w": 240,
+   "name": "Re-inspect ask"
+  }
+ ],
+ "links": [
+  {
+   "id": "l1",
+   "from": {
+    "node": "setting",
+    "port": "text"
+   },
+   "to": {
+    "node": "director",
+    "port": "prompt"
+   }
+  },
+  {
+   "id": "l2",
+   "from": {
+    "node": "director",
+    "port": "text"
+   },
+   "to": {
+    "node": "j0",
+    "port": "b"
+   }
+  },
+  {
+   "id": "l12",
+   "from": {
+    "node": "setting",
+    "port": "text"
+   },
+   "to": {
+    "node": "j0",
+    "port": "a"
+   }
+  },
+  {
+   "id": "l13",
+   "from": {
+    "node": "j0",
+    "port": "text"
+   },
+   "to": {
+    "node": "stylist",
+    "port": "prompt"
+   }
+  },
+  {
+   "id": "l3",
+   "from": {
+    "node": "stylist",
+    "port": "text"
+   },
+   "to": {
+    "node": "paint",
+    "port": "prompt"
+   }
+  },
+  {
+   "id": "l4",
+   "from": {
+    "node": "paint",
+    "port": "image"
+   },
+   "to": {
+    "node": "surveyor",
+    "port": "img1"
+   }
+  },
+  {
+   "id": "l7",
+   "from": {
+    "node": "director",
+    "port": "text"
+   },
+   "to": {
+    "node": "j1",
+    "port": "a"
+   }
+  },
+  {
+   "id": "l8",
+   "from": {
+    "node": "surveyor",
+    "port": "text"
+   },
+   "to": {
+    "node": "j1",
+    "port": "b"
+   }
+  },
+  {
+   "id": "l11",
+   "from": {
+    "node": "j1",
+    "port": "text"
+   },
+   "to": {
+    "node": "checker",
+    "port": "prompt"
+   }
+  },
+  {
+   "id": "l14",
+   "from": {
+    "node": "j1",
+    "port": "text"
+   },
+   "to": {
+    "node": "j2",
+    "port": "a"
+   }
+  },
+  {
+   "id": "l15",
+   "from": {
+    "node": "checker",
+    "port": "text"
+   },
+   "to": {
+    "node": "j2",
+    "port": "b"
+   }
+  },
+  {
+   "id": "l16",
+   "from": {
+    "node": "j2",
+    "port": "text"
+   },
+   "to": {
+    "node": "audit",
+    "port": "text"
+   }
+  },
+  {
+   "id": "l17",
+   "from": {
+    "node": "paint",
+    "port": "image"
+   },
+   "to": {
+    "node": "audit",
+    "port": "img1"
+   }
+  },
+  {
+   "id": "l18",
+   "from": {
+    "node": "j2",
+    "port": "text"
+   },
+   "to": {
+    "node": "editor",
+    "port": "prompt"
+   }
+  },
+  {
+   "id": "l19",
+   "from": {
+    "node": "editor",
+    "port": "text"
+   },
+   "to": {
+    "node": "fix",
+    "port": "prompt"
+   }
+  },
+  {
+   "id": "l20",
+   "from": {
+    "node": "paint",
+    "port": "image"
+   },
+   "to": {
+    "node": "fix",
+    "port": "image"
+   }
+  },
+  {
+   "id": "l21",
+   "from": {
+    "node": "fix",
+    "port": "image"
+   },
+   "to": {
+    "node": "surveyor2",
+    "port": "img1"
+   }
+  },
+  {
+   "id": "l22",
+   "from": {
+    "node": "director",
+    "port": "text"
+   },
+   "to": {
+    "node": "j4",
+    "port": "a"
+   }
+  },
+  {
+   "id": "l23",
+   "from": {
+    "node": "surveyor2",
+    "port": "text"
+   },
+   "to": {
+    "node": "j4",
+    "port": "b"
+   }
+  },
+  {
+   "id": "l24",
+   "from": {
+    "node": "j4",
+    "port": "text"
+   },
+   "to": {
+    "node": "checker2",
+    "port": "prompt"
+   }
+  },
+  {
+   "id": "l39",
+   "from": {
+    "node": "ask",
+    "port": "text"
+   },
+   "to": {
+    "node": "surveyor",
+    "port": "prompt"
+   }
+  },
+  {
+   "id": "l40",
+   "from": {
+    "node": "ask2",
+    "port": "text"
+   },
+   "to": {
+    "node": "surveyor2",
+    "port": "prompt"
+   }
+  }
+ ],
+ "nid": 32,
+ "lid": 40,
+ "view": {
+  "panX": 40,
+  "panY": 40,
+  "scale": 0.5
+ }
+}
