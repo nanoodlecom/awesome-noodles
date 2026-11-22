@@ -1,0 +1,655 @@
+{
+ "v": 1,
+ "nodes": [
+  {
+   "id": "c1",
+   "type": "comment",
+   "x": 60,
+   "y": 30,
+   "fields": {
+    "text": "Can a voice FEEL THE WAY IT WAS TOLD TO FEEL - when the words are not allowed to help? A GLM director picks one spec from a menu printed in its own prompt: one strong EMOTION, one emotionally NEUTRAL bulletin sentence, and the ElevenLabs V3 audio tag that carries the feeling. A second GLM, the actor, writes the speech script: the tag, then the sentence word for word. ElevenLabs V3 reads it aloud. Then the flow splits the take into the two channels a voice carries: Whisper transcribes the WORDS - a channel that provably cannot carry the payload, since the sentence is identical whatever the feeling - and a blind Qwen Omni listener, who hears the audio and nothing else, names the EMOTION it actually heard. A GLM auditor scores EMOTION (the listener's word against the card), WORDS KEPT (the transcript against the sentence) and TAG SPOKEN (the named failure: the direction tag read aloud as a word instead of performed). A Decide judge headlines round 1. That verdict is not the deliverable: a GLM editor repairs ONLY the performance - a different or stronger tag, a tag moved mid-sentence, delivery punctuation - under a hard rule that the sentence's words never change, because the words are the controlled variable; on a perfect audit it must demand the round-1 script verbatim. The same voice re-reads the corrected script, and a blind re-listen plus the same auditor re-score it against the same card. The corrected reading is the flow's final output."
+   },
+   "w": 900,
+   "name": "Feeling check"
+  },
+  {
+   "id": "setting",
+   "type": "text",
+   "x": 60,
+   "y": 280,
+   "fields": {
+    "text": "A short spoken public announcement for a community noticeboard: one plain, factual bulletin sentence with no emotional words in it at all, to be read aloud by a voice actor who must deliver it in one strong carded emotion - the feeling lives in the performance, never in the words."
+   },
+   "w": 280,
+   "name": "Announcement setting"
+  },
+  {
+   "id": "director",
+   "type": "llm",
+   "x": 440,
+   "y": 280,
+   "fields": {
+    "model": "z-ai/glm-5.3-flash",
+    "system": "You are a voice director. Given an ANNOUNCEMENT SETTING, design a FEELING CARD for one spoken bulletin. Choose ONE spec from this menu ONLY, and copy its spec EXACTLY - the emotion, the tag, the sentence and the delivery:\n\nMENU:\n1. GOOD NEWS - EMOTION: joyful. TAG: [excited]. SENTENCE: The library will reopen on Monday morning at nine o'clock. DELIVERY: bright and quick, pitch rising with delight, a smile you can hear.\n2. SAD NEWS - EMOTION: heartbroken. TAG: [sad]. SENTENCE: The old ferry will make its last crossing on Friday evening. DELIVERY: slow and soft, pitch falling at the ends of phrases, heavy pauses, no brightness.\n3. BAD NEWS - EMOTION: furious. TAG: [angry]. SENTENCE: The meeting has been moved to the room at the end of the hall. DELIVERY: fast, loud and clipped, hard stress on the key words, no warmth at all.\n4. SCARY NEWS - EMOTION: terrified. TAG: [frightened]. SENTENCE: The footbridge over the river is closed until further notice. DELIVERY: shaky and breathless, quick uneven pace, the voice trembling.\n\nEvery sentence is emotionally neutral on purpose: it contains no word that names or suggests its emotion. The feeling must be carried by the delivery alone.\n\nOutput ONLY the card, in exactly this format, copying the chosen spec without changing any of it:\nFEELING: <the spec name>\nEMOTION: <the emotion>\nTAG: <the tag, brackets included>\nSENTENCE: <the sentence>\nDELIVERY: <the delivery line>\nNo other text.",
+    "maxTokens": 500,
+    "reasoningEffort": "low"
+   },
+   "w": 280,
+   "name": "Feeling card - GLM picks an emotion spec and copies its tag, neutral sentence and delivery",
+   "sizes": {
+    "system": 150
+   }
+  },
+  {
+   "id": "j0",
+   "type": "join",
+   "x": 800,
+   "y": 480,
+   "fields": {
+    "sep": "\n\nFEELING CARD (the spec - its emotion, tag, sentence and delivery; its exact wording must reach the actor):\n"
+   },
+   "w": 200,
+   "name": "Setting + feeling card"
+  },
+  {
+   "id": "poet",
+   "type": "llm",
+   "x": 1100,
+   "y": 280,
+   "fields": {
+    "model": "z-ai/glm-5.3-flash",
+    "system": "You are a voice actor preparing one take. The input gives an ANNOUNCEMENT SETTING and a FEELING CARD (FEELING name, EMOTION, TAG, SENTENCE, DELIVERY). Output the SPEECH SCRIPT and nothing else: the card's TAG exactly as written, brackets included, then one space, then the card's SENTENCE exactly as written, word for word, with its final full stop. No title, no notes, no extra words, no other punctuation changes. The tag is a stage direction for the speech model - it must stand at the front of the script exactly as the card gives it.",
+    "maxTokens": 300,
+    "reasoningEffort": "low"
+   },
+   "w": 280,
+   "name": "Speech script - GLM writes the tag plus the sentence, word for word",
+   "sizes": {
+    "system": 150
+   }
+  },
+  {
+   "id": "voice",
+   "type": "tts",
+   "x": 1480,
+   "y": 280,
+   "fields": {
+    "model": "Elevenlabs-V3",
+    "voice": "Sarah",
+    "response_format": "mp3"
+   },
+   "w": 280,
+   "name": "First take - ElevenLabs V3 performs the script",
+   "sizes": {
+    "prompt": 0
+   }
+  },
+  {
+   "id": "hearback",
+   "type": "transcribe",
+   "x": 1860,
+   "y": 280,
+   "fields": {
+    "model": "whisper-1",
+    "language": "auto"
+   },
+   "w": 280,
+   "name": "Words heard back - Whisper transcribes the take, blind"
+  },
+  {
+   "id": "j1",
+   "type": "join",
+   "x": 2240,
+   "y": 480,
+   "fields": {
+    "sep": "\n\nTRANSCRIPT (what a blind transcription heard when the take was read aloud; it never saw the script - it carries the words only, never the feeling):\n"
+   },
+   "w": 200,
+   "name": "Script + transcript"
+  },
+  {
+   "id": "j2",
+   "type": "join",
+   "x": 2240,
+   "y": 180,
+   "fields": {
+    "sep": "\n\nSCRIPT, TRANSCRIPT AND LISTENING REPORT (the script as written first, then its blind transcript, then what a blind listener heard in the voice):\n"
+   },
+   "w": 200,
+   "name": "Card + script, transcript and listening report"
+  },
+  {
+   "id": "checker",
+   "type": "llm",
+   "x": 2600,
+   "y": 180,
+   "fields": {
+    "model": "z-ai/glm-5.3-flash",
+    "system": "You are a prosody auditor. The input gives a FEELING CARD (FEELING name, EMOTION, TAG, SENTENCE, DELIVERY), then the SPEECH SCRIPT (the card's tag followed by the sentence), then a TRANSCRIPT - what a blind transcription model heard; it carries the words only - and a LISTENING REPORT - what a blind listening model heard in the voice itself (EMOTION, ENERGY, PACE); it never saw the card or the script. Score in exactly this format:\nEMOTION: <MATCH if the listening report's EMOTION is exactly the card's EMOTION; NEAR if it is a close cousin in the same family (joyful heard as calm is NOT near - it is a miss of the payload; heartbroken heard as calm is NEAR on energy but say so in the summary); MISS otherwise>\nWORDS KEPT: <number of the card SENTENCE's words that the transcript carries in the same order with the same value, ignoring capitalisation and punctuation> of <the sentence's total word count>\nTAG SPOKEN: <YES if the transcript contains the tag's word (the card TAG without brackets, e.g. excited, sad, angry, frightened) as a spoken word anywhere; NO otherwise>\nSUMMARY: <one short line naming what held and what failed, and on which channel - VOICE for the emotion, WORDS for the transcript>\nScore strictly from the texts given. The transcript can never prove the emotion: a perfect transcript with a missed emotion is a VOICE failure, not a pass. Count the sentence's words from the card, not from the script (the script adds the tag, which is not a sentence word).",
+    "maxTokens": 800,
+    "reasoningEffort": "low"
+   },
+   "w": 280,
+   "name": "Feeling audit - GLM scores the heard emotion, the kept words and the spoken tag",
+   "sizes": {
+    "system": 150
+   }
+  },
+  {
+   "id": "j3",
+   "type": "join",
+   "x": 2960,
+   "y": 480,
+   "fields": {
+    "sep": "\n\nFEELING AUDIT:\n"
+   },
+   "w": 200,
+   "name": "Card, script, transcript, report + feeling audit"
+  },
+  {
+   "id": "audit",
+   "type": "decide",
+   "x": 3320,
+   "y": 180,
+   "fields": {
+    "model": "perplexity/pplx-decider-v1.2",
+    "mode": "choose",
+    "question": "A voice actor read one emotionally neutral bulletin sentence aloud, directed only by an emotion tag on the feeling card. The audit in the text scores what a blind listener heard in the voice against the card's emotion, what a blind transcription kept of the sentence's words, and whether the direction tag was spoken aloud as a word instead of performed. Choose the one label that best fits the round-1 take.",
+    "options": "felt as carded\nfeeling drifted\nwords lost\ntag read aloud\nflat take"
+   },
+   "w": 280,
+   "name": "Felt as carded - audited",
+   "sizes": {
+    "question": 130
+   }
+  },
+  {
+   "id": "editor",
+   "type": "llm",
+   "x": 3320,
+   "y": 480,
+   "fields": {
+    "model": "z-ai/glm-5.3-flash",
+    "system": "You are the voice director in a prosody-audit pipeline. The input gives a FEELING CARD, the round-1 SPEECH SCRIPT, its blind TRANSCRIPT, its blind LISTENING REPORT and its FEELING AUDIT. Output the CORRECTED SCRIPT: one line and nothing else - no title, no preamble, no notes.\nIf the audit is perfect (EMOTION: MATCH, WORDS KEPT is the full count, TAG SPOKEN: NO), output the round-1 script VERBATIM, changing nothing.\nOtherwise repair ONLY the performance - the sentence is the controlled variable and its words NEVER change:\n- keep every word of the card's SENTENCE, in the same order, spelled the same;\n- change the delivery instead: choose a stronger or better-fitting tag for the card's EMOTION from [excited], [sad], [angry], [frightened], [shouting], [whispering], [crying], [laughing], [sighing] - one tag at the front, and you may add ONE more of these tags mid-sentence, just before the phrase that should land hardest;\n- you may change punctuation for delivery (a full stop to an exclamation mark, or commas to ellipses) - punctuation is performance, not words;\n- if TAG SPOKEN was YES, the tag was read as a word: keep exactly one tag, at the very front, and make it the most standard one for the emotion.\nOutput only the corrected script line.",
+    "maxTokens": 300,
+    "reasoningEffort": "low"
+   },
+   "w": 280,
+   "name": "Corrected script - GLM repairs only the performance, never a word",
+   "sizes": {
+    "system": 150
+   }
+  },
+  {
+   "id": "voice2",
+   "type": "tts",
+   "x": 3680,
+   "y": 280,
+   "fields": {
+    "model": "Elevenlabs-V3",
+    "voice": "Sarah",
+    "response_format": "mp3"
+   },
+   "w": 280,
+   "name": "Corrected take - ElevenLabs V3 re-reads the corrected script",
+   "sizes": {
+    "prompt": 0
+   }
+  },
+  {
+   "id": "hearback2",
+   "type": "transcribe",
+   "x": 4040,
+   "y": 280,
+   "fields": {
+    "model": "whisper-1",
+    "language": "auto"
+   },
+   "w": 280,
+   "name": "Words heard back again - Whisper transcribes the corrected take, blind"
+  },
+  {
+   "id": "j4",
+   "type": "join",
+   "x": 4400,
+   "y": 480,
+   "fields": {
+    "sep": "\n\nTRANSCRIPT (what a blind transcription heard when the corrected script was read aloud; it never saw the script):\n"
+   },
+   "w": 200,
+   "name": "Corrected script + re-transcript"
+  },
+  {
+   "id": "j5",
+   "type": "join",
+   "x": 4400,
+   "y": 180,
+   "fields": {
+    "sep": "\n\nSCRIPT, TRANSCRIPT AND LISTENING REPORT (the corrected script as written first, then its blind transcript, then what a blind listener heard in the voice):\n"
+   },
+   "w": 200,
+   "name": "Card + corrected script, re-transcript and re-listening report"
+  },
+  {
+   "id": "checker2",
+   "type": "llm",
+   "x": 4760,
+   "y": 180,
+   "fields": {
+    "model": "z-ai/glm-5.3-flash",
+    "system": "You are a prosody auditor. The input gives a FEELING CARD (FEELING name, EMOTION, TAG, SENTENCE, DELIVERY), then the SPEECH SCRIPT (the card's tag followed by the sentence), then a TRANSCRIPT - what a blind transcription model heard; it carries the words only - and a LISTENING REPORT - what a blind listening model heard in the voice itself (EMOTION, ENERGY, PACE); it never saw the card or the script. Score in exactly this format:\nEMOTION: <MATCH if the listening report's EMOTION is exactly the card's EMOTION; NEAR if it is a close cousin in the same family (joyful heard as calm is NOT near - it is a miss of the payload; heartbroken heard as calm is NEAR on energy but say so in the summary); MISS otherwise>\nWORDS KEPT: <number of the card SENTENCE's words that the transcript carries in the same order with the same value, ignoring capitalisation and punctuation> of <the sentence's total word count>\nTAG SPOKEN: <YES if the transcript contains the tag's word (the card TAG without brackets, e.g. excited, sad, angry, frightened) as a spoken word anywhere; NO otherwise>\nSUMMARY: <one short line naming what held and what failed, and on which channel - VOICE for the emotion, WORDS for the transcript>\nScore strictly from the texts given. The transcript can never prove the emotion: a perfect transcript with a missed emotion is a VOICE failure, not a pass. Count the sentence's words from the card, not from the script (the script adds the tag, which is not a sentence word).",
+    "maxTokens": 800,
+    "reasoningEffort": "low"
+   },
+   "w": 280,
+   "name": "Feeling re-audit - GLM re-scores the corrected take against the same card",
+   "sizes": {
+    "system": 150
+   }
+  },
+  {
+   "id": "ask",
+   "type": "text",
+   "x": 1480,
+   "y": 640,
+   "w": 280,
+   "name": "Listening ask - hear the take blind",
+   "fields": {
+    "text": "Listen to this short spoken announcement and report the feeling you hear in the voice."
+   }
+  },
+  {
+   "id": "listener",
+   "type": "llm",
+   "x": 1860,
+   "y": 640,
+   "w": 300,
+   "name": "Listening report - Qwen Omni hears the take blind",
+   "fields": {
+    "model": "qwen/qwen3.8-omni-flash",
+    "system": "You are the listener in a feeling-check pipeline. You hear one short spoken announcement and nothing else - no text, no brief, no card. Write a LISTENING REPORT in exactly this shape, choosing ONLY from the words offered. 'EMOTION: ' plus the one feeling the voice itself performs, one of joyful, heartbroken, furious, terrified, calm, other - judge the delivery (pitch, pace, energy, trembling, warmth), NOT the words, which are a plain bulletin. 'ENERGY: ' plus one of low, medium, high. 'PACE: ' plus one of slow, moderate, fast. Then one line 'VOICE: ' plus a few words on how the voice sounds (for example bright and smiling, flat and clipped, soft and trembling). Report only what the audio shows; if it is silence or noise, say so on the VOICE line and still give your best axes. Output the report only.",
+    "maxTokens": 500
+   },
+   "sizes": {
+    "system": 150
+   }
+  },
+  {
+   "id": "j6",
+   "type": "join",
+   "x": 2240,
+   "y": 780,
+   "w": 200,
+   "name": "Script + transcript + listening report",
+   "fields": {
+    "sep": "\n\nLISTENING REPORT (what a blind listener heard in the voice itself; it never saw the card or the script):\n"
+   }
+  },
+  {
+   "id": "listener2",
+   "type": "llm",
+   "x": 4040,
+   "y": 640,
+   "w": 300,
+   "name": "Listening re-report - Qwen Omni hears the corrected take blind",
+   "fields": {
+    "model": "qwen/qwen3.8-omni-flash",
+    "system": "You are the listener in a feeling-check pipeline. You hear one short spoken announcement and nothing else - no text, no brief, no card. Write a LISTENING REPORT in exactly this shape, choosing ONLY from the words offered. 'EMOTION: ' plus the one feeling the voice itself performs, one of joyful, heartbroken, furious, terrified, calm, other - judge the delivery (pitch, pace, energy, trembling, warmth), NOT the words, which are a plain bulletin. 'ENERGY: ' plus one of low, medium, high. 'PACE: ' plus one of slow, moderate, fast. Then one line 'VOICE: ' plus a few words on how the voice sounds (for example bright and smiling, flat and clipped, soft and trembling). Report only what the audio shows; if it is silence or noise, say so on the VOICE line and still give your best axes. Output the report only.",
+    "maxTokens": 500
+   },
+   "sizes": {
+    "system": 150
+   }
+  },
+  {
+   "id": "j7",
+   "type": "join",
+   "x": 4400,
+   "y": 780,
+   "w": 200,
+   "name": "Corrected script + re-transcript + re-listening report",
+   "fields": {
+    "sep": "\n\nLISTENING REPORT (what a blind listener heard in the voice itself; it never saw the card or the script):\n"
+   }
+  }
+ ],
+ "links": [
+  {
+   "id": "l1",
+   "from": {
+    "node": "setting",
+    "port": "text"
+   },
+   "to": {
+    "node": "director",
+    "port": "prompt"
+   }
+  },
+  {
+   "id": "l2",
+   "from": {
+    "node": "setting",
+    "port": "text"
+   },
+   "to": {
+    "node": "j0",
+    "port": "a"
+   }
+  },
+  {
+   "id": "l3",
+   "from": {
+    "node": "director",
+    "port": "text"
+   },
+   "to": {
+    "node": "j0",
+    "port": "b"
+   }
+  },
+  {
+   "id": "l4",
+   "from": {
+    "node": "j0",
+    "port": "text"
+   },
+   "to": {
+    "node": "poet",
+    "port": "prompt"
+   }
+  },
+  {
+   "id": "l5",
+   "from": {
+    "node": "poet",
+    "port": "text"
+   },
+   "to": {
+    "node": "voice",
+    "port": "prompt"
+   }
+  },
+  {
+   "id": "l6",
+   "from": {
+    "node": "voice",
+    "port": "audio"
+   },
+   "to": {
+    "node": "hearback",
+    "port": "audio"
+   }
+  },
+  {
+   "id": "l7",
+   "from": {
+    "node": "poet",
+    "port": "text"
+   },
+   "to": {
+    "node": "j1",
+    "port": "a"
+   }
+  },
+  {
+   "id": "l8",
+   "from": {
+    "node": "hearback",
+    "port": "text"
+   },
+   "to": {
+    "node": "j1",
+    "port": "b"
+   }
+  },
+  {
+   "id": "l9",
+   "from": {
+    "node": "director",
+    "port": "text"
+   },
+   "to": {
+    "node": "j2",
+    "port": "a"
+   }
+  },
+  {
+   "id": "l10",
+   "from": {
+    "node": "j6",
+    "port": "text"
+   },
+   "to": {
+    "node": "j2",
+    "port": "b"
+   }
+  },
+  {
+   "id": "l11",
+   "from": {
+    "node": "j2",
+    "port": "text"
+   },
+   "to": {
+    "node": "checker",
+    "port": "prompt"
+   }
+  },
+  {
+   "id": "l12",
+   "from": {
+    "node": "j2",
+    "port": "text"
+   },
+   "to": {
+    "node": "j3",
+    "port": "a"
+   }
+  },
+  {
+   "id": "l13",
+   "from": {
+    "node": "checker",
+    "port": "text"
+   },
+   "to": {
+    "node": "j3",
+    "port": "b"
+   }
+  },
+  {
+   "id": "l14",
+   "from": {
+    "node": "j3",
+    "port": "text"
+   },
+   "to": {
+    "node": "audit",
+    "port": "text"
+   }
+  },
+  {
+   "id": "l15",
+   "from": {
+    "node": "j3",
+    "port": "text"
+   },
+   "to": {
+    "node": "editor",
+    "port": "prompt"
+   }
+  },
+  {
+   "id": "l16",
+   "from": {
+    "node": "editor",
+    "port": "text"
+   },
+   "to": {
+    "node": "voice2",
+    "port": "prompt"
+   }
+  },
+  {
+   "id": "l17",
+   "from": {
+    "node": "voice2",
+    "port": "audio"
+   },
+   "to": {
+    "node": "hearback2",
+    "port": "audio"
+   }
+  },
+  {
+   "id": "l18",
+   "from": {
+    "node": "editor",
+    "port": "text"
+   },
+   "to": {
+    "node": "j4",
+    "port": "a"
+   }
+  },
+  {
+   "id": "l19",
+   "from": {
+    "node": "hearback2",
+    "port": "text"
+   },
+   "to": {
+    "node": "j4",
+    "port": "b"
+   }
+  },
+  {
+   "id": "l20",
+   "from": {
+    "node": "director",
+    "port": "text"
+   },
+   "to": {
+    "node": "j5",
+    "port": "a"
+   }
+  },
+  {
+   "id": "l21",
+   "from": {
+    "node": "j7",
+    "port": "text"
+   },
+   "to": {
+    "node": "j5",
+    "port": "b"
+   }
+  },
+  {
+   "id": "l22",
+   "from": {
+    "node": "j5",
+    "port": "text"
+   },
+   "to": {
+    "node": "checker2",
+    "port": "prompt"
+   }
+  },
+  {
+   "id": "l23",
+   "from": {
+    "node": "ask",
+    "port": "text"
+   },
+   "to": {
+    "node": "listener",
+    "port": "prompt"
+   }
+  },
+  {
+   "id": "l24",
+   "from": {
+    "node": "voice",
+    "port": "audio"
+   },
+   "to": {
+    "node": "listener",
+    "port": "audio"
+   }
+  },
+  {
+   "id": "l25",
+   "from": {
+    "node": "j1",
+    "port": "text"
+   },
+   "to": {
+    "node": "j6",
+    "port": "a"
+   }
+  },
+  {
+   "id": "l26",
+   "from": {
+    "node": "listener",
+    "port": "text"
+   },
+   "to": {
+    "node": "j6",
+    "port": "b"
+   }
+  },
+  {
+   "id": "l27",
+   "from": {
+    "node": "ask",
+    "port": "text"
+   },
+   "to": {
+    "node": "listener2",
+    "port": "prompt"
+   }
+  },
+  {
+   "id": "l28",
+   "from": {
+    "node": "voice2",
+    "port": "audio"
+   },
+   "to": {
+    "node": "listener2",
+    "port": "audio"
+   }
+  },
+  {
+   "id": "l29",
+   "from": {
+    "node": "j4",
+    "port": "text"
+   },
+   "to": {
+    "node": "j7",
+    "port": "a"
+   }
+  },
+  {
+   "id": "l30",
+   "from": {
+    "node": "listener2",
+    "port": "text"
+   },
+   "to": {
+    "node": "j7",
+    "port": "b"
+   }
+  }
+ ],
+ "nid": 60,
+ "lid": 40,
+ "view": {
+  "panX": 40,
+  "panY": 40,
+  "scale": 0.5
+ }
+}

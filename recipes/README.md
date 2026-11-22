@@ -25,6 +25,7 @@ Do not hand-edit these files — run `node scripts/make-recipes.mjs` after chang
 | [Droste check, recursion-audited](droste-check.md) | [`graphs/droste-check.noodle-graph.json`](../graphs/droste-check.noodle-graph.json) | defaults in graph |
 | [Edit with references](edit-with-references.md) | [`graphs/edit-with-references.noodle-graph.json`](../graphs/edit-with-references.noodle-graph.json) | needs Main photo, Reference 1 · outfit, Reference 2 · accessory, Reference 3 · companion |
 | [Exploded check, disassembly-audited](exploded-check.md) | [`graphs/exploded-check.noodle-graph.json`](../graphs/exploded-check.noodle-graph.json) | defaults in graph |
+| [Feeling check, emotion-audited](feeling-check.md) | [`graphs/feeling-check.noodle-graph.json`](../graphs/feeling-check.noodle-graph.json) | defaults in graph |
 | [Focus check, depth-of-field-audited](focus-check.md) | [`graphs/focus-check.noodle-graph.json`](../graphs/focus-check.noodle-graph.json) | defaults in graph |
 | [Fridge to feast](fridge-to-feast.md) | [`graphs/fridge-to-feast.noodle-graph.json`](../graphs/fridge-to-feast.noodle-graph.json) | needs Fridge photo |
 | [Haircut preview, identity-checked](haircut-preview.md) | [`graphs/haircut-preview.noodle-graph.json`](../graphs/haircut-preview.noodle-graph.json) | needs Portrait photo |
