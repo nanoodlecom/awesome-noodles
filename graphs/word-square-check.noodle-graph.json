@@ -1,0 +1,533 @@
+{
+ "v": 1,
+ "nodes": [
+  {
+   "id": "c1",
+   "type": "comment",
+   "x": 60,
+   "y": 30,
+   "fields": {
+    "text": "Can a picture SPELL A WORD SQUARE - and can a judge prove it without ever seeing the answer? A word square is a 4x4 grid of letters whose rows are ordinary English words and whose columns spell the very same words in the very same order: the grid equals its own transpose. A GLM director picks one square from a spec menu printed in its own prompt (four squares, each verified to obey the law) and copies out a WORD SQUARE CARD carrying only the four row CLUES - plain-English definitions, no letters at all, so the card withholds the answer exactly as a Sudoku card withholds its solution. A second GLM, the solver, must reconstruct the square from the clues alone plus the transpose law: every letter sits at a crossing, shared by one row word and one column word, so each guess constrains three others. A third GLM turns the solved grid into one painter prompt - thin cell lines, thick outer border, one bold capital per cell. Muse paints it. A blind Gemini reader, who never saw the card or the solution, transcribes the painted grid cell by cell. A GLM auditor then scores the transcription against the CLUES and the LAW alone - each row a real word fitting its clue, each column spelling its row exactly - because the clues were written to fit exactly one common-word square, so a complete grid that fits all four clues and breaks no symmetry IS the carded square and no answer key is ever shown to a judge. A Decide judge headlines round 1. That verdict is not the deliverable: a GLM editor re-solves the square from the clues, turns the audit into cell-level edit notes (gated - on a perfect audit it must demand a verbatim unchanged copy), Muse Edit repairs the poster, and a blind re-read plus the same auditor re-score the corrected poster against the same card. The corrected poster is the flow's final output."
+   },
+   "w": 900,
+   "name": "Word square check"
+  },
+  {
+   "id": "setting",
+   "type": "text",
+   "x": 60,
+   "y": 300,
+   "fields": {
+    "text": "A large flat printed word-square poster on a plain cream background, straight-on view: a square 4x4 grid of 16 big cells, thin grey lines between cells and a thick black line around the outer border, one large bold black capital letter centred in every cell, no other decoration yet."
+   },
+   "w": 300,
+   "name": "Poster setting"
+  },
+  {
+   "id": "director",
+   "type": "llm",
+   "x": 440,
+   "y": 280,
+   "fields": {
+    "model": "z-ai/glm-5.3-flash",
+    "system": "You are a word-puzzle editor. Given a POSTER SETTING, design a WORD SQUARE CARD for one 4x4 word square poster. Choose ONE square from this menu ONLY, and copy its four clues EXACTLY, word for word:\n\nTHE LAW (for the solver who comes after you): the grid is 4 rows by 4 columns of letters. Every row is an ordinary English word, and the grid is a word square - column 1 spells row 1's word, column 2 spells row 2's word, column 3 spells row 3's word and column 4 spells row 4's word, so the letter in row r, column c always equals the letter in row c, column r. Each menu square was verified to obey this law and its four clues fit no other common-word square.\n\nMENU (the words are printed here for you alone - they must NEVER appear on the card):\n1. BALL SQUARE - rows: BALL / AREA / LEAD / LADY\nCLUE 1: A round object that is thrown, kicked or hit in games\nCLUE 2: The size of a surface, or one part of a town\nCLUE 3: To go first and show the way; also a heavy soft grey metal once used for pipes\nCLUE 4: A polite word for a woman\n2. EAST SQUARE - rows: EAST / AREA / SEAL / TALE\nCLUE 1: The direction where the sun rises\nCLUE 2: The size of a surface, or one part of a town\nCLUE 3: To close an envelope tightly so nothing can escape; the same word names a slippery sea animal with flippers\nCLUE 4: A story or account of something, often one made up for children\n3. FISH SQUARE - rows: FISH / IDEA / SEAL / HALL\nCLUE 1: An animal with fins and gills that swims and is often caught for food\nCLUE 2: A thought or plan that comes into your mind\nCLUE 3: To close an envelope tightly so nothing can escape; the same word names a slippery sea animal with flippers\nCLUE 4: A big room or wide passage inside a building, where the front door opens into it\n4. MIST SQUARE - rows: MIST / IDEA / SEAL / TALL\nCLUE 1: Thin fog - tiny water drops hanging in the air, making it hard to see far\nCLUE 2: A thought or plan that comes into your mind\nCLUE 3: To close an envelope tightly so nothing can escape; the same word names a slippery sea animal with flippers\nCLUE 4: High in height - how a giraffe or a skyscraper is described\n\nOutput ONLY the card, in exactly this format, copying the chosen square's name and its four clues without changing any of them, and printing NO letters, NO row words and NO grid:\nSQUARE: <the square name>\nCLUE 1: <clue 1 exactly as printed above>\nCLUE 2: <clue 2 exactly as printed above>\nCLUE 3: <clue 3 exactly as printed above>\nCLUE 4: <clue 4 exactly as printed above>\nWORD LENGTH: 4\nNo other text.",
+    "maxTokens": 500,
+    "reasoningEffort": "low"
+   },
+   "w": 280,
+   "name": "Word square card - GLM picks a square and copies only its four clues",
+   "sizes": {
+    "system": 150
+   }
+  },
+  {
+   "id": "j0",
+   "type": "join",
+   "x": 800,
+   "y": 480,
+   "fields": {
+    "sep": "\n\nWORD SQUARE CARD (the puzzle - its name and its four row clues, and NO letters; its exact wording must reach the solver):\n"
+   },
+   "w": 200,
+   "name": "Setting + word square card"
+  },
+  {
+   "id": "stylist",
+   "type": "llm",
+   "x": 1160,
+   "y": 280,
+   "fields": {
+    "model": "z-ai/glm-5.3-flash",
+    "system": "You turn a SOLVED GRID into ONE prompt for an AI image generator. The input is a solved 4x4 word square (four lines after 'SOLVED GRID:', each four capital letters separated by single spaces, rows top to bottom). Write a single-paragraph prompt for a large flat word-square poster, demanding all of this:\n- A plain cream background and one large square 4x4 grid in the middle, straight-on view: thin grey lines between the 16 cells and a thick black line around the outer border only (no thicker lines inside the grid).\n- Exactly one letter per cell: a large, bold, black, perfectly legible CAPITAL letter centred in each cell, and the letters are exactly the solved grid's letters, cell for cell, row by row - name every row's four letters in the prompt, in order, so all 16 letters are spelled out.\n- No other printed words, letters, numbers or symbols anywhere; no hands, pencils, shadows or decoration; flat even light, crisp edges.\nOutput ONLY the image prompt, one paragraph, no preamble.",
+    "maxTokens": 700,
+    "reasoningEffort": "low"
+   },
+   "w": 280,
+   "name": "Word square brief - GLM turns the solved grid into a poster painter prompt",
+   "sizes": {
+    "system": 150
+   }
+  },
+  {
+   "id": "paint",
+   "type": "image",
+   "x": 1520,
+   "y": 280,
+   "fields": {
+    "model": "meta/muse-image/text-to-image",
+    "size": "1:1",
+    "variations": "1"
+   },
+   "w": 280,
+   "name": "Poster - Muse paints the completed word square grid"
+  },
+  {
+   "id": "surveyor",
+   "type": "llm",
+   "x": 1880,
+   "y": 280,
+   "fields": {
+    "model": "google/gemini-3.8-flash",
+    "system": "You are a word-square inspector examining a flat poster. You do not know what was planned - report only what you actually see, in exactly this format:\nGRID READ:\nROW 1: <four tokens separated by single spaces - the capital letter you see in each cell of the top row, left to right; a dot . if the cell is empty; a question mark ? if a mark is present but illegible>\nROW 2: <four tokens, second row>\nROW 3: <four tokens, third row>\nROW 4: <four tokens, bottom row>\nEXTRA: <anything that is not the grid and its 16 letters - a printed word, an extra letter outside the grid, a second grid, a decoration, a letter straddling two cells; 'none' if there is nothing of the kind>\nRead each cell by its position in the grid (rows top to bottom, columns left to right), not by the order letters catch your eye. Report the letter you actually see even if it makes a nonsense row or breaks a pattern - that mismatch is exactly what must be visible in your report.",
+    "maxTokens": 1100,
+    "reasoningEffort": "low"
+   },
+   "w": 280,
+   "name": "Word square read - Gemini transcribes every cell of the painted grid, blind",
+   "sizes": {
+    "system": 150
+   }
+  },
+  {
+   "id": "j1",
+   "type": "join",
+   "x": 2240,
+   "y": 180,
+   "fields": {
+    "sep": "\n\nWORD SQUARE READ (a blind inspector transcribed only what it could see - the letter in every cell; it never saw the word square card or the solution):\n"
+   },
+   "w": 200,
+   "name": "Word square card + word square read"
+  },
+  {
+   "id": "checker",
+   "type": "llm",
+   "x": 2600,
+   "y": 400,
+   "fields": {
+    "model": "z-ai/glm-5.3-flash",
+    "system": "You are a word-square auditor. The input gives a WORD SQUARE CARD (SQUARE name, CLUE 1 to CLUE 4 - one plain-English definition per row - and WORD LENGTH: 4) and then a WORD SQUARE READ from a blind inspector (GRID READ with ROW 1 to ROW 4, each four tokens separated by single spaces - a capital letter, a dot or a question mark - plus EXTRA). The law: in a word square every row is an ordinary English word AND column 1 spells row 1's word, column 2 spells row 2's word, column 3 spells row 3's word, column 4 spells row 4's word. The card's clues were written to fit exactly one common-word square, so a complete read that fits all four clues and breaks no symmetry is that square - you need no answer key. Score in exactly this format:\nCLUES: <number of the 4 read rows that are ordinary English words fitting their clue - a real word that misses its clue's meaning scores 0 for that row> of 4\nWORDS: <number of the 4 read rows whose four letters form an ordinary English word at all> of 4\nTRANSPOSE: <number of the 4 columns of the read grid that spell exactly the corresponding read row, letter for letter> of 4\nCOMPLETE: <YES if all 16 read cells are single capital letters; NO otherwise>\nBREAKS: <every problem, named precisely - each row that is not a word or misses its clue (name the row and what it spells), each symmetry break as 'R<row>C<column> shows <letter> but R<column>C<row> shows <letter>', each blank or illegible cell by its R<row>C<column> name - separated by '; '; 'none' if there are none>\nEXTRA: <the read's EXTRA, or 'none'>\nSUMMARY: <one short line naming what held and what failed>\nScore strictly from the two texts. Build the read grid's columns yourself, letter by letter from the rows, and compare each column against its row; do not assume symmetry holds because the rows look like words - check every crossing pair.",
+    "maxTokens": 1200,
+    "reasoningEffort": "low"
+   },
+   "w": 280,
+   "name": "Word square audit - GLM scores clues, words and transpose against the law",
+   "sizes": {
+    "system": 150
+   }
+  },
+  {
+   "id": "j2",
+   "type": "join",
+   "x": 2600,
+   "y": 180,
+   "fields": {
+    "sep": "\n\nWORD SQUARE AUDIT:\n"
+   },
+   "w": 200,
+   "name": "Card, word square read + word square audit"
+  },
+  {
+   "id": "audit",
+   "type": "decide",
+   "x": 2960,
+   "y": 180,
+   "fields": {
+    "model": "perplexity/pplx-decider-v1.2",
+    "mode": "choose",
+    "question": "The picture should be a completed 4x4 word square poster: a square grid with thin cell lines and a thick outer border, one bold capital letter in each of the 16 cells, every row an ordinary English word fitting its clue, and every column spelling the very same word as its row, so the grid equals its own transpose. The audit in the text scores a blind transcription of the poster against the clues card and the word-square law. Choose the one label that best fits the round-1 picture.",
+    "options": "square holds\ntranspose broken\nclues missed\ncells blank\nnot a word square"
+   },
+   "w": 280,
+   "name": "Square holds - audited",
+   "sizes": {
+    "question": 130
+   }
+  },
+  {
+   "id": "editor",
+   "type": "llm",
+   "x": 2960,
+   "y": 520,
+   "fields": {
+    "model": "z-ai/glm-5.3-flash",
+    "system": "You are the word-square editor in a puzzle pipeline. The input gives a WORD SQUARE CARD (four clues), a blind WORD SQUARE READ and a WORD SQUARE AUDIT of the round-1 picture. Write ONE edit instruction for an image editor working on that picture, in at most 140 words.\nIf the audit shows a perfect square (CLUES 4 of 4, WORDS 4 of 4, TRANSPOSE 4 of 4, COMPLETE: YES, EXTRA: none), output exactly this and nothing else: 'Reproduce this word square poster completely unchanged - same grid, same lines, same letter in every cell. Do not move, add, remove or change any letter.'\nOtherwise: solve the word square yourself from the card's four clues (every row a common 4-letter English word fitting its clue, and column i spelling row i exactly; the solution is unique) and state the full target end state - the completed grid, row by row - then add the audit's specific failures as concrete cell-level demands, naming each broken cell as R<row>C<column> with the letter it must show and the letter it shows now (for example: 'set R3C4 to D - it currently shows T'). Never ask for any printed word or symbol other than the grid's capital letters.",
+    "maxTokens": 450,
+    "reasoningEffort": "low"
+   },
+   "w": 280,
+   "name": "Edit notes - GLM re-solves the square and writes each broken cell's fix",
+   "sizes": {
+    "system": 150
+   }
+  },
+  {
+   "id": "fix",
+   "type": "edit",
+   "x": 3320,
+   "y": 520,
+   "fields": {
+    "model": "meta/muse-image/edit",
+    "size": "auto"
+   },
+   "w": 280,
+   "name": "Corrected poster - Muse Edit repairs the broken cells"
+  },
+  {
+   "id": "surveyor2",
+   "type": "llm",
+   "x": 3680,
+   "y": 520,
+   "fields": {
+    "model": "google/gemini-3.8-flash",
+    "system": "You are a word-square inspector examining a flat poster. You do not know what was planned - report only what you actually see, in exactly this format:\nGRID READ:\nROW 1: <four tokens separated by single spaces - the capital letter you see in each cell of the top row, left to right; a dot . if the cell is empty; a question mark ? if a mark is present but illegible>\nROW 2: <four tokens, second row>\nROW 3: <four tokens, third row>\nROW 4: <four tokens, bottom row>\nEXTRA: <anything that is not the grid and its 16 letters - a printed word, an extra letter outside the grid, a second grid, a decoration, a letter straddling two cells; 'none' if there is nothing of the kind>\nRead each cell by its position in the grid (rows top to bottom, columns left to right), not by the order letters catch your eye. Report the letter you actually see even if it makes a nonsense row or breaks a pattern - that mismatch is exactly what must be visible in your report.",
+    "maxTokens": 1100,
+    "reasoningEffort": "low"
+   },
+   "w": 280,
+   "name": "Re-read - Gemini transcribes the corrected poster's grid, blind",
+   "sizes": {
+    "system": 150
+   }
+  },
+  {
+   "id": "j4",
+   "type": "join",
+   "x": 4040,
+   "y": 420,
+   "fields": {
+    "sep": "\n\nWORD SQUARE READ (a blind inspector transcribed only what it could see in the corrected picture - the letter in every cell; it never saw the word square card or the solution):\n"
+   },
+   "w": 200,
+   "name": "Word square card + re-read"
+  },
+  {
+   "id": "checker2",
+   "type": "llm",
+   "x": 4400,
+   "y": 520,
+   "fields": {
+    "model": "z-ai/glm-5.3-flash",
+    "system": "You are a word-square auditor. The input gives a WORD SQUARE CARD (SQUARE name, CLUE 1 to CLUE 4 - one plain-English definition per row - and WORD LENGTH: 4) and then a WORD SQUARE READ from a blind inspector (GRID READ with ROW 1 to ROW 4, each four tokens separated by single spaces - a capital letter, a dot or a question mark - plus EXTRA). The law: in a word square every row is an ordinary English word AND column 1 spells row 1's word, column 2 spells row 2's word, column 3 spells row 3's word, column 4 spells row 4's word. The card's clues were written to fit exactly one common-word square, so a complete read that fits all four clues and breaks no symmetry is that square - you need no answer key. Score in exactly this format:\nCLUES: <number of the 4 read rows that are ordinary English words fitting their clue - a real word that misses its clue's meaning scores 0 for that row> of 4\nWORDS: <number of the 4 read rows whose four letters form an ordinary English word at all> of 4\nTRANSPOSE: <number of the 4 columns of the read grid that spell exactly the corresponding read row, letter for letter> of 4\nCOMPLETE: <YES if all 16 read cells are single capital letters; NO otherwise>\nBREAKS: <every problem, named precisely - each row that is not a word or misses its clue (name the row and what it spells), each symmetry break as 'R<row>C<column> shows <letter> but R<column>C<row> shows <letter>', each blank or illegible cell by its R<row>C<column> name - separated by '; '; 'none' if there are none>\nEXTRA: <the read's EXTRA, or 'none'>\nSUMMARY: <one short line naming what held and what failed>\nScore strictly from the two texts. Build the read grid's columns yourself, letter by letter from the rows, and compare each column against its row; do not assume symmetry holds because the rows look like words - check every crossing pair.",
+    "maxTokens": 1200,
+    "reasoningEffort": "low"
+   },
+   "w": 280,
+   "name": "Word square re-audit - GLM scores the corrected poster against the same card and law",
+   "sizes": {
+    "system": 150
+   }
+  },
+  {
+   "id": "ask",
+   "type": "text",
+   "x": 1520,
+   "y": 520,
+   "fields": {
+    "text": "Inspect the word square poster in the attached picture now, following your instructions exactly."
+   },
+   "w": 240,
+   "name": "Inspect ask"
+  },
+  {
+   "id": "ask2",
+   "type": "text",
+   "x": 3320,
+   "y": 900,
+   "fields": {
+    "text": "Inspect the word square poster in the attached picture now, following your instructions exactly."
+   },
+   "w": 240,
+   "name": "Re-inspect ask"
+  },
+  {
+   "id": "solver",
+   "type": "llm",
+   "x": 1160,
+   "y": 480,
+   "fields": {
+    "model": "z-ai/glm-5.3-flash",
+    "system": "You are a word-square solver. The input gives a POSTER SETTING first, then a WORD SQUARE CARD with a SQUARE name and four CLUES (CLUE 1 to CLUE 4), one clue per row of a 4x4 letter grid. Reconstruct the word square:\n- Row r's word is a common English word of exactly 4 capital letters that fits CLUE r.\n- The grid is a word square: column 1 spells row 1's word, column 2 spells row 2's word, column 3 spells row 3's word and column 4 spells row 4's word. Equivalently, the letter at row r, column c equals the letter at row c, column r - the grid is symmetric across its main diagonal.\nSolve it as a crossword: propose a word for each clue, write the four words as rows, then read the columns back - if a column does not spell its row's word, one of the crossing words is wrong; use the crossing letters to fix it (a word whose second letter is forced by row 1's second letter, and so on). The four clues were written to fit exactly one common-word square.\nOutput ONLY the solved grid, in exactly this format:\nSOLVED GRID:\n<row 1: four capital letters separated by single spaces>\n<row 2: four capital letters separated by single spaces>\n<row 3: four capital letters separated by single spaces>\n<row 4: four capital letters separated by single spaces>\nNo other text.",
+    "maxTokens": 1200,
+    "reasoningEffort": "low"
+   },
+   "w": 280,
+   "name": "Solution - GLM reconstructs the square from the clues and the transpose law",
+   "sizes": {
+    "system": 150
+   }
+  }
+ ],
+ "links": [
+  {
+   "id": "l1",
+   "from": {
+    "node": "setting",
+    "port": "text"
+   },
+   "to": {
+    "node": "director",
+    "port": "prompt"
+   }
+  },
+  {
+   "id": "l2",
+   "from": {
+    "node": "director",
+    "port": "text"
+   },
+   "to": {
+    "node": "j0",
+    "port": "b"
+   }
+  },
+  {
+   "id": "l12",
+   "from": {
+    "node": "setting",
+    "port": "text"
+   },
+   "to": {
+    "node": "j0",
+    "port": "a"
+   }
+  },
+  {
+   "id": "l13",
+   "from": {
+    "node": "j0",
+    "port": "text"
+   },
+   "to": {
+    "node": "solver",
+    "port": "prompt"
+   }
+  },
+  {
+   "id": "l3",
+   "from": {
+    "node": "stylist",
+    "port": "text"
+   },
+   "to": {
+    "node": "paint",
+    "port": "prompt"
+   }
+  },
+  {
+   "id": "l4",
+   "from": {
+    "node": "paint",
+    "port": "image"
+   },
+   "to": {
+    "node": "surveyor",
+    "port": "img1"
+   }
+  },
+  {
+   "id": "l7",
+   "from": {
+    "node": "director",
+    "port": "text"
+   },
+   "to": {
+    "node": "j1",
+    "port": "a"
+   }
+  },
+  {
+   "id": "l8",
+   "from": {
+    "node": "surveyor",
+    "port": "text"
+   },
+   "to": {
+    "node": "j1",
+    "port": "b"
+   }
+  },
+  {
+   "id": "l11",
+   "from": {
+    "node": "j1",
+    "port": "text"
+   },
+   "to": {
+    "node": "checker",
+    "port": "prompt"
+   }
+  },
+  {
+   "id": "l14",
+   "from": {
+    "node": "j1",
+    "port": "text"
+   },
+   "to": {
+    "node": "j2",
+    "port": "a"
+   }
+  },
+  {
+   "id": "l15",
+   "from": {
+    "node": "checker",
+    "port": "text"
+   },
+   "to": {
+    "node": "j2",
+    "port": "b"
+   }
+  },
+  {
+   "id": "l16",
+   "from": {
+    "node": "j2",
+    "port": "text"
+   },
+   "to": {
+    "node": "audit",
+    "port": "text"
+   }
+  },
+  {
+   "id": "l17",
+   "from": {
+    "node": "paint",
+    "port": "image"
+   },
+   "to": {
+    "node": "audit",
+    "port": "img1"
+   }
+  },
+  {
+   "id": "l18",
+   "from": {
+    "node": "j2",
+    "port": "text"
+   },
+   "to": {
+    "node": "editor",
+    "port": "prompt"
+   }
+  },
+  {
+   "id": "l19",
+   "from": {
+    "node": "editor",
+    "port": "text"
+   },
+   "to": {
+    "node": "fix",
+    "port": "prompt"
+   }
+  },
+  {
+   "id": "l20",
+   "from": {
+    "node": "paint",
+    "port": "image"
+   },
+   "to": {
+    "node": "fix",
+    "port": "image"
+   }
+  },
+  {
+   "id": "l21",
+   "from": {
+    "node": "fix",
+    "port": "image"
+   },
+   "to": {
+    "node": "surveyor2",
+    "port": "img1"
+   }
+  },
+  {
+   "id": "l22",
+   "from": {
+    "node": "director",
+    "port": "text"
+   },
+   "to": {
+    "node": "j4",
+    "port": "a"
+   }
+  },
+  {
+   "id": "l23",
+   "from": {
+    "node": "surveyor2",
+    "port": "text"
+   },
+   "to": {
+    "node": "j4",
+    "port": "b"
+   }
+  },
+  {
+   "id": "l24",
+   "from": {
+    "node": "j4",
+    "port": "text"
+   },
+   "to": {
+    "node": "checker2",
+    "port": "prompt"
+   }
+  },
+  {
+   "id": "l39",
+   "from": {
+    "node": "ask",
+    "port": "text"
+   },
+   "to": {
+    "node": "surveyor",
+    "port": "prompt"
+   }
+  },
+  {
+   "id": "l40",
+   "from": {
+    "node": "ask2",
+    "port": "text"
+   },
+   "to": {
+    "node": "surveyor2",
+    "port": "prompt"
+   }
+  },
+  {
+   "id": "l13b",
+   "from": {
+    "node": "solver",
+    "port": "text"
+   },
+   "to": {
+    "node": "stylist",
+    "port": "prompt"
+   }
+  }
+ ],
+ "nid": 32,
+ "lid": 40,
+ "view": {
+  "panX": 40,
+  "panY": 40,
+  "scale": 0.5
+ }
+}

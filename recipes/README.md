@@ -75,6 +75,7 @@ Do not hand-edit these files — run `node scripts/make-recipes.mjs` after chang
 | [Turnaround check, viewpoint-audited](turnaround-check.md) | [`graphs/turnaround-check.noodle-graph.json`](../graphs/turnaround-check.noodle-graph.json) | defaults in graph |
 | [Venn check, logic-audited](venn-check.md) | [`graphs/venn-check.noodle-graph.json`](../graphs/venn-check.noodle-graph.json) | defaults in graph |
 | [Weave check, parity-audited](weave-check.md) | [`graphs/weave-check.noodle-graph.json`](../graphs/weave-check.noodle-graph.json) | defaults in graph |
+| [Word square check, transpose-audited](word-square-check.md) | [`graphs/word-square-check.noodle-graph.json`](../graphs/word-square-check.noodle-graph.json) | defaults in graph |
 | [Words only, repainted](words-only-repaint.md) | [`graphs/words-only-repaint.noodle-graph.json`](../graphs/words-only-repaint.noodle-graph.json) | needs Scene photo |
 
 Install: `npm i nanoodle` · `pip install nanoodle`. Run anywhere: [nanoodle-js](https://github.com/nanoodlecom/nanoodle-js) · [nanoodle-py](https://github.com/nanoodlecom/nanoodle-py) · [nanoodle-mcp](https://github.com/nanoodlecom/nanoodle-mcp) · [run-noodle-action](https://github.com/nanoodlecom/run-noodle-action).
