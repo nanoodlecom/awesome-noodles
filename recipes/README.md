@@ -54,6 +54,7 @@ Do not hand-edit these files — run `node scripts/make-recipes.mjs` after chang
 | [Pictogram check, meaning-audited](pictogram-check.md) | [`graphs/pictogram-check.noodle-graph.json`](../graphs/pictogram-check.noodle-graph.json) | defaults in graph |
 | [Red reveal, channel-audited](red-reveal-check.md) | [`graphs/red-reveal-check.noodle-graph.json`](../graphs/red-reveal-check.noodle-graph.json) | defaults in graph |
 | [Relay drift, hop-checked](relay-drift.md) | [`graphs/relay-drift.noodle-graph.json`](../graphs/relay-drift.noodle-graph.json) | defaults in graph |
+| [Restore the Photo](restore-the-photo.md) | [`graphs/restore-the-photo.noodle-graph.json`](../graphs/restore-the-photo.noodle-graph.json) | needs Damaged photo |
 | [Rhyme check, form-audited](rhyme-check.md) | [`graphs/rhyme-check.noodle-graph.json`](../graphs/rhyme-check.noodle-graph.json) | defaults in graph |
 | [Say it back, transcript-checked](say-it-back.md) | [`graphs/say-it-back.noodle-graph.json`](../graphs/say-it-back.noodle-graph.json) | defaults in graph |
 | [Scale check, proportion-audited](scale-check.md) | [`graphs/scale-check.noodle-graph.json`](../graphs/scale-check.noodle-graph.json) | defaults in graph |
