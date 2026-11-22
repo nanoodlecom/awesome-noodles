@@ -59,6 +59,7 @@ Do not hand-edit these files — run `node scripts/make-recipes.mjs` after chang
 | [Scale check, proportion-audited](scale-check.md) | [`graphs/scale-check.noodle-graph.json`](../graphs/scale-check.noodle-graph.json) | defaults in graph |
 | [Score the still, ear-checked](score-the-still.md) | [`graphs/score-the-still.noodle-graph.json`](../graphs/score-the-still.noodle-graph.json) | defaults in graph |
 | [Shadow check, sun-audited](shadow-check.md) | [`graphs/shadow-check.noodle-graph.json`](../graphs/shadow-check.noodle-graph.json) | defaults in graph |
+| [Shadow play check, projection-audited](shadow-play-check.md) | [`graphs/shadow-play-check.noodle-graph.json`](../graphs/shadow-play-check.noodle-graph.json) | defaults in graph |
 | [Sheet music check, measure-audited](sheet-music-check.md) | [`graphs/sheet-music-check.noodle-graph.json`](../graphs/sheet-music-check.noodle-graph.json) | defaults in graph |
 | [Spot the difference, diff-checked](spot-the-difference.md) | [`graphs/spot-the-difference.noodle-graph.json`](../graphs/spot-the-difference.noodle-graph.json) | defaults in graph |
 | [Squint test, two-distance-checked](squint-test.md) | [`graphs/squint-test.noodle-graph.json`](../graphs/squint-test.noodle-graph.json) | defaults in graph |
