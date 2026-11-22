@@ -4,7 +4,7 @@
  "nid": 9,
  "nodes": [
   {
-   "id": 1,
+   "id": "note",
    "type": "comment",
    "name": "About this workflow",
    "x": 40,
@@ -14,7 +14,7 @@
    }
   },
   {
-   "id": 2,
+   "id": "photo",
    "type": "upload",
    "name": "Damaged photo",
    "x": 40,
@@ -22,7 +22,7 @@
    "fields": {}
   },
   {
-   "id": 3,
+   "id": "survey",
    "type": "vision",
    "name": "Damage survey",
    "x": 320,
@@ -33,7 +33,7 @@
    }
   },
   {
-   "id": 4,
+   "id": "restore",
    "type": "edit",
    "name": "Restore \u2014 Seedream 5.5",
    "x": 320,
@@ -45,7 +45,7 @@
    }
   },
   {
-   "id": 5,
+   "id": "upscale",
    "type": "edit",
    "name": "Upscale \u2014 Pruna",
    "x": 600,
@@ -55,18 +55,18 @@
    }
   },
   {
-   "id": 6,
+   "id": "guard",
    "type": "llm",
    "name": "Identity guard + repair ledger",
    "x": 880,
    "y": 240,
    "fields": {
     "model": "google/gemini-3.1-flash-lite",
-    "system": "Two images are attached to this message: the FIRST is the damaged original and the SECOND is the restored result; a damage survey is attached as text. You are the identity guard and bookkeeper for a photo restoration. The FIRST attached image is the damaged original; the SECOND is the restored result. A damage survey is attached as text. Do three things. 1) IDENTITY: for every face in the result, say whether it is recognizably the same person as in the original \u2014 same features, same expression \u2014 and name any drift. 2) INVENTIONS \u2014 be adversarial: restoration models commonly invent jewelry, necklaces, earrings, glasses, hats, watches and background objects. Check the neck, ears, wrists and background of the result against the original item by item. Anything present in the result but absent in the original is an INVENTION, even if it looks natural. List every invention, or 'none' only if you verified each area. 3) REPAIR LEDGER: go through the attached survey ITEM BY ITEM \u2014 every defect the survey lists must appear in exactly one of three headed lists: REPAIRED (damage now gone), REBUILT (areas the restoration had to reconstruct), LEFT ALONE (damage still visible or deliberately untouched). Never call damage minor that the survey lists as a tear, a stain, or a missing area. End with exactly one verdict line: 'RESTORE: HELD' if identity held and nothing was invented, else 'RESTORE: DRIFTED'."
+    "system": "You are the identity guard and bookkeeper for a photo restoration. Two images are attached: the FIRST is the damaged original, the SECOND is the restored result. The damage survey arrives as this message's text. Do three things. 1) IDENTITY: for every face in the result, say whether it is recognizably the same person as in the original \u2014 same features, same expression \u2014 and name any drift. 2) INVENTIONS \u2014 be adversarial: restoration models commonly invent jewelry, necklaces, earrings, glasses, hats, watches and background objects. Check the neck, ears, wrists and background of the result against the original item by item. Anything present in the result but absent in the original is an INVENTION, even if it looks natural. List every invention, or 'none' only if you verified each area. 3) REPAIR LEDGER: go through the attached survey ITEM BY ITEM \u2014 every defect the survey lists must appear in exactly one of three headed lists: REPAIRED (damage now gone), REBUILT (areas the restoration had to reconstruct), LEFT ALONE (damage still visible or deliberately untouched). Never call damage minor that the survey lists as a tear, a stain, or a missing area. End with exactly one verdict line: 'RESTORE: HELD' if identity held and nothing was invented, else 'RESTORE: DRIFTED'."
    }
   },
   {
-   "id": 7,
+   "id": "guide",
    "type": "llm",
    "name": "Guide \u2014 your restored photo",
    "x": 1160,
@@ -79,79 +79,79 @@
  ],
  "links": [
   {
-   "id": 1,
+   "id": "l1",
    "from": {
-    "node": 2,
+    "node": "photo",
     "port": "image"
    },
    "to": {
-    "node": 3,
+    "node": "survey",
     "port": "image"
    }
   },
   {
-   "id": 2,
+   "id": "l2",
    "from": {
-    "node": 2,
+    "node": "photo",
     "port": "image"
    },
    "to": {
-    "node": 4,
+    "node": "restore",
     "port": "image"
    }
   },
   {
-   "id": 3,
+   "id": "l3",
    "from": {
-    "node": 4,
+    "node": "restore",
     "port": "image"
    },
    "to": {
-    "node": 5,
+    "node": "upscale",
     "port": "image"
    }
   },
   {
-   "id": 4,
+   "id": "l4",
    "from": {
-    "node": 2,
+    "node": "photo",
     "port": "image"
    },
    "to": {
-    "node": 6,
+    "node": "guard",
     "port": "img"
    }
   },
   {
-   "id": 5,
+   "id": "l5",
    "from": {
-    "node": 5,
+    "node": "upscale",
     "port": "image"
    },
    "to": {
-    "node": 6,
+    "node": "guard",
     "port": "img2"
    }
   },
   {
-   "id": 6,
+   "id": "l6",
    "from": {
-    "node": 3,
+    "node": "survey",
     "port": "text"
    },
    "to": {
-    "node": 6,
+    "node": "guard",
     "port": "prompt"
    }
   },
   {
-   "id": 8,
+   "id": "l7",
    "from": {
-    "node": 6,
+    "node": "guard",
     "port": "text"
    },
    "to": {
-    "node": 7,
+    "node": "guide",
     "port": "prompt"
    }
   }
