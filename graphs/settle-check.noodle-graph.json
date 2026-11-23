@@ -1,0 +1,505 @@
+{
+ "v": 1,
+ "nodes": [
+  {
+   "id": "c1",
+   "type": "comment",
+   "x": 60,
+   "y": 30,
+   "fields": {
+    "text": "Will five liquids poured into one glass stack themselves by density - and will the painter let them? A GLM director picks one jar from a menu printed in its own prompt (four jars; each five immiscible liquids, every one with a distinct colour and a distinct density) and copies out a SETTLE CARD that lists the liquids in pour order - deliberately NOT in settling order - with their densities, plus a DECOY line naming the liquid whose look lies about its weight. No node ever states the layer order. A second GLM turns the card into a cylinder prompt naming only the liquids and their colours and demanding they be drawn fully settled, lightest on top, densest at the bottom. Muse paints the tower. A blind Gemini reader reports the bands top to bottom by colour alone, the layer count and the state of the interfaces. A GLM auditor derives the expected order itself by sorting the carded densities and scores ORDER, COLOURS, LAYERS, INTERFACES and DECOY. A Decide judge headlines round 1. That verdict is not the deliverable: a GLM editor turns the audit into concrete re-layering notes (gated - on a perfect audit it must demand a verbatim unchanged copy), Muse Edit repaints the tower, and the corrected tower is re-read blind and re-audited against the same card. The corrected tower is the flow's final output."
+   },
+   "w": 900,
+   "name": "Settle check"
+  },
+  {
+   "id": "setting",
+   "type": "text",
+   "x": 60,
+   "y": 300,
+   "fields": {
+    "text": "A tall, straight, clear glass cylinder on a plain pale bench against a plain off-white background, seen straight on from the side. The cylinder is empty. Nothing else in the scene."
+   },
+   "w": 300,
+   "name": "Jar setting"
+  },
+  {
+   "id": "director",
+   "type": "llm",
+   "x": 440,
+   "y": 280,
+   "fields": {
+    "model": "z-ai/glm-5.3-flash",
+    "system": "You are a density-tower designer. The JAR SETTING you receive is an empty backdrop description, not an image and not a jar to match: it names no liquids on purpose, because the painter will fill the cylinder afterwards. Do NOT try to match a menu jar to the setting, do NOT refuse, and never ask for a different input. Pick exactly one menu jar freely - any of the four is a correct choice - and copy it out as the card. Choose ONE jar from this menu ONLY, and copy its spec EXACTLY - every liquid, colour and density, in the order listed (the list is a pour order, never a settling order):\n\nMENU:\n1. JAR: RAINBOW JAR\nLIQUID 1: water, dyed BLUE - DENSITY 1.00\nLIQUID 2: honey, pale AMBER - DENSITY 1.42\nLIQUID 3: rubbing alcohol, dyed RED - DENSITY 0.79\nLIQUID 4: dish soap, PURPLE - DENSITY 1.06\nLIQUID 5: vegetable oil, GOLD - DENSITY 0.91\nDECOY: the honey - pale and golden, it looks like the lightest thing in the jar, but at 1.42 it is the densest liquid here and must end at the very bottom.\n2. JAR: ORCHARD JAR\nLIQUID 1: corn syrup, dyed ORANGE - DENSITY 1.33\nLIQUID 2: vegetable oil, GOLD - DENSITY 0.91\nLIQUID 3: honey, pale AMBER - DENSITY 1.42\nLIQUID 4: rubbing alcohol, dyed GREEN - DENSITY 0.79\nLIQUID 5: dish soap, BLUE - DENSITY 1.06\nDECOY: the honey - pale and golden, it looks like the lightest thing in the jar, but at 1.42 it is the densest liquid here and must end at the very bottom.\n3. JAR: LAGOON JAR\nLIQUID 1: dish soap, TEAL - DENSITY 1.06\nLIQUID 2: rubbing alcohol, dyed VIOLET - DENSITY 0.79\nLIQUID 3: corn syrup, dyed PINK - DENSITY 1.33\nLIQUID 4: vegetable oil, GOLD - DENSITY 0.91\nLIQUID 5: water, dyed NAVY - DENSITY 1.00\nDECOY: the rubbing alcohol - dyed a deep, heavy-looking violet, it looks like it should sink, but at 0.79 it is the lightest liquid here and must end at the very top.\n4. JAR: EMBER JAR\nLIQUID 1: honey, pale AMBER - DENSITY 1.42\nLIQUID 2: water, dyed DEEP BLUE - DENSITY 1.00\nLIQUID 3: rubbing alcohol, dyed ORANGE - DENSITY 0.79\nLIQUID 4: dish soap, GREEN - DENSITY 1.06\nLIQUID 5: vegetable oil, GOLD - DENSITY 0.91\nDECOY: the honey - pale and golden, it looks like the lightest thing in the jar, but at 1.42 it is the densest liquid here and must end at the very bottom.\n\nOutput ONLY the card, in exactly this format, copying the chosen jar's spec without changing any of it:\nJAR: <the jar name>\nLIQUID 1: <liquid line exactly as carded>\nLIQUID 2: <liquid line exactly as carded>\nLIQUID 3: <liquid line exactly as carded>\nLIQUID 4: <liquid line exactly as carded>\nLIQUID 5: <liquid line exactly as carded>\nDECOY: <the decoy line exactly as carded>\nLIQUID COUNT: 5\nNo other text.",
+    "maxTokens": 700,
+    "reasoningEffort": "low"
+   },
+   "w": 280,
+   "name": "Settle card - GLM picks a jar and copies its liquids, colours and densities",
+   "sizes": {
+    "system": 150
+   }
+  },
+  {
+   "id": "j0",
+   "type": "join",
+   "x": 800,
+   "y": 480,
+   "fields": {
+    "sep": "\n\nSETTLE CARD (the jar - its five liquids with their colours and densities, listed in pour order, NOT settling order; its exact wording must reach the image maker):\n\n"
+   },
+   "w": 200,
+   "name": "Setting + settle card"
+  },
+  {
+   "id": "stylist",
+   "type": "llm",
+   "x": 800,
+   "y": 280,
+   "fields": {
+    "model": "z-ai/glm-5.3-flash",
+    "system": "You turn a SETTLE CARD into ONE prompt for an AI image generator. The input always contains a valid card with five LIQUID lines (a liquid, its colour and its density) and a DECOY line; never refuse and never ask for a different card. Write a single-paragraph prompt for a density tower photograph, demanding all of this:\n- One tall, straight, clear glass cylinder on a plain pale bench against a plain off-white background, seen straight on from the side, filled almost to the top.\n- Inside the cylinder, the card's five liquids - name each liquid with its carded colour, and NO other liquid - poured in together and left to settle COMPLETELY: each liquid forms exactly one level, uniform band with a flat, sharp, horizontal interface against its neighbours, the five bands stacked directly on top of each other with no gaps, no mixing, no swirls, no bubbles trails.\n- The settling law, stated exactly like this and nothing more: 'the liquids rest in density order, the lightest liquid on top and the densest at the bottom'. Do NOT state which liquid ends up in which position, do NOT list the liquids in any vertical order, and do NOT repeat any density number in the prompt - the painter must work the order out from the liquids themselves.\n- Equal volumes: the five bands are of roughly equal height. No labels, no text, no numbers, no legend, no objects inside or outside the cylinder except the bench and background.\nOutput ONLY the image prompt, one paragraph, no preamble.",
+    "maxTokens": 800,
+    "reasoningEffort": "low"
+   },
+   "w": 280,
+   "name": "Tower brief - GLM turns the card into a settled-cylinder prompt (order never stated)",
+   "sizes": {
+    "system": 150
+   }
+  },
+  {
+   "id": "paint",
+   "type": "image",
+   "x": 1160,
+   "y": 280,
+   "fields": {
+    "model": "meta/muse-image/text-to-image",
+    "size": "4:3",
+    "variations": "1"
+   },
+   "w": 280,
+   "name": "Density tower - Muse paints the five liquids fully settled"
+  },
+  {
+   "id": "surveyor",
+   "type": "llm",
+   "x": 1520,
+   "y": 280,
+   "fields": {
+    "model": "google/gemini-3.8-flash",
+    "system": "You are a liquids inspector examining a photograph of a glass cylinder that may contain stacked liquid layers. You do not know what was planned - report only what you actually see, in exactly this format:\nBANDS TOP TO BOTTOM: <the colour of each distinct liquid band, from the top of the cylinder to the bottom, separated by ' / ' - name colours plainly, e.g. RED / GOLD / BLUE / PURPLE / AMBER; write NONE if there are no bands>\nLAYER COUNT SEEN: <the number of distinct bands you counted>\nINTERFACES: <FLAT if every boundary between bands is level, sharp and horizontal; WAVY if boundaries are level but soft or uneven; MIXED if colours bleed into each other or bands are marbled, swirled or cloudy>\nEXTRA: <anything that is not bands of liquid in a plain cylinder - labels, printed text, objects in the liquid, a second container, people; 'none' if there is nothing of the kind>\nName the colours you actually see, in the order you actually see them, even when a band is hard to name - that is exactly what must be visible in your report.",
+    "maxTokens": 900,
+    "reasoningEffort": "low"
+   },
+   "w": 280,
+   "name": "Tower read - Gemini reports the bands top to bottom by colour, blind",
+   "sizes": {
+    "system": 150
+   }
+  },
+  {
+   "id": "j1",
+   "type": "join",
+   "x": 1880,
+   "y": 180,
+   "fields": {
+    "sep": "\n\nTOWER READ (a blind inspector reported only what it could see in the cylinder - the band colours top to bottom, the layer count and the interfaces; it never saw the settle card):\n\n"
+   },
+   "w": 200,
+   "name": "Settle card + tower read"
+  },
+  {
+   "id": "checker",
+   "type": "llm",
+   "x": 2240,
+   "y": 400,
+   "fields": {
+    "model": "z-ai/glm-5.3-flash",
+    "system": "You are a density auditor. The input gives a SETTLE CARD (JAR, five LIQUID lines each naming a liquid, its colour and its DENSITY, a DECOY line, LIQUID COUNT) then a TOWER READ from a blind inspector (BANDS TOP TO BOTTOM as colours, LAYER COUNT SEEN, INTERFACES, EXTRA).\n\nFirst derive the expected order yourself: sort the five carded liquids by density ascending - the smallest density belongs at the TOP of the cylinder, the largest at the BOTTOM - giving the expected top-to-bottom colour sequence. Score against that derived sequence, in exactly this format:\nCARD LAW: <VALID if the card carries exactly five liquids with five distinct densities and five distinct colours and a decoy naming one of the carded liquids; otherwise INVALID, naming each problem>\nORDER: <n> of 4 adjacent pairs in density order - for each adjacent pair in the read's top-to-bottom sequence, the upper band's liquid must be the less dense of the two; count the pairs that obey this (if the read names a colour that is not carded, that pair and the next cannot be verified and count as failed)\nCOLOURS: <n> of 5 carded colours present as bands in the read; name any carded colour missing and any read colour that is not carded as an INTRUDER\nLAYERS: <n> of 5 - the read's LAYER COUNT SEEN against 5, capped at 5\nINTERFACES: <FLAT, WAVY or MIXED, copied from the read>\nDECOY: <CORRECT if the decoy liquid's colour sits at its density-derived end of the tower - the very bottom band if the decoy is the densest liquid, the very top band if it is the lightest; WRONG otherwise, naming where its colour actually sits>\nSETTLE ERRORS: <every point lost, as short clauses separated by '; ' - each inverted adjacent pair naming the two colours, each missing or intruder colour, each missing layer, wavy or mixed interfaces, a wrong decoy; 'none' if nothing was lost>\nEXTRA: <anything the read put under EXTRA that is not already scored, or 'none'>\nSUMMARY: <one short line naming what held and what failed>\nScore strictly from the two texts and the densities on the card. The read names colours only: match each read colour to the one carded liquid of that colour.",
+    "maxTokens": 1200,
+    "reasoningEffort": "low"
+   },
+   "w": 280,
+   "name": "Settle audit - GLM derives the density order and scores order, colours, layers, interfaces and decoy",
+   "sizes": {
+    "system": 150
+   }
+  },
+  {
+   "id": "j2",
+   "type": "join",
+   "x": 2240,
+   "y": 180,
+   "fields": {
+    "sep": "\n\nSETTLE AUDIT:\n\n"
+   },
+   "w": 200,
+   "name": "Card, tower read + settle audit"
+  },
+  {
+   "id": "audit",
+   "type": "decide",
+   "x": 2600,
+   "y": 180,
+   "fields": {
+    "model": "perplexity/pplx-decider-v1.2",
+    "mode": "choose",
+    "question": "The picture should be a density tower: one tall clear glass cylinder holding five immiscible liquids in five level bands of roughly equal height, each band one carded liquid in its carded colour, the bands resting in density order - lightest on top, densest at the bottom - with flat sharp interfaces, no labels and no text. The audit in the text derives the expected order from the carded densities and scores a blind top-to-bottom colour read against it: adjacent-pair order, colours, layers, interfaces and the decoy liquid at its derived end. Choose the one label that best fits the round-1 picture.",
+    "options": "settled by density\norder wrong\nlayers mixed\ncolours off\nnot a density tower"
+   },
+   "w": 280,
+   "name": "Settled by density - audited",
+   "sizes": {
+    "question": 130
+   }
+  },
+  {
+   "id": "editor",
+   "type": "llm",
+   "x": 2600,
+   "y": 520,
+   "fields": {
+    "model": "z-ai/glm-5.3-flash",
+    "system": "You are the tower editor in a density-tower pipeline. The input gives a SETTLE CARD, a blind TOWER READ and a SETTLE AUDIT of the round-1 tower. Write ONE edit instruction for an image editor working on that tower photograph, in at most 120 words.\nIf the audit shows a perfect settling (ORDER: 4 of 4, COLOURS: 5 of 5, LAYERS: 5 of 5, INTERFACES: FLAT, DECOY: CORRECT), output exactly this and nothing else: 'Reproduce this density tower completely unchanged - same cylinder, same five bands in the same order with the same colours and the same flat interfaces. Do not move, add, remove or recolour anything.'\nOtherwise: first state the full target end state - the same plain bench and tall clear cylinder holding the five carded liquids as five level bands of roughly equal height in the derived density order, naming the bands top to bottom by liquid and colour (derive the order from the carded densities: lightest on top, densest at the bottom) - then add the audit's specific failures as concrete demands (for example: 'the blue water band sits below the purple soap band: swap them, blue above purple'; or 'the interfaces are wavy: level every boundary flat and sharp'). Every fix reorders, recolours or levels bands; never ask for labels, text or a different set of liquids.",
+    "maxTokens": 400,
+    "reasoningEffort": "low"
+   },
+   "w": 280,
+   "name": "Edit notes - GLM turns the settle audit into concrete re-layering instructions",
+   "sizes": {
+    "system": 150
+   }
+  },
+  {
+   "id": "fix",
+   "type": "edit",
+   "x": 2960,
+   "y": 520,
+   "fields": {
+    "model": "meta/muse-image/edit",
+    "size": "auto"
+   },
+   "w": 280,
+   "name": "Corrected density tower - Muse Edit re-layers the cylinder"
+  },
+  {
+   "id": "surveyor2",
+   "type": "llm",
+   "x": 3320,
+   "y": 520,
+   "fields": {
+    "model": "google/gemini-3.8-flash",
+    "system": "You are a liquids inspector examining a photograph of a glass cylinder that may contain stacked liquid layers. You do not know what was planned - report only what you actually see, in exactly this format:\nBANDS TOP TO BOTTOM: <the colour of each distinct liquid band, from the top of the cylinder to the bottom, separated by ' / ' - name colours plainly, e.g. RED / GOLD / BLUE / PURPLE / AMBER; write NONE if there are no bands>\nLAYER COUNT SEEN: <the number of distinct bands you counted>\nINTERFACES: <FLAT if every boundary between bands is level, sharp and horizontal; WAVY if boundaries are level but soft or uneven; MIXED if colours bleed into each other or bands are marbled, swirled or cloudy>\nEXTRA: <anything that is not bands of liquid in a plain cylinder - labels, printed text, objects in the liquid, a second container, people; 'none' if there is nothing of the kind>\nName the colours you actually see, in the order you actually see them, even when a band is hard to name - that is exactly what must be visible in your report.",
+    "maxTokens": 900,
+    "reasoningEffort": "low"
+   },
+   "w": 280,
+   "name": "Tower re-read - Gemini reports the corrected tower's bands, blind",
+   "sizes": {
+    "system": 150
+   }
+  },
+  {
+   "id": "j4",
+   "type": "join",
+   "x": 3680,
+   "y": 420,
+   "fields": {
+    "sep": "\n\nTOWER READ (a blind inspector reported only what it could see in the corrected cylinder - the band colours top to bottom, the layer count and the interfaces; it never saw the settle card):\n\n"
+   },
+   "w": 200,
+   "name": "Settle card + tower re-read"
+  },
+  {
+   "id": "checker2",
+   "type": "llm",
+   "x": 4040,
+   "y": 520,
+   "fields": {
+    "model": "z-ai/glm-5.3-flash",
+    "system": "You are a density auditor. The input gives a SETTLE CARD (JAR, five LIQUID lines each naming a liquid, its colour and its DENSITY, a DECOY line, LIQUID COUNT) then a TOWER READ from a blind inspector (BANDS TOP TO BOTTOM as colours, LAYER COUNT SEEN, INTERFACES, EXTRA).\n\nFirst derive the expected order yourself: sort the five carded liquids by density ascending - the smallest density belongs at the TOP of the cylinder, the largest at the BOTTOM - giving the expected top-to-bottom colour sequence. Score against that derived sequence, in exactly this format:\nCARD LAW: <VALID if the card carries exactly five liquids with five distinct densities and five distinct colours and a decoy naming one of the carded liquids; otherwise INVALID, naming each problem>\nORDER: <n> of 4 adjacent pairs in density order - for each adjacent pair in the read's top-to-bottom sequence, the upper band's liquid must be the less dense of the two; count the pairs that obey this (if the read names a colour that is not carded, that pair and the next cannot be verified and count as failed)\nCOLOURS: <n> of 5 carded colours present as bands in the read; name any carded colour missing and any read colour that is not carded as an INTRUDER\nLAYERS: <n> of 5 - the read's LAYER COUNT SEEN against 5, capped at 5\nINTERFACES: <FLAT, WAVY or MIXED, copied from the read>\nDECOY: <CORRECT if the decoy liquid's colour sits at its density-derived end of the tower - the very bottom band if the decoy is the densest liquid, the very top band if it is the lightest; WRONG otherwise, naming where its colour actually sits>\nSETTLE ERRORS: <every point lost, as short clauses separated by '; ' - each inverted adjacent pair naming the two colours, each missing or intruder colour, each missing layer, wavy or mixed interfaces, a wrong decoy; 'none' if nothing was lost>\nEXTRA: <anything the read put under EXTRA that is not already scored, or 'none'>\nSUMMARY: <one short line naming what held and what failed>\nScore strictly from the two texts and the densities on the card. The read names colours only: match each read colour to the one carded liquid of that colour.",
+    "maxTokens": 1200,
+    "reasoningEffort": "low"
+   },
+   "w": 280,
+   "name": "Settle re-audit - GLM scores the corrected tower against the same card",
+   "sizes": {
+    "system": 150
+   }
+  },
+  {
+   "id": "ask",
+   "type": "text",
+   "x": 1160,
+   "y": 520,
+   "fields": {
+    "text": "Inspect the density tower in the attached picture now, following your instructions exactly."
+   },
+   "w": 240,
+   "name": "Inspect ask"
+  },
+  {
+   "id": "ask2",
+   "type": "text",
+   "x": 2960,
+   "y": 900,
+   "fields": {
+    "text": "Inspect the density tower in the attached picture now, following your instructions exactly."
+   },
+   "w": 240,
+   "name": "Re-inspect ask"
+  }
+ ],
+ "links": [
+  {
+   "id": "l1",
+   "from": {
+    "node": "setting",
+    "port": "text"
+   },
+   "to": {
+    "node": "director",
+    "port": "prompt"
+   }
+  },
+  {
+   "id": "l2",
+   "from": {
+    "node": "director",
+    "port": "text"
+   },
+   "to": {
+    "node": "j0",
+    "port": "b"
+   }
+  },
+  {
+   "id": "l12",
+   "from": {
+    "node": "setting",
+    "port": "text"
+   },
+   "to": {
+    "node": "j0",
+    "port": "a"
+   }
+  },
+  {
+   "id": "l13",
+   "from": {
+    "node": "j0",
+    "port": "text"
+   },
+   "to": {
+    "node": "stylist",
+    "port": "prompt"
+   }
+  },
+  {
+   "id": "l3",
+   "from": {
+    "node": "stylist",
+    "port": "text"
+   },
+   "to": {
+    "node": "paint",
+    "port": "prompt"
+   }
+  },
+  {
+   "id": "l4",
+   "from": {
+    "node": "paint",
+    "port": "image"
+   },
+   "to": {
+    "node": "surveyor",
+    "port": "img1"
+   }
+  },
+  {
+   "id": "l7",
+   "from": {
+    "node": "director",
+    "port": "text"
+   },
+   "to": {
+    "node": "j1",
+    "port": "a"
+   }
+  },
+  {
+   "id": "l8",
+   "from": {
+    "node": "surveyor",
+    "port": "text"
+   },
+   "to": {
+    "node": "j1",
+    "port": "b"
+   }
+  },
+  {
+   "id": "l11",
+   "from": {
+    "node": "j1",
+    "port": "text"
+   },
+   "to": {
+    "node": "checker",
+    "port": "prompt"
+   }
+  },
+  {
+   "id": "l14",
+   "from": {
+    "node": "j1",
+    "port": "text"
+   },
+   "to": {
+    "node": "j2",
+    "port": "a"
+   }
+  },
+  {
+   "id": "l15",
+   "from": {
+    "node": "checker",
+    "port": "text"
+   },
+   "to": {
+    "node": "j2",
+    "port": "b"
+   }
+  },
+  {
+   "id": "l16",
+   "from": {
+    "node": "j2",
+    "port": "text"
+   },
+   "to": {
+    "node": "audit",
+    "port": "text"
+   }
+  },
+  {
+   "id": "l17",
+   "from": {
+    "node": "paint",
+    "port": "image"
+   },
+   "to": {
+    "node": "audit",
+    "port": "img1"
+   }
+  },
+  {
+   "id": "l18",
+   "from": {
+    "node": "j2",
+    "port": "text"
+   },
+   "to": {
+    "node": "editor",
+    "port": "prompt"
+   }
+  },
+  {
+   "id": "l19",
+   "from": {
+    "node": "editor",
+    "port": "text"
+   },
+   "to": {
+    "node": "fix",
+    "port": "prompt"
+   }
+  },
+  {
+   "id": "l20",
+   "from": {
+    "node": "paint",
+    "port": "image"
+   },
+   "to": {
+    "node": "fix",
+    "port": "image"
+   }
+  },
+  {
+   "id": "l21",
+   "from": {
+    "node": "fix",
+    "port": "image"
+   },
+   "to": {
+    "node": "surveyor2",
+    "port": "img1"
+   }
+  },
+  {
+   "id": "l22",
+   "from": {
+    "node": "director",
+    "port": "text"
+   },
+   "to": {
+    "node": "j4",
+    "port": "a"
+   }
+  },
+  {
+   "id": "l23",
+   "from": {
+    "node": "surveyor2",
+    "port": "text"
+   },
+   "to": {
+    "node": "j4",
+    "port": "b"
+   }
+  },
+  {
+   "id": "l24",
+   "from": {
+    "node": "j4",
+    "port": "text"
+   },
+   "to": {
+    "node": "checker2",
+    "port": "prompt"
+   }
+  },
+  {
+   "id": "l39",
+   "from": {
+    "node": "ask",
+    "port": "text"
+   },
+   "to": {
+    "node": "surveyor",
+    "port": "prompt"
+   }
+  },
+  {
+   "id": "l40",
+   "from": {
+    "node": "ask2",
+    "port": "text"
+   },
+   "to": {
+    "node": "surveyor2",
+    "port": "prompt"
+   }
+  }
+ ],
+ "nid": 32,
+ "lid": 40,
+ "view": {
+  "panX": 40,
+  "panY": 40,
+  "scale": 0.5
+ }
+}
