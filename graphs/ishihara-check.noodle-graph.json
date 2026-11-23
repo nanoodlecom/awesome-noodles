@@ -1,0 +1,750 @@
+{
+ "v": 1,
+ "nodes": [
+  {
+   "id": "c1",
+   "type": "comment",
+   "x": 60,
+   "y": 30,
+   "fields": {
+    "text": "Can a number hide in colour ALONE? A GLM director picks one colour-vision test plate from a menu printed in its own prompt (four plates; each a two-digit NUMBER, a FIGURE hue family for the digits and a different GROUND hue family for the surround, under two shared rules: dot lightness is random across the whole plate with the same spread in figure and ground, and dot sizes are random everywhere with the same spread) and copies out an ISHIHARA CARD. A second GLM turns the card into a plate prompt: one large circle of hundreds of dots, the digits formed only by dot colour, no outline, no printed digits, no text. Muse paints the plate. A blind Gemini reader reports the number it can see in colour and what cue betrays it. Muse Edit converts the plate to an exact greyscale copy and a second blind Gemini reader tries to read a number in shading alone. A GLM auditor scores HUE READ (the colour reader's number against the card), LUMINANCE LEAK (any number readable in the greyscale view), CUE LEAK (the colour reader's cue: brightness, size or outline instead of colour only) and DOT FIELD. A Decide judge headlines round 1. That verdict is not the deliverable: a GLM editor turns the audit into concrete dot-level edit notes (gated - on a perfect audit it must demand a verbatim unchanged copy), Muse Edit repaints the plate, and the corrected plate is re-read in colour, re-converted to greyscale, re-read in grey and re-audited against the same card. The corrected plate is the flow's final output."
+   },
+   "w": 900,
+   "name": "Ishihara check"
+  },
+  {
+   "id": "setting",
+   "type": "text",
+   "x": 60,
+   "y": 300,
+   "fields": {
+    "text": "A colour-vision test plate on a plain off-white background, seen straight on: one large circle filled with many small round dots of different colours. Nothing is drawn on the plate yet."
+   },
+   "w": 300,
+   "name": "Plate setting"
+  },
+  {
+   "id": "director",
+   "type": "llm",
+   "x": 440,
+   "y": 280,
+   "fields": {
+    "model": "z-ai/glm-5.3-flash",
+    "system": "You are a colour-vision test designer. The PLATE SETTING you receive is an empty backdrop description, not an image and not a plate to match: it names no number on purpose, because the painter will draw the chosen plate afterwards. Do NOT try to match a menu plate to the setting, do NOT refuse, and never ask for a different input. Pick exactly one menu plate freely - any of the four is a correct choice - and copy it out as the card. Choose ONE plate from this menu ONLY, and copy its spec EXACTLY - the number, the figure hues, the ground hues and both rules:\n\nMENU:\n1. NUMBER: 42 - FIGURE HUES: reds and oranges (the digits are formed by dots in warm red and orange shades) - GROUND HUES: greens (the surrounding dots are green shades)\n2. NUMBER: 74 - FIGURE HUES: greens (the digits are formed by dots in green shades) - GROUND HUES: reds and oranges (the surrounding dots are warm red and orange shades)\n3. NUMBER: 35 - FIGURE HUES: oranges and browns (the digits are formed by dots in orange and brown shades) - GROUND HUES: blue-greens and teals (the surrounding dots are blue-green and teal shades)\n4. NUMBER: 96 - FIGURE HUES: yellow-greens (the digits are formed by dots in yellow-green shades) - GROUND HUES: reds and browns (the surrounding dots are red and brown shades)\n\nTHE TWO RULES (identical on every plate, copy them word for word onto the card):\nLIGHTNESS RULE: the lightness of the dots is random across the whole plate - in the figure and in the ground alike, dots range from dark to light with the same spread, so some figure dots are darker than some ground dots and some are lighter; brightness alone must never reveal the number.\nSIZE RULE: the sizes of the dots vary randomly across the whole plate with the same spread in the figure and in the ground, so dot size must never reveal the number either.\n\nOutput ONLY the card, in exactly this format, copying the chosen plate's spec without changing any of it:\nNUMBER: <the two digits>\nFIGURE HUES: <the figure hue line exactly as carded>\nGROUND HUES: <the ground hue line exactly as carded>\nLIGHTNESS RULE: <the lightness rule word for word>\nSIZE RULE: <the size rule word for word>\nDIGITS: 2\nNo other text.",
+    "maxTokens": 700,
+    "reasoningEffort": "low"
+   },
+   "w": 280,
+   "name": "Ishihara card - GLM picks a plate and copies its number, hues and rules",
+   "sizes": {
+    "system": 150
+   }
+  },
+  {
+   "id": "j0",
+   "type": "join",
+   "x": 800,
+   "y": 480,
+   "fields": {
+    "sep": "\n\nISHIHARA CARD (the plate - its number, figure hues, ground hues and the lightness and size rules; its exact wording must reach the image maker):\n\n"
+   },
+   "w": 200,
+   "name": "Setting + ishihara card"
+  },
+  {
+   "id": "stylist",
+   "type": "llm",
+   "x": 800,
+   "y": 280,
+   "fields": {
+    "model": "z-ai/glm-5.3-flash",
+    "system": "You turn an ISHIHARA CARD into ONE prompt for an AI image generator. The input always contains a valid card with a NUMBER line, FIGURE HUES, GROUND HUES, a LIGHTNESS RULE and a SIZE RULE; never refuse and never ask for a different card. Write a single-paragraph prompt for a colour-vision test plate (Ishihara style), demanding all of this:\n- One large circle, seen straight on, centred on a plain off-white background, filled edge to edge with hundreds of separate round dots of many different sizes, small gaps between the dots, no grid.\n- Inside the circle, one large two-digit number, the carded NUMBER, centred and filling most of the circle's height. The number is formed ONLY by the colours of the dots that fall inside the digit shapes: those dots are in the carded FIGURE HUES, and every dot outside the digit shapes is in the carded GROUND HUES. Name both hue families in the prompt exactly as the card gives them.\n- The LIGHTNESS RULE, enforced literally: the lightness of individual dots varies widely and randomly across the whole plate - inside the digits, some dots are dark and some are light; outside the digits, the same wide dark-to-light spread; the average lightness inside and outside the digits is the same, so the number cannot be seen in brightness at all.\n- The SIZE RULE, enforced literally: dot sizes vary randomly everywhere with the same spread inside and outside the digits.\n- NO outline or border around the digits, NO printed digits, letters, words or numbers drawn as text anywhere in the image, NO legend - the digits exist only as a colour difference between dots.\nOutput ONLY the image prompt, one paragraph, no preamble.",
+    "maxTokens": 800,
+    "reasoningEffort": "low"
+   },
+   "w": 280,
+   "name": "Plate brief - GLM turns the card into an Ishihara plate prompt",
+   "sizes": {
+    "system": 150
+   }
+  },
+  {
+   "id": "paint",
+   "type": "image",
+   "x": 1160,
+   "y": 280,
+   "fields": {
+    "model": "meta/muse-image/text-to-image",
+    "size": "4:3",
+    "variations": "1"
+   },
+   "w": 280,
+   "name": "Ishihara plate - Muse paints the dot plate"
+  },
+  {
+   "id": "surveyor",
+   "type": "llm",
+   "x": 1520,
+   "y": 280,
+   "fields": {
+    "model": "google/gemini-3.8-flash",
+    "system": "You are a colour-vision inspector examining a dot plate in full colour. You do not know what was planned - report only what you actually see, in exactly this format:\nNUMBER SEEN: <the two digits you can read in the plate, or NONE if no number is visible>\nCERTAINTY: <SURE if you can read the number at a glance, UNSURE if you are guessing>\nFIGURE HUES SEEN: <the colour family or families of the dots that form the number, in your own words; 'none' if no number is visible>\nCUE: <exactly one of COLOUR ONLY, BRIGHTNESS, SIZE, OUTLINE - COLOUR ONLY if the number differs from its surround only in colour; BRIGHTNESS if the number also stands out as systematically lighter or darker; SIZE if its dots look systematically bigger or smaller; OUTLINE if the number is drawn with lines, an outline or printed strokes>\nEXTRA: <anything that is not a field of dots forming a number by colour - printed text, letters, a drawn outline digit, pictures, a legend; 'none' if there is nothing of the kind>\nName what you actually see, even when the number is hard to read or absent - that is exactly what must be visible in your report.",
+    "maxTokens": 900,
+    "reasoningEffort": "low"
+   },
+   "w": 280,
+   "name": "Colour read - Gemini reports the number it sees in colour and the cue, blind",
+   "sizes": {
+    "system": 150
+   }
+  },
+  {
+   "id": "gray1",
+   "type": "edit",
+   "x": 1520,
+   "y": 520,
+   "fields": {
+    "model": "meta/muse-image/edit",
+    "size": "auto"
+   },
+   "w": 280,
+   "name": "Greyscale view - Muse Edit removes all colour from the plate"
+  },
+  {
+   "id": "gsurveyor",
+   "type": "llm",
+   "x": 1880,
+   "y": 520,
+   "fields": {
+    "model": "google/gemini-3.8-flash",
+    "system": "You are a shading inspector examining a GREYSCALE image - a picture with no colour in it at all, only shades of grey. It may or may not contain a dot plate with a hidden number. You do not know what was planned - report only what you actually see, in exactly this format:\nNUMBER SEEN: <the two digits you can read from light and dark differences alone, or NONE if no number is visible>\nCERTAINTY: <SURE if a number is plainly readable in the shading, UNSURE if you are guessing at a faint shape>\nFIGURE IN SHADING: <YES if any digit-shaped region is visible through light/dark differences alone, even if you cannot read it; NO otherwise>\nEXTRA: <anything that is not a field of grey dots - printed text, letters, a drawn outline digit, pictures; 'none' if there is nothing of the kind>\nJudge only the shading in front of you. If the dots differ only in ways greyscale cannot show, the honest answer is NUMBER SEEN: NONE - report exactly that rather than guessing.",
+    "maxTokens": 900,
+    "reasoningEffort": "low"
+   },
+   "w": 280,
+   "name": "Greyscale read - Gemini tries to read a number in shading alone, blind",
+   "sizes": {
+    "system": 150
+   }
+  },
+  {
+   "id": "j1",
+   "type": "join",
+   "x": 1880,
+   "y": 180,
+   "fields": {
+    "sep": "\n\nCOLOUR READ (a blind inspector reported only what it could see in the colour plate - the number it read, its certainty, the hues and the cue; it never saw the ishihara card):\n\n"
+   },
+   "w": 200,
+   "name": "Ishihara card + colour read"
+  },
+  {
+   "id": "j1g",
+   "type": "join",
+   "x": 2240,
+   "y": 320,
+   "fields": {
+    "sep": "\n\nGREYSCALE READ (a second blind inspector saw only a greyscale conversion of the same plate - no colour at all - and reported any number it could read from shading alone; it never saw the ishihara card):\n\n"
+   },
+   "w": 200,
+   "name": "Card, colour read + greyscale read"
+  },
+  {
+   "id": "checker",
+   "type": "llm",
+   "x": 2240,
+   "y": 400,
+   "fields": {
+    "model": "z-ai/glm-5.3-flash",
+    "system": "You are a colour-vision auditor. The input gives an ISHIHARA CARD (NUMBER, FIGURE HUES, GROUND HUES, LIGHTNESS RULE, SIZE RULE, DIGITS) then a COLOUR READ from a blind inspector (NUMBER SEEN, CERTAINTY, FIGURE HUES SEEN, CUE, EXTRA) and then a GREYSCALE READ from a second blind inspector who saw only a greyscale conversion of the same plate (NUMBER SEEN, CERTAINTY, FIGURE IN SHADING, EXTRA).\n\nScore in exactly this format:\nCARD LAW: <VALID if the card carries a two-digit number, figure and ground hue families that are different families, and both the lightness rule and the size rule; otherwise INVALID, naming each problem>\nHUE READ: <EXACT if the colour read's NUMBER SEEN equals the carded NUMBER; WRONG if the colour read reports a different complete number; NONE if the colour read reports NONE>\nLUMINANCE LEAK: <SEALED if the greyscale read's NUMBER SEEN is NONE; PARTIAL if the greyscale read reports a number with CERTAINTY: UNSURE, or reports only one digit, or reports FIGURE IN SHADING: YES without a complete number; FULL if the greyscale read reports a complete two-digit number with CERTAINTY: SURE - name the number it read>\nCUE LEAK: <NONE if the colour read's CUE is COLOUR ONLY; LEAK if the CUE is BRIGHTNESS, SIZE or OUTLINE - name the cue>\nDOT FIELD: <CLEAN if the colour read's EXTRA is none and a number was formed by dot colours; FLAWED otherwise, naming what the reads report - printed text, an outline, pictures, a missing dot field>\nISHIHARA ERRORS: <every point lost, as short clauses separated by '; ' - a wrong or missing hue read, a partial or full luminance leak with the number the grey reader saw, a cue leak, a flawed field; 'none' if nothing was lost>\nEXTRA: <anything either read put under EXTRA that is not already scored, or 'none'>\nSUMMARY: <one short line naming what held and what failed>\nScore strictly from the three texts. The greyscale conversion is a model's rendering of the plate without colour, so judge the leak by what the grey reader could actually read, never by what the colour plate looks like.",
+    "maxTokens": 1200,
+    "reasoningEffort": "low"
+   },
+   "w": 280,
+   "name": "Ishihara audit - GLM scores hue read, luminance leak, cue leak and dot field against the card",
+   "sizes": {
+    "system": 150
+   }
+  },
+  {
+   "id": "j2",
+   "type": "join",
+   "x": 2240,
+   "y": 180,
+   "fields": {
+    "sep": "\n\nISHIHARA AUDIT:\n\n"
+   },
+   "w": 200,
+   "name": "Card, reads + ishihara audit"
+  },
+  {
+   "id": "audit",
+   "type": "decide",
+   "x": 2600,
+   "y": 180,
+   "fields": {
+    "model": "perplexity/pplx-decider-v1.2",
+    "mode": "choose",
+    "question": "The picture should be a colour-vision test plate: one large circle of dots on a plain background, a two-digit number formed only by the colour of its dots - the figure dots in the carded figure hues, the ground dots in the carded ground hues - with dot lightness and dot size randomised across the whole plate so neither brightness nor size can betray the number, and no outline or printed digits. The audit in the text scores a blind colour read and a blind greyscale read against the card: the hue read, the luminance leak, the cue leak and the dot field. Choose the one label that best fits the round-1 picture.",
+    "options": "hue only\nleaks in grey\nhue unreadable\ncued, not coloured\nnot a dot plate"
+   },
+   "w": 280,
+   "name": "Hue only - audited",
+   "sizes": {
+    "question": 130
+   }
+  },
+  {
+   "id": "editor",
+   "type": "llm",
+   "x": 2600,
+   "y": 520,
+   "fields": {
+    "model": "z-ai/glm-5.3-flash",
+    "system": "You are the plate editor in a colour-vision test pipeline. The input gives an ISHIHARA CARD, a blind COLOUR READ, a blind GREYSCALE READ and an ISHIHARA AUDIT of the round-1 plate. Write ONE edit instruction for an image editor working on that plate, in at most 120 words.\nIf the audit shows a perfect reading (HUE READ: EXACT, LUMINANCE LEAK: SEALED, CUE LEAK: NONE, DOT FIELD: CLEAN), output exactly this and nothing else: 'Reproduce this colour-vision plate completely unchanged - same circle of dots, same number formed by the same dot colours, same random spread of dot lightness and dot sizes. Do not move, add, remove or recolour anything.'\nOtherwise: first state the full target end state - the same plain background and circle of dots, the carded number formed only by dots in the carded figure hues against ground dots in the carded ground hues, dot lightness random across the whole plate with the same dark-to-light spread inside and outside the digits, dot sizes random everywhere with the same spread - then add the audit's specific failures as concrete demands (for example: 'the greyscale reader read 42: darken some figure dots and lighten some ground dots until the digits' average lightness equals the ground's, keeping every dot's hue family unchanged'; or 'no number was readable in colour: strengthen the hue difference between figure and ground dots without changing any dot's lightness'). Every fix changes dot hues within their family, dot lightness, or removes a named extra; never ask for an outline, printed digits, or a different number.",
+    "maxTokens": 400,
+    "reasoningEffort": "low"
+   },
+   "w": 280,
+   "name": "Edit notes - GLM turns the ishihara audit into concrete dot-level instructions",
+   "sizes": {
+    "system": 150
+   }
+  },
+  {
+   "id": "fix",
+   "type": "edit",
+   "x": 2960,
+   "y": 520,
+   "fields": {
+    "model": "meta/muse-image/edit",
+    "size": "auto"
+   },
+   "w": 280,
+   "name": "Corrected ishihara plate - Muse Edit repaints the dots"
+  },
+  {
+   "id": "surveyor2",
+   "type": "llm",
+   "x": 3320,
+   "y": 520,
+   "fields": {
+    "model": "google/gemini-3.8-flash",
+    "system": "You are a colour-vision inspector examining a dot plate in full colour. You do not know what was planned - report only what you actually see, in exactly this format:\nNUMBER SEEN: <the two digits you can read in the plate, or NONE if no number is visible>\nCERTAINTY: <SURE if you can read the number at a glance, UNSURE if you are guessing>\nFIGURE HUES SEEN: <the colour family or families of the dots that form the number, in your own words; 'none' if no number is visible>\nCUE: <exactly one of COLOUR ONLY, BRIGHTNESS, SIZE, OUTLINE - COLOUR ONLY if the number differs from its surround only in colour; BRIGHTNESS if the number also stands out as systematically lighter or darker; SIZE if its dots look systematically bigger or smaller; OUTLINE if the number is drawn with lines, an outline or printed strokes>\nEXTRA: <anything that is not a field of dots forming a number by colour - printed text, letters, a drawn outline digit, pictures, a legend; 'none' if there is nothing of the kind>\nName what you actually see, even when the number is hard to read or absent - that is exactly what must be visible in your report.",
+    "maxTokens": 900,
+    "reasoningEffort": "low"
+   },
+   "w": 280,
+   "name": "Colour re-read - Gemini reports the corrected plate's number and cue, blind",
+   "sizes": {
+    "system": 150
+   }
+  },
+  {
+   "id": "gray2",
+   "type": "edit",
+   "x": 2960,
+   "y": 760,
+   "fields": {
+    "model": "meta/muse-image/edit",
+    "size": "auto"
+   },
+   "w": 280,
+   "name": "Greyscale view of corrected plate - Muse Edit removes all colour"
+  },
+  {
+   "id": "gsurveyor2",
+   "type": "llm",
+   "x": 3320,
+   "y": 760,
+   "fields": {
+    "model": "google/gemini-3.8-flash",
+    "system": "You are a shading inspector examining a GREYSCALE image - a picture with no colour in it at all, only shades of grey. It may or may not contain a dot plate with a hidden number. You do not know what was planned - report only what you actually see, in exactly this format:\nNUMBER SEEN: <the two digits you can read from light and dark differences alone, or NONE if no number is visible>\nCERTAINTY: <SURE if a number is plainly readable in the shading, UNSURE if you are guessing at a faint shape>\nFIGURE IN SHADING: <YES if any digit-shaped region is visible through light/dark differences alone, even if you cannot read it; NO otherwise>\nEXTRA: <anything that is not a field of grey dots - printed text, letters, a drawn outline digit, pictures; 'none' if there is nothing of the kind>\nJudge only the shading in front of you. If the dots differ only in ways greyscale cannot show, the honest answer is NUMBER SEEN: NONE - report exactly that rather than guessing.",
+    "maxTokens": 900,
+    "reasoningEffort": "low"
+   },
+   "w": 280,
+   "name": "Greyscale re-read - Gemini tries to read the corrected plate in shading alone, blind",
+   "sizes": {
+    "system": 150
+   }
+  },
+  {
+   "id": "j4",
+   "type": "join",
+   "x": 3680,
+   "y": 420,
+   "fields": {
+    "sep": "\n\nCOLOUR READ (a blind inspector reported only what it could see in the corrected colour plate - the number it read, its certainty, the hues and the cue; it never saw the ishihara card):\n\n"
+   },
+   "w": 200,
+   "name": "Ishihara card + colour re-read"
+  },
+  {
+   "id": "j4g",
+   "type": "join",
+   "x": 3680,
+   "y": 600,
+   "fields": {
+    "sep": "\n\nGREYSCALE READ (a second blind inspector saw only a greyscale conversion of the corrected plate - no colour at all - and reported any number it could read from shading alone; it never saw the ishihara card):\n\n"
+   },
+   "w": 200,
+   "name": "Card, colour re-read + greyscale re-read"
+  },
+  {
+   "id": "checker2",
+   "type": "llm",
+   "x": 4040,
+   "y": 520,
+   "fields": {
+    "model": "z-ai/glm-5.3-flash",
+    "system": "You are a colour-vision auditor. The input gives an ISHIHARA CARD (NUMBER, FIGURE HUES, GROUND HUES, LIGHTNESS RULE, SIZE RULE, DIGITS) then a COLOUR READ from a blind inspector (NUMBER SEEN, CERTAINTY, FIGURE HUES SEEN, CUE, EXTRA) and then a GREYSCALE READ from a second blind inspector who saw only a greyscale conversion of the same plate (NUMBER SEEN, CERTAINTY, FIGURE IN SHADING, EXTRA).\n\nScore in exactly this format:\nCARD LAW: <VALID if the card carries a two-digit number, figure and ground hue families that are different families, and both the lightness rule and the size rule; otherwise INVALID, naming each problem>\nHUE READ: <EXACT if the colour read's NUMBER SEEN equals the carded NUMBER; WRONG if the colour read reports a different complete number; NONE if the colour read reports NONE>\nLUMINANCE LEAK: <SEALED if the greyscale read's NUMBER SEEN is NONE; PARTIAL if the greyscale read reports a number with CERTAINTY: UNSURE, or reports only one digit, or reports FIGURE IN SHADING: YES without a complete number; FULL if the greyscale read reports a complete two-digit number with CERTAINTY: SURE - name the number it read>\nCUE LEAK: <NONE if the colour read's CUE is COLOUR ONLY; LEAK if the CUE is BRIGHTNESS, SIZE or OUTLINE - name the cue>\nDOT FIELD: <CLEAN if the colour read's EXTRA is none and a number was formed by dot colours; FLAWED otherwise, naming what the reads report - printed text, an outline, pictures, a missing dot field>\nISHIHARA ERRORS: <every point lost, as short clauses separated by '; ' - a wrong or missing hue read, a partial or full luminance leak with the number the grey reader saw, a cue leak, a flawed field; 'none' if nothing was lost>\nEXTRA: <anything either read put under EXTRA that is not already scored, or 'none'>\nSUMMARY: <one short line naming what held and what failed>\nScore strictly from the three texts. The greyscale conversion is a model's rendering of the plate without colour, so judge the leak by what the grey reader could actually read, never by what the colour plate looks like.",
+    "maxTokens": 1200,
+    "reasoningEffort": "low"
+   },
+   "w": 280,
+   "name": "Ishihara re-audit - GLM scores the corrected plate against the same card",
+   "sizes": {
+    "system": 150
+   }
+  },
+  {
+   "id": "ask",
+   "type": "text",
+   "x": 1160,
+   "y": 520,
+   "fields": {
+    "text": "Inspect the colour dot plate in the attached picture now, following your instructions exactly."
+   },
+   "w": 240,
+   "name": "Inspect ask"
+  },
+  {
+   "id": "ask2",
+   "type": "text",
+   "x": 2960,
+   "y": 900,
+   "fields": {
+    "text": "Inspect the colour dot plate in the attached picture now, following your instructions exactly."
+   },
+   "w": 240,
+   "name": "Re-inspect ask"
+  },
+  {
+   "id": "grayask",
+   "type": "text",
+   "x": 1160,
+   "y": 760,
+   "fields": {
+    "text": "Convert this image into an exact greyscale version: the same picture with all colour removed, every dot, shape, position and size unchanged, and the brightness of every part kept as close as possible to the original's lightness. Do not add, remove, move, resize or redraw anything; do not add text. Output only the greyscale version of the same image."
+   },
+   "w": 240,
+   "name": "Greyscale instruction"
+  },
+  {
+   "id": "gask",
+   "type": "text",
+   "x": 1520,
+   "y": 760,
+   "fields": {
+    "text": "Inspect the greyscale image in the attached picture now, following your instructions exactly."
+   },
+   "w": 240,
+   "name": "Grey inspect ask"
+  },
+  {
+   "id": "gask2",
+   "type": "text",
+   "x": 2960,
+   "y": 1000,
+   "fields": {
+    "text": "Inspect the greyscale image in the attached picture now, following your instructions exactly."
+   },
+   "w": 240,
+   "name": "Grey re-inspect ask"
+  }
+ ],
+ "links": [
+  {
+   "id": "l1",
+   "from": {
+    "node": "setting",
+    "port": "text"
+   },
+   "to": {
+    "node": "director",
+    "port": "prompt"
+   }
+  },
+  {
+   "id": "l2",
+   "from": {
+    "node": "director",
+    "port": "text"
+   },
+   "to": {
+    "node": "j0",
+    "port": "b"
+   }
+  },
+  {
+   "id": "l12",
+   "from": {
+    "node": "setting",
+    "port": "text"
+   },
+   "to": {
+    "node": "j0",
+    "port": "a"
+   }
+  },
+  {
+   "id": "l13",
+   "from": {
+    "node": "j0",
+    "port": "text"
+   },
+   "to": {
+    "node": "stylist",
+    "port": "prompt"
+   }
+  },
+  {
+   "id": "l3",
+   "from": {
+    "node": "stylist",
+    "port": "text"
+   },
+   "to": {
+    "node": "paint",
+    "port": "prompt"
+   }
+  },
+  {
+   "id": "l4",
+   "from": {
+    "node": "paint",
+    "port": "image"
+   },
+   "to": {
+    "node": "surveyor",
+    "port": "img1"
+   }
+  },
+  {
+   "id": "l7",
+   "from": {
+    "node": "director",
+    "port": "text"
+   },
+   "to": {
+    "node": "j1",
+    "port": "a"
+   }
+  },
+  {
+   "id": "l8",
+   "from": {
+    "node": "surveyor",
+    "port": "text"
+   },
+   "to": {
+    "node": "j1",
+    "port": "b"
+   }
+  },
+  {
+   "id": "l15",
+   "from": {
+    "node": "checker",
+    "port": "text"
+   },
+   "to": {
+    "node": "j2",
+    "port": "b"
+   }
+  },
+  {
+   "id": "l16",
+   "from": {
+    "node": "j2",
+    "port": "text"
+   },
+   "to": {
+    "node": "audit",
+    "port": "text"
+   }
+  },
+  {
+   "id": "l17",
+   "from": {
+    "node": "paint",
+    "port": "image"
+   },
+   "to": {
+    "node": "audit",
+    "port": "img1"
+   }
+  },
+  {
+   "id": "l18",
+   "from": {
+    "node": "j2",
+    "port": "text"
+   },
+   "to": {
+    "node": "editor",
+    "port": "prompt"
+   }
+  },
+  {
+   "id": "l19",
+   "from": {
+    "node": "editor",
+    "port": "text"
+   },
+   "to": {
+    "node": "fix",
+    "port": "prompt"
+   }
+  },
+  {
+   "id": "l20",
+   "from": {
+    "node": "paint",
+    "port": "image"
+   },
+   "to": {
+    "node": "fix",
+    "port": "image"
+   }
+  },
+  {
+   "id": "l21",
+   "from": {
+    "node": "fix",
+    "port": "image"
+   },
+   "to": {
+    "node": "surveyor2",
+    "port": "img1"
+   }
+  },
+  {
+   "id": "l22",
+   "from": {
+    "node": "director",
+    "port": "text"
+   },
+   "to": {
+    "node": "j4",
+    "port": "a"
+   }
+  },
+  {
+   "id": "l23",
+   "from": {
+    "node": "surveyor2",
+    "port": "text"
+   },
+   "to": {
+    "node": "j4",
+    "port": "b"
+   }
+  },
+  {
+   "id": "l39",
+   "from": {
+    "node": "ask",
+    "port": "text"
+   },
+   "to": {
+    "node": "surveyor",
+    "port": "prompt"
+   }
+  },
+  {
+   "id": "l40",
+   "from": {
+    "node": "ask2",
+    "port": "text"
+   },
+   "to": {
+    "node": "surveyor2",
+    "port": "prompt"
+   }
+  },
+  {
+   "id": "l41",
+   "from": {
+    "node": "paint",
+    "port": "image"
+   },
+   "to": {
+    "node": "gray1",
+    "port": "image"
+   }
+  },
+  {
+   "id": "l42",
+   "from": {
+    "node": "grayask",
+    "port": "text"
+   },
+   "to": {
+    "node": "gray1",
+    "port": "prompt"
+   }
+  },
+  {
+   "id": "l43",
+   "from": {
+    "node": "gray1",
+    "port": "image"
+   },
+   "to": {
+    "node": "gsurveyor",
+    "port": "img1"
+   }
+  },
+  {
+   "id": "l44",
+   "from": {
+    "node": "gask",
+    "port": "text"
+   },
+   "to": {
+    "node": "gsurveyor",
+    "port": "prompt"
+   }
+  },
+  {
+   "id": "l45",
+   "from": {
+    "node": "j1",
+    "port": "text"
+   },
+   "to": {
+    "node": "j1g",
+    "port": "a"
+   }
+  },
+  {
+   "id": "l46",
+   "from": {
+    "node": "gsurveyor",
+    "port": "text"
+   },
+   "to": {
+    "node": "j1g",
+    "port": "b"
+   }
+  },
+  {
+   "id": "l47",
+   "from": {
+    "node": "j1g",
+    "port": "text"
+   },
+   "to": {
+    "node": "checker",
+    "port": "prompt"
+   }
+  },
+  {
+   "id": "l48",
+   "from": {
+    "node": "j1g",
+    "port": "text"
+   },
+   "to": {
+    "node": "j2",
+    "port": "a"
+   }
+  },
+  {
+   "id": "l49",
+   "from": {
+    "node": "fix",
+    "port": "image"
+   },
+   "to": {
+    "node": "gray2",
+    "port": "image"
+   }
+  },
+  {
+   "id": "l50",
+   "from": {
+    "node": "grayask",
+    "port": "text"
+   },
+   "to": {
+    "node": "gray2",
+    "port": "prompt"
+   }
+  },
+  {
+   "id": "l51",
+   "from": {
+    "node": "gray2",
+    "port": "image"
+   },
+   "to": {
+    "node": "gsurveyor2",
+    "port": "img1"
+   }
+  },
+  {
+   "id": "l52",
+   "from": {
+    "node": "gask2",
+    "port": "text"
+   },
+   "to": {
+    "node": "gsurveyor2",
+    "port": "prompt"
+   }
+  },
+  {
+   "id": "l53",
+   "from": {
+    "node": "j4",
+    "port": "text"
+   },
+   "to": {
+    "node": "j4g",
+    "port": "a"
+   }
+  },
+  {
+   "id": "l54",
+   "from": {
+    "node": "gsurveyor2",
+    "port": "text"
+   },
+   "to": {
+    "node": "j4g",
+    "port": "b"
+   }
+  },
+  {
+   "id": "l55",
+   "from": {
+    "node": "j4g",
+    "port": "text"
+   },
+   "to": {
+    "node": "checker2",
+    "port": "prompt"
+   }
+  }
+ ],
+ "nid": 41,
+ "lid": 55,
+ "view": {
+  "panX": 40,
+  "panY": 40,
+  "scale": 0.5
+ }
+}
