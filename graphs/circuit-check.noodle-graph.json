@@ -1,0 +1,505 @@
+{
+ "v": 1,
+ "nodes": [
+  {
+   "id": "c1",
+   "type": "comment",
+   "x": 60,
+   "y": 30,
+   "fields": {
+    "text": "Will a painted circuit obey the wiring - or will every bulb just glow? A GLM director picks one circuit board from a menu printed in its own prompt (four boards; each four bulbs in coloured holders wired in three different ways: one bulb alone on its own closed branch, two bulbs in series on a shared branch, and one bulb on a branch whose switch stands open) and copies out a CIRCUIT CARD listing the bulbs left to right with their wiring only - no bulb's brightness is stated anywhere. A second GLM turns the card into a board prompt describing the battery, the holders and the wire routing, plus the circuit law stated once and abstractly: a solo bulb on a closed branch glows full, two in series share and glow dim and equal, a bulb behind an open switch stays dark. Muse paints the board. A blind Gemini reader reports each bulb's glow state left to right - BRIGHT, DIM or OFF - and whether the switch stands open. A GLM auditor derives each bulb's expected state from its wiring and scores STATES, RANK, PAIR EQUALITY (the series pair must match each other), SWITCH and DECOY (the largest bulb on the board is the open-switch one, built to look like it should outshine the rest). A Decide judge headlines round 1. That verdict is not the deliverable: a GLM editor turns the audit into concrete re-wiring-of-light notes (gated - on a perfect audit it must demand a verbatim unchanged copy), Muse Edit repaints the board, and the corrected board is re-read blind and re-audited against the same card. The corrected board is the flow's final output."
+   },
+   "w": 900,
+   "name": "Circuit check"
+  },
+  {
+   "id": "setting",
+   "type": "text",
+   "x": 60,
+   "y": 300,
+   "fields": {
+    "text": "A plain pale workbench against a plain off-white background, seen straight on from the front. On the bench sits an empty wooden circuit board with a small battery pack at its left end and four empty bulb holders in a row. No bulbs and no wires yet. Nothing else in the scene."
+   },
+   "w": 300,
+   "name": "Board setting"
+  },
+  {
+   "id": "director",
+   "type": "llm",
+   "x": 440,
+   "y": 280,
+   "fields": {
+    "model": "z-ai/glm-5.3-flash",
+    "system": "You are a circuit-board designer. The BOARD SETTING you receive is an empty backdrop description, not an image and not a circuit to match: it names no bulbs or wiring on purpose, because the painter will build the board afterwards. Do NOT try to match a menu board to the setting, do NOT refuse, and never ask for a different input. Pick exactly one menu board freely - any of the four is a correct choice - and copy it out as the card. Choose ONE board from this menu ONLY, and copy its spec EXACTLY - every bulb, holder colour and wiring line, in the order listed (the list is left to right along the board):\n\nMENU:\n1. BOARD: WORKSHOP BOARD\nBULB 1: RED holder - SOLO: wired alone on its own branch straight across the battery, no switch in the branch\nBULB 2: BLUE holder - SERIES: wired in series with the GREEN bulb on one shared branch (battery to BLUE to GREEN to battery), no switch in the branch\nBULB 3: GREEN holder - SERIES: wired in series with the BLUE bulb on one shared branch (battery to BLUE to GREEN to battery), no switch in the branch\nBULB 4: YELLOW holder - OPEN: wired alone on its own branch through the board's one switch, and that switch is OPEN (lever up, a visible gap in the wire)\nDECOY: the YELLOW bulb - it is a larger lantern globe than the other three and looks made to outshine them all, but its switch is open.\n2. BOARD: GARDEN BOARD\nBULB 1: RED holder - OPEN: wired alone on its own branch through the board's one switch, and that switch is OPEN (lever up, a visible gap in the wire)\nBULB 2: BLUE holder - SOLO: wired alone on its own branch straight across the battery, no switch in the branch\nBULB 3: GREEN holder - SERIES: wired in series with the YELLOW bulb on one shared branch (battery to GREEN to YELLOW to battery), no switch in the branch\nBULB 4: YELLOW holder - SERIES: wired in series with the GREEN bulb on one shared branch (battery to GREEN to YELLOW to battery), no switch in the branch\nDECOY: the RED bulb - it is a larger lantern globe than the other three and sits nearest the battery, but its switch is open.\n3. BOARD: HARBOUR BOARD\nBULB 1: RED holder - SERIES: wired in series with the BLUE bulb on one shared branch (battery to RED to BLUE to battery), no switch in the branch\nBULB 2: BLUE holder - SERIES: wired in series with the RED bulb on one shared branch (battery to RED to BLUE to battery), no switch in the branch\nBULB 3: GREEN holder - OPEN: wired alone on its own branch through the board's one switch, and that switch is OPEN (lever up, a visible gap in the wire)\nBULB 4: YELLOW holder - SOLO: wired alone on its own branch straight across the battery, no switch in the branch\nDECOY: the GREEN bulb - it is a larger lantern globe than the other three and looks made to outshine them all, but its switch is open.\n4. BOARD: GREENHOUSE BOARD\nBULB 1: RED holder - SOLO: wired alone on its own branch straight across the battery, no switch in the branch\nBULB 2: BLUE holder - OPEN: wired alone on its own branch through the board's one switch, and that switch is OPEN (lever up, a visible gap in the wire)\nBULB 3: GREEN holder - SERIES: wired in series with the YELLOW bulb on one shared branch (battery to GREEN to YELLOW to battery), no switch in the branch\nBULB 4: YELLOW holder - SERIES: wired in series with the GREEN bulb on one shared branch (battery to GREEN to YELLOW to battery), no switch in the branch\nDECOY: the BLUE bulb - it is a larger lantern globe than the other three and looks made to outshine them all, but its switch is open.\n\nOutput ONLY the card, in exactly this format, copying the chosen board's spec without changing any of it:\nBOARD: <the board name>\nBULB 1: <bulb line exactly as carded>\nBULB 2: <bulb line exactly as carded>\nBULB 3: <bulb line exactly as carded>\nBULB 4: <bulb line exactly as carded>\nDECOY: <the decoy line exactly as carded>\nBULB COUNT: 4\nNo other text.",
+    "maxTokens": 700,
+    "reasoningEffort": "low"
+   },
+   "w": 280,
+   "name": "Circuit card - GLM picks a board and copies its bulbs and wiring",
+   "sizes": {
+    "system": 150
+   }
+  },
+  {
+   "id": "j0",
+   "type": "join",
+   "x": 800,
+   "y": 480,
+   "fields": {
+    "sep": "\n\nCIRCUIT CARD (the board - its four bulbs with their holder colours and their wiring, listed left to right; its exact wording must reach the image maker):\n\n"
+   },
+   "w": 200,
+   "name": "Setting + circuit card"
+  },
+  {
+   "id": "stylist",
+   "type": "llm",
+   "x": 800,
+   "y": 280,
+   "fields": {
+    "model": "z-ai/glm-5.3-flash",
+    "system": "You turn a CIRCUIT CARD into ONE prompt for an AI image generator. The input always contains a valid card with four BULB lines (a holder colour and a wiring description) and a DECOY line; never refuse and never ask for a different card. Write a single-paragraph prompt for a circuit-board photograph, demanding all of this:\n- One wooden circuit board on a plain pale workbench against a plain off-white background, seen straight on from the front, with a small battery pack at the board's left end and four clear-glass Edison bulbs in a row in coloured holders, left to right in the card's order: name each bulb by its carded holder colour, and NO other bulb.\n- Black wires along the board connecting the bulbs exactly as the card wires them: translate each bulb's wiring line into a routing sentence (the solo bulb's own two wires run straight to the battery; the series pair shares one loop that runs from the battery through the first of the pair, then through the second, then back to the battery; the open bulb's branch runs through a knife switch whose lever stands UP with a visible air gap breaking the wire).\n- The decoy bulb named on the card is a noticeably LARGER lantern globe than the other three bulbs; the other three are the same size as each other.\n- The circuit law, stated exactly like this and nothing more: 'a bulb alone on a closed branch glows at full brightness; two bulbs in series on one branch share the power and glow dim and exactly equally; a bulb on a branch whose switch is open gets no power and stays completely dark'. Do NOT state which bulb ends in which glow state, and do NOT use the words BRIGHT, DIM or OFF about any individual bulb - the painter must work each bulb's state out from its wiring.\n- A bulb that glows does so with a warm yellow-white light; a dim bulb glows faint dull orange; a dark bulb is clear unlit glass. No labels, no text, no numbers, no legend, no objects on the bench except the board, battery, bulbs, wires and the one switch.\nOutput ONLY the image prompt, one paragraph, no preamble.",
+    "maxTokens": 800,
+    "reasoningEffort": "low"
+   },
+   "w": 280,
+   "name": "Board brief - GLM turns the card into a wired-board prompt (glow states never stated)",
+   "sizes": {
+    "system": 150
+   }
+  },
+  {
+   "id": "paint",
+   "type": "image",
+   "x": 1160,
+   "y": 280,
+   "fields": {
+    "model": "meta/muse-image/text-to-image",
+    "size": "4:3",
+    "variations": "1"
+   },
+   "w": 280,
+   "name": "Circuit board - Muse paints the four bulbs wired as carded"
+  },
+  {
+   "id": "surveyor",
+   "type": "llm",
+   "x": 1520,
+   "y": 280,
+   "fields": {
+    "model": "google/gemini-3.8-flash",
+    "system": "You are an electrical inspector examining a photograph of a circuit board with four bulbs. You do not know what was planned - report only what you actually see, in exactly this format:\nBULBS LEFT TO RIGHT: <for each bulb from left to right, its holder colour and its glow state separated by a space, the bulbs separated by ' / ' - e.g. RED BRIGHT / BLUE DIM / GREEN DIM / YELLOW OFF. Judge the glow state by light alone: BRIGHT = a strong warm yellow-white glow with a visible halo and a pool of light on the board; DIM = a faint dull orange glow in the filament with little or no halo; OFF = dark or clear unlit glass with no glow at all. Name the holder colour you actually see under each bulb>\nBULB COUNT SEEN: <the number of bulbs you counted>\nSWITCH SEEN: <OPEN if a switch lever stands up or tilted with a visible gap breaking its wire; CLOSED if a switch lever lies flat completing its wire; NONE if there is no switch in the picture>\nEXTRA: <anything that is not bulbs, holders, wires, a battery, a switch and a plain board - labels, printed text, extra bulbs, people, tools; 'none' if there is nothing of the kind>\nReport the states you actually see, even when two neighbouring bulbs are hard to tell apart - that is exactly what must be visible in your report.",
+    "maxTokens": 900,
+    "reasoningEffort": "low"
+   },
+   "w": 280,
+   "name": "Board read - Gemini reports each bulb glow state left to right, blind",
+   "sizes": {
+    "system": 150
+   }
+  },
+  {
+   "id": "j1",
+   "type": "join",
+   "x": 1880,
+   "y": 180,
+   "fields": {
+    "sep": "\n\nBOARD READ (a blind inspector reported only what it could see on the board - each bulb's holder colour and glow state left to right, the bulb count and the switch; it never saw the circuit card):\n\n"
+   },
+   "w": 200,
+   "name": "Circuit card + board read"
+  },
+  {
+   "id": "checker",
+   "type": "llm",
+   "x": 2240,
+   "y": 400,
+   "fields": {
+    "model": "z-ai/glm-5.3-flash",
+    "system": "You are a circuit auditor. The input gives a CIRCUIT CARD (BOARD, four BULB lines each naming a holder colour and a wiring - SOLO alone on its own closed branch, SERIES in series with one named partner on a shared closed branch, or OPEN alone on a branch whose switch is open - a DECOY line, BULB COUNT) then a BOARD READ from a blind inspector (BULBS LEFT TO RIGHT as holder colour + glow state, BULB COUNT SEEN, SWITCH SEEN, EXTRA).\n\nFirst derive each bulb's expected state from its wiring yourself: SOLO = BRIGHT; SERIES = DIM; OPEN = OFF. Score against those derived states, in exactly this format:\nCARD LAW: <VALID if the card carries exactly four bulbs with four distinct holder colours, exactly one SOLO, exactly one SERIES pair naming each other, exactly one OPEN, and a decoy naming the OPEN bulb; otherwise INVALID, naming each problem>\nSTATES: <n> of 4 bulbs whose read glow state equals its derived state; name each bulb that differs, as '<colour> read <state>, derived <state>'\nRANK: <n> of 2 brightness comparisons holding in the read: the SOLO bulb reads brighter than the SERIES bulbs (BRIGHT above DIM above OFF), and the SERIES bulbs read brighter than the OPEN bulb\nPAIR EQUAL: <YES if the two SERIES bulbs read the same glow state as each other; NO otherwise, naming both read states>\nSWITCH: <CORRECT if the read's SWITCH SEEN is OPEN; WRONG otherwise, copying what the read said>\nDECOY: <CORRECT if the decoy bulb reads OFF; WRONG otherwise, naming its read state>\nCIRCUIT ERRORS: <every point lost, as short clauses separated by '; ' - each wrong state, each failed rank comparison, an unequal series pair, a wrong switch, a lit decoy; 'none' if nothing was lost>\nEXTRA: <anything the read put under EXTRA that is not already scored, or 'none'>\nSUMMARY: <one short line naming what held and what failed>\nScore strictly from the two texts and the wiring on the card. The read names holder colours only: match each read bulb to the one carded bulb of that holder colour, wherever it sits in the row.",
+    "maxTokens": 1200,
+    "reasoningEffort": "low"
+   },
+   "w": 280,
+   "name": "Circuit audit - GLM derives each bulb state from its wiring and scores states, rank, pair equality, switch and decoy",
+   "sizes": {
+    "system": 150
+   }
+  },
+  {
+   "id": "j2",
+   "type": "join",
+   "x": 2240,
+   "y": 180,
+   "fields": {
+    "sep": "\n\nCIRCUIT AUDIT:\n\n"
+   },
+   "w": 200,
+   "name": "Card, board read + circuit audit"
+  },
+  {
+   "id": "audit",
+   "type": "decide",
+   "x": 2600,
+   "y": 180,
+   "fields": {
+    "model": "perplexity/pplx-decider-v1.2",
+    "mode": "choose",
+    "question": "The picture should be a circuit board: one wooden board with a battery at its left end and four clear-glass bulbs in a row in the carded holder colours, wired exactly as the card wires them - one solo bulb on its own closed branch, two bulbs in series on a shared branch, one bulb on a branch whose switch stands open with a visible gap - the larger decoy globe being the open-switch bulb. Glow must follow the wiring: the solo bulb at full brightness, the series pair dim and exactly equal, the open-switch bulb completely dark. The audit in the text derives each bulb's expected state from its wiring and scores a blind left-to-right glow read against it: per-bulb states, brightness rank, series-pair equality, the open switch and the dark decoy. Choose the one label that best fits the round-1 picture.",
+    "options": "wired to the rules\nbrightness wrong\ndead bulb lit\nseries pair uneven\nnot a circuit"
+   },
+   "w": 280,
+   "name": "Wired to the rules - audited",
+   "sizes": {
+    "question": 130
+   }
+  },
+  {
+   "id": "editor",
+   "type": "llm",
+   "x": 2600,
+   "y": 520,
+   "fields": {
+    "model": "z-ai/glm-5.3-flash",
+    "system": "You are the board editor in a circuit-board pipeline. The input gives a CIRCUIT CARD, a blind BOARD READ and a CIRCUIT AUDIT of the round-1 board. Write ONE edit instruction for an image editor working on that board photograph, in at most 120 words.\nIf the audit shows a perfect circuit (STATES: 4 of 4, RANK: 2 of 2, PAIR EQUAL: YES, SWITCH: CORRECT, DECOY: CORRECT), output exactly this and nothing else: 'Reproduce this circuit board completely unchanged - same board, battery, holders, wires and switch, and the same four bulbs with the same glow states. Do not move, add, remove, relight or darken anything.'\nOtherwise: first state the full target end state - the same plain bench and wooden board with its battery, the four bulbs left to right in their carded holder colours (the decoy globe still the largest), the wires routed exactly as carded and the one switch standing open with its gap visible, and each bulb's derived glow state named bulb by bulb (derive them from the wiring: SOLO = BRIGHT, SERIES = DIM, OPEN = OFF) - then add the audit's specific failures as concrete demands (for example: 'the yellow bulb glows dim but its switch is open: make it completely dark, clear unlit glass, no halo'; or 'the blue series bulb glows bright while its green partner glows dim: bring both to the same faint dull orange'). Every fix changes a glow state or the switch; never ask for labels, text, different wiring or a different set of bulbs.",
+    "maxTokens": 400,
+    "reasoningEffort": "low"
+   },
+   "w": 280,
+   "name": "Edit notes - GLM turns the circuit audit into concrete relighting instructions",
+   "sizes": {
+    "system": 150
+   }
+  },
+  {
+   "id": "fix",
+   "type": "edit",
+   "x": 2960,
+   "y": 520,
+   "fields": {
+    "model": "meta/muse-image/edit",
+    "size": "auto"
+   },
+   "w": 280,
+   "name": "Corrected circuit board - Muse Edit relights the bulbs per the wiring"
+  },
+  {
+   "id": "surveyor2",
+   "type": "llm",
+   "x": 3320,
+   "y": 520,
+   "fields": {
+    "model": "google/gemini-3.8-flash",
+    "system": "You are an electrical inspector examining a photograph of a circuit board with four bulbs. You do not know what was planned - report only what you actually see, in exactly this format:\nBULBS LEFT TO RIGHT: <for each bulb from left to right, its holder colour and its glow state separated by a space, the bulbs separated by ' / ' - e.g. RED BRIGHT / BLUE DIM / GREEN DIM / YELLOW OFF. Judge the glow state by light alone: BRIGHT = a strong warm yellow-white glow with a visible halo and a pool of light on the board; DIM = a faint dull orange glow in the filament with little or no halo; OFF = dark or clear unlit glass with no glow at all. Name the holder colour you actually see under each bulb>\nBULB COUNT SEEN: <the number of bulbs you counted>\nSWITCH SEEN: <OPEN if a switch lever stands up or tilted with a visible gap breaking its wire; CLOSED if a switch lever lies flat completing its wire; NONE if there is no switch in the picture>\nEXTRA: <anything that is not bulbs, holders, wires, a battery, a switch and a plain board - labels, printed text, extra bulbs, people, tools; 'none' if there is nothing of the kind>\nReport the states you actually see, even when two neighbouring bulbs are hard to tell apart - that is exactly what must be visible in your report.",
+    "maxTokens": 900,
+    "reasoningEffort": "low"
+   },
+   "w": 280,
+   "name": "Board re-read - Gemini reports the corrected board bulb states, blind",
+   "sizes": {
+    "system": 150
+   }
+  },
+  {
+   "id": "j4",
+   "type": "join",
+   "x": 3680,
+   "y": 420,
+   "fields": {
+    "sep": "\n\nBOARD READ (a blind inspector reported only what it could see in the corrected board - each bulb's holder colour and glow state left to right, the bulb count and the switch; it never saw the circuit card):\n\n"
+   },
+   "w": 200,
+   "name": "Circuit card + board re-read"
+  },
+  {
+   "id": "checker2",
+   "type": "llm",
+   "x": 4040,
+   "y": 520,
+   "fields": {
+    "model": "z-ai/glm-5.3-flash",
+    "system": "You are a circuit auditor. The input gives a CIRCUIT CARD (BOARD, four BULB lines each naming a holder colour and a wiring - SOLO alone on its own closed branch, SERIES in series with one named partner on a shared closed branch, or OPEN alone on a branch whose switch is open - a DECOY line, BULB COUNT) then a BOARD READ from a blind inspector (BULBS LEFT TO RIGHT as holder colour + glow state, BULB COUNT SEEN, SWITCH SEEN, EXTRA).\n\nFirst derive each bulb's expected state from its wiring yourself: SOLO = BRIGHT; SERIES = DIM; OPEN = OFF. Score against those derived states, in exactly this format:\nCARD LAW: <VALID if the card carries exactly four bulbs with four distinct holder colours, exactly one SOLO, exactly one SERIES pair naming each other, exactly one OPEN, and a decoy naming the OPEN bulb; otherwise INVALID, naming each problem>\nSTATES: <n> of 4 bulbs whose read glow state equals its derived state; name each bulb that differs, as '<colour> read <state>, derived <state>'\nRANK: <n> of 2 brightness comparisons holding in the read: the SOLO bulb reads brighter than the SERIES bulbs (BRIGHT above DIM above OFF), and the SERIES bulbs read brighter than the OPEN bulb\nPAIR EQUAL: <YES if the two SERIES bulbs read the same glow state as each other; NO otherwise, naming both read states>\nSWITCH: <CORRECT if the read's SWITCH SEEN is OPEN; WRONG otherwise, copying what the read said>\nDECOY: <CORRECT if the decoy bulb reads OFF; WRONG otherwise, naming its read state>\nCIRCUIT ERRORS: <every point lost, as short clauses separated by '; ' - each wrong state, each failed rank comparison, an unequal series pair, a wrong switch, a lit decoy; 'none' if nothing was lost>\nEXTRA: <anything the read put under EXTRA that is not already scored, or 'none'>\nSUMMARY: <one short line naming what held and what failed>\nScore strictly from the two texts and the wiring on the card. The read names holder colours only: match each read bulb to the one carded bulb of that holder colour, wherever it sits in the row.",
+    "maxTokens": 1200,
+    "reasoningEffort": "low"
+   },
+   "w": 280,
+   "name": "Circuit re-audit - GLM scores the corrected board against the same card",
+   "sizes": {
+    "system": 150
+   }
+  },
+  {
+   "id": "ask",
+   "type": "text",
+   "x": 1160,
+   "y": 520,
+   "fields": {
+    "text": "Inspect the circuit board in the attached picture now, following your instructions exactly."
+   },
+   "w": 240,
+   "name": "Inspect ask"
+  },
+  {
+   "id": "ask2",
+   "type": "text",
+   "x": 2960,
+   "y": 900,
+   "fields": {
+    "text": "Inspect the circuit board in the attached picture now, following your instructions exactly."
+   },
+   "w": 240,
+   "name": "Re-inspect ask"
+  }
+ ],
+ "links": [
+  {
+   "id": "l1",
+   "from": {
+    "node": "setting",
+    "port": "text"
+   },
+   "to": {
+    "node": "director",
+    "port": "prompt"
+   }
+  },
+  {
+   "id": "l2",
+   "from": {
+    "node": "director",
+    "port": "text"
+   },
+   "to": {
+    "node": "j0",
+    "port": "b"
+   }
+  },
+  {
+   "id": "l12",
+   "from": {
+    "node": "setting",
+    "port": "text"
+   },
+   "to": {
+    "node": "j0",
+    "port": "a"
+   }
+  },
+  {
+   "id": "l13",
+   "from": {
+    "node": "j0",
+    "port": "text"
+   },
+   "to": {
+    "node": "stylist",
+    "port": "prompt"
+   }
+  },
+  {
+   "id": "l3",
+   "from": {
+    "node": "stylist",
+    "port": "text"
+   },
+   "to": {
+    "node": "paint",
+    "port": "prompt"
+   }
+  },
+  {
+   "id": "l4",
+   "from": {
+    "node": "paint",
+    "port": "image"
+   },
+   "to": {
+    "node": "surveyor",
+    "port": "img1"
+   }
+  },
+  {
+   "id": "l7",
+   "from": {
+    "node": "director",
+    "port": "text"
+   },
+   "to": {
+    "node": "j1",
+    "port": "a"
+   }
+  },
+  {
+   "id": "l8",
+   "from": {
+    "node": "surveyor",
+    "port": "text"
+   },
+   "to": {
+    "node": "j1",
+    "port": "b"
+   }
+  },
+  {
+   "id": "l11",
+   "from": {
+    "node": "j1",
+    "port": "text"
+   },
+   "to": {
+    "node": "checker",
+    "port": "prompt"
+   }
+  },
+  {
+   "id": "l14",
+   "from": {
+    "node": "j1",
+    "port": "text"
+   },
+   "to": {
+    "node": "j2",
+    "port": "a"
+   }
+  },
+  {
+   "id": "l15",
+   "from": {
+    "node": "checker",
+    "port": "text"
+   },
+   "to": {
+    "node": "j2",
+    "port": "b"
+   }
+  },
+  {
+   "id": "l16",
+   "from": {
+    "node": "j2",
+    "port": "text"
+   },
+   "to": {
+    "node": "audit",
+    "port": "text"
+   }
+  },
+  {
+   "id": "l17",
+   "from": {
+    "node": "paint",
+    "port": "image"
+   },
+   "to": {
+    "node": "audit",
+    "port": "img1"
+   }
+  },
+  {
+   "id": "l18",
+   "from": {
+    "node": "j2",
+    "port": "text"
+   },
+   "to": {
+    "node": "editor",
+    "port": "prompt"
+   }
+  },
+  {
+   "id": "l19",
+   "from": {
+    "node": "editor",
+    "port": "text"
+   },
+   "to": {
+    "node": "fix",
+    "port": "prompt"
+   }
+  },
+  {
+   "id": "l20",
+   "from": {
+    "node": "paint",
+    "port": "image"
+   },
+   "to": {
+    "node": "fix",
+    "port": "image"
+   }
+  },
+  {
+   "id": "l21",
+   "from": {
+    "node": "fix",
+    "port": "image"
+   },
+   "to": {
+    "node": "surveyor2",
+    "port": "img1"
+   }
+  },
+  {
+   "id": "l22",
+   "from": {
+    "node": "director",
+    "port": "text"
+   },
+   "to": {
+    "node": "j4",
+    "port": "a"
+   }
+  },
+  {
+   "id": "l23",
+   "from": {
+    "node": "surveyor2",
+    "port": "text"
+   },
+   "to": {
+    "node": "j4",
+    "port": "b"
+   }
+  },
+  {
+   "id": "l24",
+   "from": {
+    "node": "j4",
+    "port": "text"
+   },
+   "to": {
+    "node": "checker2",
+    "port": "prompt"
+   }
+  },
+  {
+   "id": "l39",
+   "from": {
+    "node": "ask",
+    "port": "text"
+   },
+   "to": {
+    "node": "surveyor",
+    "port": "prompt"
+   }
+  },
+  {
+   "id": "l40",
+   "from": {
+    "node": "ask2",
+    "port": "text"
+   },
+   "to": {
+    "node": "surveyor2",
+    "port": "prompt"
+   }
+  }
+ ],
+ "nid": 32,
+ "lid": 40,
+ "view": {
+  "panX": 40,
+  "panY": 40,
+  "scale": 0.5
+ }
+}
