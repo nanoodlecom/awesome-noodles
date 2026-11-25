@@ -16,6 +16,7 @@ Do not hand-edit these files — run `node scripts/make-recipes.mjs` after chang
 | [Bookshelf next-read, phantom-checked](bookshelf-next-read.md) | [`graphs/bookshelf-next-read.noodle-graph.json`](../graphs/bookshelf-next-read.noodle-graph.json) | needs Shelf photo |
 | [Braille check, dot-audited](braille-check.md) | [`graphs/braille-check.noodle-graph.json`](../graphs/braille-check.noodle-graph.json) | defaults in graph |
 | [Character to rigged, skin-verified](character-to-rigged.md) | [`graphs/character-to-rigged.noodle-graph.json`](../graphs/character-to-rigged.noodle-graph.json) | defaults in graph |
+| [Chladni check, mode-audited](chladni-check.md) | [`graphs/chladni-check.noodle-graph.json`](../graphs/chladni-check.noodle-graph.json) | defaults in graph |
 | [Circuit check, wiring-audited](circuit-check.md) | [`graphs/circuit-check.noodle-graph.json`](../graphs/circuit-check.noodle-graph.json) | defaults in graph |
 | [Clean-voice rescue, transcript-scored](clean-voice-rescue.md) | [`graphs/clean-voice-rescue.noodle-graph.json`](../graphs/clean-voice-rescue.noodle-graph.json) | defaults in graph |
 | [Clip to comic, order-checked](clip-to-comic.md) | [`graphs/clip-to-comic.noodle-graph.json`](../graphs/clip-to-comic.noodle-graph.json) | needs Clip |

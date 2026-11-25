@@ -1,0 +1,505 @@
+{
+ "v": 1,
+ "nodes": [
+  {
+   "id": "c1",
+   "type": "comment",
+   "x": 60,
+   "y": 30,
+   "fields": {
+    "text": "Can a painted sand figure be trusted to obey the resonance mode that supposedly produced it? A GLM director picks one Chladni plate from a menu printed in its own prompt (four square plates, each driven in one vibration mode named by two indices (M,N)) and copies out a CHLADNI CARD: the mode indices, the nodal-line counts those indices force (M-1 straight vertical lines at the M-th divisions, N-1 straight horizontal lines at the N-th divisions) and the M-by-N grid of cells between them. Sand shaken on a vibrating plate migrates off the moving cells and settles only on the nodal lines where the plate is still, so the whole figure is fixed by the two indices: counts, positions and empty cell interiors. A second GLM turns the card into an image prompt stating the mode indices and the nodal law once and abstractly - sand rests only where the plate does not move, on the straight lines between the antinode columns and rows - and is forbidden to state any line's count or position: the painter must work the grid out from the indices. Muse paints the plate from directly above. A blind Gemini reader counts the straight vertical and horizontal sand lines, judges their spacing, and reports curved sand, stray sand inside the cells and any sand frame along the rim. A GLM auditor derives the expected counts from the mode indices itself and scores VERTICAL, HORIZONTAL, SPACING, ANTINODES (the cell interiors must be empty - a negative constraint no motif states), INTRUDERS (curved lines and rim frames the law forbids) and CELLS. A Decide judge headlines round 1. That verdict is not the deliverable: a GLM editor turns the audit into concrete sand-repaint notes (gated - on a perfect audit it must demand a verbatim unchanged copy), Muse Edit repaints the sand, and a blind re-read plus the same auditor re-score the corrected plate against the same card. The corrected plate is the flow's final output."
+   },
+   "w": 900,
+   "name": "Chladni check"
+  },
+  {
+   "id": "setting",
+   "type": "text",
+   "x": 60,
+   "y": 300,
+   "fields": {
+    "text": "A bare square metal plate seen from directly above, filling the whole frame - dark, empty and clean: no sand, no markings, no objects on it."
+   },
+   "w": 300,
+   "name": "Plate setting"
+  },
+  {
+   "id": "director",
+   "type": "llm",
+   "x": 440,
+   "y": 280,
+   "fields": {
+    "model": "z-ai/glm-5.3-flash",
+    "system": "You are a Chladni-plate director. The PLATE SETTING you receive is an empty plate, not an image and not a scene to match: it names no pattern on purpose, because the painter will settle the chosen mode's sand figure on it afterwards. Do NOT try to match a menu plate to the setting, do NOT refuse, and never ask for a different input. Pick exactly one menu plate freely - any of the four is a correct choice - and copy it out as the card. Given the PLATE SETTING, design a CHLADNI CARD for one sand-figure image. Choose ONE plate from this menu ONLY, and copy its spec EXACTLY - the plate name, the plate line, the mode line, the vertical-lines line, the horizontal-lines line, the cells line and the sand line:\n\nTHE NODAL LAW (fixed for every plate): a square plate driven in mode (M,N) vibrates in M columns and N rows of moving cells (antinodes). Between the cells run the nodal lines, where the plate does not move at all: exactly M-1 straight vertical nodal lines, dividing the plate's width into M equal parts, and exactly N-1 straight horizontal nodal lines, dividing its height into N equal parts. Loose sand is thrown off the moving cells and settles only on the still nodal lines, so the sand figure is exactly that grid of straight lines - every cell interior stays bare, no line is curved or diagonal, and no sand gathers along the plate's rim.\n\nMENU:\n1. FOUR SQUARES - PLATE: a matte black steel square plate seen from directly above, filling the whole frame. MODE: (2,2). VERTICAL LINES: 1 - one straight vertical line at the centre, halfway across. HORIZONTAL LINES: 1 - one straight horizontal line at the centre, halfway down. CELLS: 4. SAND: fine pale sand settled only on the nodal lines; every cell interior bare.\n2. THREE BANDS - PLATE: a dark bronze square plate seen from directly above, filling the whole frame. MODE: (3,1). VERTICAL LINES: 2 - two straight vertical lines, at one third and two thirds across. HORIZONTAL LINES: 0 - NONE, this mode has no horizontal nodal line. CELLS: 3. SAND: fine pale sand settled only on the nodal lines; every cell interior bare.\n3. SIX CELLS - PLATE: a deep slate-grey square plate seen from directly above, filling the whole frame. MODE: (3,2). VERTICAL LINES: 2 - two straight vertical lines, at one third and two thirds across. HORIZONTAL LINES: 1 - one straight horizontal line at the centre, halfway down. CELLS: 6. SAND: fine pale sand settled only on the nodal lines; every cell interior bare.\n4. NINE CELLS - PLATE: a dark charcoal-green square plate seen from directly above, filling the whole frame. MODE: (3,3). VERTICAL LINES: 2 - two straight vertical lines, at one third and two thirds across. HORIZONTAL LINES: 2 - two straight horizontal lines, at one third and two thirds down. CELLS: 9. SAND: fine pale sand settled only on the nodal lines; every cell interior bare.\n\nThe card cards the law's arithmetic, not a picture: the line counts come only from the mode indices (vertical = M-1, horizontal = N-1, cells = M times N), never from what sand figures usually look like - left alone, a painter draws rings, mandalas and scattered sand, and none of those is on any card.\n\nOutput ONLY the card, in exactly this format, copying the chosen plate's spec without changing any of it:\nSCENE: <the plate name>\nPLATE: <the plate line exactly as carded>\nMODE: (M,N) exactly as carded\nVERTICAL LINES: <count and positions exactly as carded>\nHORIZONTAL LINES: <count and positions exactly as carded>\nCELLS: <count exactly as carded>\nSAND: <the sand line exactly as carded>\nNo other text.",
+    "maxTokens": 900,
+    "reasoningEffort": "low"
+   },
+   "w": 280,
+   "name": "Chladni card - GLM picks a plate and copies its mode indices and nodal counts",
+   "sizes": {
+    "system": 150
+   }
+  },
+  {
+   "id": "j0",
+   "type": "join",
+   "x": 800,
+   "y": 480,
+   "fields": {
+    "sep": "\n\nCHLADNI CARD (the plate - its mode indices, the nodal-line counts those indices force, and its cell count; its exact wording must reach the image maker):\n\n"
+   },
+   "w": 200,
+   "name": "Setting + chladni card"
+  },
+  {
+   "id": "stylist",
+   "type": "llm",
+   "x": 800,
+   "y": 280,
+   "fields": {
+    "model": "z-ai/glm-5.3-flash",
+    "system": "You turn a CHLADNI CARD into ONE prompt for an AI image generator. The input always contains a valid card with a PLATE line, a MODE line giving two indices (M,N), VERTICAL LINES and HORIZONTAL LINES lines, a CELLS line and a SAND line; never refuse and never ask for a different card. Write a single-paragraph prompt for a photograph taken from directly above a square Chladni plate, demanding all of this:\n- The plate exactly as the card's PLATE line says, square, filling the whole frame, seen straight down from directly above, evenly lit, bare dark metal except for the sand below.\n- Fine pale sand settled on the plate in the figure its vibration mode forces - state the card's mode indices (M,N) in the prompt and state the nodal law once, in these terms: the plate sounds in mode (M,N), vibrating in M columns and N rows of moving cells; loose sand is thrown off every moving cell and can rest only on the nodal lines between the cells, where the plate is perfectly still; the nodal lines are perfectly straight, parallel to the plate's edges, evenly spaced, and run the full width or height of the plate from edge to edge. Do NOT state the number of sand lines, any line's position, or the cell count anywhere in the prompt - the generator must work the grid out from the indices and the law.\n- Nothing else made of sand: no curved, circular or diagonal sand lines, no rings, no centre motif, no sand scattered or heaped inside the cells, and no frame of sand along the plate's rim - the cell interiors and the rim stay bare dark metal.\n- No other objects, no hands, no tuning equipment, no people, and no text, letters, labels or numbers anywhere in the image - the only marks are the pale sand lines on the dark plate.\nOutput ONLY the image prompt, one paragraph, no preamble.",
+    "maxTokens": 900,
+    "reasoningEffort": "low"
+   },
+   "w": 280,
+   "name": "Chladni brief - GLM turns the card into a top-down plate prompt (line counts and positions never stated)",
+   "sizes": {
+    "system": 150
+   }
+  },
+  {
+   "id": "paint",
+   "type": "image",
+   "x": 1160,
+   "y": 280,
+   "fields": {
+    "model": "meta/muse-image/text-to-image",
+    "size": "1:1",
+    "variations": "1"
+   },
+   "w": 280,
+   "name": "Chladni plate - Muse paints the sand figure for the carded mode"
+  },
+  {
+   "id": "surveyor",
+   "type": "llm",
+   "x": 1520,
+   "y": 280,
+   "fields": {
+    "model": "google/gemini-3.8-flash",
+    "system": "You are a vibration inspector examining a photograph taken from directly above a square metal plate covered in a figure of fine pale sand. You do not know what was planned - report only what you actually see, in exactly this format:\nPLATE: <SQUARE if one square plate fills the frame seen from directly above; OTHER otherwise, followed by a short note on what is wrong>\nVERTICAL LINES: <the number of distinct straight vertical sand lines that run the full height of the plate from its top edge to its bottom edge; count only straight vertical lines, 0 if there are none>\nHORIZONTAL LINES: <the number of distinct straight horizontal sand lines that run the full width of the plate from its left edge to its right edge; count only straight horizontal lines, 0 if there are none>\nVERTICAL SPACING: <EVEN if the vertical lines divide the plate into columns of equal width; UNEVEN if they do not; NA if there are fewer than 2 vertical lines>\nHORIZONTAL SPACING: <EVEN if the horizontal lines divide the plate into rows of equal height; UNEVEN if they do not; NA if there are fewer than 2 horizontal lines>\nCURVED SAND: <the number of curved, circular or diagonal sand lines, rings or arcs; 0 if there are none>\nSTRAY SAND: <NONE if every cell interior between the lines is clean bare plate; LIGHT if scattered grains or smudges sit inside the cells; HEAVY if the cells hold substantial sand>\nBORDER SAND: <NONE if the plate's rim carries no sand of its own; FRAME if sand runs along the edges as a border, apart from where straight lines meet the edges>\nEXTRA: <anything that is not part of the scene as described - other objects, hands, people, text, letters, labels; 'none' if there is nothing of the kind>\nCount lines by following each one edge to edge; a line that stops halfway or fades out does not count as a full line - say so in a short note after the count if that happens. Report what you actually see, even when the counts look surprising - a plate with no horizontal line at all, or sand in the wrong places, is exactly what must be visible in your report.",
+    "maxTokens": 900,
+    "reasoningEffort": "low"
+   },
+   "w": 280,
+   "name": "Chladni read - Gemini counts the sand lines and stray sand, blind",
+   "sizes": {
+    "system": 150
+   }
+  },
+  {
+   "id": "j1",
+   "type": "join",
+   "x": 1880,
+   "y": 180,
+   "fields": {
+    "sep": "\n\nCHLADNI READ (a blind inspector reported only what it could see - the sand-line counts, their spacing, curved sand, stray sand and border sand; it never saw the chladni card):\n\n"
+   },
+   "w": 200,
+   "name": "Chladni card + chladni read"
+  },
+  {
+   "id": "checker",
+   "type": "llm",
+   "x": 2240,
+   "y": 400,
+   "fields": {
+    "model": "z-ai/glm-5.3-flash",
+    "system": "You are a Chladni auditor. The input gives a CHLADNI CARD (SCENE, PLATE, a MODE line with indices (M,N), VERTICAL LINES and HORIZONTAL LINES lines with counts and positions, a CELLS line, a SAND line) and then a CHLADNI READ from a blind inspector (PLATE, VERTICAL LINES, HORIZONTAL LINES, VERTICAL SPACING, HORIZONTAL SPACING, CURVED SAND, STRAY SAND, BORDER SAND, EXTRA).\n\nFirst derive the law yourself from the MODE indices: the expected vertical line count is M-1, the expected horizontal line count is N-1, and the expected cell count is M times N.\n\nScore in exactly this format:\nCARD LAW: <VALID if the card's vertical count equals M-1, its horizontal count equals N-1 and its CELLS equals M times N; otherwise INVALID, naming each problem>\nVERTICAL: <the read's vertical count> of <M-1> - <MATCH if the read's vertical count equals M-1; MISMATCH otherwise>\nHORIZONTAL: <the read's horizontal count> of <N-1> - <MATCH if the read's horizontal count equals N-1; MISMATCH otherwise>\nCELLS: <the read's implied cell count, (read vertical + 1) times (read horizontal + 1)> of <M times N>\nSPACING: <EVEN if every spacing the read reports is EVEN or NA; UNEVEN if any reported spacing is UNEVEN>\nANTINODES: <CLEAN if the read's STRAY SAND is NONE; LIGHT if it is LIGHT; HEAVY if it is HEAVY>\nINTRUDERS: <NONE if the read's CURVED SAND is 0 and its BORDER SAND is NONE; otherwise name each: the curved count and/or the border frame>\nCHLADNI ERRORS: <every point lost, as short clauses separated by '; ' - name each missing or extra line by direction with the count read and the count the law requires, uneven spacing, stray sand, each intruder; 'none' if nothing was lost>\nEXTRA: <the read's EXTRA, or 'none'>\nSUMMARY: <one short line naming what held and what failed>\nScore strictly from the two texts and the mode arithmetic.",
+    "maxTokens": 1200,
+    "reasoningEffort": "low"
+   },
+   "w": 280,
+   "name": "Chladni audit - GLM derives the counts from the mode indices and scores lines, spacing, antinodes and intruders",
+   "sizes": {
+    "system": 150
+   }
+  },
+  {
+   "id": "j2",
+   "type": "join",
+   "x": 2240,
+   "y": 180,
+   "fields": {
+    "sep": "\n\nCHLADNI AUDIT:\n\n"
+   },
+   "w": 200,
+   "name": "Card, chladni read + chladni audit"
+  },
+  {
+   "id": "audit",
+   "type": "decide",
+   "x": 2600,
+   "y": 180,
+   "fields": {
+    "model": "perplexity/pplx-decider-v1.2",
+    "mode": "choose",
+    "question": "The picture should be a square Chladni plate seen from directly above, its pale sand settled only on the nodal lines of its carded vibration mode (M,N): exactly M-1 straight vertical lines and N-1 straight horizontal lines, evenly spaced and running edge to edge, dividing the plate into M-by-N cells whose interiors stay completely bare - no curved or diagonal sand, no rings, no sand frame along the rim. The audit in the text scores the blind read against the counts the mode indices force: the vertical and horizontal line counts, the cell count, the spacing, the empty antinodes and the absence of intruders. Choose the one label that best fits the round-1 picture.",
+    "options": "pattern true to mode\nlines missing\nlines added\nsand off the lines\nnot a chladni plate"
+   },
+   "w": 280,
+   "name": "Pattern true to mode - audited",
+   "sizes": {
+    "question": 130
+   }
+  },
+  {
+   "id": "editor",
+   "type": "llm",
+   "x": 2600,
+   "y": 520,
+   "fields": {
+    "model": "z-ai/glm-5.3-flash",
+    "system": "You are the Chladni editor in a vibration pipeline. The input gives a CHLADNI CARD, a blind CHLADNI READ and a CHLADNI AUDIT of the round-1 image. Write ONE edit instruction for an image editor working on that image, in at most 120 words.\nIf the audit shows a perfect reading (CARD LAW: VALID, VERTICAL and HORIZONTAL both MATCH, CELLS exact, SPACING: EVEN, ANTINODES: CLEAN, INTRUDERS: NONE, EXTRA: none), output exactly this and nothing else: 'Reproduce this Chladni plate completely unchanged - same square plate, same pale sand lines in the same places, same bare cell interiors. Do not move, add, remove or repaint anything.'\nOtherwise: first state the full target end state - the same square plate, with pale sand only on the carded nodal grid, named exactly: the carded number of straight vertical lines at their carded positions and the carded number of straight horizontal lines at their carded positions (for example: exactly 2 vertical lines at one third and two thirds across, and 1 horizontal line at the centre), every line straight and running edge to edge, every cell interior bare - then add the audit's specific failures as concrete demands (for example: 'a curved sand ring sits in the centre cell: remove it completely'; 'only one vertical line is present: add the missing second vertical line at two thirds across'; 'scattered sand fills the cells: clear every cell interior, keeping only the lines'). Every fix is a repainting of the sand - adding, removing or straightening a named line, clearing named stray sand, or removing a named intruder; never ask for the plate itself to be moved, resized or recoloured.",
+    "maxTokens": 400,
+    "reasoningEffort": "low"
+   },
+   "w": 280,
+   "name": "Edit notes - GLM turns the chladni audit into concrete sand-repaint instructions",
+   "sizes": {
+    "system": 150
+   }
+  },
+  {
+   "id": "fix",
+   "type": "edit",
+   "x": 2960,
+   "y": 520,
+   "fields": {
+    "model": "meta/muse-image/edit",
+    "size": "auto"
+   },
+   "w": 280,
+   "name": "Corrected Chladni plate - Muse Edit repaints the sand per the nodal law"
+  },
+  {
+   "id": "surveyor2",
+   "type": "llm",
+   "x": 3320,
+   "y": 520,
+   "fields": {
+    "model": "google/gemini-3.8-flash",
+    "system": "You are a vibration inspector examining a photograph taken from directly above a square metal plate covered in a figure of fine pale sand. You do not know what was planned - report only what you actually see, in exactly this format:\nPLATE: <SQUARE if one square plate fills the frame seen from directly above; OTHER otherwise, followed by a short note on what is wrong>\nVERTICAL LINES: <the number of distinct straight vertical sand lines that run the full height of the plate from its top edge to its bottom edge; count only straight vertical lines, 0 if there are none>\nHORIZONTAL LINES: <the number of distinct straight horizontal sand lines that run the full width of the plate from its left edge to its right edge; count only straight horizontal lines, 0 if there are none>\nVERTICAL SPACING: <EVEN if the vertical lines divide the plate into columns of equal width; UNEVEN if they do not; NA if there are fewer than 2 vertical lines>\nHORIZONTAL SPACING: <EVEN if the horizontal lines divide the plate into rows of equal height; UNEVEN if they do not; NA if there are fewer than 2 horizontal lines>\nCURVED SAND: <the number of curved, circular or diagonal sand lines, rings or arcs; 0 if there are none>\nSTRAY SAND: <NONE if every cell interior between the lines is clean bare plate; LIGHT if scattered grains or smudges sit inside the cells; HEAVY if the cells hold substantial sand>\nBORDER SAND: <NONE if the plate's rim carries no sand of its own; FRAME if sand runs along the edges as a border, apart from where straight lines meet the edges>\nEXTRA: <anything that is not part of the scene as described - other objects, hands, people, text, letters, labels; 'none' if there is nothing of the kind>\nCount lines by following each one edge to edge; a line that stops halfway or fades out does not count as a full line - say so in a short note after the count if that happens. Report what you actually see, even when the counts look surprising - a plate with no horizontal line at all, or sand in the wrong places, is exactly what must be visible in your report.",
+    "maxTokens": 900,
+    "reasoningEffort": "low"
+   },
+   "w": 280,
+   "name": "Re-read - Gemini counts the corrected plate's sand lines, blind",
+   "sizes": {
+    "system": 150
+   }
+  },
+  {
+   "id": "j4",
+   "type": "join",
+   "x": 3680,
+   "y": 420,
+   "fields": {
+    "sep": "\n\nCHLADNI READ (a blind inspector reported only what it could see in the corrected image - the sand-line counts, their spacing, curved sand, stray sand and border sand; it never saw the chladni card):\n\n"
+   },
+   "w": 200,
+   "name": "Chladni card + re-read"
+  },
+  {
+   "id": "checker2",
+   "type": "llm",
+   "x": 4040,
+   "y": 520,
+   "fields": {
+    "model": "z-ai/glm-5.3-flash",
+    "system": "You are a Chladni auditor. The input gives a CHLADNI CARD (SCENE, PLATE, a MODE line with indices (M,N), VERTICAL LINES and HORIZONTAL LINES lines with counts and positions, a CELLS line, a SAND line) and then a CHLADNI READ from a blind inspector (PLATE, VERTICAL LINES, HORIZONTAL LINES, VERTICAL SPACING, HORIZONTAL SPACING, CURVED SAND, STRAY SAND, BORDER SAND, EXTRA).\n\nFirst derive the law yourself from the MODE indices: the expected vertical line count is M-1, the expected horizontal line count is N-1, and the expected cell count is M times N.\n\nScore in exactly this format:\nCARD LAW: <VALID if the card's vertical count equals M-1, its horizontal count equals N-1 and its CELLS equals M times N; otherwise INVALID, naming each problem>\nVERTICAL: <the read's vertical count> of <M-1> - <MATCH if the read's vertical count equals M-1; MISMATCH otherwise>\nHORIZONTAL: <the read's horizontal count> of <N-1> - <MATCH if the read's horizontal count equals N-1; MISMATCH otherwise>\nCELLS: <the read's implied cell count, (read vertical + 1) times (read horizontal + 1)> of <M times N>\nSPACING: <EVEN if every spacing the read reports is EVEN or NA; UNEVEN if any reported spacing is UNEVEN>\nANTINODES: <CLEAN if the read's STRAY SAND is NONE; LIGHT if it is LIGHT; HEAVY if it is HEAVY>\nINTRUDERS: <NONE if the read's CURVED SAND is 0 and its BORDER SAND is NONE; otherwise name each: the curved count and/or the border frame>\nCHLADNI ERRORS: <every point lost, as short clauses separated by '; ' - name each missing or extra line by direction with the count read and the count the law requires, uneven spacing, stray sand, each intruder; 'none' if nothing was lost>\nEXTRA: <the read's EXTRA, or 'none'>\nSUMMARY: <one short line naming what held and what failed>\nScore strictly from the two texts and the mode arithmetic.",
+    "maxTokens": 1200,
+    "reasoningEffort": "low"
+   },
+   "w": 280,
+   "name": "Chladni re-audit - GLM scores the corrected plate against the same card",
+   "sizes": {
+    "system": 150
+   }
+  },
+  {
+   "id": "ask",
+   "type": "text",
+   "x": 1160,
+   "y": 520,
+   "fields": {
+    "text": "Inspect the Chladni plate in the attached picture now, following your instructions exactly."
+   },
+   "w": 240,
+   "name": "Inspect ask"
+  },
+  {
+   "id": "ask2",
+   "type": "text",
+   "x": 2960,
+   "y": 900,
+   "fields": {
+    "text": "Inspect the Chladni plate in the attached picture now, following your instructions exactly."
+   },
+   "w": 240,
+   "name": "Re-inspect ask"
+  }
+ ],
+ "links": [
+  {
+   "id": "l1",
+   "from": {
+    "node": "setting",
+    "port": "text"
+   },
+   "to": {
+    "node": "director",
+    "port": "prompt"
+   }
+  },
+  {
+   "id": "l2",
+   "from": {
+    "node": "director",
+    "port": "text"
+   },
+   "to": {
+    "node": "j0",
+    "port": "b"
+   }
+  },
+  {
+   "id": "l12",
+   "from": {
+    "node": "setting",
+    "port": "text"
+   },
+   "to": {
+    "node": "j0",
+    "port": "a"
+   }
+  },
+  {
+   "id": "l13",
+   "from": {
+    "node": "j0",
+    "port": "text"
+   },
+   "to": {
+    "node": "stylist",
+    "port": "prompt"
+   }
+  },
+  {
+   "id": "l3",
+   "from": {
+    "node": "stylist",
+    "port": "text"
+   },
+   "to": {
+    "node": "paint",
+    "port": "prompt"
+   }
+  },
+  {
+   "id": "l4",
+   "from": {
+    "node": "paint",
+    "port": "image"
+   },
+   "to": {
+    "node": "surveyor",
+    "port": "img1"
+   }
+  },
+  {
+   "id": "l7",
+   "from": {
+    "node": "director",
+    "port": "text"
+   },
+   "to": {
+    "node": "j1",
+    "port": "a"
+   }
+  },
+  {
+   "id": "l8",
+   "from": {
+    "node": "surveyor",
+    "port": "text"
+   },
+   "to": {
+    "node": "j1",
+    "port": "b"
+   }
+  },
+  {
+   "id": "l11",
+   "from": {
+    "node": "j1",
+    "port": "text"
+   },
+   "to": {
+    "node": "checker",
+    "port": "prompt"
+   }
+  },
+  {
+   "id": "l14",
+   "from": {
+    "node": "j1",
+    "port": "text"
+   },
+   "to": {
+    "node": "j2",
+    "port": "a"
+   }
+  },
+  {
+   "id": "l15",
+   "from": {
+    "node": "checker",
+    "port": "text"
+   },
+   "to": {
+    "node": "j2",
+    "port": "b"
+   }
+  },
+  {
+   "id": "l16",
+   "from": {
+    "node": "j2",
+    "port": "text"
+   },
+   "to": {
+    "node": "audit",
+    "port": "text"
+   }
+  },
+  {
+   "id": "l17",
+   "from": {
+    "node": "paint",
+    "port": "image"
+   },
+   "to": {
+    "node": "audit",
+    "port": "img1"
+   }
+  },
+  {
+   "id": "l18",
+   "from": {
+    "node": "j2",
+    "port": "text"
+   },
+   "to": {
+    "node": "editor",
+    "port": "prompt"
+   }
+  },
+  {
+   "id": "l19",
+   "from": {
+    "node": "editor",
+    "port": "text"
+   },
+   "to": {
+    "node": "fix",
+    "port": "prompt"
+   }
+  },
+  {
+   "id": "l20",
+   "from": {
+    "node": "paint",
+    "port": "image"
+   },
+   "to": {
+    "node": "fix",
+    "port": "image"
+   }
+  },
+  {
+   "id": "l21",
+   "from": {
+    "node": "fix",
+    "port": "image"
+   },
+   "to": {
+    "node": "surveyor2",
+    "port": "img1"
+   }
+  },
+  {
+   "id": "l22",
+   "from": {
+    "node": "director",
+    "port": "text"
+   },
+   "to": {
+    "node": "j4",
+    "port": "a"
+   }
+  },
+  {
+   "id": "l23",
+   "from": {
+    "node": "surveyor2",
+    "port": "text"
+   },
+   "to": {
+    "node": "j4",
+    "port": "b"
+   }
+  },
+  {
+   "id": "l24",
+   "from": {
+    "node": "j4",
+    "port": "text"
+   },
+   "to": {
+    "node": "checker2",
+    "port": "prompt"
+   }
+  },
+  {
+   "id": "l39",
+   "from": {
+    "node": "ask",
+    "port": "text"
+   },
+   "to": {
+    "node": "surveyor",
+    "port": "prompt"
+   }
+  },
+  {
+   "id": "l40",
+   "from": {
+    "node": "ask2",
+    "port": "text"
+   },
+   "to": {
+    "node": "surveyor2",
+    "port": "prompt"
+   }
+  }
+ ],
+ "nid": 32,
+ "lid": 40,
+ "view": {
+  "panX": 40,
+  "panY": 40,
+  "scale": 0.5
+ }
+}
