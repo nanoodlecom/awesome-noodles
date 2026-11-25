@@ -1,0 +1,505 @@
+{
+ "v": 1,
+ "nodes": [
+  {
+   "id": "c1",
+   "type": "comment",
+   "x": 60,
+   "y": 30,
+   "fields": {
+    "text": "Can a painted piece of glass be trusted to bend light the way its shape says it must? A GLM director picks one optics scene from a menu printed in its own prompt (four scenes; each a wall of bold, evenly spaced stripes and exactly four glass objects in a row in front of it, one for each of the four things glass can do to the stripes behind it: a CONVEX lens makes them WIDER spaced, a CONCAVE lens makes them NARROWER spaced, a triangular PRISM SHIFTS them sideways as a block at the same spacing, and a FLAT PANE - the control - leaves them SAME and continuous) and copies out a REFRACTION CARD. A second GLM turns the card into an image prompt: the striped wall, the four objects in slot order, and the optics law stated once and abstractly, forbidden to state any individual object's effect - the painter must work each effect out from the object's shape. Muse paints the scene. A blind Gemini reader compares the stripes behind each object with the stripes outside it and reports, per object, WIDER, NARROWER, SHIFTED or SAME, plus whether the background stripes outside the objects are regular. A GLM auditor scores OBJECTS, EFFECTS (the exact stripe behaviour per object), CONTROL (the flat pane must read SAME - glass that must NOT bend the stripes) and BACKGROUND. A Decide judge headlines round 1. That verdict is not the deliverable: a GLM editor turns the audit into concrete repaint notes (gated - on a perfect audit it must demand a verbatim unchanged copy), Muse Edit repaints the stripes behind the failing objects, and a blind re-read plus the same auditor re-score the corrected image against the same card. The corrected image is the flow's final output."
+   },
+   "w": 900,
+   "name": "Refraction check"
+  },
+  {
+   "id": "setting",
+   "type": "text",
+   "x": 60,
+   "y": 300,
+   "fields": {
+    "text": "A flat studio wall seen straight on, painted with a regular striped pattern - bold, evenly spaced stripes running the full height of the wall, edge to edge. Nothing stands in front of the wall yet."
+   },
+   "w": 300,
+   "name": "Backdrop setting"
+  },
+  {
+   "id": "director",
+   "type": "llm",
+   "x": 440,
+   "y": 280,
+   "fields": {
+    "model": "z-ai/glm-5.3-flash",
+    "system": "You are an optics-scene director. The BACKDROP SETTING you receive is an empty backdrop, not an image and not a scene to match: it names no objects on purpose, because the painter will place the chosen scene's objects in front of it afterwards. Do NOT try to match a menu scene to the setting, do NOT refuse, and never ask for a different input. Pick exactly one menu scene freely - any of the four is a correct choice - and copy it out as the card. Given the BACKDROP SETTING, design a REFRACTION CARD for one optics image. Choose ONE scene from this menu ONLY, and copy its spec EXACTLY - the scene name, the background line, every slot, every object, every effect and the control line:\n\nTHE OPTICS LAW (fixed for every scene): a CONVEX lens (bulging out, a magnifier) makes the stripes behind it appear WIDER spaced; a CONCAVE lens (hollowed in, a minifier) makes the stripes behind it appear NARROWER spaced; a triangular PRISM SHIFTS the stripes behind it sideways as a block - same spacing, but stepped to one side so they no longer line up with the stripes outside; a FLAT PANE of plain glass is the CONTROL - it leaves the stripes behind it SAME: same spacing, lining up continuously with the stripes outside, no offset at its edges.\n\nMENU:\n1. OPTICS BENCH - BACKGROUND: bold vertical BLACK stripes on a WHITE wall, evenly spaced. SLOT 1: a convex magnifying lens in a round brass frame on a stand - EFFECT: WIDER. SLOT 2: a flat pane of plain glass in a thin wooden frame - EFFECT: SAME. SLOT 3: a triangular glass prism standing upright - EFFECT: SHIFTED. SLOT 4: a concave lens in a round steel ring mount - EFFECT: NARROWER. CONTROL: the flat pane in slot 2 - plain flat glass that looks as if it should bend the stripes like the others, but it must leave them SAME and continuous.\n2. GREENHOUSE GLASS - BACKGROUND: bold vertical DARK GREEN stripes on a CREAM wall, evenly spaced. SLOT 1: a triangular glass prism standing upright - EFFECT: SHIFTED. SLOT 2: a concave lens in a round steel ring mount - EFFECT: NARROWER. SLOT 3: a convex magnifying lens in a round brass frame on a stand - EFFECT: WIDER. SLOT 4: a flat pane of plain glass leaning in a thin wooden frame - EFFECT: SAME. CONTROL: the flat pane in slot 4 - plain flat glass that looks as if it should bend the stripes like the others, but it must leave them SAME and continuous.\n3. HARBOUR LIGHT ROOM - BACKGROUND: bold vertical NAVY stripes on a PALE BLUE wall, evenly spaced. SLOT 1: a flat pane of plain glass in a thin wooden frame - EFFECT: SAME. SLOT 2: a convex magnifying lens in a round brass frame on a stand - EFFECT: WIDER. SLOT 3: a concave lens in a round steel ring mount - EFFECT: NARROWER. SLOT 4: a triangular glass prism standing upright - EFFECT: SHIFTED. CONTROL: the flat pane in slot 1 - plain flat glass that looks as if it should bend the stripes like the others, but it must leave them SAME and continuous.\n4. LIBRARY DESK - BACKGROUND: bold vertical BURGUNDY stripes on a PALE YELLOW wall, evenly spaced. SLOT 1: a concave lens in a round steel ring mount - EFFECT: NARROWER. SLOT 2: a triangular glass prism standing upright - EFFECT: SHIFTED. SLOT 3: a flat pane of plain glass in a thin wooden frame - EFFECT: SAME. SLOT 4: a convex magnifying lens in a round brass frame on a stand - EFFECT: WIDER. CONTROL: the flat pane in slot 3 - plain flat glass that looks as if it should bend the stripes like the others, but it must leave them SAME and continuous.\n\nThe card cards shape, not outcome: an object's effect comes only from its shape through the optics law, never from how important or glassy it looks.\n\nOutput ONLY the card, in exactly this format, copying the chosen scene's spec without changing any of it:\nSCENE: <the scene name>\nBACKGROUND: <the background line exactly as carded>\nSLOT 1: <object exactly as carded> - EFFECT: <effect>\nSLOT 2: <object exactly as carded> - EFFECT: <effect>\nSLOT 3: <object exactly as carded> - EFFECT: <effect>\nSLOT 4: <object exactly as carded> - EFFECT: <effect>\nCONTROL: <the control line exactly as carded>\nOBJECT COUNT: 4\nNo other text.",
+    "maxTokens": 700,
+    "reasoningEffort": "low"
+   },
+   "w": 280,
+   "name": "Refraction card - GLM picks a scene and copies its objects, effects and control",
+   "sizes": {
+    "system": 150
+   }
+  },
+  {
+   "id": "j0",
+   "type": "join",
+   "x": 800,
+   "y": 480,
+   "fields": {
+    "sep": "\n\nREFRACTION CARD (the scene - its background, its four objects with their shapes and effects, listed left to right, and its control; its exact wording must reach the image maker):\n\n"
+   },
+   "w": 200,
+   "name": "Setting + refraction card"
+  },
+  {
+   "id": "stylist",
+   "type": "llm",
+   "x": 800,
+   "y": 280,
+   "fields": {
+    "model": "z-ai/glm-5.3-flash",
+    "system": "You turn a REFRACTION CARD into ONE prompt for an AI image generator. The input always contains a valid card with a BACKGROUND line, four SLOT lines (each a glass object and an EFFECT) and a CONTROL line; never refuse and never ask for a different card. Write a single-paragraph prompt for a straight-on photograph-style image of an optics demonstration, demanding all of this:\n- A flat wall filling the whole background, painted exactly as the card's BACKGROUND line says: bold, evenly spaced vertical stripes running the full height of the wall, edge to edge, perfectly regular outside the objects.\n- Exactly the four carded objects stand in a row in front of the wall in their carded slot order, left to right: name every object in the prompt, one by one, in slot order, each described by its shape and its mount or frame so its form is clearly recognisable, each object fully transparent clear glass so the wall's stripes are visible through it.\n- Behind each object the stripes behave as real optics demands for that object's SHAPE - state the law once, in these terms: through a convex magnifying lens the stripes appear clearly WIDER spaced than outside it; through a concave lens clearly NARROWER spaced; through a triangular prism the stripes keep the same spacing but are SHIFTED sideways as a block, visibly stepped at the prism's edges; through a flat pane of plain glass the stripes are completely UNCHANGED - same spacing, lining up continuously with the stripes outside, no offset at the frame's edges. Do NOT attach an effect word to any individual object by name in the prompt; describe each object's shape and let the law do the work.\n- The stripes outside and between the objects stay perfectly regular and continuous everywhere; no object is opaque, frosted or tinted; no rainbow colour fringes or spectrum fans anywhere.\n- No other objects, no people, no hands, no text, letters, labels or numbers anywhere in the image.\nOutput ONLY the image prompt, one paragraph, no preamble.",
+    "maxTokens": 800,
+    "reasoningEffort": "low"
+   },
+   "w": 280,
+   "name": "Optics brief - GLM turns the card into a striped-wall image prompt (effects never stated per object)",
+   "sizes": {
+    "system": 150
+   }
+  },
+  {
+   "id": "paint",
+   "type": "image",
+   "x": 1160,
+   "y": 280,
+   "fields": {
+    "model": "meta/muse-image/text-to-image",
+    "size": "4:3",
+    "variations": "1"
+   },
+   "w": 280,
+   "name": "Optics scene - Muse paints the glass objects against the striped wall"
+  },
+  {
+   "id": "surveyor",
+   "type": "llm",
+   "x": 1520,
+   "y": 280,
+   "fields": {
+    "model": "google/gemini-3.8-flash",
+    "system": "You are an optics inspector examining an image of glass objects standing in a row in front of a wall of bold, evenly spaced vertical stripes. You do not know what was planned - report only what you actually see, in exactly this format:\nREADS: <one entry per object, in left-to-right order, each entry exactly '<object named by its most common everyday name> - <EFFECT>' where EFFECT is exactly one of WIDER, NARROWER, SHIFTED or SAME, judged ONLY by comparing the stripes seen through that object with the stripes outside it: WIDER if the stripes behind the object are clearly farther apart than outside, NARROWER if clearly closer together, SHIFTED if the spacing looks the same but the stripes behind the object are stepped sideways so they do not line up with the stripes outside, SAME if the spacing is the same AND the stripes line up continuously through the object; entries separated by '; '>\nOBJECT COUNT SEEN: <the number of objects you listed>\nBACKGROUND: <REGULAR if the stripes outside and between the objects are evenly spaced and run continuously across the whole wall; BROKEN otherwise, followed by a short note on what is irregular>\nEXTRA: <anything that is not part of the scene as described - extra objects, people, hands, text, letters, rainbow fringes; 'none' if there is nothing of the kind>\nJudge each object on its own stripes, ignoring its frame or mount. Name what you actually see, even when an effect looks wrong or surprising - that is exactly what must be visible in your report.",
+    "maxTokens": 900,
+    "reasoningEffort": "low"
+   },
+   "w": 280,
+   "name": "Optics read - Gemini reports each object's stripe effect, blind",
+   "sizes": {
+    "system": 150
+   }
+  },
+  {
+   "id": "j1",
+   "type": "join",
+   "x": 1880,
+   "y": 180,
+   "fields": {
+    "sep": "\n\nOPTICS READ (a blind inspector reported only what it could see - each object and the behaviour of the stripes behind it, and the background's regularity; it never saw the refraction card):\n\n"
+   },
+   "w": 200,
+   "name": "Refraction card + optics read"
+  },
+  {
+   "id": "checker",
+   "type": "llm",
+   "x": 2240,
+   "y": 400,
+   "fields": {
+    "model": "z-ai/glm-5.3-flash",
+    "system": "You are an optics auditor. The input gives a REFRACTION CARD (SCENE, BACKGROUND, four SLOT lines each with a glass object and an EFFECT - WIDER, NARROWER, SHIFTED or SAME - a CONTROL line, OBJECT COUNT) and then an OPTICS READ from a blind inspector (READS entries in left-to-right order, OBJECT COUNT SEEN, BACKGROUND, EXTRA).\n\nScore in exactly this format:\nCARD LAW: <VALID if the card has exactly 4 slots, the four effects WIDER, NARROWER, SHIFTED and SAME each used exactly once, the SAME slot is a flat pane and exactly one control line names that same flat pane; otherwise INVALID, naming each problem>\nOBJECTS: <number of the 4 carded objects that appear in READS in their carded slot, counting an object seen under its common synonym (a magnifying glass counts as the convex magnifying lens; a plain glass sheet counts as the flat pane)> of 4\nEFFECTS: <number of the 4 carded objects whose read effect exactly equals their carded effect> of 4\nCONTROL: <CORRECT if the flat pane's read effect is SAME; WRONG otherwise>\nBACKGROUND: <CORRECT if the read's BACKGROUND is REGULAR; WRONG otherwise>\nREFRACTION ERRORS: <every point lost, as short clauses separated by '; ' - name each missing or misplaced object, each wrong effect with the effect read and the effect carded, a wrong control, a broken background; 'none' if nothing was lost>\nEXTRA: <the read's EXTRA, or 'none'>\nSUMMARY: <one short line naming what held and what failed>\nScore strictly from the two texts. Match read objects to carded objects by slot position first, and by identity when a slot's object is named differently.",
+    "maxTokens": 1200,
+    "reasoningEffort": "low"
+   },
+   "w": 280,
+   "name": "Refraction audit - GLM scores objects, effects, control and background against the card",
+   "sizes": {
+    "system": 150
+   }
+  },
+  {
+   "id": "j2",
+   "type": "join",
+   "x": 2240,
+   "y": 180,
+   "fields": {
+    "sep": "\n\nREFRACTION AUDIT:\n\n"
+   },
+   "w": 200,
+   "name": "Card, optics read + refraction audit"
+  },
+  {
+   "id": "audit",
+   "type": "decide",
+   "x": 2600,
+   "y": 180,
+   "fields": {
+    "model": "perplexity/pplx-decider-v1.2",
+    "mode": "choose",
+    "question": "The picture should be an optics scene: four carded glass objects in a row in front of a wall of bold, evenly spaced vertical stripes, the stripes behind each object behaving as its shape demands - wider spaced through the convex lens, narrower through the concave lens, shifted sideways as a block through the prism, and completely unchanged through the flat pane, which is the control. The audit in the text scores the blind read against the card: the objects in their slots, their exact effects, the control and the background. Choose the one label that best fits the round-1 picture.",
+    "options": "light bends true\neffects swapped\ncontrol displaced\nobjects wrong\nnot a refraction scene"
+   },
+   "w": 280,
+   "name": "Light bends true - audited",
+   "sizes": {
+    "question": 130
+   }
+  },
+  {
+   "id": "editor",
+   "type": "llm",
+   "x": 2600,
+   "y": 520,
+   "fields": {
+    "model": "z-ai/glm-5.3-flash",
+    "system": "You are the optics editor in a refraction pipeline. The input gives a REFRACTION CARD, a blind OPTICS READ and a REFRACTION AUDIT of the round-1 image. Write ONE edit instruction for an image editor working on that image, in at most 120 words.\nIf the audit shows a perfect reading (OBJECTS 4 of 4, EFFECTS 4 of 4, CONTROL: CORRECT, BACKGROUND: CORRECT, EXTRA: none), output exactly this and nothing else: 'Reproduce this optics image completely unchanged - same striped wall, same four glass objects in the same slots, the stripes behind each object behaving exactly as they do now. Do not move, add, remove or repaint anything.'\nOtherwise: first state the full target end state - the same striped wall with its stripes regular and continuous outside the objects, the card's four objects in their carded slot order, and the stripes behind each object showing its carded effect, named object by object with its effect (WIDER stripes behind the convex lens, NARROWER behind the concave lens, SHIFTED sideways as a block behind the prism, SAME and continuous behind the flat pane) - then add the audit's specific failures as concrete demands (for example: 'the stripes behind the prism line up unchanged: shift them sideways as a block so they step visibly at the prism's edges, keeping their spacing'). Every fix is a repainting of the stripes behind a named object, or the removal of a named extra; never ask for an object to be moved, reshaped or replaced.",
+    "maxTokens": 400,
+    "reasoningEffort": "low"
+   },
+   "w": 280,
+   "name": "Edit notes - GLM turns the refraction audit into concrete stripe-repaint instructions",
+   "sizes": {
+    "system": 150
+   }
+  },
+  {
+   "id": "fix",
+   "type": "edit",
+   "x": 2960,
+   "y": 520,
+   "fields": {
+    "model": "meta/muse-image/edit",
+    "size": "auto"
+   },
+   "w": 280,
+   "name": "Corrected optics scene - Muse Edit repaints the stripes per the optics law"
+  },
+  {
+   "id": "surveyor2",
+   "type": "llm",
+   "x": 3320,
+   "y": 520,
+   "fields": {
+    "model": "google/gemini-3.8-flash",
+    "system": "You are an optics inspector examining an image of glass objects standing in a row in front of a wall of bold, evenly spaced vertical stripes. You do not know what was planned - report only what you actually see, in exactly this format:\nREADS: <one entry per object, in left-to-right order, each entry exactly '<object named by its most common everyday name> - <EFFECT>' where EFFECT is exactly one of WIDER, NARROWER, SHIFTED or SAME, judged ONLY by comparing the stripes seen through that object with the stripes outside it: WIDER if the stripes behind the object are clearly farther apart than outside, NARROWER if clearly closer together, SHIFTED if the spacing looks the same but the stripes behind the object are stepped sideways so they do not line up with the stripes outside, SAME if the spacing is the same AND the stripes line up continuously through the object; entries separated by '; '>\nOBJECT COUNT SEEN: <the number of objects you listed>\nBACKGROUND: <REGULAR if the stripes outside and between the objects are evenly spaced and run continuously across the whole wall; BROKEN otherwise, followed by a short note on what is irregular>\nEXTRA: <anything that is not part of the scene as described - extra objects, people, hands, text, letters, rainbow fringes; 'none' if there is nothing of the kind>\nJudge each object on its own stripes, ignoring its frame or mount. Name what you actually see, even when an effect looks wrong or surprising - that is exactly what must be visible in your report.",
+    "maxTokens": 900,
+    "reasoningEffort": "low"
+   },
+   "w": 280,
+   "name": "Re-read - Gemini reports the corrected image's objects and stripe effects, blind",
+   "sizes": {
+    "system": 150
+   }
+  },
+  {
+   "id": "j4",
+   "type": "join",
+   "x": 3680,
+   "y": 420,
+   "fields": {
+    "sep": "\n\nOPTICS READ (a blind inspector reported only what it could see in the corrected image - each object and the behaviour of the stripes behind it, and the background's regularity; it never saw the refraction card):\n\n"
+   },
+   "w": 200,
+   "name": "Refraction card + re-read"
+  },
+  {
+   "id": "checker2",
+   "type": "llm",
+   "x": 4040,
+   "y": 520,
+   "fields": {
+    "model": "z-ai/glm-5.3-flash",
+    "system": "You are an optics auditor. The input gives a REFRACTION CARD (SCENE, BACKGROUND, four SLOT lines each with a glass object and an EFFECT - WIDER, NARROWER, SHIFTED or SAME - a CONTROL line, OBJECT COUNT) and then an OPTICS READ from a blind inspector (READS entries in left-to-right order, OBJECT COUNT SEEN, BACKGROUND, EXTRA).\n\nScore in exactly this format:\nCARD LAW: <VALID if the card has exactly 4 slots, the four effects WIDER, NARROWER, SHIFTED and SAME each used exactly once, the SAME slot is a flat pane and exactly one control line names that same flat pane; otherwise INVALID, naming each problem>\nOBJECTS: <number of the 4 carded objects that appear in READS in their carded slot, counting an object seen under its common synonym (a magnifying glass counts as the convex magnifying lens; a plain glass sheet counts as the flat pane)> of 4\nEFFECTS: <number of the 4 carded objects whose read effect exactly equals their carded effect> of 4\nCONTROL: <CORRECT if the flat pane's read effect is SAME; WRONG otherwise>\nBACKGROUND: <CORRECT if the read's BACKGROUND is REGULAR; WRONG otherwise>\nREFRACTION ERRORS: <every point lost, as short clauses separated by '; ' - name each missing or misplaced object, each wrong effect with the effect read and the effect carded, a wrong control, a broken background; 'none' if nothing was lost>\nEXTRA: <the read's EXTRA, or 'none'>\nSUMMARY: <one short line naming what held and what failed>\nScore strictly from the two texts. Match read objects to carded objects by slot position first, and by identity when a slot's object is named differently.",
+    "maxTokens": 1200,
+    "reasoningEffort": "low"
+   },
+   "w": 280,
+   "name": "Refraction re-audit - GLM scores the corrected image against the same card",
+   "sizes": {
+    "system": 150
+   }
+  },
+  {
+   "id": "ask",
+   "type": "text",
+   "x": 1160,
+   "y": 520,
+   "fields": {
+    "text": "Inspect the optics image in the attached picture now, following your instructions exactly."
+   },
+   "w": 240,
+   "name": "Inspect ask"
+  },
+  {
+   "id": "ask2",
+   "type": "text",
+   "x": 2960,
+   "y": 900,
+   "fields": {
+    "text": "Inspect the optics image in the attached picture now, following your instructions exactly."
+   },
+   "w": 240,
+   "name": "Re-inspect ask"
+  }
+ ],
+ "links": [
+  {
+   "id": "l1",
+   "from": {
+    "node": "setting",
+    "port": "text"
+   },
+   "to": {
+    "node": "director",
+    "port": "prompt"
+   }
+  },
+  {
+   "id": "l2",
+   "from": {
+    "node": "director",
+    "port": "text"
+   },
+   "to": {
+    "node": "j0",
+    "port": "b"
+   }
+  },
+  {
+   "id": "l12",
+   "from": {
+    "node": "setting",
+    "port": "text"
+   },
+   "to": {
+    "node": "j0",
+    "port": "a"
+   }
+  },
+  {
+   "id": "l13",
+   "from": {
+    "node": "j0",
+    "port": "text"
+   },
+   "to": {
+    "node": "stylist",
+    "port": "prompt"
+   }
+  },
+  {
+   "id": "l3",
+   "from": {
+    "node": "stylist",
+    "port": "text"
+   },
+   "to": {
+    "node": "paint",
+    "port": "prompt"
+   }
+  },
+  {
+   "id": "l4",
+   "from": {
+    "node": "paint",
+    "port": "image"
+   },
+   "to": {
+    "node": "surveyor",
+    "port": "img1"
+   }
+  },
+  {
+   "id": "l7",
+   "from": {
+    "node": "director",
+    "port": "text"
+   },
+   "to": {
+    "node": "j1",
+    "port": "a"
+   }
+  },
+  {
+   "id": "l8",
+   "from": {
+    "node": "surveyor",
+    "port": "text"
+   },
+   "to": {
+    "node": "j1",
+    "port": "b"
+   }
+  },
+  {
+   "id": "l11",
+   "from": {
+    "node": "j1",
+    "port": "text"
+   },
+   "to": {
+    "node": "checker",
+    "port": "prompt"
+   }
+  },
+  {
+   "id": "l14",
+   "from": {
+    "node": "j1",
+    "port": "text"
+   },
+   "to": {
+    "node": "j2",
+    "port": "a"
+   }
+  },
+  {
+   "id": "l15",
+   "from": {
+    "node": "checker",
+    "port": "text"
+   },
+   "to": {
+    "node": "j2",
+    "port": "b"
+   }
+  },
+  {
+   "id": "l16",
+   "from": {
+    "node": "j2",
+    "port": "text"
+   },
+   "to": {
+    "node": "audit",
+    "port": "text"
+   }
+  },
+  {
+   "id": "l17",
+   "from": {
+    "node": "paint",
+    "port": "image"
+   },
+   "to": {
+    "node": "audit",
+    "port": "img1"
+   }
+  },
+  {
+   "id": "l18",
+   "from": {
+    "node": "j2",
+    "port": "text"
+   },
+   "to": {
+    "node": "editor",
+    "port": "prompt"
+   }
+  },
+  {
+   "id": "l19",
+   "from": {
+    "node": "editor",
+    "port": "text"
+   },
+   "to": {
+    "node": "fix",
+    "port": "prompt"
+   }
+  },
+  {
+   "id": "l20",
+   "from": {
+    "node": "paint",
+    "port": "image"
+   },
+   "to": {
+    "node": "fix",
+    "port": "image"
+   }
+  },
+  {
+   "id": "l21",
+   "from": {
+    "node": "fix",
+    "port": "image"
+   },
+   "to": {
+    "node": "surveyor2",
+    "port": "img1"
+   }
+  },
+  {
+   "id": "l22",
+   "from": {
+    "node": "director",
+    "port": "text"
+   },
+   "to": {
+    "node": "j4",
+    "port": "a"
+   }
+  },
+  {
+   "id": "l23",
+   "from": {
+    "node": "surveyor2",
+    "port": "text"
+   },
+   "to": {
+    "node": "j4",
+    "port": "b"
+   }
+  },
+  {
+   "id": "l24",
+   "from": {
+    "node": "j4",
+    "port": "text"
+   },
+   "to": {
+    "node": "checker2",
+    "port": "prompt"
+   }
+  },
+  {
+   "id": "l39",
+   "from": {
+    "node": "ask",
+    "port": "text"
+   },
+   "to": {
+    "node": "surveyor",
+    "port": "prompt"
+   }
+  },
+  {
+   "id": "l40",
+   "from": {
+    "node": "ask2",
+    "port": "text"
+   },
+   "to": {
+    "node": "surveyor2",
+    "port": "prompt"
+   }
+  }
+ ],
+ "nid": 32,
+ "lid": 40,
+ "view": {
+  "panX": 40,
+  "panY": 40,
+  "scale": 0.5
+ }
+}
