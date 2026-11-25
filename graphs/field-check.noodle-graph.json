@@ -1,0 +1,505 @@
+{
+ "v": 1,
+ "nodes": [
+  {
+   "id": "c1",
+   "type": "comment",
+   "x": 60,
+   "y": 30,
+   "fields": {
+    "text": "Can a painted compass be trusted to point along the field it sits in, instead of politely north? A GLM director picks one magnet board from a menu printed in its own prompt (four boards; each a bar magnet lying horizontally across the middle of a board seen from directly above, its red half the north pole, with six small compasses placed around it - one on the axis line beyond each end, one above each end, one above the middle and one below each end - plus a seventh control compass in the far top-right corner) and copies out a FIELD CARD giving, for every compass position, the direction its needle's red tip must point under the dipole law: the two axis compasses point the SAME way (out of the north end, around, and back into the south end), the compass above the middle points from the north end toward the south end, the compasses above the north end and below the south end point north, the compass below the north end points south, and the far control compass - too far away to feel the magnet - simply points north. A second GLM turns the card into an image prompt: the board, the magnet, the seven compasses at their positions, and the field law stated once and abstractly as field lines leaving the north end, looping around outside the magnet and re-entering the south end, forbidden to state any individual compass's direction - the painter must trace each needle from the line through its spot. Muse paints the board. A blind Gemini reader reports, per compass position, the direction the needle's red tip actually points, plus which end of the magnet is red. A GLM auditor scores PROBES, DIRECTIONS, AXIS (both axis compasses pointing the same carded way - the loop-back signature), CONTROL (the far compass must read NORTH - a compass that must NOT be turned) and MAGNET. A Decide judge headlines round 1. That verdict is not the deliverable: a GLM editor turns the audit into concrete needle-repaint notes (gated - on a perfect audit it must demand a verbatim unchanged copy), Muse Edit repaints the failing needles, and a blind re-read plus the same auditor re-score the corrected board against the same card. The corrected board is the flow's final output."
+   },
+   "w": 900,
+   "name": "Field check"
+  },
+  {
+   "id": "setting",
+   "type": "text",
+   "x": 60,
+   "y": 300,
+   "fields": {
+    "text": "A plain demonstration board seen from directly above, filling the whole frame - an empty pale board with nothing on it yet: no magnet, no compasses, no markings."
+   },
+   "w": 300,
+   "name": "Board setting"
+  },
+  {
+   "id": "director",
+   "type": "llm",
+   "x": 440,
+   "y": 280,
+   "fields": {
+    "model": "z-ai/glm-5.3-flash",
+    "system": "You are a magnetism-board director. The BOARD SETTING you receive is an empty board, not an image and not a scene to match: it names no objects on purpose, because the painter will place the chosen board's magnet and compasses on it afterwards. Do NOT try to match a menu board to the setting, do NOT refuse, and never ask for a different input. Pick exactly one menu board freely - any of the four is a correct choice - and copy it out as the card. Given the BOARD SETTING, design a FIELD CARD for one magnet-board image. Choose ONE board from this menu ONLY, and copy its spec EXACTLY - the board name, the board line, the magnet line, every probe line, the control line and the count line:\n\nTHE FIELD LAW (fixed for every board): the bar magnet's RED half is its north pole and its STEEL BLUE half is its south pole. Magnetic field lines stream out of the north end, loop around the outside of the magnet and dive back into the south end; a compass needle's RED TIP points along the field line through its spot, in the direction the line travels. So a compass on the axis line beyond the north end points AWAY from the magnet and a compass on the axis line beyond the south end points TOWARD the magnet - the two axis compasses point in the SAME compass direction. A compass above the middle of the magnet points from the north end toward the south end. A compass above the north end points NORTH and a compass below the south end points NORTH; a compass below the north end points SOUTH and a compass above the south end points SOUTH. One compass sits in the TOP-RIGHT FAR corner of the board, far from the magnet: the CONTROL - too far away for the magnet to turn it, it keeps pointing NORTH like any ordinary compass.\n\nMENU:\n1. LAB BENCH - BOARD: a pale grey laboratory board seen from directly above. MAGNET: RED (NORTH) END: LEFT - the bar magnet lies horizontally across the middle of the board, its left half painted red (the north pole), its right half painted steel blue (the south pole). PROBE LEFT: on the magnet's centre line, well to the left of the magnet, level with it - NEEDLE: WEST. PROBE TOP-LEFT: above the magnet's left (red, north) end - NEEDLE: NORTH. PROBE TOP-CENTRE: directly above the middle of the magnet - NEEDLE: EAST. PROBE RIGHT: on the magnet's centre line, well to the right of the magnet, level with it - NEEDLE: WEST. PROBE BOTTOM-RIGHT: below the magnet's right (blue, south) end - NEEDLE: NORTH. PROBE BOTTOM-LEFT: below the magnet's left (red, north) end - NEEDLE: SOUTH. CONTROL: the compass in the TOP-RIGHT FAR corner of the board, far from the magnet - NEEDLE: NORTH.\n2. CLASSROOM BOARD - BOARD: a deep green classroom demonstration board seen from directly above. MAGNET: RED (NORTH) END: LEFT - the bar magnet lies horizontally across the middle of the board, its left half painted red (the north pole), its right half painted steel blue (the south pole). PROBE LEFT: on the magnet's centre line, well to the left of the magnet, level with it - NEEDLE: WEST. PROBE TOP-LEFT: above the magnet's left (red, north) end - NEEDLE: NORTH. PROBE TOP-CENTRE: directly above the middle of the magnet - NEEDLE: EAST. PROBE RIGHT: on the magnet's centre line, well to the right of the magnet, level with it - NEEDLE: WEST. PROBE BOTTOM-RIGHT: below the magnet's right (blue, south) end - NEEDLE: NORTH. PROBE BOTTOM-LEFT: below the magnet's left (red, north) end - NEEDLE: SOUTH. CONTROL: the compass in the TOP-RIGHT FAR corner of the board, far from the magnet - NEEDLE: NORTH.\n3. WORKSHOP BENCH - BOARD: a warm oak workshop board seen from directly above. MAGNET: RED (NORTH) END: RIGHT - the bar magnet lies horizontally across the middle of the board, its right half painted red (the north pole), its left half painted steel blue (the south pole). PROBE LEFT: on the magnet's centre line, well to the left of the magnet, level with it - NEEDLE: EAST. PROBE TOP-LEFT: above the magnet's left (blue, south) end - NEEDLE: SOUTH. PROBE TOP-CENTRE: directly above the middle of the magnet - NEEDLE: WEST. PROBE RIGHT: on the magnet's centre line, well to the right of the magnet, level with it - NEEDLE: EAST. PROBE BOTTOM-RIGHT: below the magnet's right (red, north) end - NEEDLE: SOUTH. PROBE BOTTOM-LEFT: below the magnet's left (blue, south) end - NEEDLE: NORTH. CONTROL: the compass in the TOP-RIGHT FAR corner of the board, far from the magnet - NEEDLE: NORTH.\n4. MUSEUM CASE - BOARD: a dark walnut museum display board seen from directly above. MAGNET: RED (NORTH) END: RIGHT - the bar magnet lies horizontally across the middle of the board, its right half painted red (the north pole), its left half painted steel blue (the south pole). PROBE LEFT: on the magnet's centre line, well to the left of the magnet, level with it - NEEDLE: EAST. PROBE TOP-LEFT: above the magnet's left (blue, south) end - NEEDLE: SOUTH. PROBE TOP-CENTRE: directly above the middle of the magnet - NEEDLE: WEST. PROBE RIGHT: on the magnet's centre line, well to the right of the magnet, level with it - NEEDLE: EAST. PROBE BOTTOM-RIGHT: below the magnet's right (red, north) end - NEEDLE: SOUTH. PROBE BOTTOM-LEFT: below the magnet's left (blue, south) end - NEEDLE: NORTH. CONTROL: the compass in the TOP-RIGHT FAR corner of the board, far from the magnet - NEEDLE: NORTH.\n\nThe card cards positions, not outcomes: a compass's direction comes only from where it sits relative to the poles through the field law, never from how a compass usually behaves - left alone, every compass here would point north, and only the control is allowed to.\n\nOutput ONLY the card, in exactly this format, copying the chosen board's spec without changing any of it:\nSCENE: <the board name>\nBOARD: <the board line exactly as carded>\nMAGNET: RED (NORTH) END: <LEFT or RIGHT, exactly as carded>\nPROBE LEFT: <position exactly as carded> - NEEDLE: <direction>\nPROBE TOP-LEFT: <position exactly as carded> - NEEDLE: <direction>\nPROBE TOP-CENTRE: <position exactly as carded> - NEEDLE: <direction>\nPROBE RIGHT: <position exactly as carded> - NEEDLE: <direction>\nPROBE BOTTOM-RIGHT: <position exactly as carded> - NEEDLE: <direction>\nPROBE BOTTOM-LEFT: <position exactly as carded> - NEEDLE: <direction>\nCONTROL: <the control line exactly as carded>\nCOMPASS COUNT: 7\nNo other text.",
+    "maxTokens": 900,
+    "reasoningEffort": "low"
+   },
+   "w": 280,
+   "name": "Field card - GLM picks a board and copies its magnet, probe directions and control",
+   "sizes": {
+    "system": 150
+   }
+  },
+  {
+   "id": "j0",
+   "type": "join",
+   "x": 800,
+   "y": 480,
+   "fields": {
+    "sep": "\n\nFIELD CARD (the board - its magnet with its red north end, its six compass positions with their needle directions, and its far control compass; its exact wording must reach the image maker):\n\n"
+   },
+   "w": 200,
+   "name": "Setting + field card"
+  },
+  {
+   "id": "stylist",
+   "type": "llm",
+   "x": 800,
+   "y": 280,
+   "fields": {
+    "model": "z-ai/glm-5.3-flash",
+    "system": "You turn a FIELD CARD into ONE prompt for an AI image generator. The input always contains a valid card with a BOARD line, a MAGNET line, six PROBE lines (each a compass position and a NEEDLE direction) and a CONTROL line; never refuse and never ask for a different card. Write a single-paragraph prompt for a photograph taken from directly above a magnetism demonstration board, demanding all of this:\n- The board exactly as the card's BOARD line says, filling the whole frame, seen straight down from directly above, evenly lit, with nothing else on it except the magnet and compasses below.\n- Exactly one bar magnet lying horizontally across the middle of the board, exactly as the card's MAGNET line says: one half painted red (the north pole), the other half painted steel blue (the south pole), on the carded sides. No letters or symbols on the magnet - colour alone marks the poles.\n- Exactly seven small round brass compasses, each with a cream dial and one slim needle whose RED TIP is long, bold and unmistakable, placed at the carded positions: six around the magnet (LEFT and RIGHT on its centre line, level with it and well clear of its ends; TOP-LEFT above its left end; TOP-CENTRE directly above its middle; BOTTOM-RIGHT below its right end; BOTTOM-LEFT below its left end) and the seventh, the control, alone in the TOP-RIGHT FAR corner of the board, far from the magnet. Name every position in the prompt, one by one.\n- Each needle's red tip points along the magnetic field line passing through its compass - state the law once, in these terms: field lines stream out of the magnet's red north end, loop around the outside of the magnet through the space beyond its ends and above and below it, and dive back into its blue south end, and every needle lines up with the line through its own spot, pointing the way the line travels there - so needles at different spots point in genuinely different directions, and only a compass too far away to feel the magnet points simply north, toward the top of the board. Do NOT attach a direction word to any individual compass position by name in the prompt; describe each compass's position relative to the poles and let the law do the work.\n- No drawn field lines, no arrows, no iron filings, no other objects, no people, no hands, and no text, letters, labels or numbers anywhere in the image - the only marks are the magnet's two coloured halves and the compass needles.\nOutput ONLY the image prompt, one paragraph, no preamble.",
+    "maxTokens": 900,
+    "reasoningEffort": "low"
+   },
+   "w": 280,
+   "name": "Field brief - GLM turns the card into a top-down board prompt (directions never stated per compass)",
+   "sizes": {
+    "system": 150
+   }
+  },
+  {
+   "id": "paint",
+   "type": "image",
+   "x": 1160,
+   "y": 280,
+   "fields": {
+    "model": "meta/muse-image/text-to-image",
+    "size": "4:3",
+    "variations": "1"
+   },
+   "w": 280,
+   "name": "Magnet board - Muse paints the bar magnet and its seven compasses from above"
+  },
+  {
+   "id": "surveyor",
+   "type": "llm",
+   "x": 1520,
+   "y": 280,
+   "fields": {
+    "model": "google/gemini-3.8-flash",
+    "system": "You are a magnetism inspector examining a photograph taken from directly above a board holding one horizontal bar magnet (one half painted red, the other steel blue) and small round compasses, each with a single needle that has a RED TIP. You do not know what was planned - report only what you actually see, in exactly this format:\nMAGNET: RED END: <LEFT if the magnet's red half is on the left, RIGHT if it is on the right; UNKNOWN if there is no two-colour bar magnet>\nREADS: <one entry per compass, in exactly this position order: LEFT, TOP-LEFT, TOP-CENTRE, RIGHT, BOTTOM-RIGHT, BOTTOM-LEFT, TOP-RIGHT FAR; each entry exactly '<POSITION> - <DIR>' where DIR is the direction the needle's RED TIP points, judged against the image frame: NORTH toward the top edge, EAST toward the right edge, SOUTH toward the bottom edge, WEST toward the left edge, and NORTH-EAST, SOUTH-EAST, SOUTH-WEST or NORTH-WEST for clear diagonals; entries separated by '; '. If a position has no compass, write '<POSITION> - MISSING'; if a compass is there but its needle or red tip cannot be made out, write '<POSITION> - UNCLEAR'>\nCOMPASS COUNT SEEN: <the number of compasses you listed with a direction, counting MISSING as not seen>\nBOARD: <INTACT if one horizontal two-colour bar magnet lies across the middle of a plain board filling the frame; BROKEN otherwise, followed by a short note on what is wrong>\nEXTRA: <anything that is not part of the scene as described - extra objects, drawn field lines, arrows, iron filings, people, hands, text, letters; 'none' if there is nothing of the kind>\nJudge each needle by its red tip alone, ignoring the needle's other end. Report what you actually see, even when a direction looks wrong or surprising - a compass pointing south, or away from north at all, is exactly what must be visible in your report.",
+    "maxTokens": 900,
+    "reasoningEffort": "low"
+   },
+   "w": 280,
+   "name": "Field read - Gemini reports each compass's needle direction, blind",
+   "sizes": {
+    "system": 150
+   }
+  },
+  {
+   "id": "j1",
+   "type": "join",
+   "x": 1880,
+   "y": 180,
+   "fields": {
+    "sep": "\n\nFIELD READ (a blind inspector reported only what it could see - the magnet's red end and the direction each compass's needle actually points; it never saw the field card):\n\n"
+   },
+   "w": 200,
+   "name": "Field card + field read"
+  },
+  {
+   "id": "checker",
+   "type": "llm",
+   "x": 2240,
+   "y": 400,
+   "fields": {
+    "model": "z-ai/glm-5.3-flash",
+    "system": "You are a magnetism auditor. The input gives a FIELD CARD (SCENE, BOARD, a MAGNET line naming the red north end's side, six PROBE lines each with a compass position and a NEEDLE direction, a CONTROL line, COMPASS COUNT) and then a FIELD READ from a blind inspector (MAGNET line, READS entries in the fixed position order LEFT, TOP-LEFT, TOP-CENTRE, RIGHT, BOTTOM-RIGHT, BOTTOM-LEFT, TOP-RIGHT FAR, COMPASS COUNT SEEN, BOARD, EXTRA).\n\nScore in exactly this format:\nCARD LAW: <VALID if the card has exactly 6 probe lines and one control line, the control needle is NORTH, the two axis probes LEFT and RIGHT carry the SAME needle direction (WEST when the red end is LEFT, EAST when it is RIGHT), TOP-CENTRE points from the north end toward the south end (EAST when the red end is LEFT, WEST when it is RIGHT), TOP-LEFT and BOTTOM-RIGHT carry the same direction (NORTH when the red end is LEFT, SOUTH when it is RIGHT) and BOTTOM-LEFT carries the opposite of that pair (SOUTH when the red end is LEFT, NORTH when it is RIGHT); otherwise INVALID, naming each problem>\nPROBES: <number of the 6 probe positions whose read entry gives an actual direction (not MISSING or UNCLEAR)> of 6\nDIRECTIONS: <number of the 6 probe positions whose read direction exactly equals their carded needle direction> of 6\nAXIS: <CORRECT if both the LEFT and RIGHT reads equal their carded direction - the same direction at both ends; WRONG otherwise>\nCONTROL: <CORRECT if the TOP-RIGHT FAR read is NORTH; WRONG otherwise>\nMAGNET: <CORRECT if the read's red end side equals the card's; WRONG otherwise>\nFIELD ERRORS: <every point lost, as short clauses separated by '; ' - name each missing or unclear compass, each wrong direction with the direction read and the direction carded, a split axis, a captured control, a flipped magnet; 'none' if nothing was lost>\nEXTRA: <the read's EXTRA, or 'none'>\nSUMMARY: <one short line naming what held and what failed>\nScore strictly from the two texts. Match read entries to carded probes by position name.",
+    "maxTokens": 1200,
+    "reasoningEffort": "low"
+   },
+   "w": 280,
+   "name": "Field audit - GLM scores probes, directions, axis, control and magnet against the card",
+   "sizes": {
+    "system": 150
+   }
+  },
+  {
+   "id": "j2",
+   "type": "join",
+   "x": 2240,
+   "y": 180,
+   "fields": {
+    "sep": "\n\nFIELD AUDIT:\n\n"
+   },
+   "w": 200,
+   "name": "Card, field read + field audit"
+  },
+  {
+   "id": "audit",
+   "type": "decide",
+   "x": 2600,
+   "y": 180,
+   "fields": {
+    "model": "perplexity/pplx-decider-v1.2",
+    "mode": "choose",
+    "question": "The picture should be a magnet board seen from directly above: one horizontal bar magnet across the middle, its red half the north pole, six compasses around it whose needles' red tips point along the field at their spot - the same direction at both axis ends (out of the north end and back into the south end), from the north end toward the south end above the middle, north above the north end and below the south end, south below the north end - and a seventh far control compass in the top-right corner pointing simply north, too far away to be turned. The audit in the text scores the blind read against the card: the probes present, their exact directions, the axis pair, the control and the magnet. Choose the one label that best fits the round-1 picture.",
+    "options": "field runs true\nneedles scrambled\naxis pair split\ncontrol captured\nnot a field board"
+   },
+   "w": 280,
+   "name": "Field runs true - audited",
+   "sizes": {
+    "question": 130
+   }
+  },
+  {
+   "id": "editor",
+   "type": "llm",
+   "x": 2600,
+   "y": 520,
+   "fields": {
+    "model": "z-ai/glm-5.3-flash",
+    "system": "You are the magnetism editor in a field pipeline. The input gives a FIELD CARD, a blind FIELD READ and a FIELD AUDIT of the round-1 image. Write ONE edit instruction for an image editor working on that image, in at most 120 words.\nIf the audit shows a perfect reading (PROBES 6 of 6, DIRECTIONS 6 of 6, AXIS: CORRECT, CONTROL: CORRECT, MAGNET: CORRECT, EXTRA: none), output exactly this and nothing else: 'Reproduce this magnet board completely unchanged - same board, same bar magnet with its red half on the same side, same seven compasses in the same positions, every needle pointing exactly as it does now. Do not move, add, remove or repaint anything.'\nOtherwise: first state the full target end state - the same board and the same bar magnet with its red half on the carded side, the same seven compasses in the same positions, and every needle's red tip pointing in its carded direction, named position by position with its direction (for example: LEFT points WEST, TOP-LEFT points NORTH) including the far control compass pointing NORTH - then add the audit's specific failures as concrete demands (for example: 'the RIGHT compass needle currently points east: repaint its needle so its red tip points west, toward the magnet'). Every fix is a repainting of a named compass's needle, the removal of a named extra, or - only if the audit says the magnet flipped - swapping the magnet's two coloured halves; never ask for a compass or the magnet to be moved or replaced.",
+    "maxTokens": 400,
+    "reasoningEffort": "low"
+   },
+   "w": 280,
+   "name": "Edit notes - GLM turns the field audit into concrete needle-repaint instructions",
+   "sizes": {
+    "system": 150
+   }
+  },
+  {
+   "id": "fix",
+   "type": "edit",
+   "x": 2960,
+   "y": 520,
+   "fields": {
+    "model": "meta/muse-image/edit",
+    "size": "auto"
+   },
+   "w": 280,
+   "name": "Corrected magnet board - Muse Edit repaints the needles per the field law"
+  },
+  {
+   "id": "surveyor2",
+   "type": "llm",
+   "x": 3320,
+   "y": 520,
+   "fields": {
+    "model": "google/gemini-3.8-flash",
+    "system": "You are a magnetism inspector examining a photograph taken from directly above a board holding one horizontal bar magnet (one half painted red, the other steel blue) and small round compasses, each with a single needle that has a RED TIP. You do not know what was planned - report only what you actually see, in exactly this format:\nMAGNET: RED END: <LEFT if the magnet's red half is on the left, RIGHT if it is on the right; UNKNOWN if there is no two-colour bar magnet>\nREADS: <one entry per compass, in exactly this position order: LEFT, TOP-LEFT, TOP-CENTRE, RIGHT, BOTTOM-RIGHT, BOTTOM-LEFT, TOP-RIGHT FAR; each entry exactly '<POSITION> - <DIR>' where DIR is the direction the needle's RED TIP points, judged against the image frame: NORTH toward the top edge, EAST toward the right edge, SOUTH toward the bottom edge, WEST toward the left edge, and NORTH-EAST, SOUTH-EAST, SOUTH-WEST or NORTH-WEST for clear diagonals; entries separated by '; '. If a position has no compass, write '<POSITION> - MISSING'; if a compass is there but its needle or red tip cannot be made out, write '<POSITION> - UNCLEAR'>\nCOMPASS COUNT SEEN: <the number of compasses you listed with a direction, counting MISSING as not seen>\nBOARD: <INTACT if one horizontal two-colour bar magnet lies across the middle of a plain board filling the frame; BROKEN otherwise, followed by a short note on what is wrong>\nEXTRA: <anything that is not part of the scene as described - extra objects, drawn field lines, arrows, iron filings, people, hands, text, letters; 'none' if there is nothing of the kind>\nJudge each needle by its red tip alone, ignoring the needle's other end. Report what you actually see, even when a direction looks wrong or surprising - a compass pointing south, or away from north at all, is exactly what must be visible in your report.",
+    "maxTokens": 900,
+    "reasoningEffort": "low"
+   },
+   "w": 280,
+   "name": "Re-read - Gemini reports the corrected board's needle directions, blind",
+   "sizes": {
+    "system": 150
+   }
+  },
+  {
+   "id": "j4",
+   "type": "join",
+   "x": 3680,
+   "y": 420,
+   "fields": {
+    "sep": "\n\nFIELD READ (a blind inspector reported only what it could see in the corrected image - the magnet's red end and the direction each compass's needle actually points; it never saw the field card):\n\n"
+   },
+   "w": 200,
+   "name": "Field card + re-read"
+  },
+  {
+   "id": "checker2",
+   "type": "llm",
+   "x": 4040,
+   "y": 520,
+   "fields": {
+    "model": "z-ai/glm-5.3-flash",
+    "system": "You are a magnetism auditor. The input gives a FIELD CARD (SCENE, BOARD, a MAGNET line naming the red north end's side, six PROBE lines each with a compass position and a NEEDLE direction, a CONTROL line, COMPASS COUNT) and then a FIELD READ from a blind inspector (MAGNET line, READS entries in the fixed position order LEFT, TOP-LEFT, TOP-CENTRE, RIGHT, BOTTOM-RIGHT, BOTTOM-LEFT, TOP-RIGHT FAR, COMPASS COUNT SEEN, BOARD, EXTRA).\n\nScore in exactly this format:\nCARD LAW: <VALID if the card has exactly 6 probe lines and one control line, the control needle is NORTH, the two axis probes LEFT and RIGHT carry the SAME needle direction (WEST when the red end is LEFT, EAST when it is RIGHT), TOP-CENTRE points from the north end toward the south end (EAST when the red end is LEFT, WEST when it is RIGHT), TOP-LEFT and BOTTOM-RIGHT carry the same direction (NORTH when the red end is LEFT, SOUTH when it is RIGHT) and BOTTOM-LEFT carries the opposite of that pair (SOUTH when the red end is LEFT, NORTH when it is RIGHT); otherwise INVALID, naming each problem>\nPROBES: <number of the 6 probe positions whose read entry gives an actual direction (not MISSING or UNCLEAR)> of 6\nDIRECTIONS: <number of the 6 probe positions whose read direction exactly equals their carded needle direction> of 6\nAXIS: <CORRECT if both the LEFT and RIGHT reads equal their carded direction - the same direction at both ends; WRONG otherwise>\nCONTROL: <CORRECT if the TOP-RIGHT FAR read is NORTH; WRONG otherwise>\nMAGNET: <CORRECT if the read's red end side equals the card's; WRONG otherwise>\nFIELD ERRORS: <every point lost, as short clauses separated by '; ' - name each missing or unclear compass, each wrong direction with the direction read and the direction carded, a split axis, a captured control, a flipped magnet; 'none' if nothing was lost>\nEXTRA: <the read's EXTRA, or 'none'>\nSUMMARY: <one short line naming what held and what failed>\nScore strictly from the two texts. Match read entries to carded probes by position name.",
+    "maxTokens": 1200,
+    "reasoningEffort": "low"
+   },
+   "w": 280,
+   "name": "Field re-audit - GLM scores the corrected board against the same card",
+   "sizes": {
+    "system": 150
+   }
+  },
+  {
+   "id": "ask",
+   "type": "text",
+   "x": 1160,
+   "y": 520,
+   "fields": {
+    "text": "Inspect the magnet board in the attached picture now, following your instructions exactly."
+   },
+   "w": 240,
+   "name": "Inspect ask"
+  },
+  {
+   "id": "ask2",
+   "type": "text",
+   "x": 2960,
+   "y": 900,
+   "fields": {
+    "text": "Inspect the magnet board in the attached picture now, following your instructions exactly."
+   },
+   "w": 240,
+   "name": "Re-inspect ask"
+  }
+ ],
+ "links": [
+  {
+   "id": "l1",
+   "from": {
+    "node": "setting",
+    "port": "text"
+   },
+   "to": {
+    "node": "director",
+    "port": "prompt"
+   }
+  },
+  {
+   "id": "l2",
+   "from": {
+    "node": "director",
+    "port": "text"
+   },
+   "to": {
+    "node": "j0",
+    "port": "b"
+   }
+  },
+  {
+   "id": "l12",
+   "from": {
+    "node": "setting",
+    "port": "text"
+   },
+   "to": {
+    "node": "j0",
+    "port": "a"
+   }
+  },
+  {
+   "id": "l13",
+   "from": {
+    "node": "j0",
+    "port": "text"
+   },
+   "to": {
+    "node": "stylist",
+    "port": "prompt"
+   }
+  },
+  {
+   "id": "l3",
+   "from": {
+    "node": "stylist",
+    "port": "text"
+   },
+   "to": {
+    "node": "paint",
+    "port": "prompt"
+   }
+  },
+  {
+   "id": "l4",
+   "from": {
+    "node": "paint",
+    "port": "image"
+   },
+   "to": {
+    "node": "surveyor",
+    "port": "img1"
+   }
+  },
+  {
+   "id": "l7",
+   "from": {
+    "node": "director",
+    "port": "text"
+   },
+   "to": {
+    "node": "j1",
+    "port": "a"
+   }
+  },
+  {
+   "id": "l8",
+   "from": {
+    "node": "surveyor",
+    "port": "text"
+   },
+   "to": {
+    "node": "j1",
+    "port": "b"
+   }
+  },
+  {
+   "id": "l11",
+   "from": {
+    "node": "j1",
+    "port": "text"
+   },
+   "to": {
+    "node": "checker",
+    "port": "prompt"
+   }
+  },
+  {
+   "id": "l14",
+   "from": {
+    "node": "j1",
+    "port": "text"
+   },
+   "to": {
+    "node": "j2",
+    "port": "a"
+   }
+  },
+  {
+   "id": "l15",
+   "from": {
+    "node": "checker",
+    "port": "text"
+   },
+   "to": {
+    "node": "j2",
+    "port": "b"
+   }
+  },
+  {
+   "id": "l16",
+   "from": {
+    "node": "j2",
+    "port": "text"
+   },
+   "to": {
+    "node": "audit",
+    "port": "text"
+   }
+  },
+  {
+   "id": "l17",
+   "from": {
+    "node": "paint",
+    "port": "image"
+   },
+   "to": {
+    "node": "audit",
+    "port": "img1"
+   }
+  },
+  {
+   "id": "l18",
+   "from": {
+    "node": "j2",
+    "port": "text"
+   },
+   "to": {
+    "node": "editor",
+    "port": "prompt"
+   }
+  },
+  {
+   "id": "l19",
+   "from": {
+    "node": "editor",
+    "port": "text"
+   },
+   "to": {
+    "node": "fix",
+    "port": "prompt"
+   }
+  },
+  {
+   "id": "l20",
+   "from": {
+    "node": "paint",
+    "port": "image"
+   },
+   "to": {
+    "node": "fix",
+    "port": "image"
+   }
+  },
+  {
+   "id": "l21",
+   "from": {
+    "node": "fix",
+    "port": "image"
+   },
+   "to": {
+    "node": "surveyor2",
+    "port": "img1"
+   }
+  },
+  {
+   "id": "l22",
+   "from": {
+    "node": "director",
+    "port": "text"
+   },
+   "to": {
+    "node": "j4",
+    "port": "a"
+   }
+  },
+  {
+   "id": "l23",
+   "from": {
+    "node": "surveyor2",
+    "port": "text"
+   },
+   "to": {
+    "node": "j4",
+    "port": "b"
+   }
+  },
+  {
+   "id": "l24",
+   "from": {
+    "node": "j4",
+    "port": "text"
+   },
+   "to": {
+    "node": "checker2",
+    "port": "prompt"
+   }
+  },
+  {
+   "id": "l39",
+   "from": {
+    "node": "ask",
+    "port": "text"
+   },
+   "to": {
+    "node": "surveyor",
+    "port": "prompt"
+   }
+  },
+  {
+   "id": "l40",
+   "from": {
+    "node": "ask2",
+    "port": "text"
+   },
+   "to": {
+    "node": "surveyor2",
+    "port": "prompt"
+   }
+  }
+ ],
+ "nid": 32,
+ "lid": 40,
+ "view": {
+  "panX": 40,
+  "panY": 40,
+  "scale": 0.5
+ }
+}
