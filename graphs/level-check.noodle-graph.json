@@ -1,0 +1,505 @@
+{
+  "v": 1,
+  "nodes": [
+    {
+      "id": "c1",
+      "type": "comment",
+      "x": 60,
+      "y": 30,
+      "fields": {
+        "text": "Can a painter let water find its own level? A GLM director picks one communicating-vessels row from a menu printed in its own prompt (four rows, each four differently shaped and differently tall glass vessels standing on one bench line, joined at their bases by a single horizontal glass tube, holding one coloured liquid, plus a fifth vessel standing apart, unconnected, filled to its own level) and copies out a LEVEL CARD: the liquid, the four connected vessels in left-to-right order with their shapes and relative heights, the base tube, the middle zone the common surface must rest in, and the isolated vessel with its own high or low fill. A second GLM turns the card into an image prompt that states the vessels, the tube and the pour - one generous measure of the liquid poured into the first vessel only - and the hydrostatic law once and abstractly: liquid in vessels joined at the base flows through the tube until every connected surface rests on one and the same horizontal line, whatever a vessel's shape, width or height, while a vessel that is not joined keeps whatever level it was filled to. The prompt is forbidden to state how full each connected vessel should look or where its own surface sits: the painter must equalise the absolute heights itself, which is exactly where the signature failure lives, because a painter that fills by proportion gives every vessel the same fraction of its own height and staggers the surfaces up and down the row. Muse paints one wide picture: the row of four connected vessels, the tube under them, and the isolated vessel apart on the right. A blind Gemini reader reports each vessel's shape and the vertical position of its liquid surface as a percentage of the picture height. A GLM auditor derives the law itself - one level for the connected four, a different level for the isolated one - and scores SHAPES, SPREAD (the gap between the highest and lowest connected surfaces), EQUALITY, ZONE, DECOY (the isolated surface kept clear of the common line) and TUBE. A Decide judge headlines round 1. That verdict is not the deliverable: a GLM editor turns the audit into concrete level-repaint notes (gated - on a perfect audit it must demand a verbatim unchanged copy), Muse Edit repaints the surfaces, and a blind re-read plus the same auditor re-score the corrected picture against the same card. The corrected picture is the flow's final output."
+      },
+      "w": 900,
+      "name": "Level check"
+    },
+    {
+      "id": "setting",
+      "type": "text",
+      "x": 60,
+      "y": 300,
+      "fields": {
+        "text": "A plain pale laboratory bench backdrop, empty and evenly lit: one long bench surface running across the lower third of the picture at a single height, room for a row of glass vessels standing on it. No objects, no text."
+      },
+      "w": 300,
+      "name": "Bench setting"
+    },
+    {
+      "id": "director",
+      "type": "llm",
+      "x": 440,
+      "y": 280,
+      "fields": {
+        "model": "z-ai/glm-5.3-flash",
+        "system": "You are a communicating-vessels director. The SETTING you receive is an empty bench backdrop, not an image and not a scene to match: it names no vessels on purpose, because the painter will draw the chosen row afterwards. Do NOT try to match a menu row to the setting, do NOT refuse, and never ask for a different input. Pick exactly one menu row freely - any of the four is a correct choice - and copy it out as the card. Given the SETTING, design a LEVEL CARD for one communicating-vessels image. Choose ONE row from this menu ONLY, and copy its spec EXACTLY - the row name, the liquid line, the four vessel lines, the connection line, the zone line and the two decoy lines:\n\nTHE LAW (fixed for every row): four glass vessels of different shapes and different heights stand in a row on one bench line, joined at their bases by a single horizontal glass tube that runs under all four, below the liquid. Liquid poured into any one of them flows through the tube until the surface in every connected vessel rests on one and the same horizontal line - the height of the line does not depend on a vessel's shape, width or height, only on how much liquid the system holds. A fifth vessel stands apart, is NOT joined to the tube, and keeps whatever level it was filled to on its own.\n\nMENU:\n1. EMBER ROW - LIQUID: translucent amber-orange liquid. VESSEL 1: a TALL narrow straight glass cylinder, the tallest of the row. VESSEL 2: a SHORT round spherical glass flask. VESSEL 3: a MEDIUM-TALL wide conical glass funnel, point down. VESSEL 4: a MEDIUM straight glass beaker. CONNECTION: vessels 1-4 joined at their bases by one horizontal glass tube. ZONE: MIDDLE - the common surface rests in the middle band of the picture. DECOY: vessel 5, a TALL stoppered glass bottle, standing apart on the right, not joined to the tube. DECOY LEVEL: HIGH - filled on its own to a surface well above the connected row's common line.\n2. AZURE ROW - LIQUID: translucent deep-blue liquid. VESSEL 1: a MEDIUM straight glass beaker. VESSEL 2: a MEDIUM-TALL wide conical glass funnel, point down. VESSEL 3: a TALL narrow straight glass cylinder, the tallest of the row. VESSEL 4: a SHORT round spherical glass flask. CONNECTION: vessels 1-4 joined at their bases by one horizontal glass tube. ZONE: MIDDLE - the common surface rests in the middle band of the picture. DECOY: vessel 5, a SHORT squat glass jug, standing apart on the right, not joined to the tube. DECOY LEVEL: LOW - filled on its own to a surface well below the connected row's common line.\n3. VIOLET ROW - LIQUID: translucent violet-purple liquid. VESSEL 1: a SHORT round spherical glass flask. VESSEL 2: a MEDIUM straight glass beaker. VESSEL 3: a TALL narrow straight glass cylinder, the tallest of the row. VESSEL 4: a MEDIUM-TALL wide conical glass funnel, point down. CONNECTION: vessels 1-4 joined at their bases by one horizontal glass tube. ZONE: MIDDLE - the common surface rests in the middle band of the picture. DECOY: vessel 5, a TALL stoppered glass bottle, standing apart on the right, not joined to the tube. DECOY LEVEL: HIGH - filled on its own to a surface well above the connected row's common line.\n4. ROSE ROW - LIQUID: translucent rose-red liquid. VESSEL 1: a MEDIUM-TALL wide conical glass funnel, point down. VESSEL 2: a TALL narrow straight glass cylinder, the tallest of the row. VESSEL 3: a SHORT round spherical glass flask. VESSEL 4: a MEDIUM straight glass beaker. CONNECTION: vessels 1-4 joined at their bases by one horizontal glass tube. ZONE: MIDDLE - the common surface rests in the middle band of the picture. DECOY: vessel 5, a SHORT squat glass jug, standing apart on the right, not joined to the tube. DECOY LEVEL: LOW - filled on its own to a surface well below the connected row's common line.\n\nThe card cards the physics, not a picture: the connected four share one level because the tube joins them, never because they were filled alike - left alone, a painter fills each vessel to the same fraction of its own height and staggers the surfaces, and levels the isolated vessel along with the rest.\n\nOutput ONLY the card, in exactly this format, copying the chosen row's spec without changing any of it:\nSCENE: <the row name>\nLIQUID: <the liquid line exactly as carded>\nVESSEL 1: <the vessel 1 line exactly as carded>\nVESSEL 2: <the vessel 2 line exactly as carded>\nVESSEL 3: <the vessel 3 line exactly as carded>\nVESSEL 4: <the vessel 4 line exactly as carded>\nCONNECTION: <the connection line exactly as carded>\nZONE: <the zone line exactly as carded>\nDECOY: <the decoy line exactly as carded>\nDECOY LEVEL: <the decoy level line exactly as carded>\nNo other text.",
+        "maxTokens": 900,
+        "reasoningEffort": "low"
+      },
+      "w": 280,
+      "name": "Level card - GLM picks a vessels row and copies its shapes, tube, zone and decoy",
+      "sizes": {
+        "system": 150
+      }
+    },
+    {
+      "id": "j0",
+      "type": "join",
+      "x": 800,
+      "y": 480,
+      "fields": {
+        "sep": "\n\nLEVEL CARD (the row - its liquid, its four connected vessels in order, the base tube, the zone and the isolated decoy; its exact wording must reach the image maker):\n\n"
+      },
+      "w": 200,
+      "name": "Setting + level card"
+    },
+    {
+      "id": "stylist",
+      "type": "llm",
+      "x": 800,
+      "y": 280,
+      "fields": {
+        "model": "z-ai/glm-5.3-flash",
+        "system": "You turn a LEVEL CARD into ONE prompt for an AI image generator. The input always contains a valid card with a LIQUID line, four VESSEL lines, a CONNECTION line, a ZONE line, a DECOY line and a DECOY LEVEL line; never refuse and never ask for a different card. Write a single-paragraph prompt for one wide picture on a plain pale laboratory background, demanding all of this:\n- One row of four clear glass vessels standing on a single flat bench line at the same base height, in the card's exact left-to-right order, each drawn in its carded shape at its carded relative height (the tall narrow cylinder clearly the tallest, the round flask clearly the shortest) - state each vessel's shape and relative height in the prompt, since the vessels are data, not a deduction.\n- One horizontal glass tube joins the bases of all four vessels, running straight under the row below the liquid, visibly connecting every vessel to its neighbours.\n- The fifth vessel from the card's DECOY line stands apart on the right, separated from the row, with no tube touching it; it holds the same liquid filled on its own to the card's DECOY LEVEL - state that fill as a property of the decoy alone (filled high, its surface up near its shoulder; or filled low, its surface down near its base).\n- The fill event, stated exactly like this: one generous measure of the card's liquid was poured into vessel 1 only, and the liquid has settled. Then state the hydrostatic law once, in these terms: liquid in vessels joined at the base flows through the tube until the surface in every joined vessel rests on one and the same horizontal line across the whole row, in the middle band of the picture - the same absolute height in the tall cylinder and the short flask alike, whatever each vessel's shape, width or height - while the vessel that is not joined keeps its own different level.\n- Do NOT state how full any connected vessel should look, do NOT give any connected vessel its own surface position or its own fraction, and do NOT copy the card's ZONE line as a per-vessel instruction - the generator must equalise the absolute surface heights itself.\n- Every connected vessel holds some of the liquid and none is filled to the brim; the liquid is one flat-topped body of colour in each vessel with a clean horizontal surface; no words, letters, labels, numbers or measurement marks anywhere, no hands, no people, no other objects, nothing else on the bench.\nOutput ONLY the image prompt, one paragraph, no preamble.",
+        "maxTokens": 900,
+        "reasoningEffort": "low"
+      },
+      "w": 280,
+      "name": "Vessels brief - GLM turns the card into a row prompt (no per-vessel fill ever stated)",
+      "sizes": {
+        "system": 150
+      }
+    },
+    {
+      "id": "paint",
+      "type": "image",
+      "x": 1160,
+      "y": 280,
+      "fields": {
+        "model": "meta/muse-image/text-to-image",
+        "size": "16:9",
+        "variations": "1"
+      },
+      "w": 280,
+      "name": "Vessels row - Muse paints the connected row, the tube and the isolated vessel"
+    },
+    {
+      "id": "surveyor",
+      "type": "llm",
+      "x": 1520,
+      "y": 280,
+      "fields": {
+        "model": "google/gemini-3.8-flash",
+        "system": "You are a vessels inspector examining one wide picture: a row of four clear glass vessels of different shapes and heights standing on one bench line, joined at their bases by a horizontal glass tube, each holding some coloured liquid, plus a fifth glass vessel standing apart on the right holding the same liquid. You do not know what was planned - report only what you actually see, in exactly this format:\nLAYOUT: <ROW if the picture holds one row of four connected vessels plus one separate vessel on the right; OTHER otherwise, followed by a short note on what is wrong>\nVESSEL 1 SHAPE: <the shape of the leftmost connected vessel in one or two plain words, e.g. tall cylinder, round flask, conical funnel, beaker>\nSURFACE 1: <one number only - the vertical position of vessel 1's liquid surface as a percentage of the whole picture's height, 0 at the very top edge of the picture and 100 at the very bottom edge; judge the flat top surface of the liquid itself>\nVESSEL 2 SHAPE: <the shape of the second connected vessel>\nSURFACE 2: <one number only - vessel 2's surface position on the same 0-to-100 picture-height scale>\nVESSEL 3 SHAPE: <the shape of the third connected vessel>\nSURFACE 3: <one number only - vessel 3's surface position on the same scale>\nVESSEL 4 SHAPE: <the shape of the fourth connected vessel>\nSURFACE 4: <one number only - vessel 4's surface position on the same scale>\nTUBE: <ALL FOUR if one horizontal tube at the bases visibly joins all four connected vessels; PARTIAL if it joins only some; NONE if there is no connecting tube - add a short note>\nDECOY SHAPE: <the shape of the separate fifth vessel on the right>\nDECOY SURFACE: <one number only - the decoy vessel's surface position on the same 0-to-100 picture-height scale>\nDECOY JOINED: <NO if no tube touches the decoy vessel; YES if a tube joins it to the row>\nFILLS: <which of the five vessels hold liquid, naming any that are empty or filled to the brim; 'all five hold liquid, none brim-full' if that is what you see>\nEXTRA: <anything that is not part of the scene as described - other objects, hands, people, text, letters, labels; 'none' if there is nothing of the kind>\nEstimate each surface position independently against the whole picture height, even when two surfaces look level - a row whose surfaces sit at different heights is exactly what must be visible in your numbers. Report what you actually see, even when it looks physically wrong.",
+        "maxTokens": 900,
+        "reasoningEffort": "low"
+      },
+      "w": 280,
+      "name": "Vessels read - Gemini reports each vessel's shape and surface height, blind",
+      "sizes": {
+        "system": 150
+      }
+    },
+    {
+      "id": "j1",
+      "type": "join",
+      "x": 1880,
+      "y": 180,
+      "fields": {
+        "sep": "\n\nVESSELS READ (a blind inspector reported only what it could see - each vessel's shape and the height of its liquid surface; it never saw the level card):\n\n"
+      },
+      "w": 200,
+      "name": "Level card + vessels read"
+    },
+    {
+      "id": "checker",
+      "type": "llm",
+      "x": 2240,
+      "y": 400,
+      "fields": {
+        "model": "z-ai/glm-5.3-flash",
+        "system": "You are a communicating-vessels auditor. The input gives a LEVEL CARD (SCENE, LIQUID, four VESSEL lines, CONNECTION, ZONE, DECOY and DECOY LEVEL lines) and then a VESSELS READ from a blind inspector (LAYOUT, VESSEL 1-4 SHAPE and SURFACE numbers on a 0-to-100 picture-height scale where bigger means lower in the picture, TUBE, DECOY SHAPE, DECOY SURFACE, DECOY JOINED, FILLS, EXTRA).\n\nFirst derive the law yourself: vessels joined at the base by one tube hold one liquid at one level, so the four connected surfaces must agree in absolute picture height whatever the vessels' shapes or heights; the decoy is not joined, so its surface must sit clearly away from the connected line, on the side its DECOY LEVEL line cards (HIGH means a smaller surface number than the connected line, LOW means a bigger one).\n\nMatch shapes by the vessel named, ignoring harmless extra descriptors (a read of 'tall glass cylinder' matches a carded TALL narrow straight glass cylinder; 'round flask' matches the spherical flask; 'cone funnel' matches the conical funnel).\n\nCompute from the read's four connected SURFACE numbers: MEDIAN = the middle value (average of the two middle values), SPREAD = the largest minus the smallest.\n\nScore in exactly this format:\nCARD LAW: <VALID if the card joins exactly vessels 1-4 by one base tube, cards four different shapes at different heights, and cards the decoy apart and unjoined with its own level; otherwise INVALID, naming each problem>\nSHAPES: <count> of 5 - <the read's shape matches the card's at that many of the five vessels (the four connected in order, then the decoy); name each mismatching position with the shape read and the shape carded, or 'all shapes match'>\nSPREAD: <the computed SPREAD> points (surfaces read: <the four numbers>)\nEQUALITY: <EQUAL if SPREAD is 8 or less; UNEVEN otherwise, naming the highest vessel (smallest surface number) and the lowest vessel (largest surface number) and the gap>\nZONE: <IN if the MEDIAN is between 35 and 70 inclusive; OUT otherwise, giving the median>\nDECOY: <SEPARATE if the decoy's surface differs from the MEDIAN by at least 12 points AND sits on the carded side (HIGH: decoy number smaller; LOW: decoy number bigger) AND DECOY JOINED is NO; LEVELLED if it differs by less than 12 points; WRONG SIDE if it differs enough but on the wrong side; JOINED if DECOY JOINED is YES - name which>\nTUBE: <the read's TUBE verdict - ALL FOUR, PARTIAL or NONE>\nLEVEL ERRORS: <every point lost, as short clauses separated by '; ' - name each wrong shape, the spread and the vessels off the common line, a median outside the zone, a decoy levelled, on the wrong side or joined, a tube short of all four, any vessel empty or brim-full from FILLS; 'none' if nothing was lost>\nEXTRA: <the read's EXTRA, or 'none'>\nSUMMARY: <one short line naming what held and what failed>\nScore strictly from the two texts and the hydrostatic law, doing the arithmetic on the read's own numbers.",
+        "maxTokens": 1200,
+        "reasoningEffort": "low"
+      },
+      "w": 280,
+      "name": "Level audit - GLM derives the one-level law and scores shapes, spread, equality, zone, decoy and tube",
+      "sizes": {
+        "system": 150
+      }
+    },
+    {
+      "id": "j2",
+      "type": "join",
+      "x": 2240,
+      "y": 180,
+      "fields": {
+        "sep": "\n\nLEVEL AUDIT (a GLM auditor scored the blind read against the card - shapes, surface spread, equality, zone, the decoy's separation and the tube):\n\n"
+      },
+      "w": 200,
+      "name": "Card, vessels read + level audit"
+    },
+    {
+      "id": "audit",
+      "type": "decide",
+      "x": 2600,
+      "y": 180,
+      "fields": {
+        "model": "perplexity/pplx-decider-v1.2",
+        "mode": "choose",
+        "question": "The picture should hold a row of four clear glass vessels of different shapes and heights on one bench line, joined at their bases by one horizontal tube, holding one coloured liquid poured into the first vessel only: because the tube joins them, the liquid surface in all four must rest on one and the same horizontal line in the middle band of the picture, whatever each vessel's shape or height. A fifth vessel stands apart on the right, not joined to the tube, its surface clearly above or below the common line as carded. The audit in the text scores the blind read against the card: the shapes, the spread between the highest and lowest connected surfaces, the equality of the four, the zone, the decoy's separation and the tube. Choose the one label that best fits the round-1 picture.",
+        "options": "levels true\nlevels uneven\ndecoy levelled\nnot connected\nnot vessels"
+      },
+      "w": 280,
+      "name": "Levels true - audited",
+      "sizes": {
+        "question": 130
+      }
+    },
+    {
+      "id": "editor",
+      "type": "llm",
+      "x": 2600,
+      "y": 520,
+      "fields": {
+        "model": "z-ai/glm-5.3-flash",
+        "system": "You are the vessels editor in a communicating-vessels pipeline. The input gives a LEVEL CARD, a blind VESSELS READ and a VESSELS AUDIT of the round-1 image. Write ONE edit instruction for an image editor working on that image, in at most 130 words.\nIf the audit shows a perfect reading (CARD LAW: VALID, SHAPES: 5 of 5, EQUALITY: EQUAL, ZONE: IN, DECOY: SEPARATE, TUBE: ALL FOUR, LEVEL ERRORS: none, EXTRA: none), output exactly this and nothing else: 'Reproduce this communicating-vessels picture completely unchanged - same five vessels in the same shapes and positions, same base tube, same liquid surfaces at the same heights. Do not move, add, remove or repaint anything.'\nCRITICAL SCALE RULE: the read's surface numbers are percentages of the picture height measured FROM THE TOP, so a SMALLER number is a HIGHER surface in the picture and a BIGGER number is a LOWER one. When you name a vessel's move, derive it from the numbers, never from the words high or low alone: if a vessel's surface number is BIGGER than the common line's number, its surface must RISE in the picture (move up) to reach the line; if SMALLER, its surface must DROP in the picture (move down). State each move as a picture direction (raise the surface up / lower the surface down) and never quote the raw numbers as heights. Otherwise write the instruction as the full target end state plus the audit's specific failures as surface-repaint demands: name the four connected vessels in order with their carded shapes, the one horizontal base tube joining all four, and ONE common surface line for the connected four - set it at the audit's median height, and for each connected vessel whose surface sits off that line say whether its liquid surface must be raised or lowered to the line, keeping every vessel's shape, size and position exactly as drawn. If the decoy was levelled, on the wrong side or joined, demand the decoy vessel be moved apart with no tube touching it and its surface repainted well above the common line if the card says HIGH, or well below it if the card says LOW. If the tube joined fewer than four vessels, demand the tube be extended to join all four bases. Whichever vessels already sit exactly on the common line, and whichever half of the picture passed completely, must be left exactly as they are. Never ask for any text, labels or measurement marks.",
+        "maxTokens": 400,
+        "reasoningEffort": "low"
+      },
+      "w": 280,
+      "name": "Edit notes - GLM turns the level audit into concrete surface-repaint instructions",
+      "sizes": {
+        "system": 150
+      }
+    },
+    {
+      "id": "fix",
+      "type": "edit",
+      "x": 2960,
+      "y": 520,
+      "fields": {
+        "model": "meta/muse-image/edit",
+        "size": "auto"
+      },
+      "w": 280,
+      "name": "Corrected vessels row - Muse Edit repaints the surfaces per the hydrostatic law"
+    },
+    {
+      "id": "surveyor2",
+      "type": "llm",
+      "x": 3320,
+      "y": 520,
+      "fields": {
+        "model": "google/gemini-3.8-flash",
+        "system": "You are a vessels inspector examining one wide picture: a row of four clear glass vessels of different shapes and heights standing on one bench line, joined at their bases by a horizontal glass tube, each holding some coloured liquid, plus a fifth glass vessel standing apart on the right holding the same liquid. You do not know what was planned - report only what you actually see, in exactly this format:\nLAYOUT: <ROW if the picture holds one row of four connected vessels plus one separate vessel on the right; OTHER otherwise, followed by a short note on what is wrong>\nVESSEL 1 SHAPE: <the shape of the leftmost connected vessel in one or two plain words, e.g. tall cylinder, round flask, conical funnel, beaker>\nSURFACE 1: <one number only - the vertical position of vessel 1's liquid surface as a percentage of the whole picture's height, 0 at the very top edge of the picture and 100 at the very bottom edge; judge the flat top surface of the liquid itself>\nVESSEL 2 SHAPE: <the shape of the second connected vessel>\nSURFACE 2: <one number only - vessel 2's surface position on the same 0-to-100 picture-height scale>\nVESSEL 3 SHAPE: <the shape of the third connected vessel>\nSURFACE 3: <one number only - vessel 3's surface position on the same scale>\nVESSEL 4 SHAPE: <the shape of the fourth connected vessel>\nSURFACE 4: <one number only - vessel 4's surface position on the same scale>\nTUBE: <ALL FOUR if one horizontal tube at the bases visibly joins all four connected vessels; PARTIAL if it joins only some; NONE if there is no connecting tube - add a short note>\nDECOY SHAPE: <the shape of the separate fifth vessel on the right>\nDECOY SURFACE: <one number only - the decoy vessel's surface position on the same 0-to-100 picture-height scale>\nDECOY JOINED: <NO if no tube touches the decoy vessel; YES if a tube joins it to the row>\nFILLS: <which of the five vessels hold liquid, naming any that are empty or filled to the brim; 'all five hold liquid, none brim-full' if that is what you see>\nEXTRA: <anything that is not part of the scene as described - other objects, hands, people, text, letters, labels; 'none' if there is nothing of the kind>\nEstimate each surface position independently against the whole picture height, even when two surfaces look level - a row whose surfaces sit at different heights is exactly what must be visible in your numbers. Report what you actually see, even when it looks physically wrong.",
+        "maxTokens": 900,
+        "reasoningEffort": "low"
+      },
+      "w": 280,
+      "name": "Re-read - Gemini reports the corrected picture's shapes and surface heights, blind",
+      "sizes": {
+        "system": 150
+      }
+    },
+    {
+      "id": "j4",
+      "type": "join",
+      "x": 3680,
+      "y": 420,
+      "fields": {
+        "sep": "\n\nVESSELS READ (a blind inspector reported only what it could see in the corrected image - each vessel's shape and surface height; it never saw the level card):\n\n"
+      },
+      "w": 200,
+      "name": "Level card + re-read"
+    },
+    {
+      "id": "checker2",
+      "type": "llm",
+      "x": 4040,
+      "y": 520,
+      "fields": {
+        "model": "z-ai/glm-5.3-flash",
+        "system": "You are a communicating-vessels auditor. The input gives a LEVEL CARD (SCENE, LIQUID, four VESSEL lines, CONNECTION, ZONE, DECOY and DECOY LEVEL lines) and then a VESSELS READ from a blind inspector (LAYOUT, VESSEL 1-4 SHAPE and SURFACE numbers on a 0-to-100 picture-height scale where bigger means lower in the picture, TUBE, DECOY SHAPE, DECOY SURFACE, DECOY JOINED, FILLS, EXTRA).\n\nFirst derive the law yourself: vessels joined at the base by one tube hold one liquid at one level, so the four connected surfaces must agree in absolute picture height whatever the vessels' shapes or heights; the decoy is not joined, so its surface must sit clearly away from the connected line, on the side its DECOY LEVEL line cards (HIGH means a smaller surface number than the connected line, LOW means a bigger one).\n\nMatch shapes by the vessel named, ignoring harmless extra descriptors (a read of 'tall glass cylinder' matches a carded TALL narrow straight glass cylinder; 'round flask' matches the spherical flask; 'cone funnel' matches the conical funnel).\n\nCompute from the read's four connected SURFACE numbers: MEDIAN = the middle value (average of the two middle values), SPREAD = the largest minus the smallest.\n\nScore in exactly this format:\nCARD LAW: <VALID if the card joins exactly vessels 1-4 by one base tube, cards four different shapes at different heights, and cards the decoy apart and unjoined with its own level; otherwise INVALID, naming each problem>\nSHAPES: <count> of 5 - <the read's shape matches the card's at that many of the five vessels (the four connected in order, then the decoy); name each mismatching position with the shape read and the shape carded, or 'all shapes match'>\nSPREAD: <the computed SPREAD> points (surfaces read: <the four numbers>)\nEQUALITY: <EQUAL if SPREAD is 8 or less; UNEVEN otherwise, naming the highest vessel (smallest surface number) and the lowest vessel (largest surface number) and the gap>\nZONE: <IN if the MEDIAN is between 35 and 70 inclusive; OUT otherwise, giving the median>\nDECOY: <SEPARATE if the decoy's surface differs from the MEDIAN by at least 12 points AND sits on the carded side (HIGH: decoy number smaller; LOW: decoy number bigger) AND DECOY JOINED is NO; LEVELLED if it differs by less than 12 points; WRONG SIDE if it differs enough but on the wrong side; JOINED if DECOY JOINED is YES - name which>\nTUBE: <the read's TUBE verdict - ALL FOUR, PARTIAL or NONE>\nLEVEL ERRORS: <every point lost, as short clauses separated by '; ' - name each wrong shape, the spread and the vessels off the common line, a median outside the zone, a decoy levelled, on the wrong side or joined, a tube short of all four, any vessel empty or brim-full from FILLS; 'none' if nothing was lost>\nEXTRA: <the read's EXTRA, or 'none'>\nSUMMARY: <one short line naming what held and what failed>\nScore strictly from the two texts and the hydrostatic law, doing the arithmetic on the read's own numbers.",
+        "maxTokens": 1200,
+        "reasoningEffort": "low"
+      },
+      "w": 280,
+      "name": "Level re-audit - GLM scores the corrected picture against the same card",
+      "sizes": {
+        "system": 150
+      }
+    },
+    {
+      "id": "ask",
+      "type": "text",
+      "x": 1160,
+      "y": 520,
+      "fields": {
+        "text": "Inspect the communicating-vessels picture in the attached image now, following your instructions exactly."
+      },
+      "w": 240,
+      "name": "Inspect ask"
+    },
+    {
+      "id": "ask2",
+      "type": "text",
+      "x": 2960,
+      "y": 900,
+      "fields": {
+        "text": "Inspect the communicating-vessels picture in the attached image now, following your instructions exactly."
+      },
+      "w": 240,
+      "name": "Re-inspect ask"
+    }
+  ],
+  "links": [
+    {
+      "id": "l1",
+      "from": {
+        "node": "setting",
+        "port": "text"
+      },
+      "to": {
+        "node": "director",
+        "port": "prompt"
+      }
+    },
+    {
+      "id": "l2",
+      "from": {
+        "node": "director",
+        "port": "text"
+      },
+      "to": {
+        "node": "j0",
+        "port": "b"
+      }
+    },
+    {
+      "id": "l12",
+      "from": {
+        "node": "setting",
+        "port": "text"
+      },
+      "to": {
+        "node": "j0",
+        "port": "a"
+      }
+    },
+    {
+      "id": "l13",
+      "from": {
+        "node": "j0",
+        "port": "text"
+      },
+      "to": {
+        "node": "stylist",
+        "port": "prompt"
+      }
+    },
+    {
+      "id": "l3",
+      "from": {
+        "node": "stylist",
+        "port": "text"
+      },
+      "to": {
+        "node": "paint",
+        "port": "prompt"
+      }
+    },
+    {
+      "id": "l4",
+      "from": {
+        "node": "paint",
+        "port": "image"
+      },
+      "to": {
+        "node": "surveyor",
+        "port": "img1"
+      }
+    },
+    {
+      "id": "l7",
+      "from": {
+        "node": "director",
+        "port": "text"
+      },
+      "to": {
+        "node": "j1",
+        "port": "a"
+      }
+    },
+    {
+      "id": "l8",
+      "from": {
+        "node": "surveyor",
+        "port": "text"
+      },
+      "to": {
+        "node": "j1",
+        "port": "b"
+      }
+    },
+    {
+      "id": "l11",
+      "from": {
+        "node": "j1",
+        "port": "text"
+      },
+      "to": {
+        "node": "checker",
+        "port": "prompt"
+      }
+    },
+    {
+      "id": "l14",
+      "from": {
+        "node": "j1",
+        "port": "text"
+      },
+      "to": {
+        "node": "j2",
+        "port": "a"
+      }
+    },
+    {
+      "id": "l15",
+      "from": {
+        "node": "checker",
+        "port": "text"
+      },
+      "to": {
+        "node": "j2",
+        "port": "b"
+      }
+    },
+    {
+      "id": "l16",
+      "from": {
+        "node": "j2",
+        "port": "text"
+      },
+      "to": {
+        "node": "audit",
+        "port": "text"
+      }
+    },
+    {
+      "id": "l17",
+      "from": {
+        "node": "paint",
+        "port": "image"
+      },
+      "to": {
+        "node": "audit",
+        "port": "img1"
+      }
+    },
+    {
+      "id": "l18",
+      "from": {
+        "node": "j2",
+        "port": "text"
+      },
+      "to": {
+        "node": "editor",
+        "port": "prompt"
+      }
+    },
+    {
+      "id": "l19",
+      "from": {
+        "node": "editor",
+        "port": "text"
+      },
+      "to": {
+        "node": "fix",
+        "port": "prompt"
+      }
+    },
+    {
+      "id": "l20",
+      "from": {
+        "node": "paint",
+        "port": "image"
+      },
+      "to": {
+        "node": "fix",
+        "port": "image"
+      }
+    },
+    {
+      "id": "l21",
+      "from": {
+        "node": "fix",
+        "port": "image"
+      },
+      "to": {
+        "node": "surveyor2",
+        "port": "img1"
+      }
+    },
+    {
+      "id": "l22",
+      "from": {
+        "node": "director",
+        "port": "text"
+      },
+      "to": {
+        "node": "j4",
+        "port": "a"
+      }
+    },
+    {
+      "id": "l23",
+      "from": {
+        "node": "surveyor2",
+        "port": "text"
+      },
+      "to": {
+        "node": "j4",
+        "port": "b"
+      }
+    },
+    {
+      "id": "l24",
+      "from": {
+        "node": "j4",
+        "port": "text"
+      },
+      "to": {
+        "node": "checker2",
+        "port": "prompt"
+      }
+    },
+    {
+      "id": "l39",
+      "from": {
+        "node": "ask",
+        "port": "text"
+      },
+      "to": {
+        "node": "surveyor",
+        "port": "prompt"
+      }
+    },
+    {
+      "id": "l40",
+      "from": {
+        "node": "ask2",
+        "port": "text"
+      },
+      "to": {
+        "node": "surveyor2",
+        "port": "prompt"
+      }
+    }
+  ],
+  "nid": 32,
+  "lid": 40,
+  "view": {
+    "panX": 40,
+    "panY": 40,
+    "scale": 0.5
+  }
+}
