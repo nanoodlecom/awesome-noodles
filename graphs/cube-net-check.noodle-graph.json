@@ -1,0 +1,505 @@
+{
+ "v": 1,
+ "nodes": [
+  {
+   "id": "c1",
+   "type": "comment",
+   "x": 60,
+   "y": 30,
+   "fields": {
+    "text": "Can a painter fold a flat net in its head? A GLM director picks one cube from a menu printed in its own prompt (four paper cubes, each drawn as the same cross-shaped net: one CENTRE face, an UP, DOWN, LEFT and RIGHT face around it, and a TAIL face hanging below DOWN, every face carrying a different picture motif) and copies out a CUBE CARD: the motif on each net position, the three opposite pairs the cross layout forces (UP opposite DOWN, LEFT opposite RIGHT, CENTRE opposite TAIL), the corner the folded cube is viewed from - named only in net positions - and the FRONT, TOP and RIGHT motifs that corner forces. A second GLM turns the card into an image prompt that states the net in full and the folding law once and abstractly - faces across the centre from each other end up opposite and can never be seen together, exactly three faces meet at any corner - and names the viewing corner in net positions only, forbidden to state which motif lands on the front, top or right of the folded cube: the painter must fold the net itself. Muse paints one picture: the flat net on the left, the folded cube on the right. A blind Gemini reader reports the motif at each net position and the motif on the cube's front, top and right faces. A GLM auditor re-derives the opposite pairs from the net positions itself and scores NET (each net position's motif), VIEW SET (the cube shows exactly the three faces that meet at the carded corner), POSITIONS (front, top and right each the forced motif), OPPOSITES (no opposite pair co-visible - a scored impossibility) and FACES (exactly three). A Decide judge headlines round 1. That verdict is not the deliverable: a GLM editor turns the audit into concrete repaint notes (gated - on a perfect audit it must demand a verbatim unchanged copy), Muse Edit repaints, and a blind re-read plus the same auditor re-score the corrected picture against the same card. The corrected picture is the flow's final output."
+   },
+   "w": 900,
+   "name": "Cube net check"
+  },
+  {
+   "id": "setting",
+   "type": "text",
+   "x": 60,
+   "y": 300,
+   "fields": {
+    "text": "A plain pale studio backdrop, empty and evenly lit: room on the left for a flat unfolded cube net drawn on white card, room on the right for one folded paper cube. No objects, no text."
+   },
+   "w": 300,
+   "name": "Backdrop setting"
+  },
+  {
+   "id": "director",
+   "type": "llm",
+   "x": 440,
+   "y": 280,
+   "fields": {
+    "model": "z-ai/glm-5.3-flash",
+    "system": "You are a cube-net director. The SETTING you receive is an empty backdrop, not an image and not a scene to match: it names no cube on purpose, because the painter will draw the chosen cube's net and its folded form afterwards. Do NOT try to match a menu cube to the setting, do NOT refuse, and never ask for a different input. Pick exactly one menu cube freely - any of the four is a correct choice - and copy it out as the card. Given the SETTING, design a CUBE CARD for one net-and-cube image. Choose ONE cube from this menu ONLY, and copy its spec EXACTLY - the cube name, the six face lines, the opposites line, the corner line and the view line:\n\nTHE NET (fixed for every cube): the net is a cross of six square faces. The CENTRE face sits in the middle; UP, DOWN, LEFT and RIGHT faces are attached to its four edges; the TAIL face is attached to the far edge of the DOWN face, hanging one square below it. Folded into a cube, faces that sit across the centre from each other become opposite faces of the cube and can never be visible in the same view: UP is opposite DOWN, LEFT is opposite RIGHT, and CENTRE is opposite TAIL. Exactly three faces meet at each corner of the cube, so a view of one corner shows exactly three faces - one from each opposite pair.\n\nMENU:\n1. HARBOUR CUBE - CENTRE: a navy-blue ANCHOR. UP: a gold STAR. DOWN: a silver crescent MOON. LEFT: a teal WAVE. RIGHT: a coral-pink SHELL. TAIL: a brass KEY. OPPOSITES: STAR opposite MOON; WAVE opposite SHELL; ANCHOR opposite KEY. CORNER: the corner where the CENTRE, UP and RIGHT faces meet, viewed from outside with the CENTRE face facing front. VIEW: FRONT ANCHOR, TOP STAR, RIGHT SHELL.\n2. GARDEN CUBE - CENTRE: a red APPLE. UP: a yellow-and-black BEE. DOWN: a green PEAR. LEFT: a green LEAF. RIGHT: a brown BASKET. TAIL: a grey SPADE. OPPOSITES: BEE opposite PEAR; LEAF opposite BASKET; APPLE opposite SPADE. CORNER: the corner where the LEFT, UP and CENTRE faces meet, viewed from outside with the LEFT face facing front. VIEW: FRONT LEAF, TOP BEE, RIGHT APPLE.\n3. WORKSHOP CUBE - CENTRE: an orange HAMMER. UP: a grey GEAR. DOWN: a steel NAIL. LEFT: a yellow RULER. RIGHT: a purple PAINTBRUSH. TAIL: red PLIERS. OPPOSITES: GEAR opposite NAIL; RULER opposite PAINTBRUSH; HAMMER opposite PLIERS. CORNER: the corner where the TAIL, DOWN and RIGHT faces meet, viewed from outside with the TAIL face facing front. VIEW: FRONT PLIERS, TOP NAIL, RIGHT PAINTBRUSH.\n4. ARCTIC CUBE - CENTRE: a black-and-white PENGUIN. UP: a pale-blue SNOWFLAKE. DOWN: a grey SEAL. LEFT: a white ICEBERG. RIGHT: an orange FISH. TAIL: a white IGLOO. OPPOSITES: SNOWFLAKE opposite SEAL; ICEBERG opposite FISH; PENGUIN opposite IGLOO. CORNER: the corner where the RIGHT, DOWN and CENTRE faces meet, viewed from outside with the RIGHT face facing front. VIEW: FRONT FISH, TOP SEAL, RIGHT PENGUIN.\n\nThe card cards the fold, not a picture: the opposite pairs come only from the net positions (across the centre), never from what the motifs suggest - left alone, a painter pairs motifs by theme, puts a sun and a moon on show together, and folds nothing.\n\nOutput ONLY the card, in exactly this format, copying the chosen cube's spec without changing any of it:\nSCENE: <the cube name>\nCENTRE: <the centre face line exactly as carded>\nUP: <the up face line exactly as carded>\nDOWN: <the down face line exactly as carded>\nLEFT: <the left face line exactly as carded>\nRIGHT: <the right face line exactly as carded>\nTAIL: <the tail face line exactly as carded>\nOPPOSITES: <the opposites line exactly as carded>\nCORNER: <the corner line exactly as carded>\nVIEW: <the view line exactly as carded>\nNo other text.",
+    "maxTokens": 900,
+    "reasoningEffort": "low"
+   },
+   "w": 280,
+   "name": "Cube card - GLM picks a cube and copies its net, opposite pairs, corner and view",
+   "sizes": {
+    "system": 150
+   }
+  },
+  {
+   "id": "j0",
+   "type": "join",
+   "x": 800,
+   "y": 480,
+   "fields": {
+    "sep": "\n\nCUBE CARD (the cube - its net positions and motifs, the opposite pairs the layout forces, its viewing corner and the view that corner forces; its exact wording must reach the image maker):\n\n"
+   },
+   "w": 200,
+   "name": "Setting + cube card"
+  },
+  {
+   "id": "stylist",
+   "type": "llm",
+   "x": 800,
+   "y": 280,
+   "fields": {
+    "model": "z-ai/glm-5.3-flash",
+    "system": "You turn a CUBE CARD into ONE prompt for an AI image generator. The input always contains a valid card with six face lines (CENTRE, UP, DOWN, LEFT, RIGHT, TAIL, each naming one picture motif), an OPPOSITES line, a CORNER line and a VIEW line; never refuse and never ask for a different card. Write a single-paragraph prompt for one wide picture on a plain pale background, demanding all of this:\n- On the LEFT half, the cube's flat net drawn on white card in this exact cross layout: the CENTRE face in the middle with the UP face directly above it, the DOWN face directly below it, the LEFT face to its left and the RIGHT face to its right, and the TAIL face one square below the DOWN face. Each square carries exactly the motif the card assigns to that position, drawn large and centred as a simple bold picture - state each position's motif in the prompt, since the net is data, not a deduction.\n- On the RIGHT half, the same cube folded up and seen from outside in a three-quarter view from slightly above, sitting next to the net at a similar scale. State the card's CORNER line in net positions only - which three net faces meet at the viewed corner and which of them faces the viewer - and state the folding law once, in these terms: when the cross folds up, the faces across the centre from each other become opposite faces of the cube and can never be visible in the same view, and exactly the three faces that meet at one corner can be seen together, one facing front, one on top, one on the right. Do NOT state which motif appears on the front, top or right face of the folded cube, and do NOT copy the card's VIEW line into the prompt - the generator must fold the net and work the three visible faces out itself.\n- The folded cube shows exactly three faces - no fourth face peeking, no face repeated, no motif that is not on the net, and no two faces that sit opposite each other in the net.\n- The motifs are pictures only: no words, letters, labels or numbers anywhere in the image, no position names written on the net, no hands, no people, no other objects, and nothing else on the background.\nOutput ONLY the image prompt, one paragraph, no preamble.",
+    "maxTokens": 900,
+    "reasoningEffort": "low"
+   },
+   "w": 280,
+   "name": "Cube brief - GLM turns the card into a net-and-cube prompt (the view's motifs never stated)",
+   "sizes": {
+    "system": 150
+   }
+  },
+  {
+   "id": "paint",
+   "type": "image",
+   "x": 1160,
+   "y": 280,
+   "fields": {
+    "model": "meta/muse-image/text-to-image",
+    "size": "16:9",
+    "variations": "1"
+   },
+   "w": 280,
+   "name": "Net and cube - Muse paints the flat net and the cube folded from it"
+  },
+  {
+   "id": "surveyor",
+   "type": "llm",
+   "x": 1520,
+   "y": 280,
+   "fields": {
+    "model": "google/gemini-3.8-flash",
+    "system": "You are a cube inspector examining one wide picture: on its left half a flat unfolded cube net drawn as a cross of six square faces (a centre square, one square above it, one below it, one to its left, one to its right, and one more square hanging below the lower square), and on its right half a folded cube seen in three-quarter view showing its front, top and right faces. You do not know what was planned - report only what you actually see, in exactly this format:\nLAYOUT: <PAIR if the picture holds one flat cross net on the left and one folded cube on the right; OTHER otherwise, followed by a short note on what is wrong>\nNET CENTRE: <the picture motif drawn on the centre square of the net, named by the object it depicts in one or two plain words>\nNET UP: <the motif on the square directly above the centre square>\nNET DOWN: <the motif on the square directly below the centre square>\nNET LEFT: <the motif on the square directly left of the centre square>\nNET RIGHT: <the motif on the square directly right of the centre square>\nNET TAIL: <the motif on the extra square hanging below the DOWN square>\nCUBE FRONT: <the motif on the folded cube's front face - the face looking straight at the viewer>\nCUBE TOP: <the motif on the folded cube's top face>\nCUBE RIGHT: <the motif on the folded cube's right-hand face>\nCUBE FACES: <the number of distinct faces of the cube that are visible; a normal three-quarter view shows 3>\nEXTRA: <anything that is not part of the scene as described - other objects, hands, people, text, letters, labels; 'none' if there is nothing of the kind>\nName each motif by the object depicted (anchor, star, moon, key, and so on), ignoring its colour. Report what you actually see, even when it looks impossible - a folded cube showing two motifs that sat opposite each other in the net, or a motif that appears twice, is exactly what must be visible in your report.",
+    "maxTokens": 900,
+    "reasoningEffort": "low"
+   },
+   "w": 280,
+   "name": "Cube read - Gemini reports the net motifs and the cube's three faces, blind",
+   "sizes": {
+    "system": 150
+   }
+  },
+  {
+   "id": "j1",
+   "type": "join",
+   "x": 1880,
+   "y": 180,
+   "fields": {
+    "sep": "\n\nCUBE READ (a blind inspector reported only what it could see - the motif at each net position and the motifs on the cube's front, top and right faces; it never saw the cube card):\n\n"
+   },
+   "w": 200,
+   "name": "Cube card + cube read"
+  },
+  {
+   "id": "checker",
+   "type": "llm",
+   "x": 2240,
+   "y": 400,
+   "fields": {
+    "model": "z-ai/glm-5.3-flash",
+    "system": "You are a cube-net auditor. The input gives a CUBE CARD (SCENE, six face lines CENTRE, UP, DOWN, LEFT, RIGHT, TAIL each naming one motif, an OPPOSITES line, a CORNER line, a VIEW line giving FRONT, TOP and RIGHT motifs) and then a CUBE READ from a blind inspector (LAYOUT, NET CENTRE, NET UP, NET DOWN, NET LEFT, NET RIGHT, NET TAIL, CUBE FRONT, CUBE TOP, CUBE RIGHT, CUBE FACES, EXTRA).\n\nFirst derive the law yourself from the net positions: in a cross net the opposite pairs are fixed by position - UP opposite DOWN, LEFT opposite RIGHT, CENTRE opposite TAIL - so the card's OPPOSITES line is valid only if it pairs exactly those positions' motifs, and a view of one corner must contain exactly one face from each pair.\n\nMatch motifs by the object named, ignoring colour words and harmless extra descriptors (a read of 'crescent moon' matches a carded MOON; 'paint brush' matches PAINTBRUSH).\n\nScore in exactly this format:\nCARD LAW: <VALID if the card's opposites pair the UP motif with the DOWN motif, the LEFT motif with the RIGHT motif and the CENTRE motif with the TAIL motif, and its VIEW holds exactly one face from each pair; otherwise INVALID, naming each problem>\nNET: <count> of 6 - <the read's motif matches the card's at that many of the six net positions; name each mismatching position with the motif read and the motif carded, or 'all positions match'>\nVIEW SET: <MATCH if the read's CUBE FRONT, CUBE TOP and CUBE RIGHT motifs are exactly the card's VIEW motifs as a set, in any order; otherwise name the faces wrongly shown and the faces missing>\nPOSITIONS: <count> of 3 - <FRONT, TOP and RIGHT each MATCH or WRONG, comparing the read's face in each position with the card's VIEW face for that position>\nOPPOSITES: <NONE if no carded opposite pair appears together among the read's three cube faces; VIOLATED, naming the pair or pairs, otherwise>\nFACES: <the read's CUBE FACES> of 3\nCUBE ERRORS: <every point lost, as short clauses separated by '; ' - name each net position drawn wrong, each cube face wrongly shown or missing, each position wrong, each opposite pair shown together, any face count other than 3; 'none' if nothing was lost>\nEXTRA: <the read's EXTRA, or 'none'>\nSUMMARY: <one short line naming what held and what failed>\nScore strictly from the two texts and the positional folding law.",
+    "maxTokens": 1200,
+    "reasoningEffort": "low"
+   },
+   "w": 280,
+   "name": "Cube audit - GLM derives the opposite pairs from the net positions and scores net, view set, positions and opposites",
+   "sizes": {
+    "system": 150
+   }
+  },
+  {
+   "id": "j2",
+   "type": "join",
+   "x": 2240,
+   "y": 180,
+   "fields": {
+    "sep": "\n\nCUBE AUDIT (a GLM auditor scored the blind read against the card - net positions, the visible set, each face's position, the opposite pairs and the face count):\n\n"
+   },
+   "w": 200,
+   "name": "Card, cube read + cube audit"
+  },
+  {
+   "id": "audit",
+   "type": "decide",
+   "x": 2600,
+   "y": 180,
+   "fields": {
+    "model": "perplexity/pplx-decider-v1.2",
+    "mode": "choose",
+    "question": "The picture should hold, on the left, a flat cross-shaped cube net whose six squares carry the card's six motifs at the carded positions (centre, up, down, left, right, and the tail below down), and on the right the same cube folded and viewed from the carded corner: exactly three faces visible - the front, top and right motifs the corner forces - with no two visible faces opposite each other in the net (up opposite down, left opposite right, centre opposite tail) and no motif repeated or invented. The audit in the text scores the blind read against the card: the net positions, the visible set, each visible face's position, the opposite-pair check and the face count. Choose the one label that best fits the round-1 picture.",
+    "options": "folds true\nopposites together\nwrong corner\nnet misdrawn\nnot a net and cube"
+   },
+   "w": 280,
+   "name": "Folds true - audited",
+   "sizes": {
+    "question": 130
+   }
+  },
+  {
+   "id": "editor",
+   "type": "llm",
+   "x": 2600,
+   "y": 520,
+   "fields": {
+    "model": "z-ai/glm-5.3-flash",
+    "system": "You are the cube editor in a folding pipeline. The input gives a CUBE CARD, a blind CUBE READ and a CUBE AUDIT of the round-1 image. Write ONE edit instruction for an image editor working on that image, in at most 120 words.\nIf the audit shows a perfect reading (CARD LAW: VALID, NET: 6 of 6, VIEW SET: MATCH, POSITIONS: 3 of 3, OPPOSITES: NONE, FACES: 3 of 3, EXTRA: none), output exactly this and nothing else: 'Reproduce this net-and-cube picture completely unchanged - same flat net with the same motifs in the same squares, same folded cube showing the same three faces. Do not move, add, remove or repaint anything.'\nOtherwise: first state the full target end state - the same picture with the flat net carrying the card's six motifs at their carded positions (name each position and its motif) and the folded cube showing exactly the card's VIEW faces in their carded positions (front, top and right named) - then add the audit's specific failures as concrete demands (for example: 'the cube's top face shows the MOON, which sits opposite the STAR in the net and can never be visible with it: repaint the top face with the STAR'; 'the net's TAIL square shows a KEY but the card puts the KEY at CENTRE and the SPADE at TAIL: swap those two motifs'; 'a fourth face peeks at the cube's left edge: remove it so exactly three faces show'). Every fix is a repainting of a named motif on a named square or cube face; keep whichever half - net or cube - the audit passed completely exactly as it is, and never ask for the layout, the background or the cube's viewpoint to change.",
+    "maxTokens": 400,
+    "reasoningEffort": "low"
+   },
+   "w": 280,
+   "name": "Edit notes - GLM turns the cube audit into concrete motif-repaint instructions",
+   "sizes": {
+    "system": 150
+   }
+  },
+  {
+   "id": "fix",
+   "type": "edit",
+   "x": 2960,
+   "y": 520,
+   "fields": {
+    "model": "meta/muse-image/edit",
+    "size": "auto"
+   },
+   "w": 280,
+   "name": "Corrected net and cube - Muse Edit repaints the motifs per the folding law"
+  },
+  {
+   "id": "surveyor2",
+   "type": "llm",
+   "x": 3320,
+   "y": 520,
+   "fields": {
+    "model": "google/gemini-3.8-flash",
+    "system": "You are a cube inspector examining one wide picture: on its left half a flat unfolded cube net drawn as a cross of six square faces (a centre square, one square above it, one below it, one to its left, one to its right, and one more square hanging below the lower square), and on its right half a folded cube seen in three-quarter view showing its front, top and right faces. You do not know what was planned - report only what you actually see, in exactly this format:\nLAYOUT: <PAIR if the picture holds one flat cross net on the left and one folded cube on the right; OTHER otherwise, followed by a short note on what is wrong>\nNET CENTRE: <the picture motif drawn on the centre square of the net, named by the object it depicts in one or two plain words>\nNET UP: <the motif on the square directly above the centre square>\nNET DOWN: <the motif on the square directly below the centre square>\nNET LEFT: <the motif on the square directly left of the centre square>\nNET RIGHT: <the motif on the square directly right of the centre square>\nNET TAIL: <the motif on the extra square hanging below the DOWN square>\nCUBE FRONT: <the motif on the folded cube's front face - the face looking straight at the viewer>\nCUBE TOP: <the motif on the folded cube's top face>\nCUBE RIGHT: <the motif on the folded cube's right-hand face>\nCUBE FACES: <the number of distinct faces of the cube that are visible; a normal three-quarter view shows 3>\nEXTRA: <anything that is not part of the scene as described - other objects, hands, people, text, letters, labels; 'none' if there is nothing of the kind>\nName each motif by the object depicted (anchor, star, moon, key, and so on), ignoring its colour. Report what you actually see, even when it looks impossible - a folded cube showing two motifs that sat opposite each other in the net, or a motif that appears twice, is exactly what must be visible in your report.",
+    "maxTokens": 900,
+    "reasoningEffort": "low"
+   },
+   "w": 280,
+   "name": "Re-read - Gemini reports the corrected picture's net motifs and cube faces, blind",
+   "sizes": {
+    "system": 150
+   }
+  },
+  {
+   "id": "j4",
+   "type": "join",
+   "x": 3680,
+   "y": 420,
+   "fields": {
+    "sep": "\n\nCUBE READ (a blind inspector reported only what it could see in the corrected image - the motif at each net position and the motifs on the cube's front, top and right faces; it never saw the cube card):\n\n"
+   },
+   "w": 200,
+   "name": "Cube card + re-read"
+  },
+  {
+   "id": "checker2",
+   "type": "llm",
+   "x": 4040,
+   "y": 520,
+   "fields": {
+    "model": "z-ai/glm-5.3-flash",
+    "system": "You are a cube-net auditor. The input gives a CUBE CARD (SCENE, six face lines CENTRE, UP, DOWN, LEFT, RIGHT, TAIL each naming one motif, an OPPOSITES line, a CORNER line, a VIEW line giving FRONT, TOP and RIGHT motifs) and then a CUBE READ from a blind inspector (LAYOUT, NET CENTRE, NET UP, NET DOWN, NET LEFT, NET RIGHT, NET TAIL, CUBE FRONT, CUBE TOP, CUBE RIGHT, CUBE FACES, EXTRA).\n\nFirst derive the law yourself from the net positions: in a cross net the opposite pairs are fixed by position - UP opposite DOWN, LEFT opposite RIGHT, CENTRE opposite TAIL - so the card's OPPOSITES line is valid only if it pairs exactly those positions' motifs, and a view of one corner must contain exactly one face from each pair.\n\nMatch motifs by the object named, ignoring colour words and harmless extra descriptors (a read of 'crescent moon' matches a carded MOON; 'paint brush' matches PAINTBRUSH).\n\nScore in exactly this format:\nCARD LAW: <VALID if the card's opposites pair the UP motif with the DOWN motif, the LEFT motif with the RIGHT motif and the CENTRE motif with the TAIL motif, and its VIEW holds exactly one face from each pair; otherwise INVALID, naming each problem>\nNET: <count> of 6 - <the read's motif matches the card's at that many of the six net positions; name each mismatching position with the motif read and the motif carded, or 'all positions match'>\nVIEW SET: <MATCH if the read's CUBE FRONT, CUBE TOP and CUBE RIGHT motifs are exactly the card's VIEW motifs as a set, in any order; otherwise name the faces wrongly shown and the faces missing>\nPOSITIONS: <count> of 3 - <FRONT, TOP and RIGHT each MATCH or WRONG, comparing the read's face in each position with the card's VIEW face for that position>\nOPPOSITES: <NONE if no carded opposite pair appears together among the read's three cube faces; VIOLATED, naming the pair or pairs, otherwise>\nFACES: <the read's CUBE FACES> of 3\nCUBE ERRORS: <every point lost, as short clauses separated by '; ' - name each net position drawn wrong, each cube face wrongly shown or missing, each position wrong, each opposite pair shown together, any face count other than 3; 'none' if nothing was lost>\nEXTRA: <the read's EXTRA, or 'none'>\nSUMMARY: <one short line naming what held and what failed>\nScore strictly from the two texts and the positional folding law.",
+    "maxTokens": 1200,
+    "reasoningEffort": "low"
+   },
+   "w": 280,
+   "name": "Cube re-audit - GLM scores the corrected picture against the same card",
+   "sizes": {
+    "system": 150
+   }
+  },
+  {
+   "id": "ask",
+   "type": "text",
+   "x": 1160,
+   "y": 520,
+   "fields": {
+    "text": "Inspect the net-and-cube picture in the attached image now, following your instructions exactly."
+   },
+   "w": 240,
+   "name": "Inspect ask"
+  },
+  {
+   "id": "ask2",
+   "type": "text",
+   "x": 2960,
+   "y": 900,
+   "fields": {
+    "text": "Inspect the net-and-cube picture in the attached image now, following your instructions exactly."
+   },
+   "w": 240,
+   "name": "Re-inspect ask"
+  }
+ ],
+ "links": [
+  {
+   "id": "l1",
+   "from": {
+    "node": "setting",
+    "port": "text"
+   },
+   "to": {
+    "node": "director",
+    "port": "prompt"
+   }
+  },
+  {
+   "id": "l2",
+   "from": {
+    "node": "director",
+    "port": "text"
+   },
+   "to": {
+    "node": "j0",
+    "port": "b"
+   }
+  },
+  {
+   "id": "l12",
+   "from": {
+    "node": "setting",
+    "port": "text"
+   },
+   "to": {
+    "node": "j0",
+    "port": "a"
+   }
+  },
+  {
+   "id": "l13",
+   "from": {
+    "node": "j0",
+    "port": "text"
+   },
+   "to": {
+    "node": "stylist",
+    "port": "prompt"
+   }
+  },
+  {
+   "id": "l3",
+   "from": {
+    "node": "stylist",
+    "port": "text"
+   },
+   "to": {
+    "node": "paint",
+    "port": "prompt"
+   }
+  },
+  {
+   "id": "l4",
+   "from": {
+    "node": "paint",
+    "port": "image"
+   },
+   "to": {
+    "node": "surveyor",
+    "port": "img1"
+   }
+  },
+  {
+   "id": "l7",
+   "from": {
+    "node": "director",
+    "port": "text"
+   },
+   "to": {
+    "node": "j1",
+    "port": "a"
+   }
+  },
+  {
+   "id": "l8",
+   "from": {
+    "node": "surveyor",
+    "port": "text"
+   },
+   "to": {
+    "node": "j1",
+    "port": "b"
+   }
+  },
+  {
+   "id": "l11",
+   "from": {
+    "node": "j1",
+    "port": "text"
+   },
+   "to": {
+    "node": "checker",
+    "port": "prompt"
+   }
+  },
+  {
+   "id": "l14",
+   "from": {
+    "node": "j1",
+    "port": "text"
+   },
+   "to": {
+    "node": "j2",
+    "port": "a"
+   }
+  },
+  {
+   "id": "l15",
+   "from": {
+    "node": "checker",
+    "port": "text"
+   },
+   "to": {
+    "node": "j2",
+    "port": "b"
+   }
+  },
+  {
+   "id": "l16",
+   "from": {
+    "node": "j2",
+    "port": "text"
+   },
+   "to": {
+    "node": "audit",
+    "port": "text"
+   }
+  },
+  {
+   "id": "l17",
+   "from": {
+    "node": "paint",
+    "port": "image"
+   },
+   "to": {
+    "node": "audit",
+    "port": "img1"
+   }
+  },
+  {
+   "id": "l18",
+   "from": {
+    "node": "j2",
+    "port": "text"
+   },
+   "to": {
+    "node": "editor",
+    "port": "prompt"
+   }
+  },
+  {
+   "id": "l19",
+   "from": {
+    "node": "editor",
+    "port": "text"
+   },
+   "to": {
+    "node": "fix",
+    "port": "prompt"
+   }
+  },
+  {
+   "id": "l20",
+   "from": {
+    "node": "paint",
+    "port": "image"
+   },
+   "to": {
+    "node": "fix",
+    "port": "image"
+   }
+  },
+  {
+   "id": "l21",
+   "from": {
+    "node": "fix",
+    "port": "image"
+   },
+   "to": {
+    "node": "surveyor2",
+    "port": "img1"
+   }
+  },
+  {
+   "id": "l22",
+   "from": {
+    "node": "director",
+    "port": "text"
+   },
+   "to": {
+    "node": "j4",
+    "port": "a"
+   }
+  },
+  {
+   "id": "l23",
+   "from": {
+    "node": "surveyor2",
+    "port": "text"
+   },
+   "to": {
+    "node": "j4",
+    "port": "b"
+   }
+  },
+  {
+   "id": "l24",
+   "from": {
+    "node": "j4",
+    "port": "text"
+   },
+   "to": {
+    "node": "checker2",
+    "port": "prompt"
+   }
+  },
+  {
+   "id": "l39",
+   "from": {
+    "node": "ask",
+    "port": "text"
+   },
+   "to": {
+    "node": "surveyor",
+    "port": "prompt"
+   }
+  },
+  {
+   "id": "l40",
+   "from": {
+    "node": "ask2",
+    "port": "text"
+   },
+   "to": {
+    "node": "surveyor2",
+    "port": "prompt"
+   }
+  }
+ ],
+ "nid": 32,
+ "lid": 40,
+ "view": {
+  "panX": 40,
+  "panY": 40,
+  "scale": 0.5
+ }
+}
