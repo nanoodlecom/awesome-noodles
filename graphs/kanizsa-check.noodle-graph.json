@@ -1,0 +1,671 @@
+{
+ "v": 1,
+ "nodes": [
+  {
+   "id": "c1",
+   "type": "comment",
+   "x": 60,
+   "y": 30,
+   "fields": {
+    "text": "Can a painter fake a shape that is not there, or does it cheat and draw it? A GLM director picks one Kanizsa figure from a menu printed in its own prompt (TRIANGLE from three notched discs, SQUARE from four, PENTAGON from five) and copies out a KANIZSA CARD: the ground, the inducer discs' colour and count, their corner positions, and the notch law - every disc is a full circle with one wedge notch cut out, the notch being exactly the wedge between the two sides of the perceived polygon meeting at that corner, its straight edges lying along those sides, its mouth facing the picture's centre, so the polygon's corners sit inside the discs and its edges cross bare ground, drawn by no line. Muse paints only the discs. Two blind Gemini readers then split the one question no single read can answer: a PERCEIVED reader reports the first shape it sees floating in the centre and whether its edges look sharp, while a LITERAL reader, forbidden to name any floating shape, counts the discs, checks each notch's alignment, and swears whether any outline or centre shape is actually drawn. A GLM auditor certifies the conjunction: ILLUSION HOLDS only when the perceived reader names the carded figure AND the literal reader finds every notch aligned AND no ink where the shape appears. A Decide judge headlines round 1 as a side output; a gated GLM editor turns the audit into concrete repair notes - realign the stray notch, erase any drawn outline back to bare ground, never draw the perceived shape - Muse Edit repaints, and both blind readers plus the same auditor re-score the corrected diagram, which is the flow's final output."
+   },
+   "w": 900,
+   "name": "Kaleidoscope check"
+  },
+  {
+   "id": "setting",
+   "type": "text",
+   "x": 60,
+   "y": 300,
+   "fields": {
+    "text": "A plain flat backdrop for a square optical-illusion diagram, evenly lit, empty: a smooth untextured ground with room for one centred diagram. No objects, no text."
+   },
+   "w": 300,
+   "name": "Backdrop setting"
+  },
+  {
+   "id": "director",
+   "type": "llm",
+   "x": 440,
+   "y": 280,
+   "fields": {
+    "model": "z-ai/glm-5.3-flash",
+    "system": "You are a Kanizsa director. The SETTING you receive is an empty backdrop description, not an image and not a scene to match: it names no figure on purpose, because the painter will draw the chosen figure afterwards. Do NOT try to match a menu figure to the setting, do NOT refuse, and never ask for a different input. Pick exactly one menu figure freely - any of the three is a correct choice - and copy it out as the card, in exactly the card format below.\n\nTHE FIGURE (fixed for every menu entry): one flat optical-illusion diagram on a flat ground. Around the centre sit N solid discs of one colour, one disc at each corner of an invisible regular polygon - the perceived shape. Every disc is a full circle with exactly one wedge-shaped notch cut out of it. The notch at each corner is the wedge between the two polygon sides that meet at that corner: its two straight edges lie exactly along those two sides, and its open mouth faces the picture's centre. So the polygon's corners hide inside the discs, its edges cross bare ground, and NO part of the polygon is drawn - no outline, no connecting lines, no filled shape in the centre. A viewer nevertheless perceives the polygon floating in the centre, its edges sharp, seemingly brighter than the ground. The centre itself is bare ground.\n\nMENU:\n1. EMBER TRIANGLE - GROUND: warm cream, flat and bare outside the discs. INDUCERS: 3 discs in charcoal black. POSITIONS: one disc at the TOP corner, one at the BOTTOM-LEFT corner, one at the BOTTOM-RIGHT corner of an upright triangle. PERCEIVED: one upright TRIANGLE floating in the centre.\n2. FROST SQUARE - GROUND: pale ice grey, flat and bare outside the discs. INDUCERS: 4 discs in cobalt blue. POSITIONS: one disc at each corner of an upright square - TOP-LEFT, TOP-RIGHT, BOTTOM-LEFT, BOTTOM-RIGHT. PERCEIVED: one upright SQUARE floating in the centre.\n3. GARDEN PENTAGON - GROUND: soft sage green, flat and bare outside the discs. INDUCERS: 5 discs in plum purple. POSITIONS: one disc at each corner of a point-up pentagon - TOP, UPPER-RIGHT, LOWER-RIGHT, LOWER-LEFT, UPPER-LEFT. PERCEIVED: one PENTAGON floating in the centre.\n\nCARD FORMAT - output exactly these lines, copying the chosen menu entry word for word into them:\nFIGURE: <the menu name, e.g. EMBER TRIANGLE>\nGROUND: <the menu ground, word for word>\nINDUCERS: <the menu inducer count and colour, e.g. '3 discs in charcoal black'>\nPOSITIONS: <the menu positions, word for word>\nNOTCH LAW: every disc is a full circle with one wedge notch cut out; the notch is the wedge between the two sides of the perceived shape meeting at that disc's corner, its straight edges lying exactly along those sides, its mouth facing the picture's centre\nPERCEIVED: <the menu perceived line, word for word>\nFRAME: flat ground, no outline of the perceived shape, no lines connecting the discs, nothing drawn in the centre, no text",
+    "maxTokens": 900,
+    "reasoningEffort": "low"
+   },
+   "w": 280,
+   "name": "Kanizsa card - GLM picks a figure and copies its discs, positions and notch law",
+   "sizes": {
+    "system": 150
+   }
+  },
+  {
+   "id": "j0",
+   "type": "join",
+   "x": 800,
+   "y": 480,
+   "fields": {
+    "sep": "\n\nKANIZSA CARD (the figure - its ground, its inducer discs and positions, its notch law and its perceived shape; its exact wording must reach the image maker):\n"
+   },
+   "w": 200,
+   "name": "Setting + kanizsa card"
+  },
+  {
+   "id": "stylist",
+   "type": "llm",
+   "x": 800,
+   "y": 280,
+   "fields": {
+    "model": "z-ai/glm-5.3-flash",
+    "system": "You turn a KANIZSA CARD into ONE prompt for an AI image generator. The input always contains a valid card with a FIGURE line, a GROUND line, an INDUCERS line, a POSITIONS line, a NOTCH LAW line, a PERCEIVED line and a FRAME line; never refuse and never ask for a different card. Write a single-paragraph prompt for one square picture demanding all of this:\n- One flat diagram centred on the carded flat ground, drawn as a clean flat design with solid colours and crisp edges, the ground bare everywhere except the discs, nothing else in the picture.\n- Exactly the carded number of solid discs in the carded colour, one at each carded corner position of the perceived shape.\n- Every disc is a full circle with exactly one wedge-shaped notch cut out of it; the notch is the wedge between the two sides of the perceived shape meeting at that disc's corner, its two straight edges lying exactly along those sides, its open mouth facing the picture's centre - like a pac-man mouth aimed at the centre, sized to the corner's angle.\n- CRITICAL: the perceived shape itself must NOT be drawn. No outline, no border, no lines connecting the discs, no filled or shaded shape in the centre - the centre is bare ground exactly like the rest of the ground. The shape may only be suggested by the aligned notches.\n- No text, no labels, no arrows, no border around the picture.",
+    "maxTokens": 900,
+    "reasoningEffort": "low"
+   },
+   "w": 280,
+   "name": "Diagram brief - GLM turns the card into a painter prompt (discs only, shape never drawn)",
+   "sizes": {
+    "system": 150
+   }
+  },
+  {
+   "id": "paint",
+   "type": "image",
+   "x": 1160,
+   "y": 280,
+   "fields": {
+    "model": "meta/muse-image/text-to-image",
+    "size": "1:1",
+    "variations": "1"
+   },
+   "w": 280,
+   "name": "Diagram - Muse paints the notched discs, the perceived shape left undrawn"
+  },
+  {
+   "id": "surveyor",
+   "type": "llm",
+   "x": 1520,
+   "y": 280,
+   "fields": {
+    "model": "google/gemini-3.8-flash",
+    "system": "You are a shape perceiver examining one square picture: a flat diagram of solid discs on a flat ground. Look at the picture the way a person glancing at it would, and report the first strong impression, in exactly this format:\nLAYOUT: <DIAGRAM if the picture holds flat solid discs on a flat ground; OTHER otherwise, followed by a short note>\nPERCEIVED SHAPE: <the one shape you clearly seem to see floating in the centre of the picture, as a person would name it - TRIANGLE, SQUARE, PENTAGON, CIRCLE, or another plain shape name; NONE if no shape floats in the centre>\nPERCEIVED EDGES: <SHARP if that floating shape's edges look crisp and definite; FAINT if it is vague or wobbly; NONE if there is no floating shape>\nFLOATING: <YES if the centre shape seems to float in front of the ground, like a shape laid over the picture; NO otherwise>\nEXTRA: <anything else in the picture - other shapes or objects, a border, text, letters; 'none' if there is nothing of the kind>\nReport your honest first impression of the whole picture. Do not analyse the discs one by one, do not count anything, and do not talk yourself out of a shape you plainly seem to see.",
+    "maxTokens": 400,
+    "reasoningEffort": "low"
+   },
+   "w": 280,
+   "name": "Perceived read - Gemini reports the shape it seems to see floating in the centre",
+   "sizes": {
+    "system": 150
+   }
+  },
+  {
+   "id": "lit",
+   "type": "llm",
+   "x": 1520,
+   "y": 540,
+   "fields": {
+    "model": "google/gemini-3.8-flash",
+    "system": "You are a literal inspector examining one square picture: a flat diagram of solid discs on a flat ground. Your job is only what is physically drawn. You are FORBIDDEN to name, guess or describe any shape that seems to float in the centre - if a shape seems to appear there, that is not ink and you must not report it as drawn. Report only drawn marks, in exactly this format:\nLAYOUT: <DIAGRAM if the picture holds flat solid discs on a flat ground; OTHER otherwise, followed by a short note>\nDISC COUNT: <the number of solid discs you can count, as a single number>\nDISC COLOUR: <the discs' colour in one or two plain words>\nNOTCHES: <one entry per disc, discs listed clockwise starting from the topmost (or top-left if two tie), each as 'POSITION: ALIGNED' if the disc has one wedge notch whose two straight edges point along the sides of an invisible polygon corner at that disc - the mouth opening toward the picture's centre - or 'POSITION: MISALIGNED' if the notch faces another way, or 'POSITION: NO NOTCH' if the disc is a full circle, or 'POSITION: UNCLEAR' if you cannot tell; POSITION is the disc's place in the picture - TOP, TOP-LEFT, TOP-RIGHT, UPPER-RIGHT, LOWER-RIGHT, BOTTOM, BOTTOM-LEFT, BOTTOM-RIGHT, LOWER-LEFT or UPPER-LEFT>\nDRAWN OUTLINE: <NONE if no line, border or outline is drawn in or around the centre; PRESENT followed by a short description if any line or outline is actually drawn there>\nCENTRE INK: <NONE if the centre of the picture is bare ground with nothing drawn in it; PRESENT followed by a short description if any filled or shaded shape is drawn in the centre>\nEXTRA: <any other drawn marks - extra discs, stray lines, a border, text, letters; 'none' if there is nothing of the kind>\nCount and inspect disc by disc. Judge each notch by its drawn edges only, exactly as drawn - do not correct a disc toward what the pattern would predict.",
+    "maxTokens": 600,
+    "reasoningEffort": "low"
+   },
+   "w": 280,
+   "name": "Literal read - Gemini counts the discs, checks each notch, swears what is actually drawn",
+   "sizes": {
+    "system": 150
+   }
+  },
+  {
+   "id": "j1a",
+   "type": "join",
+   "x": 1880,
+   "y": 180,
+   "fields": {
+    "sep": "\n\nKANIZSA PERCEIVED READ (a blind perceiver reported the first shape it seemed to see floating in the centre; it never saw the kanizsa card):\n"
+   },
+   "w": 200,
+   "name": "Kanizsa card + perceived read"
+  },
+  {
+   "id": "j1",
+   "type": "join",
+   "x": 1880,
+   "y": 180,
+   "fields": {
+    "sep": "\n\nKANIZSA LITERAL READ (a blind literal inspector counted the discs, checked each notch's alignment and swore what is actually drawn - outline and centre ink; it never saw the kanizsa card and was forbidden to name any floating shape):\n"
+   },
+   "w": 200,
+   "name": "Perceived bundle + literal read"
+  },
+  {
+   "id": "checker",
+   "type": "llm",
+   "x": 2240,
+   "y": 400,
+   "fields": {
+    "model": "z-ai/glm-5.3-flash",
+    "system": "You are a Kanizsa auditor. The input gives a KANIZSA CARD (FIGURE, GROUND, INDUCERS, POSITIONS, NOTCH LAW, PERCEIVED, FRAME), then a KANIZSA PERCEIVED READ from a blind perceiver (LAYOUT, PERCEIVED SHAPE, PERCEIVED EDGES, FLOATING, EXTRA), then a KANIZSA LITERAL READ from a blind literal inspector (LAYOUT, DISC COUNT, DISC COLOUR, NOTCHES per disc, DRAWN OUTLINE, CENTRE INK, EXTRA).\n\nFirst derive the law from the card itself: the carded figure fixes the inducer count (TRIANGLE 3, SQUARE 4, PENTAGON 5) and the perceived shape's name (the last word of the FIGURE line). Print CARD LAW: VALID if the card's INDUCERS count matches its figure and its POSITIONS name exactly that many corners, INVALID otherwise.\n\nThen score exactly these lines:\nINDUCERS: <X> of <N> - N is the carded disc count; X counts discs the literal read actually found in the carded colour at carded corner positions (the literal DISC COUNT must equal N and the colour family must match; if the count is wrong, X is the smaller of the two counts and only discs at carded positions in the carded colour score)\nNOTCHES: <X> of <N> - one point per carded disc whose literal NOTCHES entry is ALIGNED (MISALIGNED, NO NOTCH and UNCLEAR all fail; a disc the literal read never listed fails)\nDRAWN: <CLEAN if the literal DRAWN OUTLINE is NONE and CENTRE INK is NONE; LEAKED if either is PRESENT - the shape was drawn, not induced>\nPERCEIVED: <the perceived read's PERCEIVED SHAPE, copied>\nILLUSION: <HOLDS only if PERCEIVED is the carded figure's shape AND DRAWN is CLEAN AND NOTCHES is N of N AND INDUCERS is N of N; FAKED if PERCEIVED matches the card but DRAWN is LEAKED - the shape reads because it was drawn; UNALIGNED if DRAWN is CLEAN and PERCEIVED matches but some notch or disc fails; NOT PERCEIVED if DRAWN is CLEAN, the discs and notches are right, but PERCEIVED is NONE or another shape; BROKEN otherwise>\nKANIZSA ERRORS: <the specific failures in one line - each failing disc or notch by position, any drawn outline or centre ink, any perception mismatch; 'none' if there are none>\nSUMMARY: <one plain line>\nOutput exactly these lines in this order: CARD LAW, INDUCERS, NOTCHES, DRAWN, PERCEIVED, ILLUSION, KANIZSA ERRORS, SUMMARY. Judge only from the card and the two reads; never invent a disc or a perception you were not given. The conjunction is the point: a perceived shape with drawn ink is FAKED, never HOLDS, however sharp it looks.",
+    "maxTokens": 1200,
+    "reasoningEffort": "low"
+   },
+   "w": 280,
+   "name": "Kanizsa audit - GLM certifies perceived-yes AND drawn-no AND notches aligned",
+   "sizes": {
+    "system": 150
+   }
+  },
+  {
+   "id": "j2",
+   "type": "join",
+   "x": 2240,
+   "y": 180,
+   "fields": {
+    "sep": "\n\nKANIZSA AUDIT (a GLM auditor scored the two blind reads against the card - the inducers, the notch alignments, the drawn-ink check, the perceived shape and the illusion verdict):\n"
+   },
+   "w": 200,
+   "name": "Card, both reads + kanizsa audit"
+  },
+  {
+   "id": "audit",
+   "type": "decide",
+   "x": 2600,
+   "y": 180,
+   "fields": {
+    "model": "perplexity/pplx-decider-v1.2",
+    "mode": "choose",
+    "question": "The picture should hold one flat Kanizsa diagram in the card's colours: exactly the carded discs at the carded corners of an invisible polygon, every disc's wedge notch aligned so its edges lie along the polygon's sides with its mouth facing the centre, and the polygon itself NOT drawn - no outline, no lines, nothing in the centre - yet plainly perceived floating there. The audit in the text scores two blind reads against the card: a perceiver who names the floating shape, and a literal inspector who counts discs, checks notches and swears what ink exists. Choose the one label that best fits the round-1 picture.",
+    "options": "illusion holds\nshape drawn not illusory\nnotches unaligned\nnothing perceived\nnot a diagram"
+   },
+   "w": 280,
+   "name": "Illusion holds - audited",
+   "sizes": {
+    "question": 130
+   }
+  },
+  {
+   "id": "editor",
+   "type": "llm",
+   "x": 2600,
+   "y": 520,
+   "fields": {
+    "model": "z-ai/glm-5.3-flash",
+    "system": "You are the Kanizsa editor in an illusion pipeline. The input gives a KANIZSA CARD, a blind KANIZSA PERCEIVED READ, a blind KANIZSA LITERAL READ and a KANIZSA AUDIT of the round-1 image. Write ONE edit instruction for an image editor working on that image, in at most 130 words.\nIf the audit shows a perfect reading (CARD LAW: VALID, INDUCERS and NOTCHES both full, DRAWN: CLEAN, ILLUSION: HOLDS, KANIZSA ERRORS: none), output exactly this and nothing else: 'Reproduce this diagram picture completely unchanged - same ground, same discs in the same colour at the same corners, every notch exactly as drawn, the centre still bare ground. Do not move, add, remove or repaint anything.'\nOtherwise write the instruction as the full target end state plus the audit's specific failures as concrete repaint demands: name the ground and the discs by colour, count and corner position. For each misaligned or missing notch, demand that disc be repainted as a full circle with one wedge notch whose straight edges lie along the perceived shape's sides at that corner, its mouth facing the centre. If any outline is drawn or any shape fills the centre, demand it be erased back to bare flat ground - the perceived shape must never be drawn, only induced by the notches. Every disc that already matches the card must be left exactly as drawn. Never ask for the perceived shape to be drawn, outlined or shaded in, and never ask for any text, labels or arrows.",
+    "maxTokens": 400,
+    "reasoningEffort": "low"
+   },
+   "w": 280,
+   "name": "Edit notes - GLM turns the kanizsa audit into concrete disc and erasure demands",
+   "sizes": {
+    "system": 150
+   }
+  },
+  {
+   "id": "fix",
+   "type": "edit",
+   "x": 2960,
+   "y": 520,
+   "fields": {
+    "model": "meta/muse-image/edit",
+    "size": "auto"
+   },
+   "w": 280,
+   "name": "Corrected diagram - Muse Edit realigns the notches and erases any drawn shape"
+  },
+  {
+   "id": "surveyor2",
+   "type": "llm",
+   "x": 3320,
+   "y": 520,
+   "fields": {
+    "model": "google/gemini-3.8-flash",
+    "system": "You are a shape perceiver examining one square picture: a flat diagram of solid discs on a flat ground. Look at the picture the way a person glancing at it would, and report the first strong impression, in exactly this format:\nLAYOUT: <DIAGRAM if the picture holds flat solid discs on a flat ground; OTHER otherwise, followed by a short note>\nPERCEIVED SHAPE: <the one shape you clearly seem to see floating in the centre of the picture, as a person would name it - TRIANGLE, SQUARE, PENTAGON, CIRCLE, or another plain shape name; NONE if no shape floats in the centre>\nPERCEIVED EDGES: <SHARP if that floating shape's edges look crisp and definite; FAINT if it is vague or wobbly; NONE if there is no floating shape>\nFLOATING: <YES if the centre shape seems to float in front of the ground, like a shape laid over the picture; NO otherwise>\nEXTRA: <anything else in the picture - other shapes or objects, a border, text, letters; 'none' if there is nothing of the kind>\nReport your honest first impression of the whole picture. Do not analyse the discs one by one, do not count anything, and do not talk yourself out of a shape you plainly seem to see.",
+    "maxTokens": 400,
+    "reasoningEffort": "low"
+   },
+   "w": 280,
+   "name": "Re-read (perceived) - Gemini reports the shape it seems to see in the corrected diagram",
+   "sizes": {
+    "system": 150
+   }
+  },
+  {
+   "id": "lit2",
+   "type": "llm",
+   "x": 1520,
+   "y": 780,
+   "fields": {
+    "model": "google/gemini-3.8-flash",
+    "system": "You are a literal inspector examining one square picture: a flat diagram of solid discs on a flat ground. Your job is only what is physically drawn. You are FORBIDDEN to name, guess or describe any shape that seems to float in the centre - if a shape seems to appear there, that is not ink and you must not report it as drawn. Report only drawn marks, in exactly this format:\nLAYOUT: <DIAGRAM if the picture holds flat solid discs on a flat ground; OTHER otherwise, followed by a short note>\nDISC COUNT: <the number of solid discs you can count, as a single number>\nDISC COLOUR: <the discs' colour in one or two plain words>\nNOTCHES: <one entry per disc, discs listed clockwise starting from the topmost (or top-left if two tie), each as 'POSITION: ALIGNED' if the disc has one wedge notch whose two straight edges point along the sides of an invisible polygon corner at that disc - the mouth opening toward the picture's centre - or 'POSITION: MISALIGNED' if the notch faces another way, or 'POSITION: NO NOTCH' if the disc is a full circle, or 'POSITION: UNCLEAR' if you cannot tell; POSITION is the disc's place in the picture - TOP, TOP-LEFT, TOP-RIGHT, UPPER-RIGHT, LOWER-RIGHT, BOTTOM, BOTTOM-LEFT, BOTTOM-RIGHT, LOWER-LEFT or UPPER-LEFT>\nDRAWN OUTLINE: <NONE if no line, border or outline is drawn in or around the centre; PRESENT followed by a short description if any line or outline is actually drawn there>\nCENTRE INK: <NONE if the centre of the picture is bare ground with nothing drawn in it; PRESENT followed by a short description if any filled or shaded shape is drawn in the centre>\nEXTRA: <any other drawn marks - extra discs, stray lines, a border, text, letters; 'none' if there is nothing of the kind>\nCount and inspect disc by disc. Judge each notch by its drawn edges only, exactly as drawn - do not correct a disc toward what the pattern would predict.",
+    "maxTokens": 600,
+    "reasoningEffort": "low"
+   },
+   "w": 280,
+   "name": "Re-read (literal) - Gemini recounts the corrected diagram's discs and ink",
+   "sizes": {
+    "system": 150
+   }
+  },
+  {
+   "id": "j4a",
+   "type": "join",
+   "x": 1880,
+   "y": 180,
+   "fields": {
+    "sep": "\n\nKANIZSA PERCEIVED READ (a blind perceiver reported the first shape it seemed to see floating in the centre; it never saw the kanizsa card):\n"
+   },
+   "w": 200,
+   "name": "Kanizsa card + corrected perceived read"
+  },
+  {
+   "id": "j4",
+   "type": "join",
+   "x": 3680,
+   "y": 420,
+   "fields": {
+    "sep": "\n\nKANIZSA LITERAL READ (a blind literal inspector counted the discs, checked each notch's alignment and swore what is actually drawn - outline and centre ink; it never saw the kanizsa card and was forbidden to name any floating shape):\n"
+   },
+   "w": 200,
+   "name": "Corrected perceived bundle + literal re-read"
+  },
+  {
+   "id": "checker2",
+   "type": "llm",
+   "x": 4040,
+   "y": 520,
+   "fields": {
+    "model": "z-ai/glm-5.3-flash",
+    "system": "You are a Kanizsa auditor. The input gives a KANIZSA CARD (FIGURE, GROUND, INDUCERS, POSITIONS, NOTCH LAW, PERCEIVED, FRAME), then a KANIZSA PERCEIVED READ from a blind perceiver (LAYOUT, PERCEIVED SHAPE, PERCEIVED EDGES, FLOATING, EXTRA), then a KANIZSA LITERAL READ from a blind literal inspector (LAYOUT, DISC COUNT, DISC COLOUR, NOTCHES per disc, DRAWN OUTLINE, CENTRE INK, EXTRA).\n\nFirst derive the law from the card itself: the carded figure fixes the inducer count (TRIANGLE 3, SQUARE 4, PENTAGON 5) and the perceived shape's name (the last word of the FIGURE line). Print CARD LAW: VALID if the card's INDUCERS count matches its figure and its POSITIONS name exactly that many corners, INVALID otherwise.\n\nThen score exactly these lines:\nINDUCERS: <X> of <N> - N is the carded disc count; X counts discs the literal read actually found in the carded colour at carded corner positions (the literal DISC COUNT must equal N and the colour family must match; if the count is wrong, X is the smaller of the two counts and only discs at carded positions in the carded colour score)\nNOTCHES: <X> of <N> - one point per carded disc whose literal NOTCHES entry is ALIGNED (MISALIGNED, NO NOTCH and UNCLEAR all fail; a disc the literal read never listed fails)\nDRAWN: <CLEAN if the literal DRAWN OUTLINE is NONE and CENTRE INK is NONE; LEAKED if either is PRESENT - the shape was drawn, not induced>\nPERCEIVED: <the perceived read's PERCEIVED SHAPE, copied>\nILLUSION: <HOLDS only if PERCEIVED is the carded figure's shape AND DRAWN is CLEAN AND NOTCHES is N of N AND INDUCERS is N of N; FAKED if PERCEIVED matches the card but DRAWN is LEAKED - the shape reads because it was drawn; UNALIGNED if DRAWN is CLEAN and PERCEIVED matches but some notch or disc fails; NOT PERCEIVED if DRAWN is CLEAN, the discs and notches are right, but PERCEIVED is NONE or another shape; BROKEN otherwise>\nKANIZSA ERRORS: <the specific failures in one line - each failing disc or notch by position, any drawn outline or centre ink, any perception mismatch; 'none' if there are none>\nSUMMARY: <one plain line>\nOutput exactly these lines in this order: CARD LAW, INDUCERS, NOTCHES, DRAWN, PERCEIVED, ILLUSION, KANIZSA ERRORS, SUMMARY. Judge only from the card and the two reads; never invent a disc or a perception you were not given. The conjunction is the point: a perceived shape with drawn ink is FAKED, never HOLDS, however sharp it looks.",
+    "maxTokens": 1200,
+    "reasoningEffort": "low"
+   },
+   "w": 280,
+   "name": "Kanizsa re-audit - GLM re-certifies the corrected diagram against the same card",
+   "sizes": {
+    "system": 150
+   }
+  },
+  {
+   "id": "ask",
+   "type": "text",
+   "x": 1160,
+   "y": 520,
+   "fields": {
+    "text": "Glance at the diagram picture in the attached image now and report your first impression, following your instructions exactly."
+   },
+   "w": 240,
+   "name": "Perceive ask"
+  },
+  {
+   "id": "askL",
+   "type": "text",
+   "x": 1160,
+   "y": 520,
+   "fields": {
+    "text": "Inspect the diagram picture in the attached image now, disc by disc, following your instructions exactly."
+   },
+   "w": 240,
+   "name": "Literal inspect ask"
+  },
+  {
+   "id": "ask2",
+   "type": "text",
+   "x": 2960,
+   "y": 900,
+   "fields": {
+    "text": "Glance at the diagram picture in the attached image now and report your first impression, following your instructions exactly."
+   },
+   "w": 240,
+   "name": "Perceive ask (corrected)"
+  },
+  {
+   "id": "askL2",
+   "type": "text",
+   "x": 1160,
+   "y": 520,
+   "fields": {
+    "text": "Inspect the diagram picture in the attached image now, disc by disc, following your instructions exactly."
+   },
+   "w": 240,
+   "name": "Literal inspect ask (corrected)"
+  }
+ ],
+ "links": [
+  {
+   "id": "l1",
+   "from": {
+    "node": "setting",
+    "port": "text"
+   },
+   "to": {
+    "node": "director",
+    "port": "prompt"
+   }
+  },
+  {
+   "id": "l2",
+   "from": {
+    "node": "director",
+    "port": "text"
+   },
+   "to": {
+    "node": "j0",
+    "port": "b"
+   }
+  },
+  {
+   "id": "l12",
+   "from": {
+    "node": "setting",
+    "port": "text"
+   },
+   "to": {
+    "node": "j0",
+    "port": "a"
+   }
+  },
+  {
+   "id": "l13",
+   "from": {
+    "node": "j0",
+    "port": "text"
+   },
+   "to": {
+    "node": "stylist",
+    "port": "prompt"
+   }
+  },
+  {
+   "id": "l3",
+   "from": {
+    "node": "stylist",
+    "port": "text"
+   },
+   "to": {
+    "node": "paint",
+    "port": "prompt"
+   }
+  },
+  {
+   "id": "l4",
+   "from": {
+    "node": "paint",
+    "port": "image"
+   },
+   "to": {
+    "node": "surveyor",
+    "port": "img1"
+   }
+  },
+  {
+   "id": "l5",
+   "from": {
+    "node": "paint",
+    "port": "image"
+   },
+   "to": {
+    "node": "lit",
+    "port": "img1"
+   }
+  },
+  {
+   "id": "l39",
+   "from": {
+    "node": "ask",
+    "port": "text"
+   },
+   "to": {
+    "node": "surveyor",
+    "port": "prompt"
+   }
+  },
+  {
+   "id": "l41",
+   "from": {
+    "node": "askL",
+    "port": "text"
+   },
+   "to": {
+    "node": "lit",
+    "port": "prompt"
+   }
+  },
+  {
+   "id": "l7",
+   "from": {
+    "node": "director",
+    "port": "text"
+   },
+   "to": {
+    "node": "j1a",
+    "port": "a"
+   }
+  },
+  {
+   "id": "l8",
+   "from": {
+    "node": "surveyor",
+    "port": "text"
+   },
+   "to": {
+    "node": "j1a",
+    "port": "b"
+   }
+  },
+  {
+   "id": "l9",
+   "from": {
+    "node": "j1a",
+    "port": "text"
+   },
+   "to": {
+    "node": "j1",
+    "port": "a"
+   }
+  },
+  {
+   "id": "l10",
+   "from": {
+    "node": "lit",
+    "port": "text"
+   },
+   "to": {
+    "node": "j1",
+    "port": "b"
+   }
+  },
+  {
+   "id": "l11",
+   "from": {
+    "node": "j1",
+    "port": "text"
+   },
+   "to": {
+    "node": "checker",
+    "port": "prompt"
+   }
+  },
+  {
+   "id": "l14",
+   "from": {
+    "node": "j1",
+    "port": "text"
+   },
+   "to": {
+    "node": "j2",
+    "port": "a"
+   }
+  },
+  {
+   "id": "l15",
+   "from": {
+    "node": "checker",
+    "port": "text"
+   },
+   "to": {
+    "node": "j2",
+    "port": "b"
+   }
+  },
+  {
+   "id": "l16",
+   "from": {
+    "node": "j2",
+    "port": "text"
+   },
+   "to": {
+    "node": "audit",
+    "port": "text"
+   }
+  },
+  {
+   "id": "l17",
+   "from": {
+    "node": "paint",
+    "port": "image"
+   },
+   "to": {
+    "node": "audit",
+    "port": "img1"
+   }
+  },
+  {
+   "id": "l18",
+   "from": {
+    "node": "j2",
+    "port": "text"
+   },
+   "to": {
+    "node": "editor",
+    "port": "prompt"
+   }
+  },
+  {
+   "id": "l19",
+   "from": {
+    "node": "editor",
+    "port": "text"
+   },
+   "to": {
+    "node": "fix",
+    "port": "prompt"
+   }
+  },
+  {
+   "id": "l20",
+   "from": {
+    "node": "paint",
+    "port": "image"
+   },
+   "to": {
+    "node": "fix",
+    "port": "image"
+   }
+  },
+  {
+   "id": "l21",
+   "from": {
+    "node": "fix",
+    "port": "image"
+   },
+   "to": {
+    "node": "surveyor2",
+    "port": "img1"
+   }
+  },
+  {
+   "id": "l25",
+   "from": {
+    "node": "fix",
+    "port": "image"
+   },
+   "to": {
+    "node": "lit2",
+    "port": "img1"
+   }
+  },
+  {
+   "id": "l40",
+   "from": {
+    "node": "ask2",
+    "port": "text"
+   },
+   "to": {
+    "node": "surveyor2",
+    "port": "prompt"
+   }
+  },
+  {
+   "id": "l42",
+   "from": {
+    "node": "askL2",
+    "port": "text"
+   },
+   "to": {
+    "node": "lit2",
+    "port": "prompt"
+   }
+  },
+  {
+   "id": "l22",
+   "from": {
+    "node": "director",
+    "port": "text"
+   },
+   "to": {
+    "node": "j4a",
+    "port": "a"
+   }
+  },
+  {
+   "id": "l23",
+   "from": {
+    "node": "surveyor2",
+    "port": "text"
+   },
+   "to": {
+    "node": "j4a",
+    "port": "b"
+   }
+  },
+  {
+   "id": "l26",
+   "from": {
+    "node": "j4a",
+    "port": "text"
+   },
+   "to": {
+    "node": "j4",
+    "port": "a"
+   }
+  },
+  {
+   "id": "l27",
+   "from": {
+    "node": "lit2",
+    "port": "text"
+   },
+   "to": {
+    "node": "j4",
+    "port": "b"
+   }
+  },
+  {
+   "id": "l24",
+   "from": {
+    "node": "j4",
+    "port": "text"
+   },
+   "to": {
+    "node": "checker2",
+    "port": "prompt"
+   }
+  }
+ ],
+ "nid": 100,
+ "lid": 100,
+ "view": {
+  "panX": 40,
+  "panY": 40,
+  "scale": 0.5
+ }
+}
