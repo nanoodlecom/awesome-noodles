@@ -1,0 +1,671 @@
+{
+ "v": 1,
+ "nodes": [
+  {
+   "id": "c1",
+   "type": "comment",
+   "x": 60,
+   "y": 30,
+   "fields": {
+    "text": "Can a reader report the ink when the word itself is shouting a different colour? A GLM director picks one Stroop poster from a menu printed in its own prompt and copies out a STROOP CARD: a 2-by-3 grid of six colour words, each cell naming its WORD and its INK colour. Four cells are INCONGRUENT - the ink is a different colour from the word's meaning - and two are CONGRUENT controls where word and ink agree. Muse paints the poster and nothing else. Two blind Gemini readers then work the same poster on separate channels: a WORD reader reports only the six words, an INK reader reports only the six ink colours and is told to ignore what the words say. A GLM auditor scores the channels separately against the card - WORDS exact per cell, INKS exact per cell, CONTROLS exact on both channels - and names each CAPTURE: a cell where the ink reader answered the word's meaning instead of the ink, which is a reader-side interference event, not a painter error, and is kept apart from genuine misprints where the ink on the poster is actually wrong. A Decide judge headlines round 1 as a side output; a gated GLM editor turns only genuine misprints into concrete repaint notes (a capture is never 'fixed' by repainting the ink to match the word - that would destroy the incongruence the poster exists to create), Muse Edit repaints, and both blind readers plus the same auditor re-score the corrected poster, which is the flow's final output."
+   },
+   "w": 900,
+   "name": "Stroop check"
+  },
+  {
+   "id": "setting",
+   "type": "text",
+   "x": 60,
+   "y": 300,
+   "fields": {
+    "text": "A plain flat backdrop for a square printed poster, evenly lit, empty: a smooth untextured off-white ground with room for one centred poster. No objects, no other text."
+   },
+   "w": 300,
+   "name": "Poster backdrop setting"
+  },
+  {
+   "id": "director",
+   "type": "llm",
+   "x": 440,
+   "y": 280,
+   "fields": {
+    "model": "z-ai/glm-5.3-flash",
+    "system": "You are a Stroop director. The SETTING you receive is an empty backdrop description, not an image and not a scene to match: it names no poster on purpose, because the painter will print the chosen poster afterwards. Do NOT try to match a menu poster to the setting, do NOT refuse, and never ask for a different input. Pick exactly one menu poster freely - any of the three is a correct choice - and copy it out as the card, in exactly the card format below.\n\nTHE POSTER (fixed for every menu entry): one flat printed poster, a 2-by-3 grid of six large bold colour words on a plain off-white ground, two rows of three, generous spacing, no title, no border text, no other marks. Cells are numbered 1 to 6 in reading order: 1 top-left, 2 top-middle, 3 top-right, 4 bottom-left, 5 bottom-middle, 6 bottom-right. In each cell ONE word is printed in ONE ink colour. In the four INCONGRUENT cells the ink colour is different from the colour the word names. In the two CONGRUENT control cells the ink colour is exactly the colour the word names. Every word appears once; the six words are RED, BLUE, GREEN, YELLOW, PURPLE, ORANGE in some order.\n\nMENU:\n1. SIGNAL GRID - CELL 1: word RED printed in BLUE ink (incongruent). CELL 2: word GREEN printed in RED ink (incongruent). CELL 3: word BLUE printed in YELLOW ink (incongruent). CELL 4: word YELLOW printed in GREEN ink (incongruent). CELL 5: word PURPLE printed in PURPLE ink (congruent control). CELL 6: word ORANGE printed in ORANGE ink (congruent control).\n2. HARBOUR GRID - CELL 1: word BLUE printed in GREEN ink (incongruent). CELL 2: word YELLOW printed in PURPLE ink (incongruent). CELL 3: word PURPLE printed in ORANGE ink (incongruent). CELL 4: word ORANGE printed in RED ink (incongruent). CELL 5: word RED printed in RED ink (congruent control). CELL 6: word GREEN printed in GREEN ink (congruent control).\n3. ORCHARD GRID - CELL 1: word GREEN printed in PURPLE ink (incongruent). CELL 2: word PURPLE printed in BLUE ink (incongruent). CELL 3: word ORANGE printed in GREEN ink (incongruent). CELL 4: word RED printed in YELLOW ink (incongruent). CELL 5: word BLUE printed in BLUE ink (congruent control). CELL 6: word YELLOW printed in YELLOW ink (congruent control).\n\nCARD FORMAT - copy the chosen entry out exactly in this shape, filling every line, nothing else:\nPOSTER: <SIGNAL GRID or HARBOUR GRID or ORCHARD GRID>\nGRID: 2 rows of 3 cells, numbered 1-6 in reading order\nCELL 1: WORD <word> / INK <colour> / <INCONGRUENT or CONGRUENT>\nCELL 2: WORD <word> / INK <colour> / <INCONGRUENT or CONGRUENT>\nCELL 3: WORD <word> / INK <colour> / <INCONGRUENT or CONGRUENT>\nCELL 4: WORD <word> / INK <colour> / <INCONGRUENT or CONGRUENT>\nCELL 5: WORD <word> / INK <colour> / <INCONGRUENT or CONGRUENT>\nCELL 6: WORD <word> / INK <colour> / <INCONGRUENT or CONGRUENT>\nGROUND: plain off-white, no other text or marks",
+    "maxTokens": 900,
+    "reasoningEffort": "low"
+   },
+   "w": 280,
+   "name": "Stroop card - GLM picks a poster and copies its six word/ink cells",
+   "sizes": {
+    "system": 150
+   }
+  },
+  {
+   "id": "j0",
+   "type": "join",
+   "x": 800,
+   "y": 480,
+   "fields": {
+    "sep": "\n\nSTROOP CARD (the poster - its six cells, each cell's word and ink colour, and which cells are congruent controls; its exact wording must reach the image maker):\n"
+   },
+   "w": 200,
+   "name": "Setting + kanizsa card"
+  },
+  {
+   "id": "stylist",
+   "type": "llm",
+   "x": 800,
+   "y": 280,
+   "fields": {
+    "model": "z-ai/glm-5.3-flash",
+    "system": "You are a poster brief writer. You receive a backdrop SETTING and a STROOP CARD. Turn them into ONE prompt for an image model that prints exactly the carded poster. Rules:\n- Name the ground from the card (plain off-white) and a flat, evenly lit printed-poster look.\n- List all six cells in reading order 1-6, each as: the word in capital letters, printed in its carded ink colour. Spell every word letter by letter once (for example R-E-D) so the painter cannot garble it.\n- State the layout plainly in picture directions: two rows of three large bold words, generous spacing, every word fully inside its own cell area, nothing overlapping.\n- Forbid everything else: no title, no caption, no numbers, no extra words, no logos, no border, no shadows or 3D effects, no background objects. The six words are the ONLY text.\n- Never 'correct' an incongruent cell: if the card says the word RED is printed in BLUE ink, the brief must demand the word RED in blue letters, exactly as carded.\nOutput ONLY the painter prompt, no preamble.",
+    "maxTokens": 900,
+    "reasoningEffort": "low"
+   },
+   "w": 280,
+   "name": "Poster brief - GLM turns the card into a painter prompt (words and inks exactly as carded)",
+   "sizes": {
+    "system": 150
+   }
+  },
+  {
+   "id": "paint",
+   "type": "image",
+   "x": 1160,
+   "y": 280,
+   "fields": {
+    "model": "meta/muse-image/text-to-image",
+    "size": "1:1",
+    "variations": "1"
+   },
+   "w": 280,
+   "name": "Poster - Muse prints the six colour words in their carded inks"
+  },
+  {
+   "id": "surveyor",
+   "type": "llm",
+   "x": 1520,
+   "y": 280,
+   "fields": {
+    "model": "google/gemini-3.8-flash",
+    "system": "You are a blind word reader. You see a poster image and a request. You report only the words printed, cell by cell, exactly as the request formats them. You never mention colours, never guess a word you cannot read, and never add commentary.",
+    "maxTokens": 400,
+    "reasoningEffort": "low"
+   },
+   "w": 280,
+   "name": "Word read - Gemini reports only the six words, never the colours",
+   "sizes": {
+    "system": 150
+   }
+  },
+  {
+   "id": "lit",
+   "type": "llm",
+   "x": 1520,
+   "y": 540,
+   "fields": {
+    "model": "google/gemini-3.8-flash",
+    "system": "You are a blind ink reader. You see a poster image and a request. You report only the colour of the letters in each cell. The words' meanings are a trap: if a word names a colour, that is NOT evidence about its ink. Judge each cell purely by the pigment of its letters. You never report the words themselves and never add commentary.",
+    "maxTokens": 600,
+    "reasoningEffort": "low"
+   },
+   "w": 280,
+   "name": "Ink read - Gemini reports only the six ink colours, ignoring what the words say",
+   "sizes": {
+    "system": 150
+   }
+  },
+  {
+   "id": "j1a",
+   "type": "join",
+   "x": 1880,
+   "y": 180,
+   "fields": {
+    "sep": "\n\nSTROOP WORD READ (a blind reader reported only the words, cell by cell; it never saw the stroop card and said nothing about colours):\n"
+   },
+   "w": 200,
+   "name": "Kanizsa card + perceived read"
+  },
+  {
+   "id": "j1",
+   "type": "join",
+   "x": 1880,
+   "y": 180,
+   "fields": {
+    "sep": "\n\nSTROOP INK READ (a blind reader reported only the ink colours, cell by cell, under instruction to ignore what the words say; it never saw the stroop card):\n"
+   },
+   "w": 200,
+   "name": "Perceived bundle + literal read"
+  },
+  {
+   "id": "checker",
+   "type": "llm",
+   "x": 2240,
+   "y": 400,
+   "fields": {
+    "model": "z-ai/glm-5.3-flash",
+    "system": "You are a Stroop auditor. You receive a STROOP CARD (six cells, each with a carded WORD, a carded INK and a CONGRUENT or INCONGRUENT tag), a blind WORD READ (the six words a reader reported) and a blind INK READ (the six ink colours a different reader reported, who was told to ignore the words' meanings). Score the two channels separately. All colour and word comparisons are exact name matches, case-insensitive.\n\nDefinitions:\n- WORD HIT: the word read for a cell equals the carded WORD.\n- INK HIT: the ink read for a cell equals the carded INK.\n- CAPTURE: a cell that is NOT an ink hit, where the ink read equals the cell's carded WORD (the reader answered the word's meaning instead of the ink). A capture is a reader-side interference event, NOT a painter error. Captures can only occur on INCONGRUENT cells.\n- MISPRINT: a cell that is NOT an ink hit and NOT a capture (the ink read matches neither the carded ink nor the word - the ink on the poster is genuinely wrong, or unreadable).\n- CONTROL: a CONGRUENT cell. A control passes only if BOTH its word and its ink are hits.\n\nOutput EXACTLY these lines, in this order, nothing else:\nWORDS: <n> of 6\nINKS: <n> of 6\nCONTROLS: <n> of 2\nCAPTURES: <comma-separated cell numbers, or NONE>\nMISPRINTS: <comma-separated cell numbers, or NONE>\nVERDICT: <one of: SEPARATED - every word and every ink hit, controls pass; CAPTURED - words all hit, no misprints, but one or more captures; MISPRINTED - one or more misprints, words all hit; GARBLED - one or more word misses>\nThen one line: DETAIL: <one short sentence naming any missed cell and what was read instead>",
+    "maxTokens": 1200,
+    "reasoningEffort": "low"
+   },
+   "w": 280,
+   "name": "Stroop audit - GLM scores words and inks separately and names captures vs misprints",
+   "sizes": {
+    "system": 150
+   }
+  },
+  {
+   "id": "j2",
+   "type": "join",
+   "x": 2240,
+   "y": 180,
+   "fields": {
+    "sep": "\n\nSTROOP AUDIT (a GLM auditor scored the two blind reads against the card - words, inks, congruent controls, reader captures and genuine misprints):\n"
+   },
+   "w": 200,
+   "name": "Card, both reads + kanizsa audit"
+  },
+  {
+   "id": "audit",
+   "type": "decide",
+   "x": 2600,
+   "y": 180,
+   "fields": {
+    "model": "perplexity/pplx-decider-v1.2",
+    "mode": "choose",
+    "question": "The picture should be one flat printed poster: a 2-by-3 grid of six colour words, each printed in exactly the ink colour the card assigns it - incongruent on four cells, congruent on the two control cells - with no other text. The audit in the text scores two blind reads against the card: a word reader who reported only the words, and an ink reader who reported only the ink colours while ignoring the words' meanings; it separates reader CAPTURES (ink reader answered the word's meaning) from genuine MISPRINTS (ink actually wrong). Choose the one label that best fits the round-1 picture.",
+    "options": "channels separated\nreader captured\ninks misprinted\nwords garbled\nnot a poster"
+   },
+   "w": 280,
+   "name": "Illusion holds - audited",
+   "sizes": {
+    "question": 130
+   }
+  },
+  {
+   "id": "editor",
+   "type": "llm",
+   "x": 2600,
+   "y": 520,
+   "fields": {
+    "model": "z-ai/glm-5.3-flash",
+    "system": "You are a poster repair editor. You receive a STROOP CARD and a STROOP AUDIT of the round-1 poster. Turn the audit into ONE concrete repaint instruction for an image editor. Rules:\n- If the audit's MISPRINTS line is NONE, output exactly: 'Reproduce this poster exactly, unchanged - same six words, same spelling, same ink colour in every cell, same layout.' and nothing else. Captures are reader errors, not poster errors: NEVER repaint a captured cell.\n- If there are misprints, name each misprinted cell by its position in picture directions (for example 'bottom-left word') and demand: repaint ONLY that word's letters in the carded ink colour from the card, keeping its word and spelling identical. Demand every other cell stay pixel-for-pixel the same word in the same ink.\n- NEVER demand an ink be changed to match its word's meaning, and never demand a word be changed. The incongruence is the design.\nOutput ONLY the repaint instruction.",
+    "maxTokens": 400,
+    "reasoningEffort": "low"
+   },
+   "w": 280,
+   "name": "Edit notes - GLM turns misprints (never captures) into concrete repaint demands",
+   "sizes": {
+    "system": 150
+   }
+  },
+  {
+   "id": "fix",
+   "type": "edit",
+   "x": 2960,
+   "y": 520,
+   "fields": {
+    "model": "meta/muse-image/edit",
+    "size": "auto"
+   },
+   "w": 280,
+   "name": "Corrected poster - Muse Edit repaints only the misprinted inks"
+  },
+  {
+   "id": "surveyor2",
+   "type": "llm",
+   "x": 3320,
+   "y": 520,
+   "fields": {
+    "model": "google/gemini-3.8-flash",
+    "system": "You are a blind word reader. You see a poster image and a request. You report only the words printed, cell by cell, exactly as the request formats them. You never mention colours, never guess a word you cannot read, and never add commentary.",
+    "maxTokens": 400,
+    "reasoningEffort": "low"
+   },
+   "w": 280,
+   "name": "Re-read (words) - Gemini reports only the corrected poster's words",
+   "sizes": {
+    "system": 150
+   }
+  },
+  {
+   "id": "lit2",
+   "type": "llm",
+   "x": 1520,
+   "y": 780,
+   "fields": {
+    "model": "google/gemini-3.8-flash",
+    "system": "You are a blind ink reader. You see a poster image and a request. You report only the colour of the letters in each cell. The words' meanings are a trap: if a word names a colour, that is NOT evidence about its ink. Judge each cell purely by the pigment of its letters. You never report the words themselves and never add commentary.",
+    "maxTokens": 600,
+    "reasoningEffort": "low"
+   },
+   "w": 280,
+   "name": "Re-read (inks) - Gemini reports only the corrected poster's ink colours",
+   "sizes": {
+    "system": 150
+   }
+  },
+  {
+   "id": "j4a",
+   "type": "join",
+   "x": 1880,
+   "y": 180,
+   "fields": {
+    "sep": "\n\nSTROOP WORD READ (a blind reader reported only the words, cell by cell; it never saw the stroop card and said nothing about colours):\n"
+   },
+   "w": 200,
+   "name": "Kanizsa card + corrected perceived read"
+  },
+  {
+   "id": "j4",
+   "type": "join",
+   "x": 3680,
+   "y": 420,
+   "fields": {
+    "sep": "\n\nSTROOP INK READ (a blind reader reported only the ink colours, cell by cell, under instruction to ignore what the words say; it never saw the stroop card):\n"
+   },
+   "w": 200,
+   "name": "Corrected perceived bundle + literal re-read"
+  },
+  {
+   "id": "checker2",
+   "type": "llm",
+   "x": 4040,
+   "y": 520,
+   "fields": {
+    "model": "z-ai/glm-5.3-flash",
+    "system": "You are a Stroop auditor. You receive a STROOP CARD (six cells, each with a carded WORD, a carded INK and a CONGRUENT or INCONGRUENT tag), a blind WORD READ (the six words a reader reported) and a blind INK READ (the six ink colours a different reader reported, who was told to ignore the words' meanings). Score the two channels separately. All colour and word comparisons are exact name matches, case-insensitive.\n\nDefinitions:\n- WORD HIT: the word read for a cell equals the carded WORD.\n- INK HIT: the ink read for a cell equals the carded INK.\n- CAPTURE: a cell that is NOT an ink hit, where the ink read equals the cell's carded WORD (the reader answered the word's meaning instead of the ink). A capture is a reader-side interference event, NOT a painter error. Captures can only occur on INCONGRUENT cells.\n- MISPRINT: a cell that is NOT an ink hit and NOT a capture (the ink read matches neither the carded ink nor the word - the ink on the poster is genuinely wrong, or unreadable).\n- CONTROL: a CONGRUENT cell. A control passes only if BOTH its word and its ink are hits.\n\nOutput EXACTLY these lines, in this order, nothing else:\nWORDS: <n> of 6\nINKS: <n> of 6\nCONTROLS: <n> of 2\nCAPTURES: <comma-separated cell numbers, or NONE>\nMISPRINTS: <comma-separated cell numbers, or NONE>\nVERDICT: <one of: SEPARATED - every word and every ink hit, controls pass; CAPTURED - words all hit, no misprints, but one or more captures; MISPRINTED - one or more misprints, words all hit; GARBLED - one or more word misses>\nThen one line: DETAIL: <one short sentence naming any missed cell and what was read instead>",
+    "maxTokens": 1200,
+    "reasoningEffort": "low"
+   },
+   "w": 280,
+   "name": "Stroop re-audit - GLM re-scores the corrected poster against the same card",
+   "sizes": {
+    "system": 150
+   }
+  },
+  {
+   "id": "ask",
+   "type": "text",
+   "x": 1160,
+   "y": 520,
+   "fields": {
+    "text": "Look at this poster. Report ONLY the words. For each of the six cells in reading order (1 top-left, 2 top-middle, 3 top-right, 4 bottom-left, 5 bottom-middle, 6 bottom-right) write the word printed there, spelled exactly as shown, one line per cell in the form: CELL n: <WORD>. Say nothing about colours. If a cell is unreadable write CELL n: UNREADABLE."
+   },
+   "w": 240,
+   "name": "Perceive ask"
+  },
+  {
+   "id": "askL",
+   "type": "text",
+   "x": 1160,
+   "y": 520,
+   "fields": {
+    "text": "Look at this poster. Report ONLY the ink colours - the colour the letters themselves are printed in. IGNORE what the words say: a word's meaning is not its ink. For each of the six cells in reading order (1 top-left, 2 top-middle, 3 top-right, 4 bottom-left, 5 bottom-middle, 6 bottom-right) name the single colour of that word's letters, one line per cell in the form: CELL n: <COLOUR>. Use only these colour names: RED, BLUE, GREEN, YELLOW, PURPLE, ORANGE. Never write the word you read; write only the colour you see. If a cell's ink is none of these, write CELL n: OTHER."
+   },
+   "w": 240,
+   "name": "Literal inspect ask"
+  },
+  {
+   "id": "ask2",
+   "type": "text",
+   "x": 2960,
+   "y": 900,
+   "fields": {
+    "text": "Look at this poster. Report ONLY the words. For each of the six cells in reading order (1 top-left, 2 top-middle, 3 top-right, 4 bottom-left, 5 bottom-middle, 6 bottom-right) write the word printed there, spelled exactly as shown, one line per cell in the form: CELL n: <WORD>. Say nothing about colours. If a cell is unreadable write CELL n: UNREADABLE."
+   },
+   "w": 240,
+   "name": "Perceive ask (corrected)"
+  },
+  {
+   "id": "askL2",
+   "type": "text",
+   "x": 1160,
+   "y": 520,
+   "fields": {
+    "text": "Look at this poster. Report ONLY the ink colours - the colour the letters themselves are printed in. IGNORE what the words say: a word's meaning is not its ink. For each of the six cells in reading order (1 top-left, 2 top-middle, 3 top-right, 4 bottom-left, 5 bottom-middle, 6 bottom-right) name the single colour of that word's letters, one line per cell in the form: CELL n: <COLOUR>. Use only these colour names: RED, BLUE, GREEN, YELLOW, PURPLE, ORANGE. Never write the word you read; write only the colour you see. If a cell's ink is none of these, write CELL n: OTHER."
+   },
+   "w": 240,
+   "name": "Literal inspect ask (corrected)"
+  }
+ ],
+ "links": [
+  {
+   "id": "l1",
+   "from": {
+    "node": "setting",
+    "port": "text"
+   },
+   "to": {
+    "node": "director",
+    "port": "prompt"
+   }
+  },
+  {
+   "id": "l2",
+   "from": {
+    "node": "director",
+    "port": "text"
+   },
+   "to": {
+    "node": "j0",
+    "port": "b"
+   }
+  },
+  {
+   "id": "l12",
+   "from": {
+    "node": "setting",
+    "port": "text"
+   },
+   "to": {
+    "node": "j0",
+    "port": "a"
+   }
+  },
+  {
+   "id": "l13",
+   "from": {
+    "node": "j0",
+    "port": "text"
+   },
+   "to": {
+    "node": "stylist",
+    "port": "prompt"
+   }
+  },
+  {
+   "id": "l3",
+   "from": {
+    "node": "stylist",
+    "port": "text"
+   },
+   "to": {
+    "node": "paint",
+    "port": "prompt"
+   }
+  },
+  {
+   "id": "l4",
+   "from": {
+    "node": "paint",
+    "port": "image"
+   },
+   "to": {
+    "node": "surveyor",
+    "port": "img1"
+   }
+  },
+  {
+   "id": "l5",
+   "from": {
+    "node": "paint",
+    "port": "image"
+   },
+   "to": {
+    "node": "lit",
+    "port": "img1"
+   }
+  },
+  {
+   "id": "l39",
+   "from": {
+    "node": "ask",
+    "port": "text"
+   },
+   "to": {
+    "node": "surveyor",
+    "port": "prompt"
+   }
+  },
+  {
+   "id": "l41",
+   "from": {
+    "node": "askL",
+    "port": "text"
+   },
+   "to": {
+    "node": "lit",
+    "port": "prompt"
+   }
+  },
+  {
+   "id": "l7",
+   "from": {
+    "node": "director",
+    "port": "text"
+   },
+   "to": {
+    "node": "j1a",
+    "port": "a"
+   }
+  },
+  {
+   "id": "l8",
+   "from": {
+    "node": "surveyor",
+    "port": "text"
+   },
+   "to": {
+    "node": "j1a",
+    "port": "b"
+   }
+  },
+  {
+   "id": "l9",
+   "from": {
+    "node": "j1a",
+    "port": "text"
+   },
+   "to": {
+    "node": "j1",
+    "port": "a"
+   }
+  },
+  {
+   "id": "l10",
+   "from": {
+    "node": "lit",
+    "port": "text"
+   },
+   "to": {
+    "node": "j1",
+    "port": "b"
+   }
+  },
+  {
+   "id": "l11",
+   "from": {
+    "node": "j1",
+    "port": "text"
+   },
+   "to": {
+    "node": "checker",
+    "port": "prompt"
+   }
+  },
+  {
+   "id": "l14",
+   "from": {
+    "node": "j1",
+    "port": "text"
+   },
+   "to": {
+    "node": "j2",
+    "port": "a"
+   }
+  },
+  {
+   "id": "l15",
+   "from": {
+    "node": "checker",
+    "port": "text"
+   },
+   "to": {
+    "node": "j2",
+    "port": "b"
+   }
+  },
+  {
+   "id": "l16",
+   "from": {
+    "node": "j2",
+    "port": "text"
+   },
+   "to": {
+    "node": "audit",
+    "port": "text"
+   }
+  },
+  {
+   "id": "l17",
+   "from": {
+    "node": "paint",
+    "port": "image"
+   },
+   "to": {
+    "node": "audit",
+    "port": "img1"
+   }
+  },
+  {
+   "id": "l18",
+   "from": {
+    "node": "j2",
+    "port": "text"
+   },
+   "to": {
+    "node": "editor",
+    "port": "prompt"
+   }
+  },
+  {
+   "id": "l19",
+   "from": {
+    "node": "editor",
+    "port": "text"
+   },
+   "to": {
+    "node": "fix",
+    "port": "prompt"
+   }
+  },
+  {
+   "id": "l20",
+   "from": {
+    "node": "paint",
+    "port": "image"
+   },
+   "to": {
+    "node": "fix",
+    "port": "image"
+   }
+  },
+  {
+   "id": "l21",
+   "from": {
+    "node": "fix",
+    "port": "image"
+   },
+   "to": {
+    "node": "surveyor2",
+    "port": "img1"
+   }
+  },
+  {
+   "id": "l25",
+   "from": {
+    "node": "fix",
+    "port": "image"
+   },
+   "to": {
+    "node": "lit2",
+    "port": "img1"
+   }
+  },
+  {
+   "id": "l40",
+   "from": {
+    "node": "ask2",
+    "port": "text"
+   },
+   "to": {
+    "node": "surveyor2",
+    "port": "prompt"
+   }
+  },
+  {
+   "id": "l42",
+   "from": {
+    "node": "askL2",
+    "port": "text"
+   },
+   "to": {
+    "node": "lit2",
+    "port": "prompt"
+   }
+  },
+  {
+   "id": "l22",
+   "from": {
+    "node": "director",
+    "port": "text"
+   },
+   "to": {
+    "node": "j4a",
+    "port": "a"
+   }
+  },
+  {
+   "id": "l23",
+   "from": {
+    "node": "surveyor2",
+    "port": "text"
+   },
+   "to": {
+    "node": "j4a",
+    "port": "b"
+   }
+  },
+  {
+   "id": "l26",
+   "from": {
+    "node": "j4a",
+    "port": "text"
+   },
+   "to": {
+    "node": "j4",
+    "port": "a"
+   }
+  },
+  {
+   "id": "l27",
+   "from": {
+    "node": "lit2",
+    "port": "text"
+   },
+   "to": {
+    "node": "j4",
+    "port": "b"
+   }
+  },
+  {
+   "id": "l24",
+   "from": {
+    "node": "j4",
+    "port": "text"
+   },
+   "to": {
+    "node": "checker2",
+    "port": "prompt"
+   }
+  }
+ ],
+ "nid": 100,
+ "lid": 100,
+ "view": {
+  "panX": 40,
+  "panY": 40,
+  "scale": 0.5
+ }
+}
