@@ -1,0 +1,505 @@
+{
+  "v": 1,
+  "nodes": [
+    {
+      "id": "c1",
+      "type": "comment",
+      "x": 60,
+      "y": 30,
+      "fields": {
+        "text": "Can a painter mirror a motif, or does it just stamp copies? A GLM director picks one mandala from a menu printed in its own prompt (four flat medallions - ember, frost, garden, midnight - each one small motif of four shapes in four colours, one shape per cell of a quadrant, plus a ring at the exact centre) and copies out a KALEIDO CARD: the ground, the centre ring, and the motif named in CENTRE-RELATIVE cells that mean the same thing in every quadrant - the CENTRE-CELL nearest the picture's centre, the CORNER-CELL nearest the quadrant's own outer corner, the EDGE-CELL near the picture's top or bottom edge, the SIDE-CELL near the picture's side edge. The card's law is reflection: every quadrant is the mirror image of the top-right quadrant across the two centre lines, so described in centre-relative cells all four quadrants read identically - while two orientation facts separate a true mirror from a stamped copy: the comma in the SIDE-CELL points its tip outward, toward its own quadrant's side edge (right in the right quadrants, left in the left ones), and the crescent in the EDGE-CELL opens toward its own quadrant's outer corner. A painter that stamps the top-right motif unflipped into every quadrant gets every shape and colour right and both orientations wrong in the left quadrants - the signature failure this flow exists to catch. A second GLM turns the card into a painter prompt that states the motif quadrant by quadrant in full, each quadrant as the mirror of the top-right, and forbids dividing lines: the symmetry must live in the motif, not in a drawn grid. Muse paints one flat square medallion. A blind Gemini reader cards each quadrant separately in the same centre-relative cells - shape and colour per cell, the comma's tip as an absolute picture direction, the crescent's opening as an absolute diagonal - plus the centre ring and any seams. A GLM auditor converts the absolute orientations into centre-relative ones per quadrant and scores ELEMENTS (shape and colour per cell, 16 in all), QUADRANTS (all four cells right), CENTRE, MIRRORS (both orientation checks per quadrant) and SYMMETRY (TRUE MIRROR only when every quadrant matches and every orientation obeys the mirror law; STAMPED when the elements are right but the orientations repeat one absolute direction - copies, not reflections). A Decide judge headlines round 1. That verdict is not the deliverable: a GLM editor turns the audit into concrete repaint notes (gated - on a perfect audit it must demand a verbatim unchanged copy), Muse Edit repaints the failing quadrants as true mirror images, and a blind re-read plus the same auditor re-score the corrected medallion against the same card. The corrected medallion is the flow's final output."
+      },
+      "w": 900,
+      "name": "Kaleidoscope check"
+    },
+    {
+      "id": "setting",
+      "type": "text",
+      "x": 60,
+      "y": 300,
+      "fields": {
+        "text": "A plain flat backdrop for a square medallion design, evenly lit, empty: a smooth untextured ground with room for one centred square motif design. No objects, no text."
+      },
+      "w": 300,
+      "name": "Backdrop setting"
+    },
+    {
+      "id": "director",
+      "type": "llm",
+      "x": 440,
+      "y": 280,
+      "fields": {
+        "model": "z-ai/glm-5.3-flash",
+        "system": "You are a kaleidoscope director. The SETTING you receive is an empty backdrop description, not an image and not a scene to match: it names no mandala on purpose, because the painter will draw the chosen mandala afterwards. Do NOT try to match a menu mandala to the setting, do NOT refuse, and never ask for a different input. Pick exactly one menu mandala freely - any of the four is a correct choice - and copy it out as the card, in exactly the card format below.\n\nTHE MANDALA (fixed for every menu entry): one flat square medallion made of four quadrants around an exact centre. Every quadrant holds the same four-shape motif, one shape per cell, the cells named from the picture's centre lines, so the names mean the same in every quadrant: the CENTRE-CELL is the part of the quadrant nearest the picture's centre; the CORNER-CELL is the part nearest that quadrant's own outer corner; the EDGE-CELL is the part nearer the picture's top or bottom edge, beside the centre line; the SIDE-CELL is the part nearer the picture's side edge, beside the horizontal centre line. The motif: CENTRE-CELL holds a filled circle; CORNER-CELL holds a diamond; EDGE-CELL holds a crescent that opens diagonally toward that quadrant's own outer corner; SIDE-CELL holds a comma - a round teardrop with one curved tail ending in a tip - whose tip points outward, toward that quadrant's own side edge. At the exact centre sits one small ring where the four quadrants meet. The law is reflection: every quadrant is the mirror image of the top-right quadrant across the centre lines - the top-left flipped left-to-right, the bottom-right flipped top-to-bottom, the bottom-left flipped both ways. Described in the centre-relative cells above, all four quadrants read identically; what changes from quadrant to quadrant is only the absolute direction of the comma's tip (right in the right-hand quadrants, left in the left-hand ones) and of the crescent's opening (toward each quadrant's own corner). No dividing lines are drawn between the quadrants and there is no border.\n\nMENU:\n1. EMBER MEDALLION - GROUND: deep charcoal grey, flat and bare outside the medallion. CENTRE RING: gold. CENTRE-CELL: vermilion red filled circle. CORNER-CELL: gold diamond. EDGE-CELL: ivory white crescent opening toward the quadrant's own outer corner. SIDE-CELL: turquoise comma, tip pointing outward toward the quadrant's side edge.\n2. FROST MEDALLION - GROUND: pale ice grey, flat and bare outside the medallion. CENTRE RING: cobalt blue. CENTRE-CELL: cobalt blue filled circle. CORNER-CELL: magenta diamond. EDGE-CELL: charcoal black crescent opening toward the quadrant's own outer corner. SIDE-CELL: lime green comma, tip pointing outward toward the quadrant's side edge.\n3. GARDEN MEDALLION - GROUND: warm cream, flat and bare outside the medallion. CENTRE RING: plum purple. CENTRE-CELL: coral orange filled circle. CORNER-CELL: plum purple diamond. EDGE-CELL: teal crescent opening toward the quadrant's own outer corner. SIDE-CELL: mustard yellow comma, tip pointing outward toward the quadrant's side edge.\n4. MIDNIGHT MEDALLION - GROUND: deep navy blue, flat and bare outside the medallion. CENTRE RING: silver white. CENTRE-CELL: silver white filled circle. CORNER-CELL: scarlet red diamond. EDGE-CELL: amber crescent opening toward the quadrant's own outer corner. SIDE-CELL: sky blue comma, tip pointing outward toward the quadrant's side edge.\n\nCARD FORMAT - output exactly these lines, copying the chosen mandala's spec word for word:\nMANDALA: <the mandala name>\nGROUND: <the ground line>\nCENTRE: one small ring in <colour> at the exact centre where the four quadrants meet\nCENTRE-CELL: a filled circle in <colour> - the cell nearest the picture's centre\nCORNER-CELL: a diamond in <colour> - the cell nearest the quadrant's own outer corner\nEDGE-CELL: a crescent in <colour> opening toward the quadrant's own outer corner - the cell nearer the picture's top or bottom edge, beside the centre line\nSIDE-CELL: a comma in <colour>, its tip pointing outward toward the quadrant's own side edge - the cell nearer the picture's side edge, beside the horizontal centre line\nLAW: every quadrant is the mirror image of the top-right quadrant across the centre lines - top-left flipped left-to-right, bottom-right flipped top-to-bottom, bottom-left flipped both ways; in centre-relative cells all four quadrants read identically\nFRAME: flat ground, no dividing lines between the quadrants, no border, no text\nOutput the card only - no commentary, no explanation.",
+        "maxTokens": 900,
+        "reasoningEffort": "low"
+      },
+      "w": 280,
+      "name": "Kaleido card - GLM picks a mandala and copies its motif, cells and mirror law",
+      "sizes": {
+        "system": 150
+      }
+    },
+    {
+      "id": "j0",
+      "type": "join",
+      "x": 800,
+      "y": 480,
+      "fields": {
+        "sep": "\n\nKALEIDO CARD (the mandala - its ground, its centre ring, its four-shape motif named in centre-relative cells, and its mirror law; its exact wording must reach the image maker):\n"
+      },
+      "w": 200,
+      "name": "Setting + kaleido card"
+    },
+    {
+      "id": "stylist",
+      "type": "llm",
+      "x": 800,
+      "y": 280,
+      "fields": {
+        "model": "z-ai/glm-5.3-flash",
+        "system": "You turn a KALEIDO CARD into ONE prompt for an AI image generator. The input always contains a valid card with a MANDALA line, a GROUND line, a CENTRE line, four cell lines (CENTRE-CELL, CORNER-CELL, EDGE-CELL, SIDE-CELL), a LAW line and a FRAME line; never refuse and never ask for a different card. Write a single-paragraph prompt for one square picture demanding all of this:\n- One flat square medallion centred on the carded flat ground, drawn as a clean flat design with solid colours and crisp edges, the ground bare outside the medallion, nothing else in the picture.\n- The medallion has four quadrants around an exact centre, with the carded small ring at the centre where the four quadrants meet.\n- Every quadrant holds the same four shapes, one per centre-relative cell: in the cell nearest the picture's centre the carded filled circle; in the cell nearest that quadrant's own outer corner the carded diamond; in the cell nearer the picture's top or bottom edge the carded crescent; in the cell nearer the picture's side edge the carded comma. Name every shape with its carded colour, quadrant by quadrant.\n- The quadrants are MIRROR images, stated in full: the top-left quadrant is the top-right quadrant flipped left-to-right; the bottom-right is the top-right flipped top-to-bottom; the bottom-left is the top-right flipped both ways. In each quadrant the crescent opens diagonally toward that quadrant's own outer corner, and the comma's tip points outward toward that quadrant's own side edge - to the right in the two right-hand quadrants, to the left in the two left-hand quadrants.\n- No dividing lines or seams between the quadrants, no border or frame around the medallion, no text, letters or numbers anywhere.\nForbidden: never describe any quadrant as a copy, repeat or stamp of another without its flip - an unflipped copy is the one failure this design cannot survive; never rotate a quadrant into place instead of mirroring it. Output the prompt only, one paragraph, no commentary.",
+        "maxTokens": 900,
+        "reasoningEffort": "low"
+      },
+      "w": 280,
+      "name": "Mandala brief - GLM turns the card into a painter prompt (each quadrant mirrored, never stamped)",
+      "sizes": {
+        "system": 150
+      }
+    },
+    {
+      "id": "paint",
+      "type": "image",
+      "x": 1160,
+      "y": 280,
+      "fields": {
+        "model": "meta/muse-image/text-to-image",
+        "size": "1:1",
+        "variations": "1"
+      },
+      "w": 280,
+      "name": "Mandala - Muse paints the medallion, quadrant by mirrored quadrant"
+    },
+    {
+      "id": "surveyor",
+      "type": "llm",
+      "x": 1520,
+      "y": 280,
+      "fields": {
+        "model": "google/gemini-3.8-flash",
+        "system": "You are a medallion reader examining one square picture: a flat square mandala of four quadrants around an exact centre, on a flat ground. Each quadrant is divided notionally into four cells named from the picture's centre lines: the CENTRE-CELL is the part of the quadrant nearest the picture's centre; the CORNER-CELL is the part nearest that quadrant's own outer corner; the EDGE-CELL is the part nearer the picture's top or bottom edge, beside the vertical centre line; the SIDE-CELL is the part nearer the picture's side edge, beside the horizontal centre line. You do not know what was planned - report only what you actually see, quadrant by quadrant, in exactly this format:\nLAYOUT: <MANDALA if the picture holds one flat four-quadrant medallion around a centre; OTHER otherwise, followed by a short note on what is wrong>\nCENTRE: <the colour of the small ring at the exact centre, in one or two plain words; 'none' if there is no ring>\nTOP-RIGHT CENTRE-CELL: <the shape and its colour in a few plain words - e.g. 'vermilion red filled circle'; 'none' if the cell is empty; 'unclear' if you cannot tell>\nTOP-RIGHT CORNER-CELL: <shape and colour, judged the same way>\nTOP-RIGHT EDGE-CELL: <shape and colour, judged the same way>\nTOP-RIGHT SIDE-CELL: <shape and colour, judged the same way>\nTOP-RIGHT COMMA TIP: <the absolute picture direction the comma's tip in this quadrant points - LEFT, RIGHT, UP or DOWN; NONE if there is no comma>\nTOP-RIGHT CRESCENT OPENING: <the absolute diagonal the crescent in this quadrant opens toward - UP-RIGHT, UP-LEFT, DOWN-RIGHT or DOWN-LEFT; NONE if there is no crescent>\nTOP-LEFT CENTRE-CELL: <shape and colour, judged the same way>\nTOP-LEFT CORNER-CELL: <shape and colour>\nTOP-LEFT EDGE-CELL: <shape and colour>\nTOP-LEFT SIDE-CELL: <shape and colour>\nTOP-LEFT COMMA TIP: <LEFT, RIGHT, UP, DOWN or NONE>\nTOP-LEFT CRESCENT OPENING: <UP-RIGHT, UP-LEFT, DOWN-RIGHT, DOWN-LEFT or NONE>\nBOTTOM-RIGHT CENTRE-CELL: <shape and colour>\nBOTTOM-RIGHT CORNER-CELL: <shape and colour>\nBOTTOM-RIGHT EDGE-CELL: <shape and colour>\nBOTTOM-RIGHT SIDE-CELL: <shape and colour>\nBOTTOM-RIGHT COMMA TIP: <LEFT, RIGHT, UP, DOWN or NONE>\nBOTTOM-RIGHT CRESCENT OPENING: <UP-RIGHT, UP-LEFT, DOWN-RIGHT, DOWN-LEFT or NONE>\nBOTTOM-LEFT CENTRE-CELL: <shape and colour>\nBOTTOM-LEFT CORNER-CELL: <shape and colour>\nBOTTOM-LEFT EDGE-CELL: <shape and colour>\nBOTTOM-LEFT SIDE-CELL: <shape and colour>\nBOTTOM-LEFT COMMA TIP: <LEFT, RIGHT, UP, DOWN or NONE>\nBOTTOM-LEFT CRESCENT OPENING: <UP-RIGHT, UP-LEFT, DOWN-RIGHT, DOWN-LEFT or NONE>\nSEAMS: <NONE if no lines divide the quadrants; CROSS if straight dividing lines run along the centre lines; otherwise describe them briefly>\nEXTRA: <anything that is not part of the design as described - other shapes or objects, a border, text, letters; 'none' if there is nothing of the kind>\nJudge each quadrant on its own and each direction as an absolute direction in the whole picture, exactly as drawn - do not correct a quadrant toward what symmetry would predict. Report what you actually see, even when a quadrant breaks the pattern.",
+        "maxTokens": 900,
+        "reasoningEffort": "low"
+      },
+      "w": 280,
+      "name": "Medallion read - Gemini cards each quadrant in centre-relative cells, blind",
+      "sizes": {
+        "system": 150
+      }
+    },
+    {
+      "id": "j1",
+      "type": "join",
+      "x": 1880,
+      "y": 180,
+      "fields": {
+        "sep": "\n\nKALEIDO READ (a blind inspector reported only what it could see - each quadrant's four cells, each comma's tip and each crescent's opening as absolute picture directions, the centre ring and any seams; it never saw the kaleido card):\n"
+      },
+      "w": 200,
+      "name": "Kaleido card + kaleido read"
+    },
+    {
+      "id": "checker",
+      "type": "llm",
+      "x": 2240,
+      "y": 400,
+      "fields": {
+        "model": "z-ai/glm-5.3-flash",
+        "system": "You are a kaleidoscope auditor. The input gives a KALEIDO CARD (MANDALA, GROUND, CENTRE, four cell lines - CENTRE-CELL, CORNER-CELL, EDGE-CELL, SIDE-CELL - LAW and FRAME) and then a KALEIDO READ from a blind inspector (LAYOUT, CENTRE, per quadrant the four cells plus COMMA TIP and CRESCENT OPENING as absolute picture directions, SEAMS, EXTRA).\n\nFirst derive the law from the card itself: described in centre-relative cells, every quadrant must read exactly like the card. Convert the read's absolute orientations into centre-relative ones per quadrant: a comma tip obeys the mirror law when it points toward that quadrant's own side edge - RIGHT in TOP-RIGHT and BOTTOM-RIGHT, LEFT in TOP-LEFT and BOTTOM-LEFT; a crescent opening obeys it when it opens toward that quadrant's own outer corner - UP-RIGHT in TOP-RIGHT, UP-LEFT in TOP-LEFT, DOWN-RIGHT in BOTTOM-RIGHT, DOWN-LEFT in BOTTOM-LEFT. Print CARD LAW: VALID if the card's four cell lines name four different shapes in four cells, INVALID otherwise.\n\nThen score exactly these lines:\nELEMENTS: <X> of 16 - one point per cell (4 per quadrant) whose read shape is the card's shape for that cell and whose colour is the card's colour for that shape (the same colour family in plain words counts - 'vermilion' for 'vermilion red'; a different shape, a different colour family, a swapped cell or an empty cell fails that cell)\nQUADRANTS: <X> of 4 - the count of quadrants whose four cells all score\nCENTRE: <CORRECT if the read's centre ring colour is the card's; WRONG if a ring is there in another colour; MISSING if there is no ring>\nMIRRORS: <X> of 4 - the count of quadrants where BOTH orientation checks obey the mirror law above (comma tip toward its own side edge AND crescent opening toward its own corner)\nSYMMETRY: <TRUE MIRROR if QUADRANTS is 4 of 4 and MIRRORS is 4 of 4; STAMPED if ELEMENTS is 13 of 16 or more but MIRRORS is 3 of 4 or fewer and the failing commas or crescents repeat one absolute direction across quadrants - the motif was copied unflipped, not mirrored; PARTIAL if some quadrants fully obey and none of the other verdicts fits; BROKEN otherwise>\nSEAMS: <copy the read's SEAMS>\nEXTRA: <copy the read's EXTRA>\nKALEIDO ERRORS: <the specific failures in one line - each failing cell by quadrant and cell, each quadrant whose orientations break the mirror law and how; 'none' if there are none>\nSUMMARY: <one plain line>\nOutput exactly these lines in this order: CARD LAW, ELEMENTS, QUADRANTS, CENTRE, MIRRORS, SYMMETRY, SEAMS, EXTRA, KALEIDO ERRORS, SUMMARY. Judge only from the card and the read; never invent a quadrant you were not given.",
+        "maxTokens": 1200,
+        "reasoningEffort": "low"
+      },
+      "w": 280,
+      "name": "Kaleido audit - GLM converts orientations to centre-relative and scores elements, mirrors, symmetry",
+      "sizes": {
+        "system": 150
+      }
+    },
+    {
+      "id": "j2",
+      "type": "join",
+      "x": 2240,
+      "y": 180,
+      "fields": {
+        "sep": "\n\nKALEIDO AUDIT (a GLM auditor scored the blind read against the card - the elements, the quadrants, the centre, the mirror orientations and the symmetry verdict):\n"
+      },
+      "w": 200,
+      "name": "Card, kaleido read + kaleido audit"
+    },
+    {
+      "id": "audit",
+      "type": "decide",
+      "x": 2600,
+      "y": 180,
+      "fields": {
+        "model": "perplexity/pplx-decider-v1.2",
+        "mode": "choose",
+        "question": "The picture should hold one flat square medallion in the card's colours: four quadrants around the carded centre ring, every quadrant holding the same four shapes in the same centre-relative cells, each quadrant the mirror image of the top-right across the centre lines - each crescent opening toward its own quadrant's outer corner and each comma's tip pointing outward toward its own quadrant's side edge - with no dividing lines and nothing else in the picture. The audit in the text scores the blind read against the card: the elements, the quadrants, the centre, the mirror orientations, and whether the symmetry is a true mirror or stamped unflipped copies. Choose the one label that best fits the round-1 picture.",
+        "options": "mirrors true\nstamped not mirrored\nquadrants drifted\ncentre or seams wrong\nnot a mandala"
+      },
+      "w": 280,
+      "name": "Mirrors true - audited",
+      "sizes": {
+        "question": 130
+      }
+    },
+    {
+      "id": "editor",
+      "type": "llm",
+      "x": 2600,
+      "y": 520,
+      "fields": {
+        "model": "z-ai/glm-5.3-flash",
+        "system": "You are the kaleidoscope editor in a mandala pipeline. The input gives a KALEIDO CARD, a blind KALEIDO READ and a KALEIDO AUDIT of the round-1 image. Write ONE edit instruction for an image editor working on that image, in at most 130 words.\nIf the audit shows a perfect reading (CARD LAW: VALID, ELEMENTS: 16 of 16, QUADRANTS: 4 of 4, CENTRE: CORRECT, MIRRORS: 4 of 4, SYMMETRY: TRUE MIRROR, SEAMS: NONE, EXTRA: none, KALEIDO ERRORS: none), output exactly this and nothing else: 'Reproduce this medallion picture completely unchanged - same ground, same centre ring, same four shapes in the same colours in the same cell of every quadrant, every crescent opening toward its own quadrant's corner and every comma's tip pointing toward its own quadrant's side edge. Do not move, add, remove or repaint anything.'\nOtherwise write the instruction as the full target end state plus the audit's specific failures as quadrant-level repaint demands: name the ground, the centre ring and the four shapes by cell and carded colour. For each quadrant whose cells are wrong, demand that quadrant be repainted with the carded shapes in the carded cells. For each quadrant whose orientations break the mirror law, demand that quadrant be repainted as a true mirror image: its crescent opening toward that quadrant's own outer corner and its comma's tip pointing outward toward that quadrant's own side edge - flipped, never copied unflipped from a neighbouring quadrant. If the centre ring is wrong or missing, demand the carded ring at the exact centre. If seams are present, demand their removal, the quadrants meeting with no dividing lines. Every quadrant that already matches the card in cells and orientations must be left exactly as drawn. Never ask for any text, labels or arrows.",
+        "maxTokens": 400,
+        "reasoningEffort": "low"
+      },
+      "w": 280,
+      "name": "Edit notes - GLM turns the kaleido audit into concrete quadrant-repaint instructions",
+      "sizes": {
+        "system": 150
+      }
+    },
+    {
+      "id": "fix",
+      "type": "edit",
+      "x": 2960,
+      "y": 520,
+      "fields": {
+        "model": "meta/muse-image/edit",
+        "size": "auto"
+      },
+      "w": 280,
+      "name": "Corrected medallion - Muse Edit repaints the failing quadrants as true mirrors"
+    },
+    {
+      "id": "surveyor2",
+      "type": "llm",
+      "x": 3320,
+      "y": 520,
+      "fields": {
+        "model": "google/gemini-3.8-flash",
+        "system": "You are a medallion reader examining one square picture: a flat square mandala of four quadrants around an exact centre, on a flat ground. Each quadrant is divided notionally into four cells named from the picture's centre lines: the CENTRE-CELL is the part of the quadrant nearest the picture's centre; the CORNER-CELL is the part nearest that quadrant's own outer corner; the EDGE-CELL is the part nearer the picture's top or bottom edge, beside the vertical centre line; the SIDE-CELL is the part nearer the picture's side edge, beside the horizontal centre line. You do not know what was planned - report only what you actually see, quadrant by quadrant, in exactly this format:\nLAYOUT: <MANDALA if the picture holds one flat four-quadrant medallion around a centre; OTHER otherwise, followed by a short note on what is wrong>\nCENTRE: <the colour of the small ring at the exact centre, in one or two plain words; 'none' if there is no ring>\nTOP-RIGHT CENTRE-CELL: <the shape and its colour in a few plain words - e.g. 'vermilion red filled circle'; 'none' if the cell is empty; 'unclear' if you cannot tell>\nTOP-RIGHT CORNER-CELL: <shape and colour, judged the same way>\nTOP-RIGHT EDGE-CELL: <shape and colour, judged the same way>\nTOP-RIGHT SIDE-CELL: <shape and colour, judged the same way>\nTOP-RIGHT COMMA TIP: <the absolute picture direction the comma's tip in this quadrant points - LEFT, RIGHT, UP or DOWN; NONE if there is no comma>\nTOP-RIGHT CRESCENT OPENING: <the absolute diagonal the crescent in this quadrant opens toward - UP-RIGHT, UP-LEFT, DOWN-RIGHT or DOWN-LEFT; NONE if there is no crescent>\nTOP-LEFT CENTRE-CELL: <shape and colour, judged the same way>\nTOP-LEFT CORNER-CELL: <shape and colour>\nTOP-LEFT EDGE-CELL: <shape and colour>\nTOP-LEFT SIDE-CELL: <shape and colour>\nTOP-LEFT COMMA TIP: <LEFT, RIGHT, UP, DOWN or NONE>\nTOP-LEFT CRESCENT OPENING: <UP-RIGHT, UP-LEFT, DOWN-RIGHT, DOWN-LEFT or NONE>\nBOTTOM-RIGHT CENTRE-CELL: <shape and colour>\nBOTTOM-RIGHT CORNER-CELL: <shape and colour>\nBOTTOM-RIGHT EDGE-CELL: <shape and colour>\nBOTTOM-RIGHT SIDE-CELL: <shape and colour>\nBOTTOM-RIGHT COMMA TIP: <LEFT, RIGHT, UP, DOWN or NONE>\nBOTTOM-RIGHT CRESCENT OPENING: <UP-RIGHT, UP-LEFT, DOWN-RIGHT, DOWN-LEFT or NONE>\nBOTTOM-LEFT CENTRE-CELL: <shape and colour>\nBOTTOM-LEFT CORNER-CELL: <shape and colour>\nBOTTOM-LEFT EDGE-CELL: <shape and colour>\nBOTTOM-LEFT SIDE-CELL: <shape and colour>\nBOTTOM-LEFT COMMA TIP: <LEFT, RIGHT, UP, DOWN or NONE>\nBOTTOM-LEFT CRESCENT OPENING: <UP-RIGHT, UP-LEFT, DOWN-RIGHT, DOWN-LEFT or NONE>\nSEAMS: <NONE if no lines divide the quadrants; CROSS if straight dividing lines run along the centre lines; otherwise describe them briefly>\nEXTRA: <anything that is not part of the design as described - other shapes or objects, a border, text, letters; 'none' if there is nothing of the kind>\nJudge each quadrant on its own and each direction as an absolute direction in the whole picture, exactly as drawn - do not correct a quadrant toward what symmetry would predict. Report what you actually see, even when a quadrant breaks the pattern.",
+        "maxTokens": 900,
+        "reasoningEffort": "low"
+      },
+      "w": 280,
+      "name": "Re-read - Gemini cards the corrected medallion's quadrants, blind",
+      "sizes": {
+        "system": 150
+      }
+    },
+    {
+      "id": "j4",
+      "type": "join",
+      "x": 3680,
+      "y": 420,
+      "fields": {
+        "sep": "\n\nKALEIDO READ (a blind inspector reported only what it could see - each quadrant's four cells, each comma's tip and each crescent's opening as absolute picture directions, the centre ring and any seams; it never saw the kaleido card):\n"
+      },
+      "w": 200,
+      "name": "Kaleido card + re-read"
+    },
+    {
+      "id": "checker2",
+      "type": "llm",
+      "x": 4040,
+      "y": 520,
+      "fields": {
+        "model": "z-ai/glm-5.3-flash",
+        "system": "You are a kaleidoscope auditor. The input gives a KALEIDO CARD (MANDALA, GROUND, CENTRE, four cell lines - CENTRE-CELL, CORNER-CELL, EDGE-CELL, SIDE-CELL - LAW and FRAME) and then a KALEIDO READ from a blind inspector (LAYOUT, CENTRE, per quadrant the four cells plus COMMA TIP and CRESCENT OPENING as absolute picture directions, SEAMS, EXTRA).\n\nFirst derive the law from the card itself: described in centre-relative cells, every quadrant must read exactly like the card. Convert the read's absolute orientations into centre-relative ones per quadrant: a comma tip obeys the mirror law when it points toward that quadrant's own side edge - RIGHT in TOP-RIGHT and BOTTOM-RIGHT, LEFT in TOP-LEFT and BOTTOM-LEFT; a crescent opening obeys it when it opens toward that quadrant's own outer corner - UP-RIGHT in TOP-RIGHT, UP-LEFT in TOP-LEFT, DOWN-RIGHT in BOTTOM-RIGHT, DOWN-LEFT in BOTTOM-LEFT. Print CARD LAW: VALID if the card's four cell lines name four different shapes in four cells, INVALID otherwise.\n\nThen score exactly these lines:\nELEMENTS: <X> of 16 - one point per cell (4 per quadrant) whose read shape is the card's shape for that cell and whose colour is the card's colour for that shape (the same colour family in plain words counts - 'vermilion' for 'vermilion red'; a different shape, a different colour family, a swapped cell or an empty cell fails that cell)\nQUADRANTS: <X> of 4 - the count of quadrants whose four cells all score\nCENTRE: <CORRECT if the read's centre ring colour is the card's; WRONG if a ring is there in another colour; MISSING if there is no ring>\nMIRRORS: <X> of 4 - the count of quadrants where BOTH orientation checks obey the mirror law above (comma tip toward its own side edge AND crescent opening toward its own corner)\nSYMMETRY: <TRUE MIRROR if QUADRANTS is 4 of 4 and MIRRORS is 4 of 4; STAMPED if ELEMENTS is 13 of 16 or more but MIRRORS is 3 of 4 or fewer and the failing commas or crescents repeat one absolute direction across quadrants - the motif was copied unflipped, not mirrored; PARTIAL if some quadrants fully obey and none of the other verdicts fits; BROKEN otherwise>\nSEAMS: <copy the read's SEAMS>\nEXTRA: <copy the read's EXTRA>\nKALEIDO ERRORS: <the specific failures in one line - each failing cell by quadrant and cell, each quadrant whose orientations break the mirror law and how; 'none' if there are none>\nSUMMARY: <one plain line>\nOutput exactly these lines in this order: CARD LAW, ELEMENTS, QUADRANTS, CENTRE, MIRRORS, SYMMETRY, SEAMS, EXTRA, KALEIDO ERRORS, SUMMARY. Judge only from the card and the read; never invent a quadrant you were not given.",
+        "maxTokens": 1200,
+        "reasoningEffort": "low"
+      },
+      "w": 280,
+      "name": "Kaleido re-audit - GLM scores the corrected medallion against the same card",
+      "sizes": {
+        "system": 150
+      }
+    },
+    {
+      "id": "ask",
+      "type": "text",
+      "x": 1160,
+      "y": 520,
+      "fields": {
+        "text": "Inspect the medallion picture in the attached image now, following your instructions exactly."
+      },
+      "w": 240,
+      "name": "Inspect ask"
+    },
+    {
+      "id": "ask2",
+      "type": "text",
+      "x": 2960,
+      "y": 900,
+      "fields": {
+        "text": "Inspect the medallion picture in the attached image now, following your instructions exactly."
+      },
+      "w": 240,
+      "name": "Re-inspect ask"
+    }
+  ],
+  "links": [
+    {
+      "id": "l1",
+      "from": {
+        "node": "setting",
+        "port": "text"
+      },
+      "to": {
+        "node": "director",
+        "port": "prompt"
+      }
+    },
+    {
+      "id": "l2",
+      "from": {
+        "node": "director",
+        "port": "text"
+      },
+      "to": {
+        "node": "j0",
+        "port": "b"
+      }
+    },
+    {
+      "id": "l12",
+      "from": {
+        "node": "setting",
+        "port": "text"
+      },
+      "to": {
+        "node": "j0",
+        "port": "a"
+      }
+    },
+    {
+      "id": "l13",
+      "from": {
+        "node": "j0",
+        "port": "text"
+      },
+      "to": {
+        "node": "stylist",
+        "port": "prompt"
+      }
+    },
+    {
+      "id": "l3",
+      "from": {
+        "node": "stylist",
+        "port": "text"
+      },
+      "to": {
+        "node": "paint",
+        "port": "prompt"
+      }
+    },
+    {
+      "id": "l4",
+      "from": {
+        "node": "paint",
+        "port": "image"
+      },
+      "to": {
+        "node": "surveyor",
+        "port": "img1"
+      }
+    },
+    {
+      "id": "l7",
+      "from": {
+        "node": "director",
+        "port": "text"
+      },
+      "to": {
+        "node": "j1",
+        "port": "a"
+      }
+    },
+    {
+      "id": "l8",
+      "from": {
+        "node": "surveyor",
+        "port": "text"
+      },
+      "to": {
+        "node": "j1",
+        "port": "b"
+      }
+    },
+    {
+      "id": "l11",
+      "from": {
+        "node": "j1",
+        "port": "text"
+      },
+      "to": {
+        "node": "checker",
+        "port": "prompt"
+      }
+    },
+    {
+      "id": "l14",
+      "from": {
+        "node": "j1",
+        "port": "text"
+      },
+      "to": {
+        "node": "j2",
+        "port": "a"
+      }
+    },
+    {
+      "id": "l15",
+      "from": {
+        "node": "checker",
+        "port": "text"
+      },
+      "to": {
+        "node": "j2",
+        "port": "b"
+      }
+    },
+    {
+      "id": "l16",
+      "from": {
+        "node": "j2",
+        "port": "text"
+      },
+      "to": {
+        "node": "audit",
+        "port": "text"
+      }
+    },
+    {
+      "id": "l17",
+      "from": {
+        "node": "paint",
+        "port": "image"
+      },
+      "to": {
+        "node": "audit",
+        "port": "img1"
+      }
+    },
+    {
+      "id": "l18",
+      "from": {
+        "node": "j2",
+        "port": "text"
+      },
+      "to": {
+        "node": "editor",
+        "port": "prompt"
+      }
+    },
+    {
+      "id": "l19",
+      "from": {
+        "node": "editor",
+        "port": "text"
+      },
+      "to": {
+        "node": "fix",
+        "port": "prompt"
+      }
+    },
+    {
+      "id": "l20",
+      "from": {
+        "node": "paint",
+        "port": "image"
+      },
+      "to": {
+        "node": "fix",
+        "port": "image"
+      }
+    },
+    {
+      "id": "l21",
+      "from": {
+        "node": "fix",
+        "port": "image"
+      },
+      "to": {
+        "node": "surveyor2",
+        "port": "img1"
+      }
+    },
+    {
+      "id": "l22",
+      "from": {
+        "node": "director",
+        "port": "text"
+      },
+      "to": {
+        "node": "j4",
+        "port": "a"
+      }
+    },
+    {
+      "id": "l23",
+      "from": {
+        "node": "surveyor2",
+        "port": "text"
+      },
+      "to": {
+        "node": "j4",
+        "port": "b"
+      }
+    },
+    {
+      "id": "l24",
+      "from": {
+        "node": "j4",
+        "port": "text"
+      },
+      "to": {
+        "node": "checker2",
+        "port": "prompt"
+      }
+    },
+    {
+      "id": "l39",
+      "from": {
+        "node": "ask",
+        "port": "text"
+      },
+      "to": {
+        "node": "surveyor",
+        "port": "prompt"
+      }
+    },
+    {
+      "id": "l40",
+      "from": {
+        "node": "ask2",
+        "port": "text"
+      },
+      "to": {
+        "node": "surveyor2",
+        "port": "prompt"
+      }
+    }
+  ],
+  "nid": 32,
+  "lid": 40,
+  "view": {
+    "panX": 40,
+    "panY": 40,
+    "scale": 0.5
+  }
+}
