@@ -37,6 +37,7 @@ Do not hand-edit these files — run `node scripts/make-recipes.mjs` after chang
 | [Hidden word, object-coded](hidden-word.md) | [`graphs/hidden-word.noodle-graph.json`](../graphs/hidden-word.noodle-graph.json) | defaults in graph |
 | [Humanize a comment](humanize-comment.md) | [`graphs/humanize-comment.noodle-graph.json`](../graphs/humanize-comment.noodle-graph.json) | defaults in graph |
 | [Idea to 3D model](idea-to-3d-model.md) | [`graphs/idea-to-3d-model.noodle-graph.json`](../graphs/idea-to-3d-model.noodle-graph.json) | defaults in graph |
+| [Impossible loop check, cycle-audited](impossible-loop-check.md) | [`graphs/impossible-loop-check.noodle-graph.json`](../graphs/impossible-loop-check.noodle-graph.json) | defaults in graph |
 | [Ishihara check, hue-only-audited](ishihara-check.md) | [`graphs/ishihara-check.noodle-graph.json`](../graphs/ishihara-check.noodle-graph.json) | defaults in graph |
 | [Knot check, crossing-audited](knot-check.md) | [`graphs/knot-check.noodle-graph.json`](../graphs/knot-check.noodle-graph.json) | defaults in graph |
 | [Level check, level-audited](level-check.md) | [`graphs/level-check.noodle-graph.json`](../graphs/level-check.noodle-graph.json) | defaults in graph |
