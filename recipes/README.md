@@ -78,6 +78,7 @@ Do not hand-edit these files — run `node scripts/make-recipes.mjs` after chang
 | [Stack check, support-audited](stack-check.md) | [`graphs/stack-check.noodle-graph.json`](../graphs/stack-check.noodle-graph.json) | defaults in graph |
 | [Stereo check, disparity-audited](stereo-check.md) | [`graphs/stereo-check.noodle-graph.json`](../graphs/stereo-check.noodle-graph.json) | defaults in graph |
 | [Storyboard relay](storyboard-relay.md) | [`graphs/storyboard-relay.noodle-graph.json`](../graphs/storyboard-relay.noodle-graph.json) | defaults in graph |
+| [Stroop check, channel-audited](stroop-check.md) | [`graphs/stroop-check.noodle-graph.json`](../graphs/stroop-check.noodle-graph.json) | defaults in graph |
 | [Subject anywhere, preservation-audited](subject-anywhere.md) | [`graphs/subject-anywhere.noodle-graph.json`](../graphs/subject-anywhere.noodle-graph.json) | needs Product photo |
 | [Sudoku check, constraint-audited](sudoku-check.md) | [`graphs/sudoku-check.noodle-graph.json`](../graphs/sudoku-check.noodle-graph.json) | defaults in graph |
 | [Talking photo](talking-photo.md) | [`graphs/talking-photo.noodle-graph.json`](../graphs/talking-photo.noodle-graph.json) | needs Subject photo |
