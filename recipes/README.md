@@ -47,6 +47,7 @@ Do not hand-edit these files — run `node scripts/make-recipes.mjs` after chang
 | [Maze run, solve-checked](maze-solve-audit.md) | [`graphs/maze-solve-audit.noodle-graph.json`](../graphs/maze-solve-audit.noodle-graph.json) | defaults in graph |
 | [Menu to plate, checked](menu-to-plate.md) | [`graphs/menu-to-plate.noodle-graph.json`](../graphs/menu-to-plate.noodle-graph.json) | needs Menu photo |
 | [Mesh diet](mesh-diet.md) | [`graphs/mesh-diet.noodle-graph.json`](../graphs/mesh-diet.noodle-graph.json) | needs Object photo |
+| [Metamorphosis check, transformation-audited](metamorphosis-check.md) | [`graphs/metamorphosis-check.noodle-graph.json`](../graphs/metamorphosis-check.noodle-graph.json) | defaults in graph |
 | [Metro map, station-checked](metro-map-audit.md) | [`graphs/metro-map-audit.noodle-graph.json`](../graphs/metro-map-audit.noodle-graph.json) | defaults in graph |
 | [Mirror check, reflection-audited](mirror-check.md) | [`graphs/mirror-check.noodle-graph.json`](../graphs/mirror-check.noodle-graph.json) | defaults in graph |
 | [Molecule check, valence-audited](molecule-check.md) | [`graphs/molecule-check.noodle-graph.json`](../graphs/molecule-check.noodle-graph.json) | defaults in graph |

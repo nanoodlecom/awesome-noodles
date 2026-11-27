@@ -1,0 +1,671 @@
+{
+ "v": 1,
+ "nodes": [
+  {
+   "id": "c1",
+   "type": "comment",
+   "x": 60,
+   "y": 30,
+   "fields": {
+    "text": "Can a picture show time passing honestly? A GLM director picks one irreversible transformation from a menu printed in its own prompt and copies out a METAMORPHOSIS CARD: the subject, its BEFORE state (pristine, REMAINING 100), the AFTER state physics derives (a melted snowman at REMAINING 15, a burned candle at 35, a tide-washed sandcastle at 20), the RESIDUE items that cannot melt, burn or wash away and must survive into the after panel, and the TRACE the change leaves on the ground. Muse paints one diptych - the same scene from the same viewpoint twice, left panel earlier, right panel later. Two blind Gemini readers then split the evidence by panel: the LEFT reader reports only the left panel's subject, completeness, loose objects and trace; the RIGHT reader does the same for the right panel. A GLM auditor subtracts: the DROP and its DIRECTION, whether the after state lands in its derived band, and how many residue items survived - TRANSFORMED only when time ran forward, by the right amount, on the same subject. A Decide judge headlines round 1 as a side output; a gated GLM editor turns any violation into concrete repaint notes for the right panel only (a transformed audit demands a verbatim copy), Muse Edit repairs, and both blind readers plus the same auditor re-score the corrected diptych, which is the flow's final output."
+   },
+   "w": 900,
+   "name": "Metamorphosis check"
+  },
+  {
+   "id": "setting",
+   "type": "text",
+   "x": 60,
+   "y": 300,
+   "fields": {
+    "text": "One scene shown twice, side by side in a single wide picture: the same subject in the same place, from the same viewpoint and in the same light - the left panel shows it earlier, the right panel shows it later, after a change has had time to work on it. A thin plain gap separates the two panels. No text, no labels, no arrows anywhere."
+   },
+   "w": 300,
+   "name": "Diptych setting"
+  },
+  {
+   "id": "director",
+   "type": "llm",
+   "x": 440,
+   "y": 280,
+   "fields": {
+    "model": "z-ai/glm-5.3-flash",
+    "system": "You are a metamorphosis director. The SETTING you receive describes a two-panel before-and-after picture, not a scene to match: it names no subject on purpose, because the painter will paint the chosen transformation afterwards. Do NOT try to match a menu entry to the setting, do NOT refuse, and never ask for a different input. Pick exactly one menu transformation freely - any of the three is a correct choice - and copy it out as the card, in exactly the card format below.\n\nTHE LAW (fixed for every menu entry): the transformation is IRREVERSIBLE and one-directional. The subject loses substance over time; it can never grow, heal or rebuild itself between the panels. What cannot be destroyed - the RESIDUE - must still be there in the after panel, displaced but present. The change leaves a TRACE on the surface. REMAINING is how much of the subject's original substance is left: 100 in the before panel by definition, and the carded target in the after panel.\n\nMENU:\n1. MELTING SNOWMAN - a tall three-ball snowman with a black top hat, a carrot nose, coal eyes and two twig arms, standing on a snowy lawn in front of a fence. AFTER: REMAINING 15 - the snow has melted to a low wet mound, the top hat sits on the wet grass beside it, the carrot lies on the ground, both twigs lie on the ground, and a shallow puddle spreads around the mound. RESIDUE: black top hat, carrot, two twig arms. TRACE: shallow puddle.\n2. BURNING CANDLE - a tall ivory pillar candle, lit, in a brass holder on a wooden table, a window behind. AFTER: REMAINING 35 - the candle has burned down to about a third of its height, still lit with a small flame, and a wide pool of melted wax has spread across the holder and table around its base. RESIDUE: brass holder, small flame. TRACE: wide pool of melted wax.\n3. WASHED SANDCASTLE - a tall sandcastle with three towers, flags on the towers, and a dug moat, on a flat beach with the sea behind. AFTER: REMAINING 20 - the tide has washed the castle down to a low smooth mound, the moat is filled with seawater, the flags are gone, and a red bucket lies tipped on its side beside the mound. RESIDUE: red bucket. TRACE: seawater filling the moat.\n\nCARD FORMAT - copy the chosen entry out exactly in this shape, filling every line, nothing else:\nSCENE: <MELTING SNOWMAN or BURNING CANDLE or WASHED SANDCASTLE>\nSUBJECT: <the subject, one line>\nBEFORE: <the before state in one line> / REMAINING 100\nAFTER: <the after state in one line> / REMAINING <15 or 35 or 20>\nRESIDUE: <the residue items, comma separated - indestructible, must appear in BOTH panels>\nTRACE: <the trace the change leaves in the after panel>\nBACKDROP: <the shared backdrop, identical in both panels>",
+    "maxTokens": 900,
+    "reasoningEffort": "low"
+   },
+   "w": 280,
+   "name": "Metamorphosis card - GLM picks a transformation and copies its derived after state",
+   "sizes": {
+    "system": 150
+   }
+  },
+  {
+   "id": "j0",
+   "type": "join",
+   "x": 800,
+   "y": 480,
+   "fields": {
+    "sep": "\n\nMETAMORPHOSIS CARD (the transformation - the subject, its before state at REMAINING 100, its derived after state and target, the residue items that must survive into the after panel, and the trace the change leaves; its exact wording must reach the image maker):\n"
+   },
+   "w": 200,
+   "name": "Setting + kanizsa card"
+  },
+  {
+   "id": "stylist",
+   "type": "llm",
+   "x": 800,
+   "y": 280,
+   "fields": {
+    "model": "z-ai/glm-5.3-flash",
+    "system": "You are a diptych brief writer. You receive a SETTING and a METAMORPHOSIS CARD. Turn them into ONE prompt for an image model that paints the two-panel picture. Rules:\n- Demand ONE wide picture split into two equal side-by-side panels by a thin plain vertical gap: LEFT panel = the card's BEFORE state, RIGHT panel = the card's AFTER state. Same subject, same backdrop, same viewpoint, same framing and same light in both panels - only the subject's state and the carded trace differ.\n- State the before state and the after state in full concrete detail from the card, including how much of the subject remains in the right panel (a low remnant, about the carded fraction of the original) and every RESIDUE item present in the right panel, displaced onto the ground or surface exactly as the card says.\n- Forbid, by name: any text, labels, captions, arrows, clocks or 'before/after' words; the subject growing, healing or looking newer in the right panel; any change to the backdrop between panels; extra people or animals.\nOutput ONLY the painter prompt, no preamble.",
+    "maxTokens": 900,
+    "reasoningEffort": "low"
+   },
+   "w": 280,
+   "name": "Diptych brief - GLM turns the card into a painter prompt (same scene, two times)",
+   "sizes": {
+    "system": 150
+   }
+  },
+  {
+   "id": "paint",
+   "type": "image",
+   "x": 1160,
+   "y": 280,
+   "fields": {
+    "model": "meta/muse-image/text-to-image",
+    "size": "1:1",
+    "variations": "1"
+   },
+   "w": 280,
+   "name": "Diptych - Muse paints the same scene before and after the change"
+  },
+  {
+   "id": "surveyor",
+   "type": "llm",
+   "x": 1520,
+   "y": 280,
+   "fields": {
+    "model": "google/gemini-3.8-flash",
+    "system": "You are a blind panel reader. You see a two-panel picture and a request about its LEFT panel only. You report only what the left panel shows: the subject, how complete it is, its loose objects and its surface trace. You never look at or guess the right panel, never invent an object you cannot see, and never add commentary.",
+    "maxTokens": 400,
+    "reasoningEffort": "low"
+   },
+   "w": 280,
+   "name": "Left read - Gemini reports only the left (before) panel's state",
+   "sizes": {
+    "system": 150
+   }
+  },
+  {
+   "id": "lit",
+   "type": "llm",
+   "x": 1520,
+   "y": 540,
+   "fields": {
+    "model": "google/gemini-3.8-flash",
+    "system": "You are a blind panel reader. You see a two-panel picture and a request about its RIGHT panel only. You report only what the right panel shows: the subject, how complete it is, its loose objects and its surface trace. You never look at or guess the left panel, never invent an object you cannot see, and never add commentary.",
+    "maxTokens": 600,
+    "reasoningEffort": "low"
+   },
+   "w": 280,
+   "name": "Right read - Gemini reports only the right (after) panel's state",
+   "sizes": {
+    "system": 150
+   }
+  },
+  {
+   "id": "j1a",
+   "type": "join",
+   "x": 1880,
+   "y": 180,
+   "fields": {
+    "sep": "\n\nLEFT READ (a blind reader reported only the LEFT panel - subject, completeness, loose objects, trace; it never saw the metamorphosis card):\n"
+   },
+   "w": 200,
+   "name": "Card + left read"
+  },
+  {
+   "id": "j1",
+   "type": "join",
+   "x": 1880,
+   "y": 180,
+   "fields": {
+    "sep": "\n\nRIGHT READ (a blind reader reported only the RIGHT panel - subject, completeness, loose objects, trace; it never saw the metamorphosis card):\n"
+   },
+   "w": 200,
+   "name": "Left bundle + right read"
+  },
+  {
+   "id": "checker",
+   "type": "llm",
+   "x": 2240,
+   "y": 400,
+   "fields": {
+    "model": "z-ai/glm-5.3-flash",
+    "system": "You are a metamorphosis auditor. You receive a METAMORPHOSIS CARD (the subject, its BEFORE state at REMAINING 100, its AFTER state with a target REMAINING, the RESIDUE items that must survive, and the TRACE), a blind LEFT READ and a blind RIGHT READ (each: SUBJECT, COMPLETENESS 0-100, LOOSE OBJECTS, TRACE). Score exactly by these definitions:\n\n- BEFORE: the left read's COMPLETENESS. AFTER: the right read's COMPLETENESS. DROP: BEFORE minus AFTER.\n- DIRECTION: DOWN when DROP is 25 or more; UP when DROP is -25 or less; FLAT otherwise.\n- AFTER BAND: HIT when AFTER is within 20 of the card's AFTER REMAINING target; MISS otherwise.\n- RESIDUE: count how many of the card's RESIDUE items are named, or near-named (a clear synonym or the same object in plain words), in the RIGHT read's LOOSE OBJECTS or TRACE. Report X of Y.\n- VERDICT, applying this precedence in order: IDENTITY LOST - BEFORE is under 40, or the right read's SUBJECT names a plainly different subject from the left read's, or RESIDUE is 0; REVERSED - DIRECTION is UP (the subject grew or healed with time); FROZEN - DIRECTION is FLAT (time passed and nothing changed); OVERSHOT - DIRECTION is DOWN and AFTER is more than 20 BELOW the card target (too much was destroyed); UNDERDONE - DIRECTION is DOWN and AFTER is more than 20 ABOVE the card target (the change started but did not reach the derived state); TRANSFORMED - anything else (direction down, after in band, residue surviving).\n\nOutput EXACTLY these lines, in this order, nothing else:\nBEFORE: <number>\nAFTER: <number>\nDROP: <number>\nDIRECTION: <DOWN or FLAT or UP>\nAFTER BAND: <HIT or MISS>\nRESIDUE: <X of Y>\nVERDICT: <TRANSFORMED or FROZEN or REVERSED or UNDERDONE or OVERSHOT or IDENTITY LOST>\nThen one line: DETAIL: <one short sentence naming what decided the verdict>",
+    "maxTokens": 1200,
+    "reasoningEffort": "low"
+   },
+   "w": 280,
+   "name": "Metamorphosis audit - GLM scores the drop, its direction, the after band and surviving residue",
+   "sizes": {
+    "system": 150
+   }
+  },
+  {
+   "id": "j2",
+   "type": "join",
+   "x": 2240,
+   "y": 180,
+   "fields": {
+    "sep": "\n\nMETAMORPHOSIS AUDIT (a GLM auditor scored the two blind panel reads against the card - before and after completeness, the drop and its direction, the after band, and how many residue items survived the change):\n"
+   },
+   "w": 200,
+   "name": "Card, both reads + kanizsa audit"
+  },
+  {
+   "id": "audit",
+   "type": "decide",
+   "x": 2600,
+   "y": 180,
+   "fields": {
+    "model": "perplexity/pplx-decider-v1.2",
+    "mode": "choose",
+    "question": "The picture should be one diptych: the same subject in the same place from the same viewpoint in two side-by-side panels - the left panel pristine and complete, the right panel the same subject after an irreversible change (melted, burned down or washed away) has reduced it to a small remnant, with the indestructible residue items (a hat, a holder, a bucket) still present in the right panel and a trace (puddle, wax pool, seawater) around it. The audit in the text scores two blind panel reads against the card: the completeness drop and its direction, whether the after state lands in its derived band, and how many residue items survived. Choose the one label that best fits the round-1 picture.",
+    "options": "transformed in order\nfrozen in time\ntransformation reversed\nsubject lost\nnot a diptych"
+   },
+   "w": 280,
+   "name": "Metamorphosis - audited",
+   "sizes": {
+    "question": 130
+   }
+  },
+  {
+   "id": "editor",
+   "type": "llm",
+   "x": 2600,
+   "y": 520,
+   "fields": {
+    "model": "z-ai/glm-5.3-flash",
+    "system": "You are a diptych repair editor. You receive a METAMORPHOSIS CARD and a METAMORPHOSIS AUDIT of the round-1 picture. Turn the audit into ONE concrete repaint instruction for an image editor that edits the whole two-panel picture. Rules:\n- If the audit's VERDICT is TRANSFORMED, output exactly: 'Reproduce this picture exactly, unchanged - same two panels, same subject in the same two states, same backdrop, same residue items, no added marks.' and nothing else.\n- In every other case, demand the LEFT panel be kept exactly as it is, untouched, and repair only the RIGHT panel, in picture terms:\n- FROZEN or UNDERDONE: reduce the right panel's subject to the card's AFTER state - the carded fraction remaining, as a low remnant of the original - and place every RESIDUE item in the right panel as the card describes, with the card's TRACE on the surface around it.\n- REVERSED: restore the right panel so the subject there is clearly MORE diminished than in the left panel, down to the card's AFTER state, with the residue and trace as carded. Never diminish the left panel to fake a drop.\n- OVERSHOT: rebuild the right panel's subject UP to the card's AFTER state - a clear remnant of the carded size, still plainly less than the left panel - keeping the residue and trace.\n- IDENTITY LOST: make the right panel's subject the same subject as the left panel's, in the card's AFTER state, and restore every missing RESIDUE item into the right panel.\n- NEVER demand text, labels or arrows; never swap the panels; never change the backdrop.\nOutput ONLY the repaint instruction.",
+    "maxTokens": 400,
+    "reasoningEffort": "low"
+   },
+   "w": 280,
+   "name": "Edit notes - GLM turns a wrong-direction or wrong-amount change into right-panel repaint demands",
+   "sizes": {
+    "system": 150
+   }
+  },
+  {
+   "id": "fix",
+   "type": "edit",
+   "x": 2960,
+   "y": 520,
+   "fields": {
+    "model": "meta/muse-image/edit",
+    "size": "auto"
+   },
+   "w": 280,
+   "name": "Corrected diptych - Muse Edit repairs the right panel only, left panel untouched"
+  },
+  {
+   "id": "surveyor2",
+   "type": "llm",
+   "x": 3320,
+   "y": 520,
+   "fields": {
+    "model": "google/gemini-3.8-flash",
+    "system": "You are a blind panel reader. You see a two-panel picture and a request about its LEFT panel only. You report only what the left panel shows: the subject, how complete it is, its loose objects and its surface trace. You never look at or guess the right panel, never invent an object you cannot see, and never add commentary.",
+    "maxTokens": 400,
+    "reasoningEffort": "low"
+   },
+   "w": 280,
+   "name": "Re-read (left) - Gemini re-reads the corrected picture's left panel",
+   "sizes": {
+    "system": 150
+   }
+  },
+  {
+   "id": "lit2",
+   "type": "llm",
+   "x": 1520,
+   "y": 780,
+   "fields": {
+    "model": "google/gemini-3.8-flash",
+    "system": "You are a blind panel reader. You see a two-panel picture and a request about its RIGHT panel only. You report only what the right panel shows: the subject, how complete it is, its loose objects and its surface trace. You never look at or guess the left panel, never invent an object you cannot see, and never add commentary.",
+    "maxTokens": 600,
+    "reasoningEffort": "low"
+   },
+   "w": 280,
+   "name": "Re-read (right) - Gemini re-reads the corrected picture's right panel",
+   "sizes": {
+    "system": 150
+   }
+  },
+  {
+   "id": "j4a",
+   "type": "join",
+   "x": 1880,
+   "y": 180,
+   "fields": {
+    "sep": "\n\nLEFT READ (a blind reader reported only the LEFT panel of the corrected picture - subject, completeness, loose objects, trace; it never saw the metamorphosis card):\n"
+   },
+   "w": 200,
+   "name": "Card + corrected left read"
+  },
+  {
+   "id": "j4",
+   "type": "join",
+   "x": 3680,
+   "y": 420,
+   "fields": {
+    "sep": "\n\nRIGHT READ (a blind reader reported only the RIGHT panel of the corrected picture - subject, completeness, loose objects, trace; it never saw the metamorphosis card):\n"
+   },
+   "w": 200,
+   "name": "Corrected left bundle + right re-read"
+  },
+  {
+   "id": "checker2",
+   "type": "llm",
+   "x": 4040,
+   "y": 520,
+   "fields": {
+    "model": "z-ai/glm-5.3-flash",
+    "system": "You are a metamorphosis auditor. You receive a METAMORPHOSIS CARD (the subject, its BEFORE state at REMAINING 100, its AFTER state with a target REMAINING, the RESIDUE items that must survive, and the TRACE), a blind LEFT READ and a blind RIGHT READ (each: SUBJECT, COMPLETENESS 0-100, LOOSE OBJECTS, TRACE). Score exactly by these definitions:\n\n- BEFORE: the left read's COMPLETENESS. AFTER: the right read's COMPLETENESS. DROP: BEFORE minus AFTER.\n- DIRECTION: DOWN when DROP is 25 or more; UP when DROP is -25 or less; FLAT otherwise.\n- AFTER BAND: HIT when AFTER is within 20 of the card's AFTER REMAINING target; MISS otherwise.\n- RESIDUE: count how many of the card's RESIDUE items are named, or near-named (a clear synonym or the same object in plain words), in the RIGHT read's LOOSE OBJECTS or TRACE. Report X of Y.\n- VERDICT, applying this precedence in order: IDENTITY LOST - BEFORE is under 40, or the right read's SUBJECT names a plainly different subject from the left read's, or RESIDUE is 0; REVERSED - DIRECTION is UP (the subject grew or healed with time); FROZEN - DIRECTION is FLAT (time passed and nothing changed); OVERSHOT - DIRECTION is DOWN and AFTER is more than 20 BELOW the card target (too much was destroyed); UNDERDONE - DIRECTION is DOWN and AFTER is more than 20 ABOVE the card target (the change started but did not reach the derived state); TRANSFORMED - anything else (direction down, after in band, residue surviving).\n\nOutput EXACTLY these lines, in this order, nothing else:\nBEFORE: <number>\nAFTER: <number>\nDROP: <number>\nDIRECTION: <DOWN or FLAT or UP>\nAFTER BAND: <HIT or MISS>\nRESIDUE: <X of Y>\nVERDICT: <TRANSFORMED or FROZEN or REVERSED or UNDERDONE or OVERSHOT or IDENTITY LOST>\nThen one line: DETAIL: <one short sentence naming what decided the verdict>",
+    "maxTokens": 1200,
+    "reasoningEffort": "low"
+   },
+   "w": 280,
+   "name": "Metamorphosis re-audit - GLM re-scores the corrected diptych against the same card",
+   "sizes": {
+    "system": 150
+   }
+  },
+  {
+   "id": "ask",
+   "type": "text",
+   "x": 1160,
+   "y": 520,
+   "fields": {
+    "text": "Look at the LEFT panel of this two-panel picture only - ignore the right panel completely. Report exactly four lines, nothing else:\nSUBJECT: <the main subject in the left panel, one short phrase>\nCOMPLETENESS: <one whole number 0-100 - how much of the subject's pristine, original, fully-built state is present: 100 means complete and untouched, 0 means entirely gone>\nLOOSE OBJECTS: <comma-separated list of loose objects visible in the left panel besides the subject itself, or NONE>\nTRACE: <what lies on the ground or surface around the subject in the left panel - a puddle, a pool, water, debris - one short phrase, or NONE>"
+   },
+   "w": 240,
+   "name": "Left panel ask"
+  },
+  {
+   "id": "askL",
+   "type": "text",
+   "x": 1160,
+   "y": 520,
+   "fields": {
+    "text": "Look at the RIGHT panel of this two-panel picture only - ignore the left panel completely. Report exactly four lines, nothing else:\nSUBJECT: <the main subject in the right panel, one short phrase>\nCOMPLETENESS: <one whole number 0-100 - how much of the subject's pristine, original, fully-built state is present: 100 means complete and untouched, 0 means entirely gone>\nLOOSE OBJECTS: <comma-separated list of loose objects visible in the right panel besides the subject itself, or NONE>\nTRACE: <what lies on the ground or surface around the subject in the right panel - a puddle, a pool, water, debris - one short phrase, or NONE>"
+   },
+   "w": 240,
+   "name": "Right panel ask"
+  },
+  {
+   "id": "ask2",
+   "type": "text",
+   "x": 2960,
+   "y": 900,
+   "fields": {
+    "text": "Look at the LEFT panel of this two-panel picture only - ignore the right panel completely. Report exactly four lines, nothing else:\nSUBJECT: <the main subject in the left panel, one short phrase>\nCOMPLETENESS: <one whole number 0-100 - how much of the subject's pristine, original, fully-built state is present: 100 means complete and untouched, 0 means entirely gone>\nLOOSE OBJECTS: <comma-separated list of loose objects visible in the left panel besides the subject itself, or NONE>\nTRACE: <what lies on the ground or surface around the subject in the left panel - a puddle, a pool, water, debris - one short phrase, or NONE>"
+   },
+   "w": 240,
+   "name": "Left panel ask (corrected)"
+  },
+  {
+   "id": "askL2",
+   "type": "text",
+   "x": 1160,
+   "y": 520,
+   "fields": {
+    "text": "Look at the RIGHT panel of this two-panel picture only - ignore the left panel completely. Report exactly four lines, nothing else:\nSUBJECT: <the main subject in the right panel, one short phrase>\nCOMPLETENESS: <one whole number 0-100 - how much of the subject's pristine, original, fully-built state is present: 100 means complete and untouched, 0 means entirely gone>\nLOOSE OBJECTS: <comma-separated list of loose objects visible in the right panel besides the subject itself, or NONE>\nTRACE: <what lies on the ground or surface around the subject in the right panel - a puddle, a pool, water, debris - one short phrase, or NONE>"
+   },
+   "w": 240,
+   "name": "Right panel ask (corrected)"
+  }
+ ],
+ "links": [
+  {
+   "id": "l1",
+   "from": {
+    "node": "setting",
+    "port": "text"
+   },
+   "to": {
+    "node": "director",
+    "port": "prompt"
+   }
+  },
+  {
+   "id": "l2",
+   "from": {
+    "node": "director",
+    "port": "text"
+   },
+   "to": {
+    "node": "j0",
+    "port": "b"
+   }
+  },
+  {
+   "id": "l12",
+   "from": {
+    "node": "setting",
+    "port": "text"
+   },
+   "to": {
+    "node": "j0",
+    "port": "a"
+   }
+  },
+  {
+   "id": "l13",
+   "from": {
+    "node": "j0",
+    "port": "text"
+   },
+   "to": {
+    "node": "stylist",
+    "port": "prompt"
+   }
+  },
+  {
+   "id": "l3",
+   "from": {
+    "node": "stylist",
+    "port": "text"
+   },
+   "to": {
+    "node": "paint",
+    "port": "prompt"
+   }
+  },
+  {
+   "id": "l4",
+   "from": {
+    "node": "paint",
+    "port": "image"
+   },
+   "to": {
+    "node": "surveyor",
+    "port": "img1"
+   }
+  },
+  {
+   "id": "l5",
+   "from": {
+    "node": "paint",
+    "port": "image"
+   },
+   "to": {
+    "node": "lit",
+    "port": "img1"
+   }
+  },
+  {
+   "id": "l39",
+   "from": {
+    "node": "ask",
+    "port": "text"
+   },
+   "to": {
+    "node": "surveyor",
+    "port": "prompt"
+   }
+  },
+  {
+   "id": "l41",
+   "from": {
+    "node": "askL",
+    "port": "text"
+   },
+   "to": {
+    "node": "lit",
+    "port": "prompt"
+   }
+  },
+  {
+   "id": "l7",
+   "from": {
+    "node": "director",
+    "port": "text"
+   },
+   "to": {
+    "node": "j1a",
+    "port": "a"
+   }
+  },
+  {
+   "id": "l8",
+   "from": {
+    "node": "surveyor",
+    "port": "text"
+   },
+   "to": {
+    "node": "j1a",
+    "port": "b"
+   }
+  },
+  {
+   "id": "l9",
+   "from": {
+    "node": "j1a",
+    "port": "text"
+   },
+   "to": {
+    "node": "j1",
+    "port": "a"
+   }
+  },
+  {
+   "id": "l10",
+   "from": {
+    "node": "lit",
+    "port": "text"
+   },
+   "to": {
+    "node": "j1",
+    "port": "b"
+   }
+  },
+  {
+   "id": "l11",
+   "from": {
+    "node": "j1",
+    "port": "text"
+   },
+   "to": {
+    "node": "checker",
+    "port": "prompt"
+   }
+  },
+  {
+   "id": "l14",
+   "from": {
+    "node": "j1",
+    "port": "text"
+   },
+   "to": {
+    "node": "j2",
+    "port": "a"
+   }
+  },
+  {
+   "id": "l15",
+   "from": {
+    "node": "checker",
+    "port": "text"
+   },
+   "to": {
+    "node": "j2",
+    "port": "b"
+   }
+  },
+  {
+   "id": "l16",
+   "from": {
+    "node": "j2",
+    "port": "text"
+   },
+   "to": {
+    "node": "audit",
+    "port": "text"
+   }
+  },
+  {
+   "id": "l17",
+   "from": {
+    "node": "paint",
+    "port": "image"
+   },
+   "to": {
+    "node": "audit",
+    "port": "img1"
+   }
+  },
+  {
+   "id": "l18",
+   "from": {
+    "node": "j2",
+    "port": "text"
+   },
+   "to": {
+    "node": "editor",
+    "port": "prompt"
+   }
+  },
+  {
+   "id": "l19",
+   "from": {
+    "node": "editor",
+    "port": "text"
+   },
+   "to": {
+    "node": "fix",
+    "port": "prompt"
+   }
+  },
+  {
+   "id": "l20",
+   "from": {
+    "node": "paint",
+    "port": "image"
+   },
+   "to": {
+    "node": "fix",
+    "port": "image"
+   }
+  },
+  {
+   "id": "l21",
+   "from": {
+    "node": "fix",
+    "port": "image"
+   },
+   "to": {
+    "node": "surveyor2",
+    "port": "img1"
+   }
+  },
+  {
+   "id": "l25",
+   "from": {
+    "node": "fix",
+    "port": "image"
+   },
+   "to": {
+    "node": "lit2",
+    "port": "img1"
+   }
+  },
+  {
+   "id": "l40",
+   "from": {
+    "node": "ask2",
+    "port": "text"
+   },
+   "to": {
+    "node": "surveyor2",
+    "port": "prompt"
+   }
+  },
+  {
+   "id": "l42",
+   "from": {
+    "node": "askL2",
+    "port": "text"
+   },
+   "to": {
+    "node": "lit2",
+    "port": "prompt"
+   }
+  },
+  {
+   "id": "l22",
+   "from": {
+    "node": "director",
+    "port": "text"
+   },
+   "to": {
+    "node": "j4a",
+    "port": "a"
+   }
+  },
+  {
+   "id": "l23",
+   "from": {
+    "node": "surveyor2",
+    "port": "text"
+   },
+   "to": {
+    "node": "j4a",
+    "port": "b"
+   }
+  },
+  {
+   "id": "l26",
+   "from": {
+    "node": "j4a",
+    "port": "text"
+   },
+   "to": {
+    "node": "j4",
+    "port": "a"
+   }
+  },
+  {
+   "id": "l27",
+   "from": {
+    "node": "lit2",
+    "port": "text"
+   },
+   "to": {
+    "node": "j4",
+    "port": "b"
+   }
+  },
+  {
+   "id": "l24",
+   "from": {
+    "node": "j4",
+    "port": "text"
+   },
+   "to": {
+    "node": "checker2",
+    "port": "prompt"
+   }
+  }
+ ],
+ "nid": 100,
+ "lid": 100,
+ "view": {
+  "panX": 40,
+  "panY": 40,
+  "scale": 0.5
+ }
+}
