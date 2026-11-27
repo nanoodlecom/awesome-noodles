@@ -13,6 +13,7 @@ Do not hand-edit these files — run `node scripts/make-recipes.mjs` after chang
 | [ADetailer finisher](adetailer-finisher.md) | [`graphs/adetailer-finisher.noodle-graph.json`](../graphs/adetailer-finisher.noodle-graph.json) | needs Portrait |
 | [Balance check, torque-audited](balance-check.md) | [`graphs/balance-check.noodle-graph.json`](../graphs/balance-check.noodle-graph.json) | defaults in graph |
 | [Bar chart, number-checked](bar-chart-audit.md) | [`graphs/bar-chart-audit.noodle-graph.json`](../graphs/bar-chart-audit.noodle-graph.json) | defaults in graph |
+| [Bistable check, ambiguity-audited](bistable-check.md) | [`graphs/bistable-check.noodle-graph.json`](../graphs/bistable-check.noodle-graph.json) | defaults in graph |
 | [Bookshelf next-read, phantom-checked](bookshelf-next-read.md) | [`graphs/bookshelf-next-read.noodle-graph.json`](../graphs/bookshelf-next-read.noodle-graph.json) | needs Shelf photo |
 | [Braille check, dot-audited](braille-check.md) | [`graphs/braille-check.noodle-graph.json`](../graphs/braille-check.noodle-graph.json) | defaults in graph |
 | [Character to rigged, skin-verified](character-to-rigged.md) | [`graphs/character-to-rigged.noodle-graph.json`](../graphs/character-to-rigged.noodle-graph.json) | defaults in graph |
