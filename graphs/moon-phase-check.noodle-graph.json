@@ -1,0 +1,505 @@
+{
+ "v": 1,
+ "nodes": [
+  {
+   "id": "c1",
+   "type": "comment",
+   "x": 60,
+   "y": 30,
+   "fields": {
+    "text": "Can a photograph keep the moon honest? A painted moon is usually a glowing prop: a crescent pasted wherever it looks pretty, lit on whichever side the painter fancied. But a real moon obeys one law without exception - its lit side faces the sun. The bright limb is the side the sunlight hits, so at dusk the lit limb points toward the glow the set sun left on the horizon, and at dawn toward the glow of the rising one; flip the lit side and the moon is mirrored, a thing the sky never shows. The phase also fixes how much of the disc is lit and how the terminator - the line between light and dark - curves: a crescent's terminator bows toward the lit limb, a gibbous moon's bows toward the dark side. This flow makes that geometry a planned, measurable quantity - and then it does something about a mirrored moon. Give it a plain night-landscape backdrop and a GLM director picks one phase from a menu printed in its own prompt (EVENING CRESCENT, lit a quarter, glow and lit limb both on the left; MORNING CRESCENT, the same crescent mirrored by dawn, glow and lit limb both on the right; EVENING GIBBOUS, lit three quarters, terminator bowing the other way) and copies it onto a PHASE CARD. A second GLM turns the card into one painter prompt demanding a single wide night photograph: the moon large in the sky, lit exactly as carded, the horizon glow lingering on the carded side. Muse paints it. A blind Gemini reader, who never saw the card, reports only what it can see: which side of the disc is lit, the shape class, the lit band, which way the terminator bows, and which side of the picture holds the horizon glow. A GLM auditor scores the picture: SIDE against the card, the SUN LAW from the read alone (the lit limb faces the glow, or it does not - a relation between two things in the same render that no card-copying can fake), SHAPE and BAND - PHASE TRUE only when all hold; WRONG SIDE when the lit limb faces away, the mirrored-moon failure; WRONG AMOUNT when the side is right but the shape or band drifted. A Decide judge headlines round 1 as a side output. Per the owner's end-in-the-asset rule, the audit is not the deliverable: a gated GLM editor turns any failure into concrete repaint notes for the moon and the glow only (a true phase demands a verbatim copy), Muse Edit repairs the photograph, and a blind re-read plus the same auditor re-score the corrected picture, which is the flow's final output."
+   },
+   "w": 900,
+   "name": "Moon phase check"
+  },
+  {
+   "id": "setting",
+   "type": "text",
+   "x": 60,
+   "y": 300,
+   "fields": {
+    "text": "One wide, quiet night landscape at blue hour, seen across a still lake: the lake fills the lower third, a dark pine treeline runs along the far shore, and above it a deep blue sky, empty and darkening, with a faint warm horizon glow lingering low at one side where the sun has gone or is coming. No moon is in the sky yet, no stars, no buildings, no text. The moon that will appear in this sky is not decided yet."
+   },
+   "w": 300,
+   "name": "Night setting"
+  },
+  {
+   "id": "director",
+   "type": "llm",
+   "x": 440,
+   "y": 280,
+   "fields": {
+    "model": "z-ai/glm-5.3-flash",
+    "system": "You are a moon-phase director. The SETTING you receive describes a night-landscape backdrop, not a phase to match: it names no phase on purpose, because the painter will hang the chosen moon afterwards. Do NOT try to match a menu entry to the setting, do NOT refuse, and never ask for a different input. Pick exactly one menu phase freely - any of the three is a correct choice - and copy it out as the card, in exactly the card format below.\n\nTHE PHASE LAW (fixed, physical). The moon's lit side always faces the sun: in the picture, the lit limb of the disc is on the same side as the horizon glow the sun left. SHAPE classes, by how much of the disc is lit and how the terminator (the inner light/dark boundary) curves: CRESCENT - a slim sliver lit, about a quarter of the disc, the terminator bowing TOWARD the lit limb; GIBBOUS - most of the disc lit, about three quarters, the terminator bowing TOWARD the dark side. LIT BANDS: QUARTER means roughly a quarter of the disc is lit (about 15-35 percent); THREE-QUARTER means roughly three quarters (about 65-85 percent).\n\nMENU (every entry below already obeys the phase law - copy it exactly, do not recompute):\n1. EVENING CRESCENT - KIND: WAXING CRESCENT. GLOW SIDE: LEFT (the sun has just set; its warm glow lingers low at the left edge of the sky). LIT SIDE: LEFT. SHAPE: CRESCENT. LIT BAND: QUARTER. TERMINATOR: TOWARD LIT.\n2. MORNING CRESCENT - KIND: WANING CRESCENT. GLOW SIDE: RIGHT (dawn is coming; its pale glow gathers low at the right edge of the sky). LIT SIDE: RIGHT. SHAPE: CRESCENT. LIT BAND: QUARTER. TERMINATOR: TOWARD LIT.\n3. EVENING GIBBOUS - KIND: WAXING GIBBOUS. GLOW SIDE: LEFT (the sun has set; a faint glow lingers low at the left edge of the sky). LIT SIDE: LEFT. SHAPE: GIBBOUS. LIT BAND: THREE-QUARTER. TERMINATOR: TOWARD DARK.\n\nCARD FORMAT - copy the chosen entry out exactly in this shape, filling every line, nothing else:\nSET: <EVENING CRESCENT or MORNING CRESCENT or EVENING GIBBOUS>\nKIND: <WAXING CRESCENT or WANING CRESCENT or WAXING GIBBOUS>\nGLOW SIDE: <LEFT or RIGHT>\nLIT SIDE: <LEFT or RIGHT>\nSHAPE: <CRESCENT or GIBBOUS>\nLIT BAND: <QUARTER or THREE-QUARTER>\nTERMINATOR: <TOWARD LIT or TOWARD DARK>\nSCENE: <the shared night landscape - lake, pine treeline, deep blue sky - identical behind every phase>",
+    "maxTokens": 1100,
+    "reasoningEffort": "low"
+   },
+   "w": 280,
+   "name": "Phase card - GLM picks a phase and copies its law-bound geometry",
+   "sizes": {
+    "system": 150
+   }
+  },
+  {
+   "id": "j0",
+   "type": "join",
+   "x": 800,
+   "y": 480,
+   "fields": {
+    "sep": "\n\nPHASE CARD (the phase - its glow side, lit side, shape, lit band and terminator, all bound by the phase law; its exact wording must reach the image maker):\n"
+   },
+   "w": 200,
+   "name": "Setting + phase card"
+  },
+  {
+   "id": "stylist",
+   "type": "llm",
+   "x": 800,
+   "y": 280,
+   "fields": {
+    "model": "z-ai/glm-5.3-flash",
+    "system": "You are a night-photograph brief writer. You receive a SETTING and a PHASE CARD. Turn them into ONE prompt for an image model that paints the photograph. Rules:\n- Demand ONE wide night landscape photograph: the still lake in the lower third, the dark pine treeline on the far shore, the deep blue sky above, and ONE large moon high in the sky, its disc crisp and clearly visible, the only bright object in the sky.\n- Place the warm horizon glow low at the card's GLOW SIDE edge of the sky, a soft band of afterglow along the treeline on that side only.\n- Describe the moon's light exactly as the card states it, in concrete picture terms: the lit part of the disc is on the card's LIT SIDE; for CRESCENT demand a slim bright sliver on that side, about a quarter of the disc lit, its inner boundary (the terminator) a smooth curve bowing toward the lit side, the rest of the disc dark and barely visible against the sky; for GIBBOUS demand about three quarters of the disc lit from the card's LIT SIDE, the dark part a slim cap on the opposite side, the terminator a smooth curve bowing toward the dark side.\n- Demand NO stars around the moon, NO second moon, NO clouds crossing the disc, NO text, letters, logos or markings anywhere.\nWrite only the finished prompt, one paragraph, no preamble.",
+    "maxTokens": 900,
+    "reasoningEffort": "low"
+   },
+   "w": 280,
+   "name": "Photo brief - GLM turns the card into a night-photo painter prompt",
+   "sizes": {
+    "system": 150
+   }
+  },
+  {
+   "id": "paint",
+   "type": "image",
+   "x": 1160,
+   "y": 280,
+   "fields": {
+    "model": "meta/muse-image/text-to-image",
+    "size": "16:9",
+    "variations": "1"
+   },
+   "w": 280,
+   "name": "Night photo - Muse paints the moon over the lake"
+  },
+  {
+   "id": "surveyor",
+   "type": "llm",
+   "x": 1520,
+   "y": 280,
+   "fields": {
+    "model": "google/gemini-3.8-flash",
+    "system": "You are a blind moon reader. You see one wide night landscape photograph with a moon in its sky. You have never seen any plan or card, and you must report only what you can actually see - never guess a phase name, never infer light you cannot see.\nReport exactly seven lines, nothing else:\nMOON: <PRESENT if one moon disc is visible, otherwise MISSING>\nLIT SIDE: <LEFT if the brightly lit part of the disc is on the disc's left side, RIGHT if on its right side, BOTH if the whole disc is lit, NONE if no part is visibly lit, MISSING if there is no moon>\nSHAPE: <CRESCENT if a slim sliver, clearly less than half the disc, is lit; HALF if about half is lit with a straight inner boundary; GIBBOUS if clearly more than half but not all is lit; FULL if the whole disc is lit; DARK if no part is lit; MISSING if there is no moon>\nLIT BAND: <QUARTER if roughly a quarter of the disc is lit (about 15-35 percent), HALF if about half (40-60 percent), THREE-QUARTER if roughly three quarters (65-85 percent), FULL if all of it, NONE if none, MISSING if there is no moon>\nTERMINATOR: <TOWARD LIT if the inner light/dark boundary bows toward the lit side (the lit part is a sliver whose inner edge curves the same way as its outer edge), TOWARD DARK if the boundary bows toward the dark side (the dark part is a slim cap), STRAIGHT if the boundary is a straight line, NONE if the whole disc is lit or dark, MISSING if there is no moon>\nGLOW SIDE: <LEFT if a warm horizon glow lingers low at the left side of the sky, RIGHT if at the right side, BOTH if it spans both sides evenly, NONE if there is no visible glow>\nSCENE: <the landscape under the sky, one short phrase>\nReport the light exactly as it lies - do not complete a familiar crescent from a sliver, do not mirror the disc into the shape you expected, and do not use any word outside the choices given.",
+    "maxTokens": 700,
+    "reasoningEffort": "low"
+   },
+   "w": 280,
+   "name": "Moon read - Gemini reports only the light it can see, blind",
+   "sizes": {
+    "system": 150
+   }
+  },
+  {
+   "id": "j1",
+   "type": "join",
+   "x": 1880,
+   "y": 180,
+   "fields": {
+    "sep": "\n\nMOON READ (a blind reader reported only the moonlight actually visible - lit side, shape, band, terminator and glow side; it never saw the phase card):\n"
+   },
+   "w": 200,
+   "name": "Phase card + moon read"
+  },
+  {
+   "id": "checker",
+   "type": "llm",
+   "x": 2240,
+   "y": 400,
+   "fields": {
+    "model": "z-ai/glm-5.3-flash",
+    "system": "You are a moon-truth auditor. You receive a PHASE CARD (one carded phase: its glow side, lit side, shape, lit band and terminator) and a MOON READ (a blind reader's report of the moon actually painted; it never saw the card). Score the read against the card and against the phase law, mechanically:\n\nTHE PHASE LAW (fixed, physical). The moon's lit side always faces the sun: in the picture, the lit limb of the disc is on the same side as the horizon glow the sun left. SHAPE classes, by how much of the disc is lit and how the terminator (the inner light/dark boundary) curves: CRESCENT - a slim sliver lit, about a quarter of the disc, the terminator bowing TOWARD the lit limb; GIBBOUS - most of the disc lit, about three quarters, the terminator bowing TOWARD the dark side. LIT BANDS: QUARTER means roughly a quarter of the disc is lit (about 15-35 percent); THREE-QUARTER means roughly three quarters (about 65-85 percent).\n\nDEFINITIONS:\n- SIDE is MATCH when the read's LIT SIDE equals the card's LIT SIDE, otherwise MISMATCH.\n- SUN LAW is HOLDS when the read's LIT SIDE equals the read's GLOW SIDE (the painted lit limb faces the painted glow, whatever the card said), BROKEN when they differ, UNKNOWN when either read line is BOTH, NONE or MISSING.\n- SHAPE is MATCH when the read's SHAPE equals the card's SHAPE, otherwise MISMATCH. BAND is MATCH when the read's LIT BAND equals the card's LIT BAND, otherwise MISMATCH. TERMINATOR is MATCH when the read's TERMINATOR equals the card's TERMINATOR, otherwise MISMATCH.\n- VERDICT: INCOMPLETE when the read's MOON line is not PRESENT or any of its LIT SIDE, SHAPE, LIT BAND or TERMINATOR lines is MISSING or cannot be parsed; otherwise WRONG SIDE when SIDE is MISMATCH or SUN LAW is BROKEN; otherwise WRONG AMOUNT when SHAPE, BAND or TERMINATOR is MISMATCH; otherwise PHASE TRUE.\n\nOutput exactly seven lines, nothing else:\nSIDE: <MATCH or MISMATCH> - read <the read lit side> vs card <the card lit side>\nSUN LAW: <HOLDS or BROKEN or UNKNOWN> - lit <the read lit side> faces glow <the read glow side>\nSHAPE: <MATCH or MISMATCH> - read <the read shape> vs card <the card shape>\nBAND: <MATCH or MISMATCH> - read <the read lit band> vs card <the card lit band>\nTERMINATOR: <MATCH or MISMATCH> - read <the read terminator> vs card <the card terminator>\nVERDICT: <PHASE TRUE or WRONG SIDE or WRONG AMOUNT or INCOMPLETE>\nDETAIL: <one short sentence naming the decisive evidence>",
+    "maxTokens": 1200,
+    "reasoningEffort": "low"
+   },
+   "w": 280,
+   "name": "Moon audit - GLM scores the read against the card and the sun law",
+   "sizes": {
+    "system": 150
+   }
+  },
+  {
+   "id": "j2",
+   "type": "join",
+   "x": 2240,
+   "y": 180,
+   "fields": {
+    "sep": "\n\nMOON AUDIT (a GLM auditor scored the blind moon read against the phase card and the sun law - side, the lit-limb-faces-glow relation, shape, band and terminator):\n"
+   },
+   "w": 200,
+   "name": "Card, moon read + moon audit"
+  },
+  {
+   "id": "audit",
+   "type": "decide",
+   "x": 2600,
+   "y": 180,
+   "fields": {
+    "model": "perplexity/pplx-decider-v1.2",
+    "mode": "choose",
+    "question": "The picture should be one wide night landscape with a single large moon. A real moon's lit side always faces the sun: in the picture the bright limb must be on the same side as the horizon glow the sun left. The card fixes the phase - glow side, lit side, shape (crescent or gibbous), lit band (quarter or three-quarter) and which way the terminator bows. The audit in the text scores a blind reader's report against the card and the law: PHASE TRUE when all hold, WRONG SIDE when the lit limb faces away from the glow or the card (a mirrored moon), WRONG AMOUNT when the side is right but the shape, band or terminator drifted, INCOMPLETE when the moon cannot be read. Choose the one label that best fits the round-1 picture.",
+    "options": "phase true\nmirrored moon\nwrong amount\nphase unreadable\nnot a night scene"
+   },
+   "w": 280,
+   "name": "Phase true - audited",
+   "sizes": {
+    "question": 130
+   }
+  },
+  {
+   "id": "editor",
+   "type": "llm",
+   "x": 2600,
+   "y": 520,
+   "fields": {
+    "model": "z-ai/glm-5.3-flash",
+    "system": "You are an edit-notes writer. You receive a PHASE CARD, a MOON READ and a MOON AUDIT of a night landscape photograph.\n- If the audit's VERDICT is PHASE TRUE, output exactly this one line and nothing else:\nReproduce this picture exactly, unchanged - same lake, same treeline, same sky, the moon in the same place at the same size with the same side lit to the same shape and band, the same terminator curve, the horizon glow on the same side, no added marks and no other text.\n- Otherwise write ONE paragraph of concrete repaint instructions for an image editor working on that same photograph: keep the lake, the treeline, the sky, and the moon's position and size exactly as they are; repaint only the moon's light and, if the audit's SUN LAW line says BROKEN or the read's glow side differs from the card's, the horizon glow. Demand the glow linger low at the card's GLOW SIDE, the disc lit on the card's LIT SIDE in the card's SHAPE and LIT BAND (for CRESCENT: a slim sliver, about a quarter of the disc, its terminator bowing toward the lit side; for GIBBOUS: about three quarters lit, its terminator bowing toward the dark side), the rest of the disc dark. Demand no stars, no second moon, no clouds across the disc and no other text or markings anywhere. Output only the instructions, no preamble.",
+    "maxTokens": 600,
+    "reasoningEffort": "low"
+   },
+   "w": 280,
+   "name": "Edit notes - GLM turns a failed phase into repaint demands",
+   "sizes": {
+    "system": 150
+   }
+  },
+  {
+   "id": "fix",
+   "type": "edit",
+   "x": 2960,
+   "y": 520,
+   "fields": {
+    "model": "meta/muse-image/edit",
+    "size": "auto"
+   },
+   "w": 280,
+   "name": "Corrected photo - Muse Edit repaints the moonlight only"
+  },
+  {
+   "id": "surveyor2",
+   "type": "llm",
+   "x": 3320,
+   "y": 520,
+   "fields": {
+    "model": "google/gemini-3.8-flash",
+    "system": "You are a blind moon reader. You see one wide night landscape photograph with a moon in its sky. You have never seen any plan or card, and you must report only what you can actually see - never guess a phase name, never infer light you cannot see.\nReport exactly seven lines, nothing else:\nMOON: <PRESENT if one moon disc is visible, otherwise MISSING>\nLIT SIDE: <LEFT if the brightly lit part of the disc is on the disc's left side, RIGHT if on its right side, BOTH if the whole disc is lit, NONE if no part is visibly lit, MISSING if there is no moon>\nSHAPE: <CRESCENT if a slim sliver, clearly less than half the disc, is lit; HALF if about half is lit with a straight inner boundary; GIBBOUS if clearly more than half but not all is lit; FULL if the whole disc is lit; DARK if no part is lit; MISSING if there is no moon>\nLIT BAND: <QUARTER if roughly a quarter of the disc is lit (about 15-35 percent), HALF if about half (40-60 percent), THREE-QUARTER if roughly three quarters (65-85 percent), FULL if all of it, NONE if none, MISSING if there is no moon>\nTERMINATOR: <TOWARD LIT if the inner light/dark boundary bows toward the lit side (the lit part is a sliver whose inner edge curves the same way as its outer edge), TOWARD DARK if the boundary bows toward the dark side (the dark part is a slim cap), STRAIGHT if the boundary is a straight line, NONE if the whole disc is lit or dark, MISSING if there is no moon>\nGLOW SIDE: <LEFT if a warm horizon glow lingers low at the left side of the sky, RIGHT if at the right side, BOTH if it spans both sides evenly, NONE if there is no visible glow>\nSCENE: <the landscape under the sky, one short phrase>\nReport the light exactly as it lies - do not complete a familiar crescent from a sliver, do not mirror the disc into the shape you expected, and do not use any word outside the choices given.",
+    "maxTokens": 700,
+    "reasoningEffort": "low"
+   },
+   "w": 280,
+   "name": "Re-read - Gemini reports the corrected photo's moonlight, blind",
+   "sizes": {
+    "system": 150
+   }
+  },
+  {
+   "id": "j4",
+   "type": "join",
+   "x": 3680,
+   "y": 420,
+   "fields": {
+    "sep": "\n\nMOON READ (a blind reader reported only the moonlight actually visible in the corrected picture - lit side, shape, band, terminator and glow side; it never saw the phase card):\n"
+   },
+   "w": 200,
+   "name": "Phase card + re-read"
+  },
+  {
+   "id": "checker2",
+   "type": "llm",
+   "x": 4040,
+   "y": 520,
+   "fields": {
+    "model": "z-ai/glm-5.3-flash",
+    "system": "You are a moon-truth auditor. You receive a PHASE CARD (one carded phase: its glow side, lit side, shape, lit band and terminator) and a MOON READ (a blind reader's report of the moon actually painted; it never saw the card). Score the read against the card and against the phase law, mechanically:\n\nTHE PHASE LAW (fixed, physical). The moon's lit side always faces the sun: in the picture, the lit limb of the disc is on the same side as the horizon glow the sun left. SHAPE classes, by how much of the disc is lit and how the terminator (the inner light/dark boundary) curves: CRESCENT - a slim sliver lit, about a quarter of the disc, the terminator bowing TOWARD the lit limb; GIBBOUS - most of the disc lit, about three quarters, the terminator bowing TOWARD the dark side. LIT BANDS: QUARTER means roughly a quarter of the disc is lit (about 15-35 percent); THREE-QUARTER means roughly three quarters (about 65-85 percent).\n\nDEFINITIONS:\n- SIDE is MATCH when the read's LIT SIDE equals the card's LIT SIDE, otherwise MISMATCH.\n- SUN LAW is HOLDS when the read's LIT SIDE equals the read's GLOW SIDE (the painted lit limb faces the painted glow, whatever the card said), BROKEN when they differ, UNKNOWN when either read line is BOTH, NONE or MISSING.\n- SHAPE is MATCH when the read's SHAPE equals the card's SHAPE, otherwise MISMATCH. BAND is MATCH when the read's LIT BAND equals the card's LIT BAND, otherwise MISMATCH. TERMINATOR is MATCH when the read's TERMINATOR equals the card's TERMINATOR, otherwise MISMATCH.\n- VERDICT: INCOMPLETE when the read's MOON line is not PRESENT or any of its LIT SIDE, SHAPE, LIT BAND or TERMINATOR lines is MISSING or cannot be parsed; otherwise WRONG SIDE when SIDE is MISMATCH or SUN LAW is BROKEN; otherwise WRONG AMOUNT when SHAPE, BAND or TERMINATOR is MISMATCH; otherwise PHASE TRUE.\n\nOutput exactly seven lines, nothing else:\nSIDE: <MATCH or MISMATCH> - read <the read lit side> vs card <the card lit side>\nSUN LAW: <HOLDS or BROKEN or UNKNOWN> - lit <the read lit side> faces glow <the read glow side>\nSHAPE: <MATCH or MISMATCH> - read <the read shape> vs card <the card shape>\nBAND: <MATCH or MISMATCH> - read <the read lit band> vs card <the card lit band>\nTERMINATOR: <MATCH or MISMATCH> - read <the read terminator> vs card <the card terminator>\nVERDICT: <PHASE TRUE or WRONG SIDE or WRONG AMOUNT or INCOMPLETE>\nDETAIL: <one short sentence naming the decisive evidence>",
+    "maxTokens": 1200,
+    "reasoningEffort": "low"
+   },
+   "w": 280,
+   "name": "Moon re-audit - GLM re-scores the corrected photo against the same card",
+   "sizes": {
+    "system": 150
+   }
+  },
+  {
+   "id": "ask",
+   "type": "text",
+   "x": 1160,
+   "y": 520,
+   "fields": {
+    "text": "Read the moonlight in the attached picture now, following your instructions exactly."
+   },
+   "w": 240,
+   "name": "Read ask"
+  },
+  {
+   "id": "ask2",
+   "type": "text",
+   "x": 2960,
+   "y": 900,
+   "fields": {
+    "text": "Read the moonlight in the attached picture now, following your instructions exactly."
+   },
+   "w": 240,
+   "name": "Re-read ask"
+  }
+ ],
+ "links": [
+  {
+   "id": "l1",
+   "from": {
+    "node": "setting",
+    "port": "text"
+   },
+   "to": {
+    "node": "director",
+    "port": "prompt"
+   }
+  },
+  {
+   "id": "l2",
+   "from": {
+    "node": "director",
+    "port": "text"
+   },
+   "to": {
+    "node": "j0",
+    "port": "b"
+   }
+  },
+  {
+   "id": "l12",
+   "from": {
+    "node": "setting",
+    "port": "text"
+   },
+   "to": {
+    "node": "j0",
+    "port": "a"
+   }
+  },
+  {
+   "id": "l13",
+   "from": {
+    "node": "j0",
+    "port": "text"
+   },
+   "to": {
+    "node": "stylist",
+    "port": "prompt"
+   }
+  },
+  {
+   "id": "l3",
+   "from": {
+    "node": "stylist",
+    "port": "text"
+   },
+   "to": {
+    "node": "paint",
+    "port": "prompt"
+   }
+  },
+  {
+   "id": "l4",
+   "from": {
+    "node": "paint",
+    "port": "image"
+   },
+   "to": {
+    "node": "surveyor",
+    "port": "img1"
+   }
+  },
+  {
+   "id": "l7",
+   "from": {
+    "node": "director",
+    "port": "text"
+   },
+   "to": {
+    "node": "j1",
+    "port": "a"
+   }
+  },
+  {
+   "id": "l8",
+   "from": {
+    "node": "surveyor",
+    "port": "text"
+   },
+   "to": {
+    "node": "j1",
+    "port": "b"
+   }
+  },
+  {
+   "id": "l11",
+   "from": {
+    "node": "j1",
+    "port": "text"
+   },
+   "to": {
+    "node": "checker",
+    "port": "prompt"
+   }
+  },
+  {
+   "id": "l14",
+   "from": {
+    "node": "j1",
+    "port": "text"
+   },
+   "to": {
+    "node": "j2",
+    "port": "a"
+   }
+  },
+  {
+   "id": "l15",
+   "from": {
+    "node": "checker",
+    "port": "text"
+   },
+   "to": {
+    "node": "j2",
+    "port": "b"
+   }
+  },
+  {
+   "id": "l16",
+   "from": {
+    "node": "j2",
+    "port": "text"
+   },
+   "to": {
+    "node": "audit",
+    "port": "text"
+   }
+  },
+  {
+   "id": "l17",
+   "from": {
+    "node": "paint",
+    "port": "image"
+   },
+   "to": {
+    "node": "audit",
+    "port": "img1"
+   }
+  },
+  {
+   "id": "l18",
+   "from": {
+    "node": "j2",
+    "port": "text"
+   },
+   "to": {
+    "node": "editor",
+    "port": "prompt"
+   }
+  },
+  {
+   "id": "l19",
+   "from": {
+    "node": "editor",
+    "port": "text"
+   },
+   "to": {
+    "node": "fix",
+    "port": "prompt"
+   }
+  },
+  {
+   "id": "l20",
+   "from": {
+    "node": "paint",
+    "port": "image"
+   },
+   "to": {
+    "node": "fix",
+    "port": "image"
+   }
+  },
+  {
+   "id": "l21",
+   "from": {
+    "node": "fix",
+    "port": "image"
+   },
+   "to": {
+    "node": "surveyor2",
+    "port": "img1"
+   }
+  },
+  {
+   "id": "l22",
+   "from": {
+    "node": "director",
+    "port": "text"
+   },
+   "to": {
+    "node": "j4",
+    "port": "a"
+   }
+  },
+  {
+   "id": "l23",
+   "from": {
+    "node": "surveyor2",
+    "port": "text"
+   },
+   "to": {
+    "node": "j4",
+    "port": "b"
+   }
+  },
+  {
+   "id": "l24",
+   "from": {
+    "node": "j4",
+    "port": "text"
+   },
+   "to": {
+    "node": "checker2",
+    "port": "prompt"
+   }
+  },
+  {
+   "id": "l39",
+   "from": {
+    "node": "ask",
+    "port": "text"
+   },
+   "to": {
+    "node": "surveyor",
+    "port": "prompt"
+   }
+  },
+  {
+   "id": "l40",
+   "from": {
+    "node": "ask2",
+    "port": "text"
+   },
+   "to": {
+    "node": "surveyor2",
+    "port": "prompt"
+   }
+  }
+ ],
+ "nid": 32,
+ "lid": 40,
+ "view": {
+  "panX": 40,
+  "panY": 40,
+  "scale": 0.5
+ }
+}

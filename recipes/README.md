@@ -52,6 +52,7 @@ Do not hand-edit these files — run `node scripts/make-recipes.mjs` after chang
 | [Metro map, station-checked](metro-map-audit.md) | [`graphs/metro-map-audit.noodle-graph.json`](../graphs/metro-map-audit.noodle-graph.json) | defaults in graph |
 | [Mirror check, reflection-audited](mirror-check.md) | [`graphs/mirror-check.noodle-graph.json`](../graphs/mirror-check.noodle-graph.json) | defaults in graph |
 | [Molecule check, valence-audited](molecule-check.md) | [`graphs/molecule-check.noodle-graph.json`](../graphs/molecule-check.noodle-graph.json) | defaults in graph |
+| [Moon phase check, sun-law-audited](moon-phase-check.md) | [`graphs/moon-phase-check.noodle-graph.json`](../graphs/moon-phase-check.noodle-graph.json) | defaults in graph |
 | [Negative space check, figure-ground-audited](negative-space-check.md) | [`graphs/negative-space-check.noodle-graph.json`](../graphs/negative-space-check.noodle-graph.json) | defaults in graph |
 | [One photo, whole campaign](one-photo-whole-campaign.md) | [`graphs/one-photo-whole-campaign.noodle-graph.json`](../graphs/one-photo-whole-campaign.noodle-graph.json) | needs Product photo |
 | [Paint mix check, colour-algebra-audited](paint-mix-check.md) | [`graphs/paint-mix-check.noodle-graph.json`](../graphs/paint-mix-check.noodle-graph.json) | defaults in graph |
