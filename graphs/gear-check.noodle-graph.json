@@ -1,0 +1,671 @@
+{
+ "v": 1,
+ "nodes": [
+  {
+   "id": "c1",
+   "type": "comment",
+   "x": 60,
+   "y": 30,
+   "fields": {
+    "text": "Can a picture keep a gear train honest? Meshing gears cannot turn any way they please: every mesh flips the direction, and the teeth ratio sets how far the next gear turns - a 12-tooth gear driving a 24-tooth gear turns it exactly half as far, the other way. A GLM director picks one three-gear train from a menu printed in its own prompt and copies out a GEAR CARD: the teeth of the LEFT, MIDDLE and RIGHT gears, the drive turn applied to the LEFT gear, and every gear's turn derived through the mesh chain, ending in the compass position each gear's coloured marker dot must reach. Muse paints one diptych - the same gear board twice: left panel before the drive turn, every marker dot at TOP; right panel after it, each dot at its derived end position. Two blind Gemini readers split the evidence by panel and report only the three dots' compass positions. A GLM auditor scores the start, each gear's turn (MATCH, WRONG WAY, WRONG AMOUNT or STILL) and the train's verdict - TRANSMITTED only when all three derived turns landed. A Decide judge headlines round 1 as a side output; a gated GLM editor turns any slip into concrete repaint notes for the right panel only (a transmitted audit demands a verbatim copy), Muse Edit repairs, and both blind readers plus the same auditor re-score the corrected diptych, which is the flow's final output."
+   },
+   "w": 900,
+   "name": "Gear check"
+  },
+  {
+   "id": "setting",
+   "type": "text",
+   "x": 60,
+   "y": 300,
+   "fields": {
+    "text": "One gear board shown twice, side by side in a single wide picture: the same three meshing gears on the same board, from the same viewpoint and in the same light - the left panel shows the train at rest before a drive turn, the right panel shows it after the drive turn. A thin plain gap separates the two panels. No text, no labels, no arrows anywhere."
+   },
+   "w": 300,
+   "name": "Gear board setting"
+  },
+  {
+   "id": "director",
+   "type": "llm",
+   "x": 440,
+   "y": 280,
+   "fields": {
+    "model": "z-ai/glm-5.3-flash",
+    "system": "You are a gear-train director. The SETTING you receive describes a two-panel before-and-after picture of a gear board, not a scene to match: it names no train on purpose, because the painter will paint the chosen train afterwards. Do NOT try to match a menu entry to the setting, do NOT refuse, and never ask for a different input. Pick exactly one menu train freely - any of the three is a correct choice - and copy it out as the card, in exactly the card format below.\n\nTHE LAW (fixed for every menu entry): three gears stand in a row on one board - LEFT, MIDDLE, RIGHT - the LEFT gear meshing with the MIDDLE, the MIDDLE with the RIGHT. Each gear carries exactly ONE marker dot near its rim: LEFT gear a RED dot, MIDDLE gear an AMBER dot, RIGHT gear a TEAL dot. In the BEFORE panel every dot sits at TOP (12 o'clock). The drive turn rotates the LEFT gear; every mesh FLIPS the direction (clockwise becomes counterclockwise and back) and rescales the angle by the teeth ratio (the driven gear turns the drive angle times driver teeth divided by its own teeth). Each menu entry below already carries the derived turns and end positions - copy them exactly, do not recompute.\n\nMENU:\n1. BRASS MILL - teeth LEFT 12, MIDDLE 24, RIGHT 12 (the middle gear is the big one, about twice the others' diameter). DRIVE: LEFT gear turns 180 degrees CLOCKWISE. DERIVED: LEFT turns 180 CLOCKWISE, marker ends at BOTTOM; MIDDLE turns 90 COUNTERCLOCKWISE, marker ends at LEFT; RIGHT turns 180 CLOCKWISE, marker ends at BOTTOM.\n2. COPPER PRESS - teeth LEFT 16, MIDDLE 8, RIGHT 16 (the middle gear is the small one, about half the others' diameter). DRIVE: LEFT gear turns 90 degrees CLOCKWISE. DERIVED: LEFT turns 90 CLOCKWISE, marker ends at RIGHT; MIDDLE turns 180 COUNTERCLOCKWISE, marker ends at BOTTOM; RIGHT turns 90 CLOCKWISE, marker ends at RIGHT.\n3. IRON GATE - teeth LEFT 12, MIDDLE 12, RIGHT 24 (the right gear is the big one, about twice the others' diameter). DRIVE: LEFT gear turns 180 degrees COUNTERCLOCKWISE. DERIVED: LEFT turns 180 COUNTERCLOCKWISE, marker ends at BOTTOM; MIDDLE turns 180 CLOCKWISE, marker ends at BOTTOM; RIGHT turns 90 COUNTERCLOCKWISE, marker ends at LEFT.\n\nCARD FORMAT - copy the chosen entry out exactly in this shape, filling every line, nothing else:\nTRAIN: <BRASS MILL or COPPER PRESS or IRON GATE>\nTEETH: LEFT <n>, MIDDLE <n>, RIGHT <n>\nDRIVE: LEFT gear turns <90 or 180> degrees <CLOCKWISE or COUNTERCLOCKWISE>\nEXPECTED TURNS: LEFT <degrees> <direction> ending at <position>; MIDDLE <degrees> <direction> ending at <position>; RIGHT <degrees> <direction> ending at <position>\nMARKERS: LEFT red dot, MIDDLE amber dot, RIGHT teal dot, every dot at TOP before the drive turn\nBOARD: <the shared board and backdrop, identical in both panels>",
+    "maxTokens": 900,
+    "reasoningEffort": "low"
+   },
+   "w": 280,
+   "name": "Gear card - GLM picks a train and copies its derived turns",
+   "sizes": {
+    "system": 150
+   }
+  },
+  {
+   "id": "j0",
+   "type": "join",
+   "x": 800,
+   "y": 480,
+   "fields": {
+    "sep": "\n\nGEAR CARD (the train - its teeth, the drive turn, and every gear's derived turn and end marker position; its exact wording must reach the image maker):\n"
+   },
+   "w": 200,
+   "name": "Setting + kanizsa card"
+  },
+  {
+   "id": "stylist",
+   "type": "llm",
+   "x": 800,
+   "y": 280,
+   "fields": {
+    "model": "z-ai/glm-5.3-flash",
+    "system": "You are a diptych brief writer. You receive a SETTING and a GEAR CARD. Turn them into ONE prompt for an image model that paints the two-panel picture. Rules:\n- Demand ONE wide picture split into two equal side-by-side panels by a thin plain vertical gap: LEFT panel = the train BEFORE the drive turn, RIGHT panel = the same train AFTER it. Same board, same three gears, same viewpoint, same framing and same light in both panels - only the marker dots' positions differ.\n- Describe the three gears in a row, teeth visibly meshed where they touch, diameters proportional to the card's teeth (a gear with twice the teeth is about twice the diameter), each gear with exactly ONE marker dot near its rim in its carded colour (LEFT red, MIDDLE amber, RIGHT teal).\n- In the LEFT panel state plainly that every marker dot sits at the TOP of its gear (12 o'clock). In the RIGHT panel state each dot's end position concretely from the card's EXPECTED TURNS, one gear at a time (for example: the left gear's red dot now sits at the bottom of the left gear, 6 o'clock).\n- Forbid, by name: any text, labels, captions, arrows, numbers or clock faces; extra gears, missing gears or a second dot on any gear; the gears changing size, colour or position on the board between panels; people, hands or tools.\nOutput ONLY the painter prompt, no preamble.",
+    "maxTokens": 900,
+    "reasoningEffort": "low"
+   },
+   "w": 280,
+   "name": "Diptych brief - GLM turns the card into a painter prompt (same board, before and after the drive turn)",
+   "sizes": {
+    "system": 150
+   }
+  },
+  {
+   "id": "paint",
+   "type": "image",
+   "x": 1160,
+   "y": 280,
+   "fields": {
+    "model": "meta/muse-image/text-to-image",
+    "size": "1:1",
+    "variations": "1"
+   },
+   "w": 280,
+   "name": "Diptych - Muse paints the gear board before and after the drive turn"
+  },
+  {
+   "id": "surveyor",
+   "type": "llm",
+   "x": 1520,
+   "y": 280,
+   "fields": {
+    "model": "google/gemini-3.8-flash",
+    "system": "You are a blind panel reader. You see a two-panel picture and a request about its LEFT panel only. You report only what the left panel shows: how many gears it holds and where each gear's coloured marker dot sits on its rim, as a compass position. You never look at or guess the right panel, never invent a dot you cannot see, and never add commentary.",
+    "maxTokens": 400,
+    "reasoningEffort": "low"
+   },
+   "w": 280,
+   "name": "Start read - Gemini reports only the left (before) panel's marker positions",
+   "sizes": {
+    "system": 150
+   }
+  },
+  {
+   "id": "lit",
+   "type": "llm",
+   "x": 1520,
+   "y": 540,
+   "fields": {
+    "model": "google/gemini-3.8-flash",
+    "system": "You are a blind panel reader. You see a two-panel picture and a request about its RIGHT panel only. You report only what the right panel shows: how many gears it holds and where each gear's coloured marker dot sits on its rim, as a compass position. You never look at or guess the left panel, never invent a dot you cannot see, and never add commentary.",
+    "maxTokens": 600,
+    "reasoningEffort": "low"
+   },
+   "w": 280,
+   "name": "End read - Gemini reports only the right (after) panel's marker positions",
+   "sizes": {
+    "system": 150
+   }
+  },
+  {
+   "id": "j1a",
+   "type": "join",
+   "x": 1880,
+   "y": 180,
+   "fields": {
+    "sep": "\n\nSTART READ (a blind reader reported only the LEFT panel - gear count and each marker dot's compass position; it never saw the gear card):\n"
+   },
+   "w": 200,
+   "name": "Card + start read"
+  },
+  {
+   "id": "j1",
+   "type": "join",
+   "x": 1880,
+   "y": 180,
+   "fields": {
+    "sep": "\n\nEND READ (a blind reader reported only the RIGHT panel - gear count and each marker dot's compass position; it never saw the gear card):\n"
+   },
+   "w": 200,
+   "name": "Start bundle + end read"
+  },
+  {
+   "id": "checker",
+   "type": "llm",
+   "x": 2240,
+   "y": 400,
+   "fields": {
+    "model": "z-ai/glm-5.3-flash",
+    "system": "You are a gear-train auditor. You receive a GEAR CARD (the train's teeth, the drive turn, and the EXPECTED TURNS with each gear's derived end marker position), a blind START READ and a blind END READ (each: GEARS count, LEFT / MIDDLE / RIGHT GEAR MARKER compass positions, BOARD). Positions are compass points on the gear's rim: TOP is 12 o'clock, RIGHT 3 o'clock, BOTTOM 6 o'clock, LEFT 9 o'clock. Score exactly by these definitions:\n\n- START: count how many of the three markers the START read reports at TOP. Report X of 3.\n- Per gear, compare the END read's marker position with the card's expected end position for that gear:\n  - MATCH - the end position is exactly the expected end position.\n  - STILL - the end position is TOP (the gear's dot never moved).\n  - WRONG WAY - the end position is the one the gear would reach by turning the expected angle in the OPPOSITE direction (mirror across the vertical: a 90-degree turn ending at RIGHT the wrong way ends at LEFT, and the reverse; a 180-degree turn ends at BOTTOM either way, so a 180-degree gear can never be WRONG WAY).\n  - WRONG AMOUNT - anything else (it moved, but to a position that is neither the expected end, nor TOP, nor the wrong-way end).\n  Apply in the order MATCH, STILL, WRONG WAY, WRONG AMOUNT.\n- TURNS: count the MATCH gears. Report X of 3.\n- VERDICT, applying this precedence in order: UNBUILT - START is under 2 of 3, or either read's GEARS count is not 3, or any marker is NONE in either read; TRANSMITTED - TURNS is 3 of 3; JAMMED - TURNS is 0 of 3 and at least two gears are STILL; TANGLED - TURNS is 0 of 3 and fewer than two gears are STILL (the train moved, but no gear landed its derived turn); SLIPPING - anything else (one or two gears transmitted, the rest slipped).\n\nOutput EXACTLY these lines, in this order, nothing else:\nSTART: <X of 3>\nLEFT GEAR: <MATCH or WRONG WAY or WRONG AMOUNT or STILL>\nMIDDLE GEAR: <MATCH or WRONG WAY or WRONG AMOUNT or STILL>\nRIGHT GEAR: <MATCH or WRONG WAY or WRONG AMOUNT or STILL>\nTURNS: <X of 3>\nVERDICT: <TRANSMITTED or SLIPPING or JAMMED or TANGLED or UNBUILT>\nThen one line: DETAIL: <one short sentence naming what decided the verdict>",
+    "maxTokens": 1200,
+    "reasoningEffort": "low"
+   },
+   "w": 280,
+   "name": "Gear audit - GLM scores each gear's turn against the derived end positions",
+   "sizes": {
+    "system": 150
+   }
+  },
+  {
+   "id": "j2",
+   "type": "join",
+   "x": 2240,
+   "y": 180,
+   "fields": {
+    "sep": "\n\nGEAR AUDIT (a GLM auditor scored the two blind panel reads against the card - the start, each gear's turn against its derived end position, and the train's verdict):\n"
+   },
+   "w": 200,
+   "name": "Card, both reads + kanizsa audit"
+  },
+  {
+   "id": "audit",
+   "type": "decide",
+   "x": 2600,
+   "y": 180,
+   "fields": {
+    "model": "perplexity/pplx-decider-v1.2",
+    "mode": "choose",
+    "question": "The picture should be one diptych: the same three meshing gears on the same board in two side-by-side panels - in the left panel every gear's single coloured marker dot (red on the left gear, amber on the middle, teal on the right) sits at the TOP of its gear, and in the right panel each dot sits at the end position the mesh law derives (each mesh flips the direction, the teeth ratio rescales the angle). The audit in the text scores two blind panel reads against the card: the start, and each gear's turn as MATCH, WRONG WAY, WRONG AMOUNT or STILL. Choose the one label that best fits the round-1 picture.",
+    "options": "transmitted in order\ngears slipping\ntrain jammed\ntrain tangled\nnot a gear train"
+   },
+   "w": 280,
+   "name": "Gear train - audited",
+   "sizes": {
+    "question": 130
+   }
+  },
+  {
+   "id": "editor",
+   "type": "llm",
+   "x": 2600,
+   "y": 520,
+   "fields": {
+    "model": "z-ai/glm-5.3-flash",
+    "system": "You are a gear-train repair editor. You receive a GEAR CARD and a GEAR AUDIT of the round-1 picture. Turn the audit into ONE concrete repaint instruction for an image editor that edits the whole two-panel picture. Rules:\n- If the audit's VERDICT is TRANSMITTED, output exactly: 'Reproduce this picture exactly, unchanged - same two panels, same three gears on the same board, same marker dots in the same positions, no added marks.' and nothing else.\n- If the VERDICT is UNBUILT, demand BOTH panels be rebuilt to the card: three meshing gears of the carded relative sizes on the same board, one marker dot per gear in its carded colour; in the left panel every dot at the TOP of its gear; in the right panel each dot at the card's expected end position for its gear.\n- In every other case, demand the LEFT panel be kept exactly as it is, untouched, and repair only the RIGHT panel: for each gear the audit did not score MATCH, demand its marker dot be moved to the card's expected end position for that gear, naming the position concretely (for example 'the middle gear's amber dot at the LEFT of the middle gear, 9 o'clock'); gears the audit scored MATCH keep their dots exactly where they are.\n- NEVER demand text, labels, numbers or arrows; never add or remove a gear or a dot; never change a gear's size, colour or place on the board.\nOutput ONLY the repaint instruction.",
+    "maxTokens": 400,
+    "reasoningEffort": "low"
+   },
+   "w": 280,
+   "name": "Edit notes - GLM turns slipped or jammed gears into right-panel repaint demands",
+   "sizes": {
+    "system": 150
+   }
+  },
+  {
+   "id": "fix",
+   "type": "edit",
+   "x": 2960,
+   "y": 520,
+   "fields": {
+    "model": "meta/muse-image/edit",
+    "size": "auto"
+   },
+   "w": 280,
+   "name": "Corrected diptych - Muse Edit repairs the right panel's marker positions only"
+  },
+  {
+   "id": "surveyor2",
+   "type": "llm",
+   "x": 3320,
+   "y": 520,
+   "fields": {
+    "model": "google/gemini-3.8-flash",
+    "system": "You are a blind panel reader. You see a two-panel picture and a request about its LEFT panel only. You report only what the left panel shows: how many gears it holds and where each gear's coloured marker dot sits on its rim, as a compass position. You never look at or guess the right panel, never invent a dot you cannot see, and never add commentary.",
+    "maxTokens": 400,
+    "reasoningEffort": "low"
+   },
+   "w": 280,
+   "name": "Re-read (start) - Gemini re-reads the corrected picture's left panel",
+   "sizes": {
+    "system": 150
+   }
+  },
+  {
+   "id": "lit2",
+   "type": "llm",
+   "x": 1520,
+   "y": 780,
+   "fields": {
+    "model": "google/gemini-3.8-flash",
+    "system": "You are a blind panel reader. You see a two-panel picture and a request about its RIGHT panel only. You report only what the right panel shows: how many gears it holds and where each gear's coloured marker dot sits on its rim, as a compass position. You never look at or guess the left panel, never invent a dot you cannot see, and never add commentary.",
+    "maxTokens": 600,
+    "reasoningEffort": "low"
+   },
+   "w": 280,
+   "name": "Re-read (end) - Gemini re-reads the corrected picture's right panel",
+   "sizes": {
+    "system": 150
+   }
+  },
+  {
+   "id": "j4a",
+   "type": "join",
+   "x": 1880,
+   "y": 180,
+   "fields": {
+    "sep": "\n\nSTART READ (a blind reader reported only the LEFT panel of the corrected picture - gear count and each marker dot's compass position; it never saw the gear card):\n"
+   },
+   "w": 200,
+   "name": "Card + corrected start read"
+  },
+  {
+   "id": "j4",
+   "type": "join",
+   "x": 3680,
+   "y": 420,
+   "fields": {
+    "sep": "\n\nEND READ (a blind reader reported only the RIGHT panel of the corrected picture - gear count and each marker dot's compass position; it never saw the gear card):\n"
+   },
+   "w": 200,
+   "name": "Corrected start bundle + end re-read"
+  },
+  {
+   "id": "checker2",
+   "type": "llm",
+   "x": 4040,
+   "y": 520,
+   "fields": {
+    "model": "z-ai/glm-5.3-flash",
+    "system": "You are a gear-train auditor. You receive a GEAR CARD (the train's teeth, the drive turn, and the EXPECTED TURNS with each gear's derived end marker position), a blind START READ and a blind END READ (each: GEARS count, LEFT / MIDDLE / RIGHT GEAR MARKER compass positions, BOARD). Positions are compass points on the gear's rim: TOP is 12 o'clock, RIGHT 3 o'clock, BOTTOM 6 o'clock, LEFT 9 o'clock. Score exactly by these definitions:\n\n- START: count how many of the three markers the START read reports at TOP. Report X of 3.\n- Per gear, compare the END read's marker position with the card's expected end position for that gear:\n  - MATCH - the end position is exactly the expected end position.\n  - STILL - the end position is TOP (the gear's dot never moved).\n  - WRONG WAY - the end position is the one the gear would reach by turning the expected angle in the OPPOSITE direction (mirror across the vertical: a 90-degree turn ending at RIGHT the wrong way ends at LEFT, and the reverse; a 180-degree turn ends at BOTTOM either way, so a 180-degree gear can never be WRONG WAY).\n  - WRONG AMOUNT - anything else (it moved, but to a position that is neither the expected end, nor TOP, nor the wrong-way end).\n  Apply in the order MATCH, STILL, WRONG WAY, WRONG AMOUNT.\n- TURNS: count the MATCH gears. Report X of 3.\n- VERDICT, applying this precedence in order: UNBUILT - START is under 2 of 3, or either read's GEARS count is not 3, or any marker is NONE in either read; TRANSMITTED - TURNS is 3 of 3; JAMMED - TURNS is 0 of 3 and at least two gears are STILL; TANGLED - TURNS is 0 of 3 and fewer than two gears are STILL (the train moved, but no gear landed its derived turn); SLIPPING - anything else (one or two gears transmitted, the rest slipped).\n\nOutput EXACTLY these lines, in this order, nothing else:\nSTART: <X of 3>\nLEFT GEAR: <MATCH or WRONG WAY or WRONG AMOUNT or STILL>\nMIDDLE GEAR: <MATCH or WRONG WAY or WRONG AMOUNT or STILL>\nRIGHT GEAR: <MATCH or WRONG WAY or WRONG AMOUNT or STILL>\nTURNS: <X of 3>\nVERDICT: <TRANSMITTED or SLIPPING or JAMMED or TANGLED or UNBUILT>\nThen one line: DETAIL: <one short sentence naming what decided the verdict>",
+    "maxTokens": 1200,
+    "reasoningEffort": "low"
+   },
+   "w": 280,
+   "name": "Gear re-audit - GLM re-scores the corrected diptych against the same card",
+   "sizes": {
+    "system": 150
+   }
+  },
+  {
+   "id": "ask",
+   "type": "text",
+   "x": 1160,
+   "y": 520,
+   "fields": {
+    "text": "Look at the LEFT panel of this two-panel picture only - ignore the right panel completely. Report exactly five lines, nothing else:\nGEARS: <how many gears are visible in the left panel, one whole number>\nLEFT GEAR MARKER: <the compass position of the RED dot on the left gear - TOP, TOP-RIGHT, RIGHT, BOTTOM-RIGHT, BOTTOM, BOTTOM-LEFT, LEFT or TOP-LEFT - judging the dot's place on the gear's rim like a clock face, or NONE if the left gear has no red dot>\nMIDDLE GEAR MARKER: <the compass position of the AMBER dot on the middle gear, same words, or NONE>\nRIGHT GEAR MARKER: <the compass position of the TEAL dot on the right gear, same words, or NONE>\nBOARD: <the board and backdrop in the left panel, one short phrase>"
+   },
+   "w": 240,
+   "name": "Start panel ask"
+  },
+  {
+   "id": "askL",
+   "type": "text",
+   "x": 1160,
+   "y": 520,
+   "fields": {
+    "text": "Look at the RIGHT panel of this two-panel picture only - ignore the left panel completely. Report exactly five lines, nothing else:\nGEARS: <how many gears are visible in the right panel, one whole number>\nLEFT GEAR MARKER: <the compass position of the RED dot on the left gear - TOP, TOP-RIGHT, RIGHT, BOTTOM-RIGHT, BOTTOM, BOTTOM-LEFT, LEFT or TOP-LEFT - judging the dot's place on the gear's rim like a clock face, or NONE if the left gear has no red dot>\nMIDDLE GEAR MARKER: <the compass position of the AMBER dot on the middle gear, same words, or NONE>\nRIGHT GEAR MARKER: <the compass position of the TEAL dot on the right gear, same words, or NONE>\nBOARD: <the board and backdrop in the right panel, one short phrase>"
+   },
+   "w": 240,
+   "name": "End panel ask"
+  },
+  {
+   "id": "ask2",
+   "type": "text",
+   "x": 2960,
+   "y": 900,
+   "fields": {
+    "text": "Look at the LEFT panel of this two-panel picture only - ignore the right panel completely. Report exactly five lines, nothing else:\nGEARS: <how many gears are visible in the left panel, one whole number>\nLEFT GEAR MARKER: <the compass position of the RED dot on the left gear - TOP, TOP-RIGHT, RIGHT, BOTTOM-RIGHT, BOTTOM, BOTTOM-LEFT, LEFT or TOP-LEFT - judging the dot's place on the gear's rim like a clock face, or NONE if the left gear has no red dot>\nMIDDLE GEAR MARKER: <the compass position of the AMBER dot on the middle gear, same words, or NONE>\nRIGHT GEAR MARKER: <the compass position of the TEAL dot on the right gear, same words, or NONE>\nBOARD: <the board and backdrop in the left panel, one short phrase>"
+   },
+   "w": 240,
+   "name": "Start panel ask (corrected)"
+  },
+  {
+   "id": "askL2",
+   "type": "text",
+   "x": 1160,
+   "y": 520,
+   "fields": {
+    "text": "Look at the RIGHT panel of this two-panel picture only - ignore the left panel completely. Report exactly five lines, nothing else:\nGEARS: <how many gears are visible in the right panel, one whole number>\nLEFT GEAR MARKER: <the compass position of the RED dot on the left gear - TOP, TOP-RIGHT, RIGHT, BOTTOM-RIGHT, BOTTOM, BOTTOM-LEFT, LEFT or TOP-LEFT - judging the dot's place on the gear's rim like a clock face, or NONE if the left gear has no red dot>\nMIDDLE GEAR MARKER: <the compass position of the AMBER dot on the middle gear, same words, or NONE>\nRIGHT GEAR MARKER: <the compass position of the TEAL dot on the right gear, same words, or NONE>\nBOARD: <the board and backdrop in the right panel, one short phrase>"
+   },
+   "w": 240,
+   "name": "End panel ask (corrected)"
+  }
+ ],
+ "links": [
+  {
+   "id": "l1",
+   "from": {
+    "node": "setting",
+    "port": "text"
+   },
+   "to": {
+    "node": "director",
+    "port": "prompt"
+   }
+  },
+  {
+   "id": "l2",
+   "from": {
+    "node": "director",
+    "port": "text"
+   },
+   "to": {
+    "node": "j0",
+    "port": "b"
+   }
+  },
+  {
+   "id": "l12",
+   "from": {
+    "node": "setting",
+    "port": "text"
+   },
+   "to": {
+    "node": "j0",
+    "port": "a"
+   }
+  },
+  {
+   "id": "l13",
+   "from": {
+    "node": "j0",
+    "port": "text"
+   },
+   "to": {
+    "node": "stylist",
+    "port": "prompt"
+   }
+  },
+  {
+   "id": "l3",
+   "from": {
+    "node": "stylist",
+    "port": "text"
+   },
+   "to": {
+    "node": "paint",
+    "port": "prompt"
+   }
+  },
+  {
+   "id": "l4",
+   "from": {
+    "node": "paint",
+    "port": "image"
+   },
+   "to": {
+    "node": "surveyor",
+    "port": "img1"
+   }
+  },
+  {
+   "id": "l5",
+   "from": {
+    "node": "paint",
+    "port": "image"
+   },
+   "to": {
+    "node": "lit",
+    "port": "img1"
+   }
+  },
+  {
+   "id": "l39",
+   "from": {
+    "node": "ask",
+    "port": "text"
+   },
+   "to": {
+    "node": "surveyor",
+    "port": "prompt"
+   }
+  },
+  {
+   "id": "l41",
+   "from": {
+    "node": "askL",
+    "port": "text"
+   },
+   "to": {
+    "node": "lit",
+    "port": "prompt"
+   }
+  },
+  {
+   "id": "l7",
+   "from": {
+    "node": "director",
+    "port": "text"
+   },
+   "to": {
+    "node": "j1a",
+    "port": "a"
+   }
+  },
+  {
+   "id": "l8",
+   "from": {
+    "node": "surveyor",
+    "port": "text"
+   },
+   "to": {
+    "node": "j1a",
+    "port": "b"
+   }
+  },
+  {
+   "id": "l9",
+   "from": {
+    "node": "j1a",
+    "port": "text"
+   },
+   "to": {
+    "node": "j1",
+    "port": "a"
+   }
+  },
+  {
+   "id": "l10",
+   "from": {
+    "node": "lit",
+    "port": "text"
+   },
+   "to": {
+    "node": "j1",
+    "port": "b"
+   }
+  },
+  {
+   "id": "l11",
+   "from": {
+    "node": "j1",
+    "port": "text"
+   },
+   "to": {
+    "node": "checker",
+    "port": "prompt"
+   }
+  },
+  {
+   "id": "l14",
+   "from": {
+    "node": "j1",
+    "port": "text"
+   },
+   "to": {
+    "node": "j2",
+    "port": "a"
+   }
+  },
+  {
+   "id": "l15",
+   "from": {
+    "node": "checker",
+    "port": "text"
+   },
+   "to": {
+    "node": "j2",
+    "port": "b"
+   }
+  },
+  {
+   "id": "l16",
+   "from": {
+    "node": "j2",
+    "port": "text"
+   },
+   "to": {
+    "node": "audit",
+    "port": "text"
+   }
+  },
+  {
+   "id": "l17",
+   "from": {
+    "node": "paint",
+    "port": "image"
+   },
+   "to": {
+    "node": "audit",
+    "port": "img1"
+   }
+  },
+  {
+   "id": "l18",
+   "from": {
+    "node": "j2",
+    "port": "text"
+   },
+   "to": {
+    "node": "editor",
+    "port": "prompt"
+   }
+  },
+  {
+   "id": "l19",
+   "from": {
+    "node": "editor",
+    "port": "text"
+   },
+   "to": {
+    "node": "fix",
+    "port": "prompt"
+   }
+  },
+  {
+   "id": "l20",
+   "from": {
+    "node": "paint",
+    "port": "image"
+   },
+   "to": {
+    "node": "fix",
+    "port": "image"
+   }
+  },
+  {
+   "id": "l21",
+   "from": {
+    "node": "fix",
+    "port": "image"
+   },
+   "to": {
+    "node": "surveyor2",
+    "port": "img1"
+   }
+  },
+  {
+   "id": "l25",
+   "from": {
+    "node": "fix",
+    "port": "image"
+   },
+   "to": {
+    "node": "lit2",
+    "port": "img1"
+   }
+  },
+  {
+   "id": "l40",
+   "from": {
+    "node": "ask2",
+    "port": "text"
+   },
+   "to": {
+    "node": "surveyor2",
+    "port": "prompt"
+   }
+  },
+  {
+   "id": "l42",
+   "from": {
+    "node": "askL2",
+    "port": "text"
+   },
+   "to": {
+    "node": "lit2",
+    "port": "prompt"
+   }
+  },
+  {
+   "id": "l22",
+   "from": {
+    "node": "director",
+    "port": "text"
+   },
+   "to": {
+    "node": "j4a",
+    "port": "a"
+   }
+  },
+  {
+   "id": "l23",
+   "from": {
+    "node": "surveyor2",
+    "port": "text"
+   },
+   "to": {
+    "node": "j4a",
+    "port": "b"
+   }
+  },
+  {
+   "id": "l26",
+   "from": {
+    "node": "j4a",
+    "port": "text"
+   },
+   "to": {
+    "node": "j4",
+    "port": "a"
+   }
+  },
+  {
+   "id": "l27",
+   "from": {
+    "node": "lit2",
+    "port": "text"
+   },
+   "to": {
+    "node": "j4",
+    "port": "b"
+   }
+  },
+  {
+   "id": "l24",
+   "from": {
+    "node": "j4",
+    "port": "text"
+   },
+   "to": {
+    "node": "checker2",
+    "port": "prompt"
+   }
+  }
+ ],
+ "nid": 100,
+ "lid": 100,
+ "view": {
+  "panX": 40,
+  "panY": 40,
+  "scale": 0.5
+ }
+}

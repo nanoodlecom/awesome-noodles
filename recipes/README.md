@@ -33,6 +33,7 @@ Do not hand-edit these files — run `node scripts/make-recipes.mjs` after chang
 | [Field check, field-audited](field-check.md) | [`graphs/field-check.noodle-graph.json`](../graphs/field-check.noodle-graph.json) | defaults in graph |
 | [Focus check, depth-of-field-audited](focus-check.md) | [`graphs/focus-check.noodle-graph.json`](../graphs/focus-check.noodle-graph.json) | defaults in graph |
 | [Fridge to feast](fridge-to-feast.md) | [`graphs/fridge-to-feast.noodle-graph.json`](../graphs/fridge-to-feast.noodle-graph.json) | needs Fridge photo |
+| [Gear check, transmission-audited](gear-check.md) | [`graphs/gear-check.noodle-graph.json`](../graphs/gear-check.noodle-graph.json) | defaults in graph |
 | [Haircut preview, identity-checked](haircut-preview.md) | [`graphs/haircut-preview.noodle-graph.json`](../graphs/haircut-preview.noodle-graph.json) | needs Portrait photo |
 | [Hear it, paint it](hear-it-paint-it.md) | [`graphs/hear-it-paint-it.noodle-graph.json`](../graphs/hear-it-paint-it.noodle-graph.json) | defaults in graph |
 | [Hidden word, object-coded](hidden-word.md) | [`graphs/hidden-word.noodle-graph.json`](../graphs/hidden-word.noodle-graph.json) | defaults in graph |
