@@ -1,0 +1,505 @@
+{
+ "v": 1,
+ "nodes": [
+  {
+   "id": "c1",
+   "type": "comment",
+   "x": 60,
+   "y": 30,
+   "fields": {
+    "text": "Can a photograph keep time it was never told? A seven-segment digit is not a numeral shape: it is a set of seven bars, and the digit exists only through which bars are lit - light the middle bar of a 0 and it silently becomes an 8, a different valid digit wearing the first one's body; take the middle bar from a 2 and its bars state no digit at all. And the number on this display is itself derived: the director cards a start time and an elapsed count of minutes, and the display must show the sum - minutes carrying into hours, hours wrapping at midnight - so the digits are an arithmetic result before they are a segment pattern. Image models paint LED clocks as glowing props: handsome red digits that are almost a time, with bars lit by vibe. This flow makes both derivations planned, measurable quantities - and then it does something about a lying digit. Give it a plain display backdrop and a GLM director picks one reading from a menu printed in its own prompt (BAKE TIMER 08:35 + 47 minutes = 09:22, LAST TRAIN 11:48 + 29 = 12:17, MIDNIGHT WHISTLE 23:51 + 18 = 00:09 past the midnight wrap; every display time already derived, and every digit's lit segment set spelled out through the standard seven-segment table) and copies it onto a DISPLAY CARD. A second GLM turns the card into one painter prompt demanding a single straight-on photograph of a black LED display panel: four large red digits and a glowing colon, each digit lighting exactly its carded segments and no others. Muse paints it. A blind Gemini reader, who never saw the card, reports only which segments are brightly lit on each digit, by position name. A GLM auditor decodes each read set through the same table by exact set-match and scores the picture: SEGMENTS out of 28, DECODED out of 4, COLON present or missing - DISPLAY TRUE only when all four decoded digits equal the carded display time; DIGIT LYING when a read set is exactly some other digit's set; SEGMENTS BROKEN when a read set matches no digit at all; INCOMPLETE when a digit cannot be read. A Decide judge headlines round 1 as a side output. Per the owner's end-in-the-asset rule, the audit is not the deliverable: a gated GLM editor turns any failure into concrete repaint notes for the failing digits only (a true display demands a verbatim copy), Muse Edit repairs the photograph, and a blind re-read plus the same auditor re-score the corrected picture, which is the flow's final output."
+   },
+   "w": 900,
+   "name": "Segment check"
+  },
+  {
+   "id": "setting",
+   "type": "text",
+   "x": 60,
+   "y": 300,
+   "fields": {
+    "text": "One straight-on photograph of a plain black rectangular LED display panel set into a brushed dark-steel front, filling most of the frame: a smooth matte black glass face with softly rounded corners, one row of four large digit positions and a colon position between the second and third digits, all currently dark, soft even light, no reflections, no brand, no buttons, no other markings anywhere. The digits that will light up on it are not decided yet."
+   },
+   "w": 300,
+   "name": "Panel setting"
+  },
+  {
+   "id": "director",
+   "type": "llm",
+   "x": 440,
+   "y": 280,
+   "fields": {
+    "model": "z-ai/glm-5.3-flash",
+    "system": "You are a display-reading director. The SETTING you receive describes a display-panel backdrop, not a reading to match: it names no reading on purpose, because the painter will light the chosen reading afterwards. Do NOT try to match a menu entry to the setting, do NOT refuse, and never ask for a different input. Pick exactly one menu reading freely - any of the three is a correct choice - and copy it out as the card, in exactly the card format below.\n\nTHE SEVEN-SEGMENT TABLE (fixed, standard). Segment position names: TOP, UPPER-LEFT, UPPER-RIGHT, MIDDLE, LOWER-LEFT, LOWER-RIGHT, BOTTOM. Each digit lights exactly this set and no others: 0 = TOP, UPPER-LEFT, UPPER-RIGHT, LOWER-LEFT, LOWER-RIGHT, BOTTOM. 1 = UPPER-RIGHT, LOWER-RIGHT. 2 = TOP, UPPER-RIGHT, MIDDLE, LOWER-LEFT, BOTTOM. 3 = TOP, UPPER-RIGHT, MIDDLE, LOWER-RIGHT, BOTTOM. 4 = UPPER-LEFT, UPPER-RIGHT, MIDDLE, LOWER-RIGHT. 5 = TOP, UPPER-LEFT, MIDDLE, LOWER-RIGHT, BOTTOM. 6 = TOP, UPPER-LEFT, MIDDLE, LOWER-LEFT, LOWER-RIGHT, BOTTOM. 7 = TOP, UPPER-RIGHT, LOWER-RIGHT. 8 = TOP, UPPER-LEFT, UPPER-RIGHT, MIDDLE, LOWER-LEFT, LOWER-RIGHT, BOTTOM (all seven). 9 = TOP, UPPER-LEFT, UPPER-RIGHT, MIDDLE, LOWER-RIGHT, BOTTOM. A set of lit segments decodes to a digit only when it equals that digit's set exactly.\n\nMENU (every display time below is already derived from its start plus its elapsed minutes, and every digit's lit set is already spelled out through the table - copy both exactly, do not recompute):\n1. BAKE TIMER - START 08:35, ELAPSED 47 MINUTES, DISPLAY 09:22. DIGIT 1: 0 - lit TOP, UPPER-LEFT, UPPER-RIGHT, LOWER-LEFT, LOWER-RIGHT, BOTTOM. DIGIT 2: 9 - lit TOP, UPPER-LEFT, UPPER-RIGHT, MIDDLE, LOWER-RIGHT, BOTTOM. DIGIT 3: 2 - lit TOP, UPPER-RIGHT, MIDDLE, LOWER-LEFT, BOTTOM. DIGIT 4: 2 - lit TOP, UPPER-RIGHT, MIDDLE, LOWER-LEFT, BOTTOM.\n2. LAST TRAIN - START 11:48, ELAPSED 29 MINUTES, DISPLAY 12:17. DIGIT 1: 1 - lit UPPER-RIGHT, LOWER-RIGHT. DIGIT 2: 2 - lit TOP, UPPER-RIGHT, MIDDLE, LOWER-LEFT, BOTTOM. DIGIT 3: 1 - lit UPPER-RIGHT, LOWER-RIGHT. DIGIT 4: 7 - lit TOP, UPPER-RIGHT, LOWER-RIGHT.\n3. MIDNIGHT WHISTLE - START 23:51, ELAPSED 18 MINUTES, DISPLAY 00:09 (the sum wraps past midnight). DIGIT 1: 0 - lit TOP, UPPER-LEFT, UPPER-RIGHT, LOWER-LEFT, LOWER-RIGHT, BOTTOM. DIGIT 2: 0 - lit TOP, UPPER-LEFT, UPPER-RIGHT, LOWER-LEFT, LOWER-RIGHT, BOTTOM. DIGIT 3: 0 - lit TOP, UPPER-LEFT, UPPER-RIGHT, LOWER-LEFT, LOWER-RIGHT, BOTTOM. DIGIT 4: 9 - lit TOP, UPPER-LEFT, UPPER-RIGHT, MIDDLE, LOWER-RIGHT, BOTTOM.\n\nCARD FORMAT - copy the chosen entry out exactly in this shape, filling every line, nothing else:\nSET: <BAKE TIMER or LAST TRAIN or MIDNIGHT WHISTLE>\nSTART: <the start time, HH:MM>\nELAPSED: <the elapsed count> MINUTES\nDISPLAY: <the display time, HH:MM>\nDIGIT 1: <digit> - lit <its segment list, in the order TOP, UPPER-LEFT, UPPER-RIGHT, MIDDLE, LOWER-LEFT, LOWER-RIGHT, BOTTOM, keeping only the lit ones>\nDIGIT 2: <same shape>\nDIGIT 3: <same shape>\nDIGIT 4: <same shape>\nCOLON: two glowing dots between digit 2 and digit 3\nPANEL: <the shared black display panel and steel front, identical behind every reading>",
+    "maxTokens": 1100,
+    "reasoningEffort": "low"
+   },
+   "w": 280,
+   "name": "Display card - GLM picks a reading and copies its derived time and segment sets",
+   "sizes": {
+    "system": 150
+   }
+  },
+  {
+   "id": "j0",
+   "type": "join",
+   "x": 800,
+   "y": 480,
+   "fields": {
+    "sep": "\n\nDISPLAY CARD (the reading - its display time derived from the start plus the elapsed minutes, and each digit's lit segment set spelled out through the seven-segment table; its exact wording must reach the image maker):\n"
+   },
+   "w": 200,
+   "name": "Setting + display card"
+  },
+  {
+   "id": "stylist",
+   "type": "llm",
+   "x": 800,
+   "y": 280,
+   "fields": {
+    "model": "z-ai/glm-5.3-flash",
+    "system": "You are a display-photograph brief writer. You receive a SETTING and a DISPLAY CARD. Turn them into ONE prompt for an image model that paints the photograph. Rules:\n- Demand ONE straight-on photograph of the black rectangular LED display panel named in the card, set into its brushed dark-steel front, filling most of the frame, matte black glass face, softly rounded corners, soft even light, no reflections.\n- Name the digits by position - DIGIT 1, DIGIT 2, DIGIT 3, DIGIT 4, left to right, with the glowing colon of two red dots between digit 2 and digit 3 - and for each digit repeat its lit segment list from the card VERBATIM, demanding that exactly those segments glow bright red and every other segment of that digit stays dark (a barely visible faint outline of an unlit segment is acceptable; a glowing one is not). All four digits are the same large size, evenly spaced, classic seven-segment shapes with slightly slanted bars.\n- Demand NO other text, numbers, letters, logos, buttons or markings anywhere in the picture - the four digits and the colon are the only lit marks.\nWrite only the finished prompt, one paragraph, no preamble.",
+    "maxTokens": 900,
+    "reasoningEffort": "low"
+   },
+   "w": 280,
+   "name": "Photo brief - GLM turns the card into a display-photo painter prompt",
+   "sizes": {
+    "system": 150
+   }
+  },
+  {
+   "id": "paint",
+   "type": "image",
+   "x": 1160,
+   "y": 280,
+   "fields": {
+    "model": "meta/muse-image/text-to-image",
+    "size": "16:9",
+    "variations": "1"
+   },
+   "w": 280,
+   "name": "Display photo - Muse paints the four lit digits"
+  },
+  {
+   "id": "surveyor",
+   "type": "llm",
+   "x": 1520,
+   "y": 280,
+   "fields": {
+    "model": "google/gemini-3.8-flash",
+    "system": "You are a blind segment reader. You see one photograph of an LED display. You have never seen any plan or card, and you must report only the segments you can actually see brightly lit - never guess a digit, never infer a segment you cannot see.\nSegment position names, fixed: TOP (the top horizontal bar), UPPER-LEFT (the upper left vertical bar), UPPER-RIGHT (the upper right vertical bar), MIDDLE (the middle horizontal bar), LOWER-LEFT (the lower left vertical bar), LOWER-RIGHT (the lower right vertical bar), BOTTOM (the bottom horizontal bar). A segment counts as lit only when it glows bright red like a lit LED; a faint dark outline of an unlit segment does NOT count.\nReport exactly seven lines, nothing else:\nDIGITS: <how many digit shapes are visible, one whole number>\nDIGIT 1 LIT: <the brightly lit segments of the LEFT digit, as position names separated by commas, in the order TOP, UPPER-LEFT, UPPER-RIGHT, MIDDLE, LOWER-LEFT, LOWER-RIGHT, BOTTOM, keeping only the lit ones - write NONE LIT if the digit shows no bright segment, and write MISSING instead of the whole list if there is no first digit>\nDIGIT 2 LIT: <the same for the second digit>\nDIGIT 3 LIT: <the same for the third digit>\nDIGIT 4 LIT: <the same for the fourth digit>\nCOLON: <PRESENT if two glowing dots stand between digit 2 and digit 3, otherwise MISSING>\nPANEL: <the display panel and its front, one short phrase>\nReport the segments exactly as they lie - do not complete a digit from its shape, do not correct a set into a familiar digit, and do not use any position word outside the seven names.",
+    "maxTokens": 700,
+    "reasoningEffort": "low"
+   },
+   "w": 280,
+   "name": "Segment read - Gemini reports only the lit segments it can see, blind",
+   "sizes": {
+    "system": 150
+   }
+  },
+  {
+   "id": "j1",
+   "type": "join",
+   "x": 1880,
+   "y": 180,
+   "fields": {
+    "sep": "\n\nSEGMENT READ (a blind reader reported only the brightly lit segments visible on each digit, left to right; it never saw the display card):\n"
+   },
+   "w": 200,
+   "name": "Display card + segment read"
+  },
+  {
+   "id": "checker",
+   "type": "llm",
+   "x": 2240,
+   "y": 400,
+   "fields": {
+    "model": "z-ai/glm-5.3-flash",
+    "system": "You are a display-truth auditor. You receive a DISPLAY CARD (a start time, an elapsed count, the display time they derive, and each display digit's carded lit segment set) and a SEGMENT READ (a blind reader's report of the segments actually lit on each digit; it never saw the card). Score the read against the card mechanically, using this table and nothing else:\n\nTHE SEVEN-SEGMENT TABLE (fixed, standard). Segment position names: TOP, UPPER-LEFT, UPPER-RIGHT, MIDDLE, LOWER-LEFT, LOWER-RIGHT, BOTTOM. Each digit lights exactly this set and no others: 0 = TOP, UPPER-LEFT, UPPER-RIGHT, LOWER-LEFT, LOWER-RIGHT, BOTTOM. 1 = UPPER-RIGHT, LOWER-RIGHT. 2 = TOP, UPPER-RIGHT, MIDDLE, LOWER-LEFT, BOTTOM. 3 = TOP, UPPER-RIGHT, MIDDLE, LOWER-RIGHT, BOTTOM. 4 = UPPER-LEFT, UPPER-RIGHT, MIDDLE, LOWER-RIGHT. 5 = TOP, UPPER-LEFT, MIDDLE, LOWER-RIGHT, BOTTOM. 6 = TOP, UPPER-LEFT, MIDDLE, LOWER-LEFT, LOWER-RIGHT, BOTTOM. 7 = TOP, UPPER-RIGHT, LOWER-RIGHT. 8 = TOP, UPPER-LEFT, UPPER-RIGHT, MIDDLE, LOWER-LEFT, LOWER-RIGHT, BOTTOM (all seven). 9 = TOP, UPPER-LEFT, UPPER-RIGHT, MIDDLE, LOWER-RIGHT, BOTTOM. A set of lit segments decodes to a digit only when it equals that digit's set exactly.\n\nDEFINITIONS:\n- For one digit, a segment position MATCHES when the read and the card agree on it: both lit or both dark. SEGMENTS is the count of matching positions over all four digits, out of 28.\n- A digit's READ SET is its read lit list. It DECODES to the digit whose table set it equals exactly, or to NONE when it equals no digit's set. DECODED counts the digits whose decoded digit equals the card digit, out of 4.\n- Per digit: EXACT when its read set equals the card set; VALID-WRONG when its read set is not the card set but decodes to some other digit (name that digit); INVALID when its read set decodes to NONE; UNREADABLE when the digit is MISSING or its read line cannot be parsed into position names.\n- COLON is PRESENT when the read's COLON line says PRESENT, otherwise MISSING.\n- VERDICT: INCOMPLETE when any digit is UNREADABLE or the read's DIGITS count is not 4; otherwise DISPLAY TRUE when DECODED is 4 of 4 and COLON is PRESENT; otherwise DIGIT LYING when at least one digit is VALID-WRONG and none is INVALID; otherwise SEGMENTS BROKEN.\n\nOutput exactly nine lines, nothing else:\nDIGIT 1: <EXACT or VALID-WRONG or INVALID or UNREADABLE> - read <the decoded digit, or NONE> vs card <the card digit>\nDIGIT 2: <same shape>\nDIGIT 3: <same shape>\nDIGIT 4: <same shape>\nSEGMENTS: <X> of 28\nDECODED: <X> of 4\nCOLON: <PRESENT or MISSING>\nVERDICT: <DISPLAY TRUE or DIGIT LYING or SEGMENTS BROKEN or INCOMPLETE>\nDETAIL: <one short sentence naming the decisive evidence>",
+    "maxTokens": 1200,
+    "reasoningEffort": "low"
+   },
+   "w": 280,
+   "name": "Display audit - GLM decodes the read segment sets and scores each digit",
+   "sizes": {
+    "system": 150
+   }
+  },
+  {
+   "id": "j2",
+   "type": "join",
+   "x": 2240,
+   "y": 180,
+   "fields": {
+    "sep": "\n\nDISPLAY AUDIT (a GLM auditor decoded the blind segment read through the seven-segment table and scored it against the card - segment positions, decoded digits, and the colon):\n"
+   },
+   "w": 200,
+   "name": "Card, segment read + display audit"
+  },
+  {
+   "id": "audit",
+   "type": "decide",
+   "x": 2600,
+   "y": 180,
+   "fields": {
+    "model": "perplexity/pplx-decider-v1.2",
+    "mode": "choose",
+    "question": "The picture should be one straight-on photograph of a black LED display panel showing four large red seven-segment digits and a glowing colon. The displayed time is derived, not chosen: a carded start time plus a carded count of elapsed minutes, carrying into hours and wrapping at midnight. Each digit is a set of lit segments, and a digit means something only when its lit set equals exactly one digit's set in the standard seven-segment table. The audit in the text decodes a blind reader's segment report through that table and scores each digit EXACT, VALID-WRONG (its set is exactly another digit's set), INVALID (its set is no digit at all) or UNREADABLE. Choose the one label that best fits the round-1 picture.",
+    "options": "display true\ndigit lying\nsegments broken\ndisplay incomplete\nnot a display"
+   },
+   "w": 280,
+   "name": "Display true - audited",
+   "sizes": {
+    "question": 130
+   }
+  },
+  {
+   "id": "editor",
+   "type": "llm",
+   "x": 2600,
+   "y": 520,
+   "fields": {
+    "model": "z-ai/glm-5.3-flash",
+    "system": "You are an edit-notes writer. You receive a DISPLAY CARD, a SEGMENT READ and a DISPLAY AUDIT of a photograph of an LED display.\n- If the audit's VERDICT is DISPLAY TRUE, output exactly this one line and nothing else:\nReproduce this picture exactly, unchanged - same black display panel in the same steel front, same four digits in the same positions, the same segments lit bright red on every digit, the same glowing colon, no added marks and no other text.\n- Otherwise write ONE paragraph of concrete repaint instructions for an image editor working on that same photograph: keep the black panel, the steel front, the digit positions, sizes and spacing and the colon exactly as they are, and keep every digit the audit scored EXACT completely unchanged; for each digit the audit did not score EXACT, name its position (DIGIT 1, DIGIT 2, DIGIT 3 or DIGIT 4, left to right) and demand its lit segments be repainted to the card's set for that digit - the lit segment position names from the card glowing bright red, and every other segment of that digit dark, with any wrongly lit segment extinguished - and if the audit's COLON line says MISSING, demand the two glowing red colon dots between digit 2 and digit 3 be restored. Demand no other text, numbers or markings anywhere. Output only the instructions, no preamble.",
+    "maxTokens": 600,
+    "reasoningEffort": "low"
+   },
+   "w": 280,
+   "name": "Edit notes - GLM turns failing digits into repaint demands",
+   "sizes": {
+    "system": 150
+   }
+  },
+  {
+   "id": "fix",
+   "type": "edit",
+   "x": 2960,
+   "y": 520,
+   "fields": {
+    "model": "meta/muse-image/edit",
+    "size": "auto"
+   },
+   "w": 280,
+   "name": "Corrected photo - Muse Edit repaints the failing digits only"
+  },
+  {
+   "id": "surveyor2",
+   "type": "llm",
+   "x": 3320,
+   "y": 520,
+   "fields": {
+    "model": "google/gemini-3.8-flash",
+    "system": "You are a blind segment reader. You see one photograph of an LED display. You have never seen any plan or card, and you must report only the segments you can actually see brightly lit - never guess a digit, never infer a segment you cannot see.\nSegment position names, fixed: TOP (the top horizontal bar), UPPER-LEFT (the upper left vertical bar), UPPER-RIGHT (the upper right vertical bar), MIDDLE (the middle horizontal bar), LOWER-LEFT (the lower left vertical bar), LOWER-RIGHT (the lower right vertical bar), BOTTOM (the bottom horizontal bar). A segment counts as lit only when it glows bright red like a lit LED; a faint dark outline of an unlit segment does NOT count.\nReport exactly seven lines, nothing else:\nDIGITS: <how many digit shapes are visible, one whole number>\nDIGIT 1 LIT: <the brightly lit segments of the LEFT digit, as position names separated by commas, in the order TOP, UPPER-LEFT, UPPER-RIGHT, MIDDLE, LOWER-LEFT, LOWER-RIGHT, BOTTOM, keeping only the lit ones - write NONE LIT if the digit shows no bright segment, and write MISSING instead of the whole list if there is no first digit>\nDIGIT 2 LIT: <the same for the second digit>\nDIGIT 3 LIT: <the same for the third digit>\nDIGIT 4 LIT: <the same for the fourth digit>\nCOLON: <PRESENT if two glowing dots stand between digit 2 and digit 3, otherwise MISSING>\nPANEL: <the display panel and its front, one short phrase>\nReport the segments exactly as they lie - do not complete a digit from its shape, do not correct a set into a familiar digit, and do not use any position word outside the seven names.",
+    "maxTokens": 700,
+    "reasoningEffort": "low"
+   },
+   "w": 280,
+   "name": "Re-read - Gemini reports the corrected photo's lit segments, blind",
+   "sizes": {
+    "system": 150
+   }
+  },
+  {
+   "id": "j4",
+   "type": "join",
+   "x": 3680,
+   "y": 420,
+   "fields": {
+    "sep": "\n\nSEGMENT READ (a blind reader reported only the brightly lit segments visible on each digit of the corrected picture, left to right; it never saw the display card):\n"
+   },
+   "w": 200,
+   "name": "Display card + re-read"
+  },
+  {
+   "id": "checker2",
+   "type": "llm",
+   "x": 4040,
+   "y": 520,
+   "fields": {
+    "model": "z-ai/glm-5.3-flash",
+    "system": "You are a display-truth auditor. You receive a DISPLAY CARD (a start time, an elapsed count, the display time they derive, and each display digit's carded lit segment set) and a SEGMENT READ (a blind reader's report of the segments actually lit on each digit; it never saw the card). Score the read against the card mechanically, using this table and nothing else:\n\nTHE SEVEN-SEGMENT TABLE (fixed, standard). Segment position names: TOP, UPPER-LEFT, UPPER-RIGHT, MIDDLE, LOWER-LEFT, LOWER-RIGHT, BOTTOM. Each digit lights exactly this set and no others: 0 = TOP, UPPER-LEFT, UPPER-RIGHT, LOWER-LEFT, LOWER-RIGHT, BOTTOM. 1 = UPPER-RIGHT, LOWER-RIGHT. 2 = TOP, UPPER-RIGHT, MIDDLE, LOWER-LEFT, BOTTOM. 3 = TOP, UPPER-RIGHT, MIDDLE, LOWER-RIGHT, BOTTOM. 4 = UPPER-LEFT, UPPER-RIGHT, MIDDLE, LOWER-RIGHT. 5 = TOP, UPPER-LEFT, MIDDLE, LOWER-RIGHT, BOTTOM. 6 = TOP, UPPER-LEFT, MIDDLE, LOWER-LEFT, LOWER-RIGHT, BOTTOM. 7 = TOP, UPPER-RIGHT, LOWER-RIGHT. 8 = TOP, UPPER-LEFT, UPPER-RIGHT, MIDDLE, LOWER-LEFT, LOWER-RIGHT, BOTTOM (all seven). 9 = TOP, UPPER-LEFT, UPPER-RIGHT, MIDDLE, LOWER-RIGHT, BOTTOM. A set of lit segments decodes to a digit only when it equals that digit's set exactly.\n\nDEFINITIONS:\n- For one digit, a segment position MATCHES when the read and the card agree on it: both lit or both dark. SEGMENTS is the count of matching positions over all four digits, out of 28.\n- A digit's READ SET is its read lit list. It DECODES to the digit whose table set it equals exactly, or to NONE when it equals no digit's set. DECODED counts the digits whose decoded digit equals the card digit, out of 4.\n- Per digit: EXACT when its read set equals the card set; VALID-WRONG when its read set is not the card set but decodes to some other digit (name that digit); INVALID when its read set decodes to NONE; UNREADABLE when the digit is MISSING or its read line cannot be parsed into position names.\n- COLON is PRESENT when the read's COLON line says PRESENT, otherwise MISSING.\n- VERDICT: INCOMPLETE when any digit is UNREADABLE or the read's DIGITS count is not 4; otherwise DISPLAY TRUE when DECODED is 4 of 4 and COLON is PRESENT; otherwise DIGIT LYING when at least one digit is VALID-WRONG and none is INVALID; otherwise SEGMENTS BROKEN.\n\nOutput exactly nine lines, nothing else:\nDIGIT 1: <EXACT or VALID-WRONG or INVALID or UNREADABLE> - read <the decoded digit, or NONE> vs card <the card digit>\nDIGIT 2: <same shape>\nDIGIT 3: <same shape>\nDIGIT 4: <same shape>\nSEGMENTS: <X> of 28\nDECODED: <X> of 4\nCOLON: <PRESENT or MISSING>\nVERDICT: <DISPLAY TRUE or DIGIT LYING or SEGMENTS BROKEN or INCOMPLETE>\nDETAIL: <one short sentence naming the decisive evidence>",
+    "maxTokens": 1200,
+    "reasoningEffort": "low"
+   },
+   "w": 280,
+   "name": "Display re-audit - GLM re-scores the corrected photo against the same card",
+   "sizes": {
+    "system": 150
+   }
+  },
+  {
+   "id": "ask",
+   "type": "text",
+   "x": 1160,
+   "y": 520,
+   "fields": {
+    "text": "Read the lit segments on the digits in the attached picture now, following your instructions exactly."
+   },
+   "w": 240,
+   "name": "Read ask"
+  },
+  {
+   "id": "ask2",
+   "type": "text",
+   "x": 2960,
+   "y": 900,
+   "fields": {
+    "text": "Read the lit segments on the digits in the attached picture now, following your instructions exactly."
+   },
+   "w": 240,
+   "name": "Re-read ask"
+  }
+ ],
+ "links": [
+  {
+   "id": "l1",
+   "from": {
+    "node": "setting",
+    "port": "text"
+   },
+   "to": {
+    "node": "director",
+    "port": "prompt"
+   }
+  },
+  {
+   "id": "l2",
+   "from": {
+    "node": "director",
+    "port": "text"
+   },
+   "to": {
+    "node": "j0",
+    "port": "b"
+   }
+  },
+  {
+   "id": "l12",
+   "from": {
+    "node": "setting",
+    "port": "text"
+   },
+   "to": {
+    "node": "j0",
+    "port": "a"
+   }
+  },
+  {
+   "id": "l13",
+   "from": {
+    "node": "j0",
+    "port": "text"
+   },
+   "to": {
+    "node": "stylist",
+    "port": "prompt"
+   }
+  },
+  {
+   "id": "l3",
+   "from": {
+    "node": "stylist",
+    "port": "text"
+   },
+   "to": {
+    "node": "paint",
+    "port": "prompt"
+   }
+  },
+  {
+   "id": "l4",
+   "from": {
+    "node": "paint",
+    "port": "image"
+   },
+   "to": {
+    "node": "surveyor",
+    "port": "img1"
+   }
+  },
+  {
+   "id": "l7",
+   "from": {
+    "node": "director",
+    "port": "text"
+   },
+   "to": {
+    "node": "j1",
+    "port": "a"
+   }
+  },
+  {
+   "id": "l8",
+   "from": {
+    "node": "surveyor",
+    "port": "text"
+   },
+   "to": {
+    "node": "j1",
+    "port": "b"
+   }
+  },
+  {
+   "id": "l11",
+   "from": {
+    "node": "j1",
+    "port": "text"
+   },
+   "to": {
+    "node": "checker",
+    "port": "prompt"
+   }
+  },
+  {
+   "id": "l14",
+   "from": {
+    "node": "j1",
+    "port": "text"
+   },
+   "to": {
+    "node": "j2",
+    "port": "a"
+   }
+  },
+  {
+   "id": "l15",
+   "from": {
+    "node": "checker",
+    "port": "text"
+   },
+   "to": {
+    "node": "j2",
+    "port": "b"
+   }
+  },
+  {
+   "id": "l16",
+   "from": {
+    "node": "j2",
+    "port": "text"
+   },
+   "to": {
+    "node": "audit",
+    "port": "text"
+   }
+  },
+  {
+   "id": "l17",
+   "from": {
+    "node": "paint",
+    "port": "image"
+   },
+   "to": {
+    "node": "audit",
+    "port": "img1"
+   }
+  },
+  {
+   "id": "l18",
+   "from": {
+    "node": "j2",
+    "port": "text"
+   },
+   "to": {
+    "node": "editor",
+    "port": "prompt"
+   }
+  },
+  {
+   "id": "l19",
+   "from": {
+    "node": "editor",
+    "port": "text"
+   },
+   "to": {
+    "node": "fix",
+    "port": "prompt"
+   }
+  },
+  {
+   "id": "l20",
+   "from": {
+    "node": "paint",
+    "port": "image"
+   },
+   "to": {
+    "node": "fix",
+    "port": "image"
+   }
+  },
+  {
+   "id": "l21",
+   "from": {
+    "node": "fix",
+    "port": "image"
+   },
+   "to": {
+    "node": "surveyor2",
+    "port": "img1"
+   }
+  },
+  {
+   "id": "l22",
+   "from": {
+    "node": "director",
+    "port": "text"
+   },
+   "to": {
+    "node": "j4",
+    "port": "a"
+   }
+  },
+  {
+   "id": "l23",
+   "from": {
+    "node": "surveyor2",
+    "port": "text"
+   },
+   "to": {
+    "node": "j4",
+    "port": "b"
+   }
+  },
+  {
+   "id": "l24",
+   "from": {
+    "node": "j4",
+    "port": "text"
+   },
+   "to": {
+    "node": "checker2",
+    "port": "prompt"
+   }
+  },
+  {
+   "id": "l39",
+   "from": {
+    "node": "ask",
+    "port": "text"
+   },
+   "to": {
+    "node": "surveyor",
+    "port": "prompt"
+   }
+  },
+  {
+   "id": "l40",
+   "from": {
+    "node": "ask2",
+    "port": "text"
+   },
+   "to": {
+    "node": "surveyor2",
+    "port": "prompt"
+   }
+  }
+ ],
+ "nid": 32,
+ "lid": 40,
+ "view": {
+  "panX": 40,
+  "panY": 40,
+  "scale": 0.5
+ }
+}
