@@ -1,0 +1,837 @@
+{
+ "v": 1,
+ "nodes": [
+  {
+   "id": "c1",
+   "type": "comment",
+   "x": 60,
+   "y": 30,
+   "fields": {
+    "text": "Can one set of strokes honestly support two opposite solids? A GLM director picks one Necker cube from a menu printed in its own prompt and copies out a BISTABLE CARD: two equal squares, one bottom-left and one offset up-right, joined by four straight connectors - twelve edges, eight corners, one ink - with PARSE A (front face BOTTOM-LEFT) and PARSE B (front face TOP-RIGHT) both named, and every disambiguating cue forbidden: no shading, no filled faces, no broken hidden edges, no line-weight differences, no labels. Muse draws the wireframe and nothing else. Three blind Gemini readers then work the same drawing: a NEUTRAL reader reports which face it sees in front and inventories any cue the pixels carry; a PRIMED-A reader tries to hold parse A and reports whether it coheres; a PRIMED-B reader does the same for parse B. A GLM auditor certifies the conjunction - a figure is BISTABLE only if both primed parses are recoverable AND the neutral reader found no cue forcing either one; a cue makes it FORCED, one recoverable parse makes it ONE-SIDED, no parse makes it FLAT. A Decide judge headlines round 1 as a side output; a gated GLM editor turns only pixel faults into concrete repair notes (a bistable audit demands a verbatim copy; the editor may remove cues or complete edges but must never add a cue to force a parse), Muse Edit repairs, and all three blind readers plus the same auditor re-score the corrected figure, which is the flow's final output."
+   },
+   "w": 900,
+   "name": "Bistable check"
+  },
+  {
+   "id": "setting",
+   "type": "text",
+   "x": 60,
+   "y": 300,
+   "fields": {
+    "text": "A plain flat backdrop for a single line drawing, evenly lit, empty: a smooth untextured white ground with room for one centred wireframe figure. No objects, no text."
+   },
+   "w": 300,
+   "name": "Figure backdrop setting"
+  },
+  {
+   "id": "director",
+   "type": "llm",
+   "x": 440,
+   "y": 280,
+   "fields": {
+    "model": "z-ai/glm-5.3-flash",
+    "system": "You are a bistable-figure director. The SETTING you receive is an empty backdrop description, not an image and not a scene to match: it names no figure on purpose, because the painter will draw the chosen figure afterwards. Do NOT try to match a menu figure to the setting, do NOT refuse, and never ask for a different input. Pick exactly one menu figure freely - any of the three is a correct choice - and copy it out as the card, in exactly the card format below.\n\nTHE FIGURE (fixed for every menu entry): one Necker cube drawn as a pure wireframe - two equal squares, one at the bottom-left and one offset up and to the right, joined by four straight diagonal connectors running from each corner of one square to the corresponding corner of the other. Twelve straight edges, eight corners, every edge drawn in the same ink at the same weight, fully continuous. The drawing supports two depth parses of the identical strokes: PARSE A, the bottom-left square is the front face of a solid cube; PARSE B, the top-right square is the front face. No cue may favour either parse.\n\nMENU:\n1. EMBER CUBE - ink BLACK.\n2. INDIGO CUBE - ink DEEP INDIGO.\n3. FOREST CUBE - ink DARK FOREST GREEN.\n\nCARD FORMAT - copy the chosen entry out exactly in this shape, filling every line, nothing else:\nFIGURE: <EMBER CUBE or INDIGO CUBE or FOREST CUBE>\nGEOMETRY: Necker cube - two equal squares, one bottom-left, one offset up-right, joined by four straight diagonal connectors corner to corresponding corner; 12 edges, 8 corners, all edges continuous\nPARSE A: FRONT BOTTOM-LEFT\nPARSE B: FRONT TOP-RIGHT\nINK: <BLACK or DEEP INDIGO or DARK FOREST GREEN>\nCUES: NONE ALLOWED - no shading, no filled faces, no broken or hidden edges, no line-weight differences, no labels, no arrows\nGROUND: plain white, nothing else",
+    "maxTokens": 900,
+    "reasoningEffort": "low"
+   },
+   "w": 280,
+   "name": "Bistable card - GLM picks a Necker cube and copies its two parses",
+   "sizes": {
+    "system": 150
+   }
+  },
+  {
+   "id": "j0",
+   "type": "join",
+   "x": 800,
+   "y": 480,
+   "fields": {
+    "sep": "\n\nBISTABLE CARD (the figure - its geometry, its two named parses and its cue ban; its exact wording must reach the image maker):\n"
+   },
+   "w": 200,
+   "name": "Setting + kanizsa card"
+  },
+  {
+   "id": "stylist",
+   "type": "llm",
+   "x": 800,
+   "y": 280,
+   "fields": {
+    "model": "z-ai/glm-5.3-flash",
+    "system": "You are a figure brief writer. You receive a backdrop SETTING and a BISTABLE CARD. Turn them into ONE prompt for an image model that draws exactly the carded wireframe. Rules:\n- Demand a pure line drawing: two equal squares, one bottom-left, one offset up and to the right, joined by four straight diagonal connectors from each corner of one square to the corresponding corner of the other - twelve straight edges, eight corners, in the carded ink on the plain white ground, centred with a generous margin.\n- Every edge the same ink, the same weight, fully continuous from corner to corner - including the edges a solid cube would hide. Nothing is broken, dashed or faded.\n- Forbid every disambiguating cue, by name: no shading, no filled or tinted faces, no hidden-line removal, no thicker lines on either square, no arrows, no labels, no letters, no numbers, no background objects, no floor, no shadow, no 3D rendering look. Flat ink lines on white, like a textbook diagram.\n- Never describe either square as the front or the back - the drawing must not favour a parse.\nOutput ONLY the painter prompt, no preamble.",
+    "maxTokens": 900,
+    "reasoningEffort": "low"
+   },
+   "w": 280,
+   "name": "Figure brief - GLM turns the card into a painter prompt (pure wireframe, no cues)",
+   "sizes": {
+    "system": 150
+   }
+  },
+  {
+   "id": "paint",
+   "type": "image",
+   "x": 1160,
+   "y": 280,
+   "fields": {
+    "model": "meta/muse-image/text-to-image",
+    "size": "1:1",
+    "variations": "1"
+   },
+   "w": 280,
+   "name": "Figure - Muse draws the Necker wireframe in the carded ink"
+  },
+  {
+   "id": "surveyor",
+   "type": "llm",
+   "x": 1520,
+   "y": 280,
+   "fields": {
+    "model": "google/gemini-3.8-flash",
+    "system": "You are a blind neutral reader. You see a wireframe drawing and a request. You report which face you see in front with no interpretation suggested to you, and you inventory any depth cue the lines themselves carry. You never guess a cue you cannot see, and never add commentary.",
+    "maxTokens": 400,
+    "reasoningEffort": "low"
+   },
+   "w": 280,
+   "name": "Neutral read - Gemini reports which face it sees in front and inventories cues",
+   "sizes": {
+    "system": 150
+   }
+  },
+  {
+   "id": "lit",
+   "type": "llm",
+   "x": 1520,
+   "y": 540,
+   "fields": {
+    "model": "google/gemini-3.8-flash",
+    "system": "You are a blind primed reader. You see a wireframe drawing and a request that asks you to try one specific depth interpretation: the bottom-left square as the front face. You try it honestly and report what you actually see and whether that interpretation coheres. You never claim coherence for a parse the lines will not hold, and never add commentary.",
+    "maxTokens": 600,
+    "reasoningEffort": "low"
+   },
+   "w": 280,
+   "name": "Primed-A read - Gemini tries to hold parse A (bottom-left front) and reports coherence",
+   "sizes": {
+    "system": 150
+   }
+  },
+  {
+   "id": "j1a",
+   "type": "join",
+   "x": 1880,
+   "y": 180,
+   "fields": {
+    "sep": "\n\nNEUTRAL READ (a blind reader given no interpretation reported which face it sees in front and inventoried any depth cue the lines carry; it never saw the bistable card):\n"
+   },
+   "w": 200,
+   "name": "Card + neutral read"
+  },
+  {
+   "id": "j1",
+   "type": "join",
+   "x": 1880,
+   "y": 180,
+   "fields": {
+    "sep": "\n\nPRIMED-A READ (a blind reader asked to hold parse A - bottom-left square as front face - reported the face it actually saw in front and whether that parse cohered; it never saw the bistable card):\n"
+   },
+   "w": 200,
+   "name": "Neutral bundle + primed-A read"
+  },
+  {
+   "id": "checker",
+   "type": "llm",
+   "x": 2240,
+   "y": 400,
+   "fields": {
+    "model": "z-ai/glm-5.3-flash",
+    "system": "You are a bistable auditor. You receive a BISTABLE CARD (the figure, PARSE A = FRONT BOTTOM-LEFT, PARSE B = FRONT TOP-RIGHT, and the cue ban), a blind NEUTRAL READ (FRONT plus a CUES inventory from a reader given no interpretation), a blind PRIMED-A READ (FRONT plus COHERENT from a reader asked to hold parse A) and a blind PRIMED-B READ (FRONT plus COHERENT from a reader asked to hold parse B). Score exactly by these definitions:\n\n- PRIMED A is RECOVERED when its FRONT is BOTTOM-LEFT and its COHERENT is YES; otherwise NOT RECOVERED.\n- PRIMED B is RECOVERED when its FRONT is TOP-RIGHT and its COHERENT is YES; otherwise NOT RECOVERED.\n- LEAK: copy the neutral read's CUES list verbatim; NONE when the neutral read says CUES: NONE. A leak is a pixel-side cue that forces one parse.\n- VERDICT, applying this precedence in order: FLAT - the neutral FRONT is FLAT and both primed parses are NOT RECOVERED; FORCED - LEAK is not NONE (the pixels disambiguate, whatever the primed readers managed); BISTABLE - both primed parses RECOVERED and LEAK is NONE; ONE-SIDED - exactly one primed parse RECOVERED and LEAK is NONE; FLAT - anything else (no parse recoverable).\n\nOutput EXACTLY these lines, in this order, nothing else:\nNEUTRAL: <BOTTOM-LEFT or TOP-RIGHT or FLAT, from the neutral read>\nPRIMED A: <RECOVERED or NOT RECOVERED>\nPRIMED B: <RECOVERED or NOT RECOVERED>\nLEAK: <NONE, or the cue list from the neutral read>\nVERDICT: <BISTABLE or FORCED or ONE-SIDED or FLAT>\nThen one line: DETAIL: <one short sentence naming what decided the verdict>",
+    "maxTokens": 1200,
+    "reasoningEffort": "low"
+   },
+   "w": 280,
+   "name": "Bistable audit - GLM certifies both parses recoverable and no cue forcing either",
+   "sizes": {
+    "system": 150
+   }
+  },
+  {
+   "id": "j2",
+   "type": "join",
+   "x": 2240,
+   "y": 180,
+   "fields": {
+    "sep": "\n\nBISTABLE AUDIT (a GLM auditor scored the three blind reads against the card - neutral parse, primed-A recovery, primed-B recovery, and any disambiguating cue leak):\n"
+   },
+   "w": 200,
+   "name": "Card, both reads + kanizsa audit"
+  },
+  {
+   "id": "audit",
+   "type": "decide",
+   "x": 2600,
+   "y": 180,
+   "fields": {
+    "model": "perplexity/pplx-decider-v1.2",
+    "mode": "choose",
+    "question": "The picture should be one pure Necker-cube wireframe: two equal squares, one bottom-left and one offset up-right, joined by four straight connectors - twelve continuous edges in one ink at one weight, with no shading, no filled faces, no broken hidden edges and no labels, so the identical strokes support two depth parses (bottom-left square in front, or top-right square in front). The audit in the text scores three blind reads against the card: a neutral reader's unprimed parse and cue inventory, and two primed readers who each tried to hold one parse. Choose the one label that best fits the round-1 picture.",
+    "options": "truly bistable\nforced by a cue\none parse only\nflat wireframe\nnot a cube"
+   },
+   "w": 280,
+   "name": "Bistable - audited",
+   "sizes": {
+    "question": 130
+   }
+  },
+  {
+   "id": "editor",
+   "type": "llm",
+   "x": 2600,
+   "y": 520,
+   "fields": {
+    "model": "z-ai/glm-5.3-flash",
+    "system": "You are a figure repair editor. You receive a BISTABLE CARD and a BISTABLE AUDIT of the round-1 drawing. Turn the audit into ONE concrete repaint instruction for an image editor. Rules:\n- If the audit's VERDICT is BISTABLE, output exactly: 'Reproduce this figure exactly, unchanged - same twelve edges, same eight corners, same ink, same line weight, no shading, no added marks.' and nothing else.\n- If the VERDICT is FORCED, name each cue on the audit's LEAK line and demand its removal in picture terms: unfill and unshade any face back to plain white, redraw any broken edge as one continuous line, make every line the same weight - while all twelve edges and both squares stay exactly where they are.\n- If the VERDICT is ONE-SIDED, demand the drawing be redrawn with every edge continuous and identical in weight and ink, both squares exactly equal, and any feature the audit's DETAIL names as favouring one parse removed.\n- If the VERDICT is FLAT, demand the wireframe be completed: all twelve edges present and continuous, all eight corners closed, two equal squares offset up-right joined by four straight connectors - still with no shading, no filled faces and no broken edges.\n- NEVER demand shading, filling, hidden-line breaks or any other cue be ADDED to force a parse. The ambiguity is the design; you may only remove cues or complete strokes.\nOutput ONLY the repaint instruction.",
+    "maxTokens": 400,
+    "reasoningEffort": "low"
+   },
+   "w": 280,
+   "name": "Edit notes - GLM turns pixel faults (never a parse) into concrete repair demands",
+   "sizes": {
+    "system": 150
+   }
+  },
+  {
+   "id": "fix",
+   "type": "edit",
+   "x": 2960,
+   "y": 520,
+   "fields": {
+    "model": "meta/muse-image/edit",
+    "size": "auto"
+   },
+   "w": 280,
+   "name": "Corrected figure - Muse Edit removes cues or completes strokes, never forces a parse"
+  },
+  {
+   "id": "surveyor2",
+   "type": "llm",
+   "x": 3320,
+   "y": 520,
+   "fields": {
+    "model": "google/gemini-3.8-flash",
+    "system": "You are a blind neutral reader. You see a wireframe drawing and a request. You report which face you see in front with no interpretation suggested to you, and you inventory any depth cue the lines themselves carry. You never guess a cue you cannot see, and never add commentary.",
+    "maxTokens": 400,
+    "reasoningEffort": "low"
+   },
+   "w": 280,
+   "name": "Re-read (neutral) - Gemini re-reads the corrected figure with no interpretation suggested",
+   "sizes": {
+    "system": 150
+   }
+  },
+  {
+   "id": "lit2",
+   "type": "llm",
+   "x": 1520,
+   "y": 780,
+   "fields": {
+    "model": "google/gemini-3.8-flash",
+    "system": "You are a blind primed reader. You see a wireframe drawing and a request that asks you to try one specific depth interpretation: the bottom-left square as the front face. You try it honestly and report what you actually see and whether that interpretation coheres. You never claim coherence for a parse the lines will not hold, and never add commentary.",
+    "maxTokens": 600,
+    "reasoningEffort": "low"
+   },
+   "w": 280,
+   "name": "Re-read (primed A) - Gemini retries parse A on the corrected figure",
+   "sizes": {
+    "system": 150
+   }
+  },
+  {
+   "id": "j4a",
+   "type": "join",
+   "x": 1880,
+   "y": 180,
+   "fields": {
+    "sep": "\n\nNEUTRAL READ (a blind reader given no interpretation reported which face it sees in front and inventoried any depth cue the lines carry; it never saw the bistable card):\n"
+   },
+   "w": 200,
+   "name": "Card + corrected neutral read"
+  },
+  {
+   "id": "j4",
+   "type": "join",
+   "x": 3680,
+   "y": 420,
+   "fields": {
+    "sep": "\n\nPRIMED-A READ (a blind reader asked to hold parse A - bottom-left square as front face - reported the face it actually saw in front and whether that parse cohered; it never saw the bistable card):\n"
+   },
+   "w": 200,
+   "name": "Corrected neutral bundle + primed-A re-read"
+  },
+  {
+   "id": "checker2",
+   "type": "llm",
+   "x": 4040,
+   "y": 520,
+   "fields": {
+    "model": "z-ai/glm-5.3-flash",
+    "system": "You are a bistable auditor. You receive a BISTABLE CARD (the figure, PARSE A = FRONT BOTTOM-LEFT, PARSE B = FRONT TOP-RIGHT, and the cue ban), a blind NEUTRAL READ (FRONT plus a CUES inventory from a reader given no interpretation), a blind PRIMED-A READ (FRONT plus COHERENT from a reader asked to hold parse A) and a blind PRIMED-B READ (FRONT plus COHERENT from a reader asked to hold parse B). Score exactly by these definitions:\n\n- PRIMED A is RECOVERED when its FRONT is BOTTOM-LEFT and its COHERENT is YES; otherwise NOT RECOVERED.\n- PRIMED B is RECOVERED when its FRONT is TOP-RIGHT and its COHERENT is YES; otherwise NOT RECOVERED.\n- LEAK: copy the neutral read's CUES list verbatim; NONE when the neutral read says CUES: NONE. A leak is a pixel-side cue that forces one parse.\n- VERDICT, applying this precedence in order: FLAT - the neutral FRONT is FLAT and both primed parses are NOT RECOVERED; FORCED - LEAK is not NONE (the pixels disambiguate, whatever the primed readers managed); BISTABLE - both primed parses RECOVERED and LEAK is NONE; ONE-SIDED - exactly one primed parse RECOVERED and LEAK is NONE; FLAT - anything else (no parse recoverable).\n\nOutput EXACTLY these lines, in this order, nothing else:\nNEUTRAL: <BOTTOM-LEFT or TOP-RIGHT or FLAT, from the neutral read>\nPRIMED A: <RECOVERED or NOT RECOVERED>\nPRIMED B: <RECOVERED or NOT RECOVERED>\nLEAK: <NONE, or the cue list from the neutral read>\nVERDICT: <BISTABLE or FORCED or ONE-SIDED or FLAT>\nThen one line: DETAIL: <one short sentence naming what decided the verdict>",
+    "maxTokens": 1200,
+    "reasoningEffort": "low"
+   },
+   "w": 280,
+   "name": "Bistable re-audit - GLM re-scores the corrected figure against the same card",
+   "sizes": {
+    "system": 150
+   }
+  },
+  {
+   "id": "ask",
+   "type": "text",
+   "x": 1160,
+   "y": 520,
+   "fields": {
+    "text": "Look at this line drawing of a wireframe cube. First line: which square face appears IN FRONT - closer to you? Write exactly: FRONT: BOTTOM-LEFT or FRONT: TOP-RIGHT or FRONT: FLAT (use FLAT only if the drawing reads as a flat pattern and no face sits in front). Second line: inventory any depth cue the drawing itself carries. Write CUES: NONE, or CUES: followed by any of these that are present: SHADED FACE, FILLED FACE, BROKEN EDGE, UNEQUAL LINE WEIGHT, EXTRA MARK. Write exactly two lines, nothing else."
+   },
+   "w": 240,
+   "name": "Perceive ask"
+  },
+  {
+   "id": "askL",
+   "type": "text",
+   "x": 1160,
+   "y": 520,
+   "fields": {
+    "text": "Look at this line drawing of a wireframe cube. Try to see it as a solid cube whose BOTTOM-LEFT square is the FRONT face, nearest to you, with the rest of the cube receding up and to the right behind it. Hold that interpretation honestly. First line: FRONT: <the face you actually see in front once you have tried - BOTTOM-LEFT, TOP-RIGHT, or FLAT>. Second line: COHERENT: YES if the bottom-left-front interpretation holds together as one solid cube without the lines fighting it, or COHERENT: NO if the drawing resists it. Write exactly two lines, nothing else."
+   },
+   "w": 240,
+   "name": "Literal inspect ask"
+  },
+  {
+   "id": "ask2",
+   "type": "text",
+   "x": 2960,
+   "y": 900,
+   "fields": {
+    "text": "Look at this line drawing of a wireframe cube. First line: which square face appears IN FRONT - closer to you? Write exactly: FRONT: BOTTOM-LEFT or FRONT: TOP-RIGHT or FRONT: FLAT (use FLAT only if the drawing reads as a flat pattern and no face sits in front). Second line: inventory any depth cue the drawing itself carries. Write CUES: NONE, or CUES: followed by any of these that are present: SHADED FACE, FILLED FACE, BROKEN EDGE, UNEQUAL LINE WEIGHT, EXTRA MARK. Write exactly two lines, nothing else."
+   },
+   "w": 240,
+   "name": "Perceive ask (corrected)"
+  },
+  {
+   "id": "askL2",
+   "type": "text",
+   "x": 1160,
+   "y": 520,
+   "fields": {
+    "text": "Look at this line drawing of a wireframe cube. Try to see it as a solid cube whose BOTTOM-LEFT square is the FRONT face, nearest to you, with the rest of the cube receding up and to the right behind it. Hold that interpretation honestly. First line: FRONT: <the face you actually see in front once you have tried - BOTTOM-LEFT, TOP-RIGHT, or FLAT>. Second line: COHERENT: YES if the bottom-left-front interpretation holds together as one solid cube without the lines fighting it, or COHERENT: NO if the drawing resists it. Write exactly two lines, nothing else."
+   },
+   "w": 240,
+   "name": "Literal inspect ask (corrected)"
+  },
+  {
+   "id": "primeB",
+   "type": "llm",
+   "x": 1520,
+   "y": 800,
+   "fields": {
+    "model": "google/gemini-3.8-flash",
+    "system": "You are a blind primed reader. You see a wireframe drawing and a request that asks you to try one specific depth interpretation: the top-right square as the front face. You try it honestly and report what you actually see and whether that interpretation coheres. You never claim coherence for a parse the lines will not hold, and never add commentary.",
+    "maxTokens": 600,
+    "reasoningEffort": "low"
+   },
+   "w": 280,
+   "name": "Primed-B read - Gemini tries to hold parse B (top-right front) and reports coherence",
+   "sizes": {
+    "system": 150
+   }
+  },
+  {
+   "id": "primeB2",
+   "type": "llm",
+   "x": 3320,
+   "y": 780,
+   "fields": {
+    "model": "google/gemini-3.8-flash",
+    "system": "You are a blind primed reader. You see a wireframe drawing and a request that asks you to try one specific depth interpretation: the top-right square as the front face. You try it honestly and report what you actually see and whether that interpretation coheres. You never claim coherence for a parse the lines will not hold, and never add commentary.",
+    "maxTokens": 600,
+    "reasoningEffort": "low"
+   },
+   "w": 280,
+   "name": "Re-read (primed B) - Gemini retries parse B on the corrected figure",
+   "sizes": {
+    "system": 150
+   }
+  },
+  {
+   "id": "askB",
+   "type": "text",
+   "x": 1160,
+   "y": 780,
+   "fields": {
+    "text": "Look at this line drawing of a wireframe cube. Try to see it as a solid cube whose TOP-RIGHT square is the FRONT face, nearest to you, with the rest of the cube receding down and to the left behind it. Hold that interpretation honestly. First line: FRONT: <the face you actually see in front once you have tried - BOTTOM-LEFT, TOP-RIGHT, or FLAT>. Second line: COHERENT: YES if the top-right-front interpretation holds together as one solid cube without the lines fighting it, or COHERENT: NO if the drawing resists it. Write exactly two lines, nothing else."
+   },
+   "w": 240,
+   "name": "Literal inspect ask"
+  },
+  {
+   "id": "askB2",
+   "type": "text",
+   "x": 2960,
+   "y": 1160,
+   "fields": {
+    "text": "Look at this line drawing of a wireframe cube. Try to see it as a solid cube whose TOP-RIGHT square is the FRONT face, nearest to you, with the rest of the cube receding down and to the left behind it. Hold that interpretation honestly. First line: FRONT: <the face you actually see in front once you have tried - BOTTOM-LEFT, TOP-RIGHT, or FLAT>. Second line: COHERENT: YES if the top-right-front interpretation holds together as one solid cube without the lines fighting it, or COHERENT: NO if the drawing resists it. Write exactly two lines, nothing else."
+   },
+   "w": 240,
+   "name": "Literal inspect ask (corrected)"
+  },
+  {
+   "id": "j1b",
+   "type": "join",
+   "x": 2060,
+   "y": 300,
+   "fields": {
+    "sep": "\n\nPRIMED-B READ (a blind reader asked to hold parse B - top-right square as front face - reported the face it actually saw in front and whether that parse cohered; it never saw the bistable card):\n"
+   },
+   "w": 200,
+   "name": "Primed-A bundle + primed-B read"
+  },
+  {
+   "id": "j4b",
+   "type": "join",
+   "x": 3860,
+   "y": 300,
+   "fields": {
+    "sep": "\n\nPRIMED-B READ (a blind reader asked to hold parse B - top-right square as front face - reported the face it actually saw in front and whether that parse cohered; it never saw the bistable card):\n"
+   },
+   "w": 200,
+   "name": "Corrected primed-A bundle + primed-B re-read"
+  }
+ ],
+ "links": [
+  {
+   "id": "l1",
+   "from": {
+    "node": "setting",
+    "port": "text"
+   },
+   "to": {
+    "node": "director",
+    "port": "prompt"
+   }
+  },
+  {
+   "id": "l2",
+   "from": {
+    "node": "director",
+    "port": "text"
+   },
+   "to": {
+    "node": "j0",
+    "port": "b"
+   }
+  },
+  {
+   "id": "l12",
+   "from": {
+    "node": "setting",
+    "port": "text"
+   },
+   "to": {
+    "node": "j0",
+    "port": "a"
+   }
+  },
+  {
+   "id": "l13",
+   "from": {
+    "node": "j0",
+    "port": "text"
+   },
+   "to": {
+    "node": "stylist",
+    "port": "prompt"
+   }
+  },
+  {
+   "id": "l3",
+   "from": {
+    "node": "stylist",
+    "port": "text"
+   },
+   "to": {
+    "node": "paint",
+    "port": "prompt"
+   }
+  },
+  {
+   "id": "l4",
+   "from": {
+    "node": "paint",
+    "port": "image"
+   },
+   "to": {
+    "node": "surveyor",
+    "port": "img1"
+   }
+  },
+  {
+   "id": "l5",
+   "from": {
+    "node": "paint",
+    "port": "image"
+   },
+   "to": {
+    "node": "lit",
+    "port": "img1"
+   }
+  },
+  {
+   "id": "l39",
+   "from": {
+    "node": "ask",
+    "port": "text"
+   },
+   "to": {
+    "node": "surveyor",
+    "port": "prompt"
+   }
+  },
+  {
+   "id": "l41",
+   "from": {
+    "node": "askL",
+    "port": "text"
+   },
+   "to": {
+    "node": "lit",
+    "port": "prompt"
+   }
+  },
+  {
+   "id": "l7",
+   "from": {
+    "node": "director",
+    "port": "text"
+   },
+   "to": {
+    "node": "j1a",
+    "port": "a"
+   }
+  },
+  {
+   "id": "l8",
+   "from": {
+    "node": "surveyor",
+    "port": "text"
+   },
+   "to": {
+    "node": "j1a",
+    "port": "b"
+   }
+  },
+  {
+   "id": "l9",
+   "from": {
+    "node": "j1a",
+    "port": "text"
+   },
+   "to": {
+    "node": "j1",
+    "port": "a"
+   }
+  },
+  {
+   "id": "l10",
+   "from": {
+    "node": "lit",
+    "port": "text"
+   },
+   "to": {
+    "node": "j1",
+    "port": "b"
+   }
+  },
+  {
+   "id": "l11",
+   "from": {
+    "node": "j1",
+    "port": "text"
+   },
+   "to": {
+    "node": "j1b",
+    "port": "a"
+   }
+  },
+  {
+   "id": "l14",
+   "from": {
+    "node": "j1b",
+    "port": "text"
+   },
+   "to": {
+    "node": "j2",
+    "port": "a"
+   }
+  },
+  {
+   "id": "l15",
+   "from": {
+    "node": "checker",
+    "port": "text"
+   },
+   "to": {
+    "node": "j2",
+    "port": "b"
+   }
+  },
+  {
+   "id": "l16",
+   "from": {
+    "node": "j2",
+    "port": "text"
+   },
+   "to": {
+    "node": "audit",
+    "port": "text"
+   }
+  },
+  {
+   "id": "l17",
+   "from": {
+    "node": "paint",
+    "port": "image"
+   },
+   "to": {
+    "node": "audit",
+    "port": "img1"
+   }
+  },
+  {
+   "id": "l18",
+   "from": {
+    "node": "j2",
+    "port": "text"
+   },
+   "to": {
+    "node": "editor",
+    "port": "prompt"
+   }
+  },
+  {
+   "id": "l19",
+   "from": {
+    "node": "editor",
+    "port": "text"
+   },
+   "to": {
+    "node": "fix",
+    "port": "prompt"
+   }
+  },
+  {
+   "id": "l20",
+   "from": {
+    "node": "paint",
+    "port": "image"
+   },
+   "to": {
+    "node": "fix",
+    "port": "image"
+   }
+  },
+  {
+   "id": "l21",
+   "from": {
+    "node": "fix",
+    "port": "image"
+   },
+   "to": {
+    "node": "surveyor2",
+    "port": "img1"
+   }
+  },
+  {
+   "id": "l25",
+   "from": {
+    "node": "fix",
+    "port": "image"
+   },
+   "to": {
+    "node": "lit2",
+    "port": "img1"
+   }
+  },
+  {
+   "id": "l40",
+   "from": {
+    "node": "ask2",
+    "port": "text"
+   },
+   "to": {
+    "node": "surveyor2",
+    "port": "prompt"
+   }
+  },
+  {
+   "id": "l42",
+   "from": {
+    "node": "askL2",
+    "port": "text"
+   },
+   "to": {
+    "node": "lit2",
+    "port": "prompt"
+   }
+  },
+  {
+   "id": "l22",
+   "from": {
+    "node": "director",
+    "port": "text"
+   },
+   "to": {
+    "node": "j4a",
+    "port": "a"
+   }
+  },
+  {
+   "id": "l23",
+   "from": {
+    "node": "surveyor2",
+    "port": "text"
+   },
+   "to": {
+    "node": "j4a",
+    "port": "b"
+   }
+  },
+  {
+   "id": "l26",
+   "from": {
+    "node": "j4a",
+    "port": "text"
+   },
+   "to": {
+    "node": "j4",
+    "port": "a"
+   }
+  },
+  {
+   "id": "l27",
+   "from": {
+    "node": "lit2",
+    "port": "text"
+   },
+   "to": {
+    "node": "j4",
+    "port": "b"
+   }
+  },
+  {
+   "id": "l24",
+   "from": {
+    "node": "j4",
+    "port": "text"
+   },
+   "to": {
+    "node": "j4b",
+    "port": "a"
+   }
+  },
+  {
+   "id": "l50",
+   "from": {
+    "node": "primeB",
+    "port": "text"
+   },
+   "to": {
+    "node": "j1b",
+    "port": "b"
+   }
+  },
+  {
+   "id": "l51",
+   "from": {
+    "node": "j1b",
+    "port": "text"
+   },
+   "to": {
+    "node": "checker",
+    "port": "prompt"
+   }
+  },
+  {
+   "id": "l52",
+   "from": {
+    "node": "paint",
+    "port": "image"
+   },
+   "to": {
+    "node": "primeB",
+    "port": "img1"
+   }
+  },
+  {
+   "id": "l53",
+   "from": {
+    "node": "askB",
+    "port": "text"
+   },
+   "to": {
+    "node": "primeB",
+    "port": "prompt"
+   }
+  },
+  {
+   "id": "l54",
+   "from": {
+    "node": "primeB2",
+    "port": "text"
+   },
+   "to": {
+    "node": "j4b",
+    "port": "b"
+   }
+  },
+  {
+   "id": "l55",
+   "from": {
+    "node": "j4b",
+    "port": "text"
+   },
+   "to": {
+    "node": "checker2",
+    "port": "prompt"
+   }
+  },
+  {
+   "id": "l56",
+   "from": {
+    "node": "fix",
+    "port": "image"
+   },
+   "to": {
+    "node": "primeB2",
+    "port": "img1"
+   }
+  },
+  {
+   "id": "l57",
+   "from": {
+    "node": "askB2",
+    "port": "text"
+   },
+   "to": {
+    "node": "primeB2",
+    "port": "prompt"
+   }
+  }
+ ],
+ "nid": 100,
+ "lid": 100,
+ "view": {
+  "panX": 40,
+  "panY": 40,
+  "scale": 0.5
+ }
+}
