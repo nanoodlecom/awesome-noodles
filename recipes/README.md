@@ -73,6 +73,7 @@ Do not hand-edit these files — run `node scripts/make-recipes.mjs` after chang
 | [Say it back, transcript-checked](say-it-back.md) | [`graphs/say-it-back.noodle-graph.json`](../graphs/say-it-back.noodle-graph.json) | defaults in graph |
 | [Scale check, proportion-audited](scale-check.md) | [`graphs/scale-check.noodle-graph.json`](../graphs/scale-check.noodle-graph.json) | defaults in graph |
 | [Score the still, ear-checked](score-the-still.md) | [`graphs/score-the-still.noodle-graph.json`](../graphs/score-the-still.noodle-graph.json) | defaults in graph |
+| [Segment check, segment-audited](segment-check.md) | [`graphs/segment-check.noodle-graph.json`](../graphs/segment-check.noodle-graph.json) | defaults in graph |
 | [Settle check, density-audited](settle-check.md) | [`graphs/settle-check.noodle-graph.json`](../graphs/settle-check.noodle-graph.json) | defaults in graph |
 | [Shadow check, sun-audited](shadow-check.md) | [`graphs/shadow-check.noodle-graph.json`](../graphs/shadow-check.noodle-graph.json) | defaults in graph |
 | [Shadow play check, projection-audited](shadow-play-check.md) | [`graphs/shadow-play-check.noodle-graph.json`](../graphs/shadow-play-check.noodle-graph.json) | defaults in graph |
