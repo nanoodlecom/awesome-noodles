@@ -1,0 +1,505 @@
+{
+ "v": 1,
+ "nodes": [
+  {
+   "id": "c1",
+   "type": "comment",
+   "x": 60,
+   "y": 30,
+   "fields": {
+    "text": "Can a photograph be worth a number? A resistor carries no digits: its value is written as coloured bands, and the number exists only through a code - the first band is a digit, the second band is a digit, the third band is a power of ten to multiply by, and a gold band at the far end merely promises the value is honest to five percent. Read the bands in the wrong order and the same resistor states a different value; swap one band's colour and the value changes by a digit or by a whole order of magnitude. Image models paint resistors as striped props - plausible bands in plausible colours that decode to nothing in particular. This flow makes the code a planned, measurable quantity - and then it does something about a misbanding. Give it a plain workbench backdrop and a GLM director picks one trio from a menu printed in its own prompt (WORKBENCH, DRAWER and SPARE trios; three resistors each, every value derived through the colour-code table and printed on the card) and copies it onto a RESISTOR CARD: each resistor's three code bands in reading order, its gold tolerance band, and its decoded value in ohms. A second GLM turns the card into one painter prompt demanding a single macro photograph of the three beige axial resistors in a row on the bench, each body carrying exactly its four carded bands in card order with the gold band at the right end. Muse paints it. A blind Gemini reader, who never saw the card, reports only the band colours it can see on each resistor, left to right. A GLM auditor decodes the read bands through the same table and scores the picture: CODE BANDS out of 9, TOLERANCE out of 3, VALUES out of 3 - TRUE VALUE only when all three decoded values equal the carded ones; REVERSED when a resistor's bands landed in reverse order, MISBANDED when a band's colour is wrong, INCOMPLETE when a resistor or a band cannot be read at all. A Decide judge headlines round 1 as a side output. Per the owner's end-in-the-asset rule, the audit is not the deliverable: a gated GLM editor turns any misbanding into concrete repaint notes for the failing resistors only (a true-value audit demands a verbatim copy), Muse Edit repairs the photograph, and a blind re-read plus the same auditor re-score the corrected picture, which is the flow's final output."
+   },
+   "w": 900,
+   "name": "Resistor check"
+  },
+  {
+   "id": "setting",
+   "type": "text",
+   "x": 60,
+   "y": 300,
+   "fields": {
+    "text": "One macro photograph of three axial-lead resistors lying parallel in a single row on a plain dark-green electronics workbench mat, straight-on close view: three smooth beige cylindrical bodies of the same size, each with a thin straight wire lead running out of both ends, the bodies well separated and not touching, sharp focus along the whole row, soft even workshop light. No printed text, numbers, labels or other components anywhere - the only markings on each body are its painted colour bands, which are not decided yet."
+   },
+   "w": 300,
+   "name": "Bench setting"
+  },
+  {
+   "id": "director",
+   "type": "llm",
+   "x": 440,
+   "y": 280,
+   "fields": {
+    "model": "z-ai/glm-5.3-flash",
+    "system": "You are a resistor-trio director. The SETTING you receive describes a workbench photograph backdrop, not a set of resistors to match: it names no trio on purpose, because the painter will paint the chosen trio afterwards. Do NOT try to match a menu entry to the setting, do NOT refuse, and never ask for a different input. Pick exactly one menu trio freely - any of the three is a correct choice - and copy it out as the card, in exactly the card format below.\n\nTHE COLOUR-CODE TABLE (fixed, standard): BLACK = digit 0, BROWN = 1, RED = 2, ORANGE = 3, YELLOW = 4, GREEN = 5, BLUE = 6, VIOLET = 7, GREY = 8, WHITE = 9. Read in order, band 1 and band 2 are the two digits and band 3 is the multiplier: the value in ohms is (10 x digit1 + digit2) x 10^multiplier-digit. Band 4 is always GOLD, the tolerance band; it carries no digit and sits at the RIGHT end of the body, so bands are always read from the end opposite the gold band.\n\nMENU (every value below is already derived through the table - copy it exactly, do not recompute):\n1. WORKBENCH TRIO - RESISTOR 1 (LEFT): bands YELLOW, VIOLET, BROWN, GOLD - value 470 OHMS. RESISTOR 2 (MIDDLE): bands BROWN, BLACK, RED, GOLD - value 1000 OHMS. RESISTOR 3 (RIGHT): bands RED, RED, ORANGE, GOLD - value 22000 OHMS.\n2. DRAWER TRIO - RESISTOR 1 (LEFT): bands ORANGE, ORANGE, BROWN, GOLD - value 330 OHMS. RESISTOR 2 (MIDDLE): bands GREEN, BLUE, RED, GOLD - value 5600 OHMS. RESISTOR 3 (RIGHT): bands BROWN, GREEN, ORANGE, GOLD - value 15000 OHMS.\n3. SPARE TRIO - RESISTOR 1 (LEFT): bands VIOLET, GREY, RED, GOLD - value 7800 OHMS. RESISTOR 2 (MIDDLE): bands YELLOW, BROWN, BLACK, GOLD - value 41 OHMS. RESISTOR 3 (RIGHT): bands BLUE, GREY, BROWN, GOLD - value 680 OHMS.\n\nCARD FORMAT - copy the chosen entry out exactly in this shape, filling every line, nothing else:\nSET: <WORKBENCH TRIO or DRAWER TRIO or SPARE TRIO>\nRESISTOR 1 (LEFT): bands <band 1>, <band 2>, <band 3>, GOLD - value <value> OHMS\nRESISTOR 2 (MIDDLE): bands <band 1>, <band 2>, <band 3>, GOLD - value <value> OHMS\nRESISTOR 3 (RIGHT): bands <band 1>, <band 2>, <band 3>, GOLD - value <value> OHMS\nREADING RULE: read each resistor's bands from the end opposite its gold tolerance band; the gold band sits at the RIGHT end of every body\nBENCH: <the shared workbench surface and backdrop, identical behind all three resistors>",
+    "maxTokens": 900,
+    "reasoningEffort": "low"
+   },
+   "w": 280,
+   "name": "Resistor card - GLM picks a trio and copies its derived values",
+   "sizes": {
+    "system": 150
+   }
+  },
+  {
+   "id": "j0",
+   "type": "join",
+   "x": 800,
+   "y": 480,
+   "fields": {
+    "sep": "\n\nRESISTOR CARD (the trio - each resistor's bands in reading order and its value derived through the colour-code table; its exact wording must reach the image maker):\n"
+   },
+   "w": 200,
+   "name": "Setting + resistor card"
+  },
+  {
+   "id": "stylist",
+   "type": "llm",
+   "x": 800,
+   "y": 280,
+   "fields": {
+    "model": "z-ai/glm-5.3-flash",
+    "system": "You are a macro-photograph brief writer. You receive a SETTING and a RESISTOR CARD. Turn them into ONE prompt for an image model that paints the photograph. Rules:\n- Demand ONE macro photograph: three axial-lead resistors lying parallel in a single row on the bench named in the card, straight-on close view, three smooth beige cylindrical bodies of the same size, each with a thin straight wire lead out of both ends, bodies well separated, sharp focus along the whole row.\n- Name the resistors by position - RESISTOR 1 on the LEFT, RESISTOR 2 in the MIDDLE, RESISTOR 3 on the RIGHT - and for each one repeat its four bands from the card VERBATIM and in card order, left to right along the body, ending with the GOLD band at the body's RIGHT end. Each body carries exactly those four bands and no others: wide, crisp, evenly spaced painted bands in exactly the named colours.\n- The three resistors differ ONLY in their band colours: same bodies, same leads, same bench, same light.\n- Demand NO printed text, numbers, letters, labels or other components anywhere in the picture.\nWrite only the finished prompt, one paragraph, no preamble.",
+    "maxTokens": 900,
+    "reasoningEffort": "low"
+   },
+   "w": 280,
+   "name": "Photo brief - GLM turns the card into a macro-photo painter prompt",
+   "sizes": {
+    "system": 150
+   }
+  },
+  {
+   "id": "paint",
+   "type": "image",
+   "x": 1160,
+   "y": 280,
+   "fields": {
+    "model": "meta/muse-image/text-to-image",
+    "size": "16:9",
+    "variations": "1"
+   },
+   "w": 280,
+   "name": "Bench photo - Muse paints the three banded resistors"
+  },
+  {
+   "id": "surveyor",
+   "type": "llm",
+   "x": 1520,
+   "y": 280,
+   "fields": {
+    "model": "google/gemini-3.8-flash",
+    "system": "You are a blind band reader. You see one photograph of resistors in a row on a bench. You have never seen any plan or card, and you must report only the colours you can actually see - never guess a value, never infer a band you cannot see.\nReport exactly five lines, nothing else:\nRESISTORS: <how many resistor bodies are visible, one whole number>\nRESISTOR 1 BANDS: <the bands on the LEFT resistor, left to right along its body as seen, as colour words separated by commas - use only BLACK, BROWN, RED, ORANGE, YELLOW, GREEN, BLUE, VIOLET, GREY, WHITE, GOLD, SILVER or BEIGE; write NONE for a band position you cannot make out, and write MISSING instead of the whole list if there is no left resistor>\nRESISTOR 2 BANDS: <the same for the MIDDLE resistor>\nRESISTOR 3 BANDS: <the same for the RIGHT resistor>\nBENCH: <the bench surface and backdrop, one short phrase>\nReport the bands in the order you see them along the body, exactly as they lie - do not reorder them, do not correct them, and do not use any colour word outside the list.",
+    "maxTokens": 500,
+    "reasoningEffort": "low"
+   },
+   "w": 280,
+   "name": "Band read - Gemini reports only the band colours it can see, blind",
+   "sizes": {
+    "system": 150
+   }
+  },
+  {
+   "id": "j1",
+   "type": "join",
+   "x": 1880,
+   "y": 180,
+   "fields": {
+    "sep": "\n\nBAND READ (a blind reader reported only the band colours visible on each resistor, left to right; it never saw the resistor card):\n"
+   },
+   "w": 200,
+   "name": "Resistor card + band read"
+  },
+  {
+   "id": "checker",
+   "type": "llm",
+   "x": 2240,
+   "y": 400,
+   "fields": {
+    "model": "z-ai/glm-5.3-flash",
+    "system": "You are a resistor-value auditor. You receive a RESISTOR CARD (three resistors, each with its carded bands in reading order and its carded value) and a BAND READ (a blind reader's report of the band colours actually seen on each resistor, left to right; it never saw the card). Score the read against the card mechanically, using this table and nothing else:\n\nTHE COLOUR-CODE TABLE (fixed, standard): BLACK = digit 0, BROWN = 1, RED = 2, ORANGE = 3, YELLOW = 4, GREEN = 5, BLUE = 6, VIOLET = 7, GREY = 8, WHITE = 9. Read in order, band 1 and band 2 are the two digits and band 3 is the multiplier: the value in ohms is (10 x digit1 + digit2) x 10^multiplier-digit. Band 4 is always GOLD, the tolerance band; it carries no digit and sits at the RIGHT end of the body, so bands are always read from the end opposite the gold band.\n\nDEFINITIONS:\n- A resistor's three CODE BANDS are its bands 1, 2 and 3. A code band counts when the read colour at that position equals the card colour at that position. CODE BANDS is the count over all three resistors, out of 9.\n- TOLERANCE counts a resistor when its read band 4 is GOLD; TOLERANCE is the count out of 3.\n- A resistor's READ VALUE is decoded from the READ's own three code bands through the table: (10 x digit1 + digit2) x 10^multiplier. It is NONE if any of the three read bands is NONE, MISSING or outside the table. VALUES counts the resistors whose read value equals the card value, out of 3.\n- Per resistor: EXACT when all three read code bands equal the card's in order and read band 4 is GOLD; REVERSED when the three read code bands are exactly the card's three code bands in reverse order; UNREADABLE when the resistor is MISSING or any read band is NONE or outside the table; otherwise WRONG BAND.\n- VERDICT: INCOMPLETE when any resistor is UNREADABLE or the read's RESISTORS count is not 3; otherwise TRUE VALUE when VALUES is 3 of 3; otherwise REVERSED when at least one resistor is REVERSED and none is WRONG BAND; otherwise MISBANDED.\n\nOutput exactly eight lines, nothing else:\nRESISTOR 1: <EXACT or REVERSED or WRONG BAND or UNREADABLE> - read value <the read value in ohms, or NONE> vs card <the card value> OHMS\nRESISTOR 2: <same shape>\nRESISTOR 3: <same shape>\nCODE BANDS: <X> of 9\nTOLERANCE: <X> of 3\nVALUES: <X> of 3\nVERDICT: <TRUE VALUE or REVERSED or MISBANDED or INCOMPLETE>\nDETAIL: <one short sentence naming the decisive evidence>",
+    "maxTokens": 1200,
+    "reasoningEffort": "low"
+   },
+   "w": 280,
+   "name": "Resistor audit - GLM decodes the read bands and scores each value",
+   "sizes": {
+    "system": 150
+   }
+  },
+  {
+   "id": "j2",
+   "type": "join",
+   "x": 2240,
+   "y": 180,
+   "fields": {
+    "sep": "\n\nRESISTOR AUDIT (a GLM auditor decoded the blind band read through the colour-code table and scored it against the card - code bands, tolerance bands, and each resistor's decoded value):\n"
+   },
+   "w": 200,
+   "name": "Card, band read + resistor audit"
+  },
+  {
+   "id": "audit",
+   "type": "decide",
+   "x": 2600,
+   "y": 180,
+   "fields": {
+    "model": "perplexity/pplx-decider-v1.2",
+    "mode": "choose",
+    "question": "The picture should be one macro photograph of three beige axial resistors in a row on a bench, each body carrying exactly four painted bands: three code bands whose colours, read in order through the standard resistor colour code (digit, digit, power-of-ten multiplier), state that resistor's carded value in ohms, and a gold tolerance band at the right end of every body. The audit in the text decodes a blind reader's band report through the same table and scores each resistor EXACT, REVERSED, WRONG BAND or UNREADABLE. Choose the one label that best fits the round-1 picture.",
+    "options": "true value\nbands drifted\nread backwards\nset incomplete\nnot resistors"
+   },
+   "w": 280,
+   "name": "True value - audited",
+   "sizes": {
+    "question": 130
+   }
+  },
+  {
+   "id": "editor",
+   "type": "llm",
+   "x": 2600,
+   "y": 520,
+   "fields": {
+    "model": "z-ai/glm-5.3-flash",
+    "system": "You are an edit-notes writer. You receive a RESISTOR CARD, a BAND READ and a RESISTOR AUDIT of a photograph of three resistors.\n- If the audit's VERDICT is TRUE VALUE, output exactly this one line and nothing else:\nReproduce this picture exactly, unchanged - same three resistors on the same bench, same bodies and leads, same bands in the same colours and order on every resistor, no added marks and no printed text.\n- Otherwise write ONE paragraph of concrete repaint instructions for an image editor working on that same photograph: keep the bench, the backdrop, the three beige bodies, their leads and their positions exactly as they are, and keep every resistor the audit scored EXACT completely unchanged; for each resistor the audit did not score EXACT, name its position (LEFT, MIDDLE or RIGHT) and demand its bands be repainted to the card's sequence for that resistor, in card order left to right along the body - the three code-band colours named from the card, then the GOLD band last at the body's right end - as wide, crisp, evenly spaced bands, removing any extra, missing or wrongly coloured bands on that body. Demand no printed text, numbers or labels anywhere. Output only the instructions, no preamble.",
+    "maxTokens": 500,
+    "reasoningEffort": "low"
+   },
+   "w": 280,
+   "name": "Edit notes - GLM turns misbanded resistors into repaint demands",
+   "sizes": {
+    "system": 150
+   }
+  },
+  {
+   "id": "fix",
+   "type": "edit",
+   "x": 2960,
+   "y": 520,
+   "fields": {
+    "model": "meta/muse-image/edit",
+    "size": "auto"
+   },
+   "w": 280,
+   "name": "Corrected photo - Muse Edit repaints the failing bands only"
+  },
+  {
+   "id": "surveyor2",
+   "type": "llm",
+   "x": 3320,
+   "y": 520,
+   "fields": {
+    "model": "google/gemini-3.8-flash",
+    "system": "You are a blind band reader. You see one photograph of resistors in a row on a bench. You have never seen any plan or card, and you must report only the colours you can actually see - never guess a value, never infer a band you cannot see.\nReport exactly five lines, nothing else:\nRESISTORS: <how many resistor bodies are visible, one whole number>\nRESISTOR 1 BANDS: <the bands on the LEFT resistor, left to right along its body as seen, as colour words separated by commas - use only BLACK, BROWN, RED, ORANGE, YELLOW, GREEN, BLUE, VIOLET, GREY, WHITE, GOLD, SILVER or BEIGE; write NONE for a band position you cannot make out, and write MISSING instead of the whole list if there is no left resistor>\nRESISTOR 2 BANDS: <the same for the MIDDLE resistor>\nRESISTOR 3 BANDS: <the same for the RIGHT resistor>\nBENCH: <the bench surface and backdrop, one short phrase>\nReport the bands in the order you see them along the body, exactly as they lie - do not reorder them, do not correct them, and do not use any colour word outside the list.",
+    "maxTokens": 500,
+    "reasoningEffort": "low"
+   },
+   "w": 280,
+   "name": "Re-read - Gemini reports the corrected photo's band colours, blind",
+   "sizes": {
+    "system": 150
+   }
+  },
+  {
+   "id": "j4",
+   "type": "join",
+   "x": 3680,
+   "y": 420,
+   "fields": {
+    "sep": "\n\nBAND READ (a blind reader reported only the band colours visible on each resistor of the corrected picture, left to right; it never saw the resistor card):\n"
+   },
+   "w": 200,
+   "name": "Resistor card + re-read"
+  },
+  {
+   "id": "checker2",
+   "type": "llm",
+   "x": 4040,
+   "y": 520,
+   "fields": {
+    "model": "z-ai/glm-5.3-flash",
+    "system": "You are a resistor-value auditor. You receive a RESISTOR CARD (three resistors, each with its carded bands in reading order and its carded value) and a BAND READ (a blind reader's report of the band colours actually seen on each resistor, left to right; it never saw the card). Score the read against the card mechanically, using this table and nothing else:\n\nTHE COLOUR-CODE TABLE (fixed, standard): BLACK = digit 0, BROWN = 1, RED = 2, ORANGE = 3, YELLOW = 4, GREEN = 5, BLUE = 6, VIOLET = 7, GREY = 8, WHITE = 9. Read in order, band 1 and band 2 are the two digits and band 3 is the multiplier: the value in ohms is (10 x digit1 + digit2) x 10^multiplier-digit. Band 4 is always GOLD, the tolerance band; it carries no digit and sits at the RIGHT end of the body, so bands are always read from the end opposite the gold band.\n\nDEFINITIONS:\n- A resistor's three CODE BANDS are its bands 1, 2 and 3. A code band counts when the read colour at that position equals the card colour at that position. CODE BANDS is the count over all three resistors, out of 9.\n- TOLERANCE counts a resistor when its read band 4 is GOLD; TOLERANCE is the count out of 3.\n- A resistor's READ VALUE is decoded from the READ's own three code bands through the table: (10 x digit1 + digit2) x 10^multiplier. It is NONE if any of the three read bands is NONE, MISSING or outside the table. VALUES counts the resistors whose read value equals the card value, out of 3.\n- Per resistor: EXACT when all three read code bands equal the card's in order and read band 4 is GOLD; REVERSED when the three read code bands are exactly the card's three code bands in reverse order; UNREADABLE when the resistor is MISSING or any read band is NONE or outside the table; otherwise WRONG BAND.\n- VERDICT: INCOMPLETE when any resistor is UNREADABLE or the read's RESISTORS count is not 3; otherwise TRUE VALUE when VALUES is 3 of 3; otherwise REVERSED when at least one resistor is REVERSED and none is WRONG BAND; otherwise MISBANDED.\n\nOutput exactly eight lines, nothing else:\nRESISTOR 1: <EXACT or REVERSED or WRONG BAND or UNREADABLE> - read value <the read value in ohms, or NONE> vs card <the card value> OHMS\nRESISTOR 2: <same shape>\nRESISTOR 3: <same shape>\nCODE BANDS: <X> of 9\nTOLERANCE: <X> of 3\nVALUES: <X> of 3\nVERDICT: <TRUE VALUE or REVERSED or MISBANDED or INCOMPLETE>\nDETAIL: <one short sentence naming the decisive evidence>",
+    "maxTokens": 1200,
+    "reasoningEffort": "low"
+   },
+   "w": 280,
+   "name": "Resistor re-audit - GLM re-scores the corrected photo against the same card",
+   "sizes": {
+    "system": 150
+   }
+  },
+  {
+   "id": "ask",
+   "type": "text",
+   "x": 1160,
+   "y": 520,
+   "fields": {
+    "text": "Read the colour bands on the resistors in the attached picture now, following your instructions exactly."
+   },
+   "w": 240,
+   "name": "Read ask"
+  },
+  {
+   "id": "ask2",
+   "type": "text",
+   "x": 2960,
+   "y": 900,
+   "fields": {
+    "text": "Read the colour bands on the resistors in the attached picture now, following your instructions exactly."
+   },
+   "w": 240,
+   "name": "Re-read ask"
+  }
+ ],
+ "links": [
+  {
+   "id": "l1",
+   "from": {
+    "node": "setting",
+    "port": "text"
+   },
+   "to": {
+    "node": "director",
+    "port": "prompt"
+   }
+  },
+  {
+   "id": "l2",
+   "from": {
+    "node": "director",
+    "port": "text"
+   },
+   "to": {
+    "node": "j0",
+    "port": "b"
+   }
+  },
+  {
+   "id": "l12",
+   "from": {
+    "node": "setting",
+    "port": "text"
+   },
+   "to": {
+    "node": "j0",
+    "port": "a"
+   }
+  },
+  {
+   "id": "l13",
+   "from": {
+    "node": "j0",
+    "port": "text"
+   },
+   "to": {
+    "node": "stylist",
+    "port": "prompt"
+   }
+  },
+  {
+   "id": "l3",
+   "from": {
+    "node": "stylist",
+    "port": "text"
+   },
+   "to": {
+    "node": "paint",
+    "port": "prompt"
+   }
+  },
+  {
+   "id": "l4",
+   "from": {
+    "node": "paint",
+    "port": "image"
+   },
+   "to": {
+    "node": "surveyor",
+    "port": "img1"
+   }
+  },
+  {
+   "id": "l7",
+   "from": {
+    "node": "director",
+    "port": "text"
+   },
+   "to": {
+    "node": "j1",
+    "port": "a"
+   }
+  },
+  {
+   "id": "l8",
+   "from": {
+    "node": "surveyor",
+    "port": "text"
+   },
+   "to": {
+    "node": "j1",
+    "port": "b"
+   }
+  },
+  {
+   "id": "l11",
+   "from": {
+    "node": "j1",
+    "port": "text"
+   },
+   "to": {
+    "node": "checker",
+    "port": "prompt"
+   }
+  },
+  {
+   "id": "l14",
+   "from": {
+    "node": "j1",
+    "port": "text"
+   },
+   "to": {
+    "node": "j2",
+    "port": "a"
+   }
+  },
+  {
+   "id": "l15",
+   "from": {
+    "node": "checker",
+    "port": "text"
+   },
+   "to": {
+    "node": "j2",
+    "port": "b"
+   }
+  },
+  {
+   "id": "l16",
+   "from": {
+    "node": "j2",
+    "port": "text"
+   },
+   "to": {
+    "node": "audit",
+    "port": "text"
+   }
+  },
+  {
+   "id": "l17",
+   "from": {
+    "node": "paint",
+    "port": "image"
+   },
+   "to": {
+    "node": "audit",
+    "port": "img1"
+   }
+  },
+  {
+   "id": "l18",
+   "from": {
+    "node": "j2",
+    "port": "text"
+   },
+   "to": {
+    "node": "editor",
+    "port": "prompt"
+   }
+  },
+  {
+   "id": "l19",
+   "from": {
+    "node": "editor",
+    "port": "text"
+   },
+   "to": {
+    "node": "fix",
+    "port": "prompt"
+   }
+  },
+  {
+   "id": "l20",
+   "from": {
+    "node": "paint",
+    "port": "image"
+   },
+   "to": {
+    "node": "fix",
+    "port": "image"
+   }
+  },
+  {
+   "id": "l21",
+   "from": {
+    "node": "fix",
+    "port": "image"
+   },
+   "to": {
+    "node": "surveyor2",
+    "port": "img1"
+   }
+  },
+  {
+   "id": "l22",
+   "from": {
+    "node": "director",
+    "port": "text"
+   },
+   "to": {
+    "node": "j4",
+    "port": "a"
+   }
+  },
+  {
+   "id": "l23",
+   "from": {
+    "node": "surveyor2",
+    "port": "text"
+   },
+   "to": {
+    "node": "j4",
+    "port": "b"
+   }
+  },
+  {
+   "id": "l24",
+   "from": {
+    "node": "j4",
+    "port": "text"
+   },
+   "to": {
+    "node": "checker2",
+    "port": "prompt"
+   }
+  },
+  {
+   "id": "l39",
+   "from": {
+    "node": "ask",
+    "port": "text"
+   },
+   "to": {
+    "node": "surveyor",
+    "port": "prompt"
+   }
+  },
+  {
+   "id": "l40",
+   "from": {
+    "node": "ask2",
+    "port": "text"
+   },
+   "to": {
+    "node": "surveyor2",
+    "port": "prompt"
+   }
+  }
+ ],
+ "nid": 32,
+ "lid": 40,
+ "view": {
+  "panX": 40,
+  "panY": 40,
+  "scale": 0.5
+ }
+}
