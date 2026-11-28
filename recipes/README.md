@@ -45,6 +45,7 @@ Do not hand-edit these files — run `node scripts/make-recipes.mjs` after chang
 | [Kaleidoscope check, symmetry-audited](kaleidoscope-check.md) | [`graphs/kaleidoscope-check.noodle-graph.json`](../graphs/kaleidoscope-check.noodle-graph.json) | defaults in graph |
 | [Kanizsa check, illusion-audited](kanizsa-check.md) | [`graphs/kanizsa-check.noodle-graph.json`](../graphs/kanizsa-check.noodle-graph.json) | defaults in graph |
 | [Knot check, crossing-audited](knot-check.md) | [`graphs/knot-check.noodle-graph.json`](../graphs/knot-check.noodle-graph.json) | defaults in graph |
+| [Lens check, projection-audited](lens-check.md) | [`graphs/lens-check.noodle-graph.json`](../graphs/lens-check.noodle-graph.json) | defaults in graph |
 | [Level check, level-audited](level-check.md) | [`graphs/level-check.noodle-graph.json`](../graphs/level-check.noodle-graph.json) | defaults in graph |
 | [Maze run, solve-checked](maze-solve-audit.md) | [`graphs/maze-solve-audit.noodle-graph.json`](../graphs/maze-solve-audit.noodle-graph.json) | defaults in graph |
 | [Menu to plate, checked](menu-to-plate.md) | [`graphs/menu-to-plate.noodle-graph.json`](../graphs/menu-to-plate.noodle-graph.json) | needs Menu photo |

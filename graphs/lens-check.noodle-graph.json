@@ -1,0 +1,505 @@
+{
+ "v": 1,
+ "nodes": [
+  {
+   "id": "c1",
+   "type": "comment",
+   "x": 60,
+   "y": 30,
+   "fields": {
+    "text": "Can a picture obey the thin-lens law? A convex lens does not copy its object onto a screen - it computes one. Put a lit candle beyond twice the focal length and the lens projects a real image that is inverted and diminished; move the candle between the focal point and twice it and the image stays inverted but grows magnified; move it inside the focal length and no real image exists at all - the screen stays blank, however bright the candle. Image models paint the magnifying-glass stereotype instead: a big upright candle floating on every screen. A GLM director picks one bench from a menu printed in its own prompt and copies out a LENS CARD: the candle's distance class, and the screen result DERIVED from it through the thin-lens and magnification laws - projection, orientation and size, never chosen freely. A GLM stylist states the bench concretely (candle, lens, screen, distances) without ever stating the derived screen result. Muse paints the bench. A blind Gemini reader, who never saw the card, reports the object and the screen separately: is an image present, which way up is it, and how tall is it next to the candle itself? A GLM auditor scores PROJECTION, ORIENTATION and SIZE: PROJECTION TRUE only when presence, inversion and relative size all follow the law - and for the inside-focal bench, only when the screen is provably BLANK. A Decide judge headlines round 1 as a side output; a gated GLM editor turns any slip into concrete repaint notes for the screen only (a lawful bench demands a verbatim copy), Muse Edit repairs the screen, and a blind re-read plus the same auditor re-score the corrected bench, which is the flow's final output."
+   },
+   "w": 900,
+   "name": "Lens check"
+  },
+  {
+   "id": "setting",
+   "type": "text",
+   "x": 60,
+   "y": 300,
+   "fields": {
+    "text": "One side-view photograph of a school optics bench on a dark laboratory table against a plain dark backdrop: on the left a tall lit white candle in a brass holder, flame upright; at the centre a round convex glass lens held in a brass stand; on the right a plain white projection screen in a dark frame. Even, dim laboratory light, the candle flame the brightest thing in frame. How far the candle stands from the lens has not been decided yet. No people, no hands, no text, no labels, no numbers, no drawn rays or arrows."
+   },
+   "w": 300,
+   "name": "Bench setting"
+  },
+  {
+   "id": "director",
+   "type": "llm",
+   "x": 440,
+   "y": 280,
+   "fields": {
+    "model": "z-ai/glm-5.3-flash",
+    "system": "You are an optics-bench director. The SETTING you receive describes a bench backdrop, not a bench to match: it names no candle distance on purpose, because the painter will set the chosen bench up afterwards. Do NOT try to match a menu entry to the setting, do NOT refuse, and never ask for a different input. Pick exactly one menu bench freely - any of the three is a correct choice - and copy it out as the card, in exactly the card format below.\n\nTHE PROJECTION LAW (fixed, thin-lens): a convex lens of focal length F projects a real image of an object onto a screen only when the object stands beyond F. Beyond twice F (2F) the real image is INVERTED and DIMINISHED - smaller than the object. Between F and 2F the real image is INVERTED and MAGNIFIED - larger than the object. Inside F there is NO real image: the lens makes a virtual image on the object's own side, which cannot be projected, so a screen on the far side stays BLANK. Every menu entry below already carries the screen result this law derives from its distance - copy the chosen entry exactly, do not recompute or soften it.\n\nMENU:\n1. FAR CANDLE - the candle stands FAR from the lens, at three focal lengths (beyond 2F). PROJECTION: IMAGE. IMAGE ORIENTATION: INVERTED. IMAGE SIZE: DIMINISHED.\n2. NEAR CANDLE - the candle stands at one and a half focal lengths from the lens (between F and 2F). PROJECTION: IMAGE. IMAGE ORIENTATION: INVERTED. IMAGE SIZE: MAGNIFIED.\n3. INSIDE-F CANDLE - the candle stands CLOSE to the lens, at half a focal length (inside F). PROJECTION: NO IMAGE. IMAGE ORIENTATION: NONE. IMAGE SIZE: NONE.\n\nCARD FORMAT - copy the chosen entry out exactly in this shape, filling every line, nothing else:\nBENCH: <FAR CANDLE or NEAR CANDLE or INSIDE-F CANDLE>\nOBJECT: one tall lit white candle in a brass holder, flame upright, on the left of the bench\nDISTANCE: <three focal lengths, beyond 2F - or - one and a half focal lengths, between F and 2F - or - half a focal length, inside F>\nLENS: one round convex glass lens in a brass stand at the centre of the bench\nSCREEN: one plain white projection screen in a dark frame on the right of the bench\nPROJECTION: <IMAGE or NO IMAGE>\nIMAGE ORIENTATION: <INVERTED or NONE>\nIMAGE SIZE: <DIMINISHED or MAGNIFIED or NONE>",
+    "maxTokens": 1100,
+    "reasoningEffort": "low"
+   },
+   "w": 280,
+   "name": "Lens card - GLM picks a bench and copies its derived screen result",
+   "sizes": {
+    "system": 150
+   }
+  },
+  {
+   "id": "j0",
+   "type": "join",
+   "x": 800,
+   "y": 480,
+   "fields": {
+    "sep": "\n\nLENS CARD (the bench - the candle's distance class and the screen result the thin-lens law derives from it; its exact wording must reach the image maker):\n"
+   },
+   "w": 200,
+   "name": "Setting + ring card"
+  },
+  {
+   "id": "stylist",
+   "type": "llm",
+   "x": 800,
+   "y": 280,
+   "fields": {
+    "model": "z-ai/glm-5.3-flash",
+    "system": "You are an optics-bench brief writer. You receive a SETTING and a LENS CARD. Turn them into ONE prompt for an image model that paints the bench photograph. Rules:\n- Demand ONE side-view photograph of the bench exactly as the card sets it up: the carded candle on the left in its brass holder with its flame upright, the carded convex lens in its stand at the centre, the carded white screen in its frame on the right, all on the setting's dark laboratory table.\n- State the candle's distance from the lens concretely in picture terms that match the card's DISTANCE line: for three focal lengths, the candle stands far left, well separated from the lens with a long stretch of bench between them; for one and a half focal lengths, the candle stands left of the lens at a moderate gap; for half a focal length, the candle stands close beside the lens, almost touching its stand.\n- NEVER state, hint or describe what appears on the screen - not its presence, not its orientation, not its size. The screen is part of the furniture; what the light through the lens leaves on it is for the painter's optics, not for your brief. Demand the photograph show the bench exactly as the light through the lens actually leaves it.\n- Forbid, by name: any text, labels, captions, numbers, focal-point marks or lettering; drawn light rays, arrows or diagram lines; a mirror, a second candle, a second lens or a second screen; people or hands; the candle's flame pointing anywhere but up on the object candle itself.\nOutput ONLY the painter prompt, one paragraph, no preamble.",
+    "maxTokens": 900,
+    "reasoningEffort": "low"
+   },
+   "w": 280,
+   "name": "Bench brief - GLM turns the card into a painter prompt (setup only, never the screen result)",
+   "sizes": {
+    "system": 150
+   }
+  },
+  {
+   "id": "paint",
+   "type": "image",
+   "x": 1160,
+   "y": 280,
+   "fields": {
+    "model": "meta/muse-image/text-to-image",
+    "size": "16:9",
+    "variations": "1"
+   },
+   "w": 280,
+   "name": "Bench - Muse paints the candle, the lens and the screen"
+  },
+  {
+   "id": "surveyor",
+   "type": "llm",
+   "x": 1520,
+   "y": 280,
+   "fields": {
+    "model": "google/gemini-3.8-flash",
+    "system": "You are a blind bench reader. You see one side-view photograph of an optics bench: a lit candle on the left, a convex lens in a stand at the centre, and a white projection screen on the right. You have never seen any plan or card, and you must report only what you can actually see - never guess what optics ought to do, never tidy the screen into what you expect.\nReport the object and the screen SEPARATELY.\nFirst the bench itself: BENCH is COMPLETE only if all three pieces are plainly visible - the candle with its flame, the lens in its stand, and the screen in its frame; otherwise INCOMPLETE.\nThen the screen, and only the screen: SCREEN IMAGE is PRESENT if a recognisable picture of the candle (a candle shape, holder or flame shape) appears ON the screen's white surface; ABSENT if the screen's surface is plain blank white (a soft glow, a bright patch, a shadow or a smudge is NOT an image - say ABSENT). If PRESENT, IMAGE ORIENTATION is INVERTED when the image's flame end points DOWN toward the bench (the image hangs upside down, holder at the top), UPRIGHT when its flame points up like the real candle. IMAGE SIZE compares the image's height on the screen with the real candle's height in the same picture: SMALLER, LARGER or SAME. If ABSENT, orientation and size are both NONE.\nReport in exactly this shape, nothing else:\nBENCH: <COMPLETE or INCOMPLETE>\nSCREEN IMAGE: <PRESENT or ABSENT>\nIMAGE ORIENTATION: <INVERTED or UPRIGHT or NONE>\nIMAGE SIZE: <SMALLER or LARGER or SAME or NONE>\nBENCH DETAIL: <the three pieces and their spacing, one short phrase>\nReport the bench exactly as it lies - do not assume an image must be present, must be upright, or must be any particular size, and do not use any word outside the choices given.",
+    "maxTokens": 700,
+    "reasoningEffort": "low"
+   },
+   "w": 280,
+   "name": "Bench read - Gemini reports the object and the screen separately, blind",
+   "sizes": {
+    "system": 150
+   }
+  },
+  {
+   "id": "j1",
+   "type": "join",
+   "x": 1880,
+   "y": 180,
+   "fields": {
+    "sep": "\n\nBENCH READ (a blind reader reported only the bench actually visible - the pieces, and separately whether an image sits on the screen, which way up it stands and its size against the candle; it never saw the lens card):\n"
+   },
+   "w": 200,
+   "name": "Ring card + ring read"
+  },
+  {
+   "id": "checker",
+   "type": "llm",
+   "x": 2240,
+   "y": 400,
+   "fields": {
+    "model": "z-ai/glm-5.3-flash",
+    "system": "You are a projection-truth auditor. You receive a LENS CARD (one bench: the candle's distance class, and the screen result the thin-lens law derives from it - PROJECTION, IMAGE ORIENTATION and IMAGE SIZE) and a BENCH READ (a blind reader's report of the bench actually painted; it never saw the card). Score the read against the card, mechanically:\n\nDEFINITIONS:\n- PROJECTION: TRUE when the card's PROJECTION and the read agree - IMAGE with PRESENT, or NO IMAGE with ABSENT; FALSE otherwise. A blank screen is a PASSING result when the card says NO IMAGE, and a failing one when the card says IMAGE.\n- ORIENTATION: when an image is both expected and present, MATCH when the read's IMAGE ORIENTATION equals the card's, WRONG otherwise. When no image is expected and none is present, NO IMAGE. In every other case NO IMAGE.\n- SIZE: when an image is both expected and present, MATCH when the read's IMAGE SIZE matches the card's IMAGE SIZE (DIMINISHED means SMALLER, MAGNIFIED means LARGER), WRONG otherwise. When no image is expected and none is present, NO IMAGE. In every other case NO IMAGE.\n- BENCH: COMPLETE when the read's BENCH line is COMPLETE; INCOMPLETE otherwise.\n- VERDICT, applying this precedence in order: UNBUILT - BENCH is INCOMPLETE (no readable bench at all); PROJECTION FALSE - PROJECTION is FALSE (an image where the law forbids one, or none where the law demands one); ORIENTATION WRONG - PROJECTION TRUE but ORIENTATION is WRONG (a real image standing the wrong way up); SIZE WRONG - PROJECTION TRUE and ORIENTATION MATCH but SIZE is WRONG; PROJECTION TRUE - PROJECTION TRUE, and ORIENTATION and SIZE each MATCH or NO IMAGE.\n\nOutput exactly six lines, nothing else:\nPROJECTION: <TRUE or FALSE>\nORIENTATION: <MATCH or WRONG or NO IMAGE>\nSIZE: <MATCH or WRONG or NO IMAGE>\nBENCH: <COMPLETE or INCOMPLETE>\nVERDICT: <PROJECTION TRUE or PROJECTION FALSE or ORIENTATION WRONG or SIZE WRONG or UNBUILT>\nDETAIL: <one short sentence naming the decisive evidence>",
+    "maxTokens": 1200,
+    "reasoningEffort": "low"
+   },
+   "w": 280,
+   "name": "Projection audit - GLM scores the screen against the derived law",
+   "sizes": {
+    "system": 150
+   }
+  },
+  {
+   "id": "j2",
+   "type": "join",
+   "x": 2240,
+   "y": 180,
+   "fields": {
+    "sep": "\n\nPROJECTION AUDIT (a GLM auditor scored the blind bench read against the lens card - projection, orientation and size, with a blank screen passing only where the law derives no image):\n"
+   },
+   "w": 200,
+   "name": "Card, ring read + growth audit"
+  },
+  {
+   "id": "audit",
+   "type": "decide",
+   "x": 2600,
+   "y": 180,
+   "fields": {
+    "model": "perplexity/pplx-decider-v1.2",
+    "mode": "choose",
+    "question": "The picture should be one side-view optics bench: a lit candle upright on the left, a convex lens in a stand at the centre, and a white screen on the right. The thin-lens law fixes what the screen may show from the candle's distance alone: beyond twice the focal length a real image, inverted and diminished; between the focal point and twice it a real image, inverted and magnified; inside the focal length no image at all - the screen stays blank. The audit in the text scores a blind reader's separate report of the screen against that derived result: PROJECTION TRUE when presence, orientation and size all follow the law (a blank screen counting as true for the inside-focal bench); PROJECTION FALSE when an image appears where the law forbids one or none appears where it demands one; ORIENTATION WRONG when the image stands upright; SIZE WRONG when its size class is wrong; UNBUILT when no bench can be read. Choose the one label that best fits the round-1 picture.",
+    "options": "projection true\nprojection false\norientation wrong\nsize wrong\nbench unreadable"
+   },
+   "w": 280,
+   "name": "Projection true - audited",
+   "sizes": {
+    "question": 130
+   }
+  },
+  {
+   "id": "editor",
+   "type": "llm",
+   "x": 2600,
+   "y": 520,
+   "fields": {
+    "model": "z-ai/glm-5.3-flash",
+    "system": "You are a projection repair editor. You receive a LENS CARD, a BENCH READ and a PROJECTION AUDIT of a bench photograph. Turn the audit into ONE concrete repaint instruction for an image editor working on that same photograph:\n- If the audit's VERDICT is PROJECTION TRUE, output exactly this one line and nothing else:\nReproduce this picture exactly, unchanged - same candle, same lens, same screen with exactly the same appearance, same bench and framing, no added marks and no other text.\n- If the VERDICT is UNBUILT, demand the whole bench be rebuilt to the card: the carded candle upright in its holder on the left at the carded distance, the convex lens in its stand at the centre, the white screen in its frame on the right, and the screen carrying exactly the card's derived result (an inverted image of the carded size, or a plain blank white surface when the card says NO IMAGE).\n- In every other case, keep the candle, its flame, the lens, both stands, the bench and the framing exactly as they are, and repair ONLY the screen's surface: if the card says NO IMAGE, demand every trace of a picture be removed from the screen, leaving it plain blank white; if the card says IMAGE and the read found none, demand a clear image of the candle be formed on the screen, flame end pointing DOWN (inverted), at the carded size relative to the real candle (DIMINISHED clearly smaller, MAGNIFIED clearly larger); if the image stands UPRIGHT, demand it alone be flipped to inverted, flame down and holder up; if its size is wrong, demand it alone be rescaled to the carded size, keeping it inverted.\n- NEVER demand text, labels, numbers, rays or arrows; never move or resize the real candle or the lens; never add a second candle anywhere except the single image on the screen.\nOutput ONLY the repaint instruction, one paragraph, no preamble.",
+    "maxTokens": 600,
+    "reasoningEffort": "low"
+   },
+   "w": 280,
+   "name": "Edit notes - GLM turns a lawless screen into repaint demands",
+   "sizes": {
+    "system": 150
+   }
+  },
+  {
+   "id": "fix",
+   "type": "edit",
+   "x": 2960,
+   "y": 520,
+   "fields": {
+    "model": "meta/muse-image/edit",
+    "size": "auto"
+   },
+   "w": 280,
+   "name": "Corrected bench - Muse Edit repaints the screen only"
+  },
+  {
+   "id": "surveyor2",
+   "type": "llm",
+   "x": 3320,
+   "y": 520,
+   "fields": {
+    "model": "google/gemini-3.8-flash",
+    "system": "You are a blind bench reader. You see one side-view photograph of an optics bench: a lit candle on the left, a convex lens in a stand at the centre, and a white projection screen on the right. You have never seen any plan or card, and you must report only what you can actually see - never guess what optics ought to do, never tidy the screen into what you expect.\nReport the object and the screen SEPARATELY.\nFirst the bench itself: BENCH is COMPLETE only if all three pieces are plainly visible - the candle with its flame, the lens in its stand, and the screen in its frame; otherwise INCOMPLETE.\nThen the screen, and only the screen: SCREEN IMAGE is PRESENT if a recognisable picture of the candle (a candle shape, holder or flame shape) appears ON the screen's white surface; ABSENT if the screen's surface is plain blank white (a soft glow, a bright patch, a shadow or a smudge is NOT an image - say ABSENT). If PRESENT, IMAGE ORIENTATION is INVERTED when the image's flame end points DOWN toward the bench (the image hangs upside down, holder at the top), UPRIGHT when its flame points up like the real candle. IMAGE SIZE compares the image's height on the screen with the real candle's height in the same picture: SMALLER, LARGER or SAME. If ABSENT, orientation and size are both NONE.\nReport in exactly this shape, nothing else:\nBENCH: <COMPLETE or INCOMPLETE>\nSCREEN IMAGE: <PRESENT or ABSENT>\nIMAGE ORIENTATION: <INVERTED or UPRIGHT or NONE>\nIMAGE SIZE: <SMALLER or LARGER or SAME or NONE>\nBENCH DETAIL: <the three pieces and their spacing, one short phrase>\nReport the bench exactly as it lies - do not assume an image must be present, must be upright, or must be any particular size, and do not use any word outside the choices given.",
+    "maxTokens": 700,
+    "reasoningEffort": "low"
+   },
+   "w": 280,
+   "name": "Re-read - Gemini reports the corrected bench's screen, blind",
+   "sizes": {
+    "system": 150
+   }
+  },
+  {
+   "id": "j4",
+   "type": "join",
+   "x": 3680,
+   "y": 420,
+   "fields": {
+    "sep": "\n\nBENCH READ (a blind reader reported only the bench actually visible in the corrected picture - the pieces, and separately the screen's image, orientation and size; it never saw the lens card):\n"
+   },
+   "w": 200,
+   "name": "Ring card + re-read"
+  },
+  {
+   "id": "checker2",
+   "type": "llm",
+   "x": 4040,
+   "y": 520,
+   "fields": {
+    "model": "z-ai/glm-5.3-flash",
+    "system": "You are a projection-truth auditor. You receive a LENS CARD (one bench: the candle's distance class, and the screen result the thin-lens law derives from it - PROJECTION, IMAGE ORIENTATION and IMAGE SIZE) and a BENCH READ (a blind reader's report of the bench actually painted; it never saw the card). Score the read against the card, mechanically:\n\nDEFINITIONS:\n- PROJECTION: TRUE when the card's PROJECTION and the read agree - IMAGE with PRESENT, or NO IMAGE with ABSENT; FALSE otherwise. A blank screen is a PASSING result when the card says NO IMAGE, and a failing one when the card says IMAGE.\n- ORIENTATION: when an image is both expected and present, MATCH when the read's IMAGE ORIENTATION equals the card's, WRONG otherwise. When no image is expected and none is present, NO IMAGE. In every other case NO IMAGE.\n- SIZE: when an image is both expected and present, MATCH when the read's IMAGE SIZE matches the card's IMAGE SIZE (DIMINISHED means SMALLER, MAGNIFIED means LARGER), WRONG otherwise. When no image is expected and none is present, NO IMAGE. In every other case NO IMAGE.\n- BENCH: COMPLETE when the read's BENCH line is COMPLETE; INCOMPLETE otherwise.\n- VERDICT, applying this precedence in order: UNBUILT - BENCH is INCOMPLETE (no readable bench at all); PROJECTION FALSE - PROJECTION is FALSE (an image where the law forbids one, or none where the law demands one); ORIENTATION WRONG - PROJECTION TRUE but ORIENTATION is WRONG (a real image standing the wrong way up); SIZE WRONG - PROJECTION TRUE and ORIENTATION MATCH but SIZE is WRONG; PROJECTION TRUE - PROJECTION TRUE, and ORIENTATION and SIZE each MATCH or NO IMAGE.\n\nOutput exactly six lines, nothing else:\nPROJECTION: <TRUE or FALSE>\nORIENTATION: <MATCH or WRONG or NO IMAGE>\nSIZE: <MATCH or WRONG or NO IMAGE>\nBENCH: <COMPLETE or INCOMPLETE>\nVERDICT: <PROJECTION TRUE or PROJECTION FALSE or ORIENTATION WRONG or SIZE WRONG or UNBUILT>\nDETAIL: <one short sentence naming the decisive evidence>",
+    "maxTokens": 1200,
+    "reasoningEffort": "low"
+   },
+   "w": 280,
+   "name": "Projection re-audit - GLM re-scores the corrected bench against the same card",
+   "sizes": {
+    "system": 150
+   }
+  },
+  {
+   "id": "ask",
+   "type": "text",
+   "x": 1160,
+   "y": 520,
+   "fields": {
+    "text": "Read the bench in the attached picture now, following your instructions exactly."
+   },
+   "w": 240,
+   "name": "Read ask"
+  },
+  {
+   "id": "ask2",
+   "type": "text",
+   "x": 2960,
+   "y": 900,
+   "fields": {
+    "text": "Read the bench in the attached picture now, following your instructions exactly."
+   },
+   "w": 240,
+   "name": "Re-read ask"
+  }
+ ],
+ "links": [
+  {
+   "id": "l1",
+   "from": {
+    "node": "setting",
+    "port": "text"
+   },
+   "to": {
+    "node": "director",
+    "port": "prompt"
+   }
+  },
+  {
+   "id": "l2",
+   "from": {
+    "node": "director",
+    "port": "text"
+   },
+   "to": {
+    "node": "j0",
+    "port": "b"
+   }
+  },
+  {
+   "id": "l12",
+   "from": {
+    "node": "setting",
+    "port": "text"
+   },
+   "to": {
+    "node": "j0",
+    "port": "a"
+   }
+  },
+  {
+   "id": "l13",
+   "from": {
+    "node": "j0",
+    "port": "text"
+   },
+   "to": {
+    "node": "stylist",
+    "port": "prompt"
+   }
+  },
+  {
+   "id": "l3",
+   "from": {
+    "node": "stylist",
+    "port": "text"
+   },
+   "to": {
+    "node": "paint",
+    "port": "prompt"
+   }
+  },
+  {
+   "id": "l4",
+   "from": {
+    "node": "paint",
+    "port": "image"
+   },
+   "to": {
+    "node": "surveyor",
+    "port": "img1"
+   }
+  },
+  {
+   "id": "l7",
+   "from": {
+    "node": "director",
+    "port": "text"
+   },
+   "to": {
+    "node": "j1",
+    "port": "a"
+   }
+  },
+  {
+   "id": "l8",
+   "from": {
+    "node": "surveyor",
+    "port": "text"
+   },
+   "to": {
+    "node": "j1",
+    "port": "b"
+   }
+  },
+  {
+   "id": "l11",
+   "from": {
+    "node": "j1",
+    "port": "text"
+   },
+   "to": {
+    "node": "checker",
+    "port": "prompt"
+   }
+  },
+  {
+   "id": "l14",
+   "from": {
+    "node": "j1",
+    "port": "text"
+   },
+   "to": {
+    "node": "j2",
+    "port": "a"
+   }
+  },
+  {
+   "id": "l15",
+   "from": {
+    "node": "checker",
+    "port": "text"
+   },
+   "to": {
+    "node": "j2",
+    "port": "b"
+   }
+  },
+  {
+   "id": "l16",
+   "from": {
+    "node": "j2",
+    "port": "text"
+   },
+   "to": {
+    "node": "audit",
+    "port": "text"
+   }
+  },
+  {
+   "id": "l17",
+   "from": {
+    "node": "paint",
+    "port": "image"
+   },
+   "to": {
+    "node": "audit",
+    "port": "img1"
+   }
+  },
+  {
+   "id": "l18",
+   "from": {
+    "node": "j2",
+    "port": "text"
+   },
+   "to": {
+    "node": "editor",
+    "port": "prompt"
+   }
+  },
+  {
+   "id": "l19",
+   "from": {
+    "node": "editor",
+    "port": "text"
+   },
+   "to": {
+    "node": "fix",
+    "port": "prompt"
+   }
+  },
+  {
+   "id": "l20",
+   "from": {
+    "node": "paint",
+    "port": "image"
+   },
+   "to": {
+    "node": "fix",
+    "port": "image"
+   }
+  },
+  {
+   "id": "l21",
+   "from": {
+    "node": "fix",
+    "port": "image"
+   },
+   "to": {
+    "node": "surveyor2",
+    "port": "img1"
+   }
+  },
+  {
+   "id": "l22",
+   "from": {
+    "node": "director",
+    "port": "text"
+   },
+   "to": {
+    "node": "j4",
+    "port": "a"
+   }
+  },
+  {
+   "id": "l23",
+   "from": {
+    "node": "surveyor2",
+    "port": "text"
+   },
+   "to": {
+    "node": "j4",
+    "port": "b"
+   }
+  },
+  {
+   "id": "l24",
+   "from": {
+    "node": "j4",
+    "port": "text"
+   },
+   "to": {
+    "node": "checker2",
+    "port": "prompt"
+   }
+  },
+  {
+   "id": "l39",
+   "from": {
+    "node": "ask",
+    "port": "text"
+   },
+   "to": {
+    "node": "surveyor",
+    "port": "prompt"
+   }
+  },
+  {
+   "id": "l40",
+   "from": {
+    "node": "ask2",
+    "port": "text"
+   },
+   "to": {
+    "node": "surveyor2",
+    "port": "prompt"
+   }
+  }
+ ],
+ "nid": 32,
+ "lid": 40,
+ "view": {
+  "panX": 40,
+  "panY": 40,
+  "scale": 0.5
+ }
+}
