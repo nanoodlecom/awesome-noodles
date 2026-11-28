@@ -1,0 +1,505 @@
+{
+ "v": 1,
+ "nodes": [
+  {
+   "id": "c1",
+   "type": "comment",
+   "x": 60,
+   "y": 30,
+   "fields": {
+    "text": "Can a picture keep capillary rise honest? Water climbs a narrow glass tube because surface tension pulls it up the walls, and the narrower the bore, the higher it climbs: the rise is inversely proportional to the tube's diameter, so a hairline tube lifts its column many times higher than a wide one standing in the same trough. Image models paint the opposite clich\u00e9 - every tube filled to the same cheerful level, or the widest tube tallest because it holds the most. A GLM director picks one bench rig from a menu printed in its own prompt and copies out a CAPILLARY CARD: four vertical tubes in a row, each one's bore, and the column band the inverse law derives for it, plus a wide open jar standing beside the trough as a control whose surface must stay level with the trough - too wide for any rise. Muse paints the bench straight-on. A blind Gemini reader, who never saw the card, ranks each tube's bore class and reports each blue column's band and the control jar's surface. A GLM auditor scores BORES and COLUMNS against the card, the INVERSE LAW from the read alone (columns must strictly fall as bore grows), and the CONTROL - RISE TRUE only when all of them hold. A Decide judge headlines round 1 as a side output; a gated GLM editor turns any slip into concrete repaint notes (a true rise demands a verbatim copy), Muse Edit repairs the bench, and a blind re-read plus the same auditor re-score the corrected bench, which is the flow's final output."
+   },
+   "w": 900,
+   "name": "Capillary check"
+  },
+  {
+   "id": "setting",
+   "type": "text",
+   "x": 60,
+   "y": 300,
+   "fields": {
+    "text": "One straight-on front view of a laboratory bench: a long shallow rectangular glass trough half full of deep blue water standing on a pale bench against a plain light-grey wall, with four empty vertical glass tubes of visibly different thicknesses held upright in a row by a metal stand, their lower ends dipping into the trough's water, and one wide open glass jar beside the trough. Bright, even laboratory light. Nothing has risen in any tube yet, and which tube is which bore is not decided yet. No people, no hands, no text, no labels, no ruler marks."
+   },
+   "w": 300,
+   "name": "Bench setting"
+  },
+  {
+   "id": "director",
+   "type": "llm",
+   "x": 440,
+   "y": 280,
+   "fields": {
+    "model": "z-ai/glm-5.3-flash",
+    "system": "You are a capillary-rise director. The SETTING you receive describes a laboratory bench backdrop, not a rig to match: it names no tube order on purpose, because the painter will build the chosen rig afterwards. Do NOT try to match a menu entry to the setting, do NOT refuse, and never ask for a different input. Pick exactly one menu rig freely - any of the three is a correct choice - and copy it out as the card, in exactly the card format below.\n\nTHE RISE LAW (fixed, physical): water rises in a vertical glass tube standing in a trough by capillary action, and the height of the risen column is inversely proportional to the tube's inner diameter - halve the bore and the column climbs twice as high. The four bore classes and the column band each one derives (the band is the height of the top of the blue column above the trough's surface, as a share of that tube's exposed length above the surface): HAIRLINE (0.5 mm) derives TALL (about four fifths); NARROW (1 mm) derives MODERATE (about half); MEDIUM (2 mm) derives LOW (about a quarter); WIDE (4 mm) derives SLIGHT (about an eighth). A wide open jar is too broad for capillary action: its surface stays LEVEL with the trough surface - that is the control. Every menu entry below already obeys the law - copy it exactly, do not recompute.\n\nMENU:\n1. IVY TROUGH - a greenhouse bench, a weathered wooden trough on a slatted bench, soft green light through glass behind. TUBES left to right: 1 WIDE (4 mm), 2 HAIRLINE (0.5 mm), 3 MEDIUM (2 mm), 4 NARROW (1 mm). EXPECTED COLUMNS: 1 SLIGHT; 2 TALL; 3 LOW; 4 MODERATE.\n2. BLUE BENCH - a clean steel laboratory bench, a glass trough, cool white light, plain pale wall. TUBES left to right: 1 NARROW (1 mm), 2 WIDE (4 mm), 3 HAIRLINE (0.5 mm), 4 MEDIUM (2 mm). EXPECTED COLUMNS: 1 MODERATE; 2 SLIGHT; 3 TALL; 4 LOW.\n3. COPPER TRAY - a workshop bench, a copper tray under a glass trough, warm lamp light. TUBES left to right: 1 MEDIUM (2 mm), 2 NARROW (1 mm), 3 WIDE (4 mm), 4 HAIRLINE (0.5 mm). EXPECTED COLUMNS: 1 LOW; 2 MODERATE; 3 SLIGHT; 4 TALL.\n\nCARD FORMAT - copy the chosen entry out exactly in this shape, filling every line, nothing else:\nRIG: <IVY TROUGH or BLUE BENCH or COPPER TRAY>\nTUBES: 1 <BORE> (<mm> mm); 2 <BORE> (<mm> mm); 3 <BORE> (<mm> mm); 4 <BORE> (<mm> mm)\nEXPECTED COLUMNS: 1 <BAND>; 2 <BAND>; 3 <BAND>; 4 <BAND>\nCONTROL: wide open glass jar beside the trough, its blue surface LEVEL with the trough surface\nBENCH: <the rig's bench and backdrop, one short phrase>",
+    "maxTokens": 1100,
+    "reasoningEffort": "low"
+   },
+   "w": 280,
+   "name": "Capillary card - GLM picks a rig and copies its law-derived columns",
+   "sizes": {
+    "system": 150
+   }
+  },
+  {
+   "id": "j0",
+   "type": "join",
+   "x": 800,
+   "y": 480,
+   "fields": {
+    "sep": "\n\nCAPILLARY CARD (the rig - each tube's bore and the column band the rise law derives for it, plus the wide-jar control; its exact wording must reach the image maker):\n"
+   },
+   "w": 200,
+   "name": "Setting + capillary card"
+  },
+  {
+   "id": "stylist",
+   "type": "llm",
+   "x": 800,
+   "y": 280,
+   "fields": {
+    "model": "z-ai/glm-5.3-flash",
+    "system": "You are a laboratory-bench brief writer. You receive a SETTING and a CAPILLARY CARD. Turn them into ONE prompt for an image model that paints the bench photograph. Rules:\n- Demand ONE straight-on front-view photograph of the bench: a long shallow glass trough half full of deep blue water, four vertical glass tubes standing in a row in a metal stand with their lower ends dipping into the trough water, all four tubes the same total length with their tops level, and one wide open glass jar beside the trough, also holding deep blue water.\n- Describe the four tubes strictly in the card's left-to-right order, naming each tube's thickness in concrete visual terms: HAIRLINE is thread-thin, barely wider than a hair; NARROW is thin, like a drinking straw's narrower cousin; MEDIUM is clearly thicker, like a pen's glass barrel; WIDE is the thickest, like a test tube. Never use millimetres, numbers or labels in the picture itself.\n- For each tube, state its risen blue column concretely from the card's EXPECTED COLUMNS, one tube at a time: the blue water has climbed inside that tube so the top of its blue column stands at the carded share of the tube's exposed length above the trough surface - SLIGHT about one eighth up, LOW about one quarter up, MODERATE about half way up, TALL about four fifths up. Outside the tubes the trough surface stays flat and level.\n- State the control plainly: the wide open jar's blue surface sits exactly LEVEL with the trough's surface - no rise in the jar at all.\n- Forbid, by name: any text, labels, captions, numbers, ruler marks or measurement scales; extra tubes, missing tubes or a fifth vessel; columns drawn outside the tubes; people, hands or tools; any tube leaning or at a different height from the others.\nOutput ONLY the painter prompt, one paragraph, no preamble.",
+    "maxTokens": 900,
+    "reasoningEffort": "low"
+   },
+   "w": 280,
+   "name": "Bench brief - GLM turns the card into a painter prompt (tubes, risen columns, level control)",
+   "sizes": {
+    "system": 150
+   }
+  },
+  {
+   "id": "paint",
+   "type": "image",
+   "x": 1160,
+   "y": 280,
+   "fields": {
+    "model": "meta/muse-image/text-to-image",
+    "size": "16:9",
+    "variations": "1"
+   },
+   "w": 280,
+   "name": "Bench photo - Muse paints the trough, the four tubes and the risen columns"
+  },
+  {
+   "id": "surveyor",
+   "type": "llm",
+   "x": 1520,
+   "y": 280,
+   "fields": {
+    "model": "google/gemini-3.8-flash",
+    "system": "You are a blind bench reader. You see one straight-on photograph of a laboratory bench: a glass trough of deep blue water, four vertical glass tubes standing in a row with their lower ends in the water, blue columns risen inside the tubes, and one wide open glass jar beside the trough. You have never seen any plan or card, and you must report only what you can actually see - never guess a tube's intended bore, never infer a column you cannot see.\nJudge each tube's bore class RELATIVE to the other tubes in the same picture: the thinnest tube is HAIRLINE, the next NARROW, the next MEDIUM, and the thickest WIDE. If two tubes look the same thickness, still assign the classes by their relative order as best you can and say so in no extra words - use only the lines below.\nJudge each tube's column band by the height of the top of its blue column above the trough's surface, as a share of that tube's exposed length above the surface: LEVEL if the blue inside the tube does not rise above the trough surface at all; SLIGHT if it rises a little, under about a fifth; LOW if about a fifth to two fifths; MODERATE if about two fifths to three fifths; TALL if over three fifths.\nReport exactly eleven lines, nothing else:\nTUBES: <how many vertical tubes stand in the trough, one whole number>\nTUBE 1 BORE: <HAIRLINE or NARROW or MEDIUM or WIDE or MISSING> (tube 1 is the leftmost)\nTUBE 1 COLUMN: <LEVEL or SLIGHT or LOW or MODERATE or TALL or MISSING>\nTUBE 2 BORE: <HAIRLINE or NARROW or MEDIUM or WIDE or MISSING>\nTUBE 2 COLUMN: <LEVEL or SLIGHT or LOW or MODERATE or TALL or MISSING>\nTUBE 3 BORE: <HAIRLINE or NARROW or MEDIUM or WIDE or MISSING>\nTUBE 3 COLUMN: <LEVEL or SLIGHT or LOW or MODERATE or TALL or MISSING>\nTUBE 4 BORE: <HAIRLINE or NARROW or MEDIUM or WIDE or MISSING>\nTUBE 4 COLUMN: <LEVEL or SLIGHT or LOW or MODERATE or TALL or MISSING>\nCONTROL: <LEVEL if the wide jar's blue surface is at the same height as the trough's surface, ABOVE if it sits higher, BELOW if lower, MISSING if there is no wide jar>\nBENCH: <the bench and backdrop, one short phrase>\nReport the bench exactly as it lies - do not tidy the columns into a neat staircase, do not assume the thin tube must be tallest, and do not use any word outside the choices given.",
+    "maxTokens": 700,
+    "reasoningEffort": "low"
+   },
+   "w": 280,
+   "name": "Bench read - Gemini reports each tube's bore and column, blind",
+   "sizes": {
+    "system": 150
+   }
+  },
+  {
+   "id": "j1",
+   "type": "join",
+   "x": 1880,
+   "y": 180,
+   "fields": {
+    "sep": "\n\nBENCH READ (a blind reader reported only the bench actually visible - each tube's bore class and risen column band, and the control jar's surface; it never saw the capillary card):\n"
+   },
+   "w": 200,
+   "name": "Capillary card + bench read"
+  },
+  {
+   "id": "checker",
+   "type": "llm",
+   "x": 2240,
+   "y": 400,
+   "fields": {
+    "model": "z-ai/glm-5.3-flash",
+    "system": "You are a capillary-truth auditor. You receive a CAPILLARY CARD (one rig: four tubes left to right, each tube's bore class, and the column band the rise law derives for it, plus the wide-jar control) and a BENCH READ (a blind reader's report of the bench actually painted; it never saw the card). Score the read against the card and against the rise law, mechanically:\n\nTHE RISE LAW (fixed, physical): the risen column's height is inversely proportional to the tube's bore. Bore order, thinnest to thickest: HAIRLINE, NARROW, MEDIUM, WIDE. Column bands, lowest to highest: LEVEL, SLIGHT, LOW, MODERATE, TALL. The card's derived pairing is HAIRLINE -> TALL, NARROW -> MODERATE, MEDIUM -> LOW, WIDE -> SLIGHT. The wide open jar is too broad for any rise: its surface must sit LEVEL with the trough surface.\n\nDEFINITIONS:\n- BORES: count the positions (1 to 4) where the read's bore equals the card's bore for that position. Report X of 4.\n- COLUMNS: count the positions where the read's column band equals the card's expected band for that position. Report X of 4.\n- INVERSE LAW: judge from the READ alone, ignoring the card. Pair each read bore with its read column, order the tubes by bore (HAIRLINE first, then NARROW, MEDIUM, WIDE), and look at the column sequence: HOLDS when the columns strictly fall as the bore grows (each thicker tube's column is in a strictly lower band than the thinner tube before it); BROKEN when they do not strictly fall; UNKNOWN when any bore or column line is MISSING, or the read's four bores are not one of each class (so the tubes cannot be ordered by bore).\n- CONTROL: CORRECT when the read's CONTROL line is LEVEL; WRONG when it is ABOVE or BELOW; MISSING when it is MISSING.\n- VERDICT, applying this precedence in order: UNBUILT - the read's TUBES count is not 4, or any bore or column line is MISSING; RISE TRUE - BORES 4 of 4, COLUMNS 4 of 4, INVERSE LAW HOLDS and CONTROL CORRECT; FLAT - all four read columns are LEVEL or SLIGHT (no real rise anywhere); INVERTED - the read's columns strictly RISE as the bore grows (the exact reverse of the law: the widest tube carries the tallest column); RISE DRIFTED - anything else.\n\nOutput exactly six lines, nothing else:\nBORES: <X of 4>\nCOLUMNS: <X of 4>\nINVERSE LAW: <HOLDS or BROKEN or UNKNOWN>\nCONTROL: <CORRECT or WRONG or MISSING>\nVERDICT: <RISE TRUE or RISE DRIFTED or FLAT or INVERTED or UNBUILT>\nDETAIL: <one short sentence naming the decisive evidence>",
+    "maxTokens": 1200,
+    "reasoningEffort": "low"
+   },
+   "w": 280,
+   "name": "Capillary audit - GLM scores the read against the card and the inverse law",
+   "sizes": {
+    "system": 150
+   }
+  },
+  {
+   "id": "j2",
+   "type": "join",
+   "x": 2240,
+   "y": 180,
+   "fields": {
+    "sep": "\n\nCAPILLARY AUDIT (a GLM auditor scored the blind bench read against the capillary card and the inverse rise law - bores, columns, the law inside the read, and the level control):\n"
+   },
+   "w": 200,
+   "name": "Card, bench read + capillary audit"
+  },
+  {
+   "id": "audit",
+   "type": "decide",
+   "x": 2600,
+   "y": 180,
+   "fields": {
+    "model": "perplexity/pplx-decider-v1.2",
+    "mode": "choose",
+    "question": "The picture should be one straight-on bench photograph: a glass trough of deep blue water, four vertical glass tubes in a row dipping into it, a blue column risen inside each tube, and one wide open glass jar beside the trough. Capillary rise is inversely proportional to bore: the hairline tube must carry the tallest column (about four fifths of its exposed length), then narrow (about half), then medium (about a quarter), and the wide tube only a slight rise - and the wide jar's surface must stay level with the trough's, with no rise at all. The audit in the text scores a blind reader's report against the card and the law: RISE TRUE when bores and columns all match, the inverse law holds inside the read and the control is level; FLAT when no column really rose; INVERTED when the columns rise as the bore grows, the law backwards; RISE DRIFTED for any other partial miss; UNBUILT when the bench cannot be read. Choose the one label that best fits the round-1 picture.",
+    "options": "rise true\nrise drifted\nrise flat\nrise inverted\nbench unreadable"
+   },
+   "w": 280,
+   "name": "Rise true - audited",
+   "sizes": {
+    "question": 130
+   }
+  },
+  {
+   "id": "editor",
+   "type": "llm",
+   "x": 2600,
+   "y": 520,
+   "fields": {
+    "model": "z-ai/glm-5.3-flash",
+    "system": "You are a capillary repair editor. You receive a CAPILLARY CARD, a BENCH READ and a CAPILLARY AUDIT of a bench photograph. Turn the audit into ONE concrete repaint instruction for an image editor working on that same photograph:\n- If the audit's VERDICT is RISE TRUE, output exactly this one line and nothing else:\nReproduce this picture exactly, unchanged - same bench, same trough, same four tubes in the same order at the same thicknesses, the blue column in each tube risen to exactly the same height, the wide jar's surface at the same level, no added marks and no other text.\n- If the VERDICT is UNBUILT, demand the whole bench be rebuilt to the card: the carded trough and backdrop, four vertical tubes in the card's left-to-right order at the card's relative thicknesses (HAIRLINE thread-thin, NARROW thin, MEDIUM clearly thicker, WIDE thickest), each tube's blue column risen to its carded band (SLIGHT about an eighth of the exposed length, LOW about a quarter, MODERATE about half, TALL about four fifths), and the wide open jar beside the trough with its surface level with the trough's.\n- In every other case, keep the bench, the trough, the backdrop and every tube the audit scored as matching exactly as they are, and repair only what failed: for each tube whose bore the audit did not match, demand that tube be repainted at its carded thickness class, naming the class concretely; for each tube whose column the audit did not match, demand the blue column inside that tube be repainted so its top stands at its carded band, naming the band as a share of the exposed length; if the audit's CONTROL line is not CORRECT, demand the wide jar's surface be repainted exactly level with the trough's surface.\n- NEVER demand text, labels, numbers or ruler marks; never add or remove a tube or the jar; never change the bench or backdrop.\nOutput ONLY the repaint instruction, one paragraph, no preamble.",
+    "maxTokens": 600,
+    "reasoningEffort": "low"
+   },
+   "w": 280,
+   "name": "Edit notes - GLM turns a failed rise into repaint demands",
+   "sizes": {
+    "system": 150
+   }
+  },
+  {
+   "id": "fix",
+   "type": "edit",
+   "x": 2960,
+   "y": 520,
+   "fields": {
+    "model": "meta/muse-image/edit",
+    "size": "auto"
+   },
+   "w": 280,
+   "name": "Corrected bench - Muse Edit repaints the failing tubes only"
+  },
+  {
+   "id": "surveyor2",
+   "type": "llm",
+   "x": 3320,
+   "y": 520,
+   "fields": {
+    "model": "google/gemini-3.8-flash",
+    "system": "You are a blind bench reader. You see one straight-on photograph of a laboratory bench: a glass trough of deep blue water, four vertical glass tubes standing in a row with their lower ends in the water, blue columns risen inside the tubes, and one wide open glass jar beside the trough. You have never seen any plan or card, and you must report only what you can actually see - never guess a tube's intended bore, never infer a column you cannot see.\nJudge each tube's bore class RELATIVE to the other tubes in the same picture: the thinnest tube is HAIRLINE, the next NARROW, the next MEDIUM, and the thickest WIDE. If two tubes look the same thickness, still assign the classes by their relative order as best you can and say so in no extra words - use only the lines below.\nJudge each tube's column band by the height of the top of its blue column above the trough's surface, as a share of that tube's exposed length above the surface: LEVEL if the blue inside the tube does not rise above the trough surface at all; SLIGHT if it rises a little, under about a fifth; LOW if about a fifth to two fifths; MODERATE if about two fifths to three fifths; TALL if over three fifths.\nReport exactly eleven lines, nothing else:\nTUBES: <how many vertical tubes stand in the trough, one whole number>\nTUBE 1 BORE: <HAIRLINE or NARROW or MEDIUM or WIDE or MISSING> (tube 1 is the leftmost)\nTUBE 1 COLUMN: <LEVEL or SLIGHT or LOW or MODERATE or TALL or MISSING>\nTUBE 2 BORE: <HAIRLINE or NARROW or MEDIUM or WIDE or MISSING>\nTUBE 2 COLUMN: <LEVEL or SLIGHT or LOW or MODERATE or TALL or MISSING>\nTUBE 3 BORE: <HAIRLINE or NARROW or MEDIUM or WIDE or MISSING>\nTUBE 3 COLUMN: <LEVEL or SLIGHT or LOW or MODERATE or TALL or MISSING>\nTUBE 4 BORE: <HAIRLINE or NARROW or MEDIUM or WIDE or MISSING>\nTUBE 4 COLUMN: <LEVEL or SLIGHT or LOW or MODERATE or TALL or MISSING>\nCONTROL: <LEVEL if the wide jar's blue surface is at the same height as the trough's surface, ABOVE if it sits higher, BELOW if lower, MISSING if there is no wide jar>\nBENCH: <the bench and backdrop, one short phrase>\nReport the bench exactly as it lies - do not tidy the columns into a neat staircase, do not assume the thin tube must be tallest, and do not use any word outside the choices given.",
+    "maxTokens": 700,
+    "reasoningEffort": "low"
+   },
+   "w": 280,
+   "name": "Re-read - Gemini reports the corrected bench's tubes, blind",
+   "sizes": {
+    "system": 150
+   }
+  },
+  {
+   "id": "j4",
+   "type": "join",
+   "x": 3680,
+   "y": 420,
+   "fields": {
+    "sep": "\n\nBENCH READ (a blind reader reported only the bench actually visible in the corrected picture - each tube's bore class and risen column band, and the control jar's surface; it never saw the capillary card):\n"
+   },
+   "w": 200,
+   "name": "Capillary card + re-read"
+  },
+  {
+   "id": "checker2",
+   "type": "llm",
+   "x": 4040,
+   "y": 520,
+   "fields": {
+    "model": "z-ai/glm-5.3-flash",
+    "system": "You are a capillary-truth auditor. You receive a CAPILLARY CARD (one rig: four tubes left to right, each tube's bore class, and the column band the rise law derives for it, plus the wide-jar control) and a BENCH READ (a blind reader's report of the bench actually painted; it never saw the card). Score the read against the card and against the rise law, mechanically:\n\nTHE RISE LAW (fixed, physical): the risen column's height is inversely proportional to the tube's bore. Bore order, thinnest to thickest: HAIRLINE, NARROW, MEDIUM, WIDE. Column bands, lowest to highest: LEVEL, SLIGHT, LOW, MODERATE, TALL. The card's derived pairing is HAIRLINE -> TALL, NARROW -> MODERATE, MEDIUM -> LOW, WIDE -> SLIGHT. The wide open jar is too broad for any rise: its surface must sit LEVEL with the trough surface.\n\nDEFINITIONS:\n- BORES: count the positions (1 to 4) where the read's bore equals the card's bore for that position. Report X of 4.\n- COLUMNS: count the positions where the read's column band equals the card's expected band for that position. Report X of 4.\n- INVERSE LAW: judge from the READ alone, ignoring the card. Pair each read bore with its read column, order the tubes by bore (HAIRLINE first, then NARROW, MEDIUM, WIDE), and look at the column sequence: HOLDS when the columns strictly fall as the bore grows (each thicker tube's column is in a strictly lower band than the thinner tube before it); BROKEN when they do not strictly fall; UNKNOWN when any bore or column line is MISSING, or the read's four bores are not one of each class (so the tubes cannot be ordered by bore).\n- CONTROL: CORRECT when the read's CONTROL line is LEVEL; WRONG when it is ABOVE or BELOW; MISSING when it is MISSING.\n- VERDICT, applying this precedence in order: UNBUILT - the read's TUBES count is not 4, or any bore or column line is MISSING; RISE TRUE - BORES 4 of 4, COLUMNS 4 of 4, INVERSE LAW HOLDS and CONTROL CORRECT; FLAT - all four read columns are LEVEL or SLIGHT (no real rise anywhere); INVERTED - the read's columns strictly RISE as the bore grows (the exact reverse of the law: the widest tube carries the tallest column); RISE DRIFTED - anything else.\n\nOutput exactly six lines, nothing else:\nBORES: <X of 4>\nCOLUMNS: <X of 4>\nINVERSE LAW: <HOLDS or BROKEN or UNKNOWN>\nCONTROL: <CORRECT or WRONG or MISSING>\nVERDICT: <RISE TRUE or RISE DRIFTED or FLAT or INVERTED or UNBUILT>\nDETAIL: <one short sentence naming the decisive evidence>",
+    "maxTokens": 1200,
+    "reasoningEffort": "low"
+   },
+   "w": 280,
+   "name": "Capillary re-audit - GLM re-scores the corrected bench against the same card",
+   "sizes": {
+    "system": 150
+   }
+  },
+  {
+   "id": "ask",
+   "type": "text",
+   "x": 1160,
+   "y": 520,
+   "fields": {
+    "text": "Read the bench in the attached picture now, following your instructions exactly."
+   },
+   "w": 240,
+   "name": "Read ask"
+  },
+  {
+   "id": "ask2",
+   "type": "text",
+   "x": 2960,
+   "y": 900,
+   "fields": {
+    "text": "Read the bench in the attached picture now, following your instructions exactly."
+   },
+   "w": 240,
+   "name": "Re-read ask"
+  }
+ ],
+ "links": [
+  {
+   "id": "l1",
+   "from": {
+    "node": "setting",
+    "port": "text"
+   },
+   "to": {
+    "node": "director",
+    "port": "prompt"
+   }
+  },
+  {
+   "id": "l2",
+   "from": {
+    "node": "director",
+    "port": "text"
+   },
+   "to": {
+    "node": "j0",
+    "port": "b"
+   }
+  },
+  {
+   "id": "l12",
+   "from": {
+    "node": "setting",
+    "port": "text"
+   },
+   "to": {
+    "node": "j0",
+    "port": "a"
+   }
+  },
+  {
+   "id": "l13",
+   "from": {
+    "node": "j0",
+    "port": "text"
+   },
+   "to": {
+    "node": "stylist",
+    "port": "prompt"
+   }
+  },
+  {
+   "id": "l3",
+   "from": {
+    "node": "stylist",
+    "port": "text"
+   },
+   "to": {
+    "node": "paint",
+    "port": "prompt"
+   }
+  },
+  {
+   "id": "l4",
+   "from": {
+    "node": "paint",
+    "port": "image"
+   },
+   "to": {
+    "node": "surveyor",
+    "port": "img1"
+   }
+  },
+  {
+   "id": "l7",
+   "from": {
+    "node": "director",
+    "port": "text"
+   },
+   "to": {
+    "node": "j1",
+    "port": "a"
+   }
+  },
+  {
+   "id": "l8",
+   "from": {
+    "node": "surveyor",
+    "port": "text"
+   },
+   "to": {
+    "node": "j1",
+    "port": "b"
+   }
+  },
+  {
+   "id": "l11",
+   "from": {
+    "node": "j1",
+    "port": "text"
+   },
+   "to": {
+    "node": "checker",
+    "port": "prompt"
+   }
+  },
+  {
+   "id": "l14",
+   "from": {
+    "node": "j1",
+    "port": "text"
+   },
+   "to": {
+    "node": "j2",
+    "port": "a"
+   }
+  },
+  {
+   "id": "l15",
+   "from": {
+    "node": "checker",
+    "port": "text"
+   },
+   "to": {
+    "node": "j2",
+    "port": "b"
+   }
+  },
+  {
+   "id": "l16",
+   "from": {
+    "node": "j2",
+    "port": "text"
+   },
+   "to": {
+    "node": "audit",
+    "port": "text"
+   }
+  },
+  {
+   "id": "l17",
+   "from": {
+    "node": "paint",
+    "port": "image"
+   },
+   "to": {
+    "node": "audit",
+    "port": "img1"
+   }
+  },
+  {
+   "id": "l18",
+   "from": {
+    "node": "j2",
+    "port": "text"
+   },
+   "to": {
+    "node": "editor",
+    "port": "prompt"
+   }
+  },
+  {
+   "id": "l19",
+   "from": {
+    "node": "editor",
+    "port": "text"
+   },
+   "to": {
+    "node": "fix",
+    "port": "prompt"
+   }
+  },
+  {
+   "id": "l20",
+   "from": {
+    "node": "paint",
+    "port": "image"
+   },
+   "to": {
+    "node": "fix",
+    "port": "image"
+   }
+  },
+  {
+   "id": "l21",
+   "from": {
+    "node": "fix",
+    "port": "image"
+   },
+   "to": {
+    "node": "surveyor2",
+    "port": "img1"
+   }
+  },
+  {
+   "id": "l22",
+   "from": {
+    "node": "director",
+    "port": "text"
+   },
+   "to": {
+    "node": "j4",
+    "port": "a"
+   }
+  },
+  {
+   "id": "l23",
+   "from": {
+    "node": "surveyor2",
+    "port": "text"
+   },
+   "to": {
+    "node": "j4",
+    "port": "b"
+   }
+  },
+  {
+   "id": "l24",
+   "from": {
+    "node": "j4",
+    "port": "text"
+   },
+   "to": {
+    "node": "checker2",
+    "port": "prompt"
+   }
+  },
+  {
+   "id": "l39",
+   "from": {
+    "node": "ask",
+    "port": "text"
+   },
+   "to": {
+    "node": "surveyor",
+    "port": "prompt"
+   }
+  },
+  {
+   "id": "l40",
+   "from": {
+    "node": "ask2",
+    "port": "text"
+   },
+   "to": {
+    "node": "surveyor2",
+    "port": "prompt"
+   }
+  }
+ ],
+ "nid": 32,
+ "lid": 40,
+ "view": {
+  "panX": 40,
+  "panY": 40,
+  "scale": 0.5
+ }
+}
