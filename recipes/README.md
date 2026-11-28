@@ -91,6 +91,7 @@ Do not hand-edit these files — run `node scripts/make-recipes.mjs` after chang
 | [Talking photo](talking-photo.md) | [`graphs/talking-photo.noodle-graph.json`](../graphs/talking-photo.noodle-graph.json) | needs Subject photo |
 | [Thermal check, heat-rank-audited](thermal-check.md) | [`graphs/thermal-check.noodle-graph.json`](../graphs/thermal-check.noodle-graph.json) | defaults in graph |
 | [Tile check, seam-audited](tile-check.md) | [`graphs/tile-check.noodle-graph.json`](../graphs/tile-check.noodle-graph.json) | defaults in graph |
+| [Tree-ring check, growth-audited](tree-ring-check.md) | [`graphs/tree-ring-check.noodle-graph.json`](../graphs/tree-ring-check.noodle-graph.json) | defaults in graph |
 | [Turnaround check, viewpoint-audited](turnaround-check.md) | [`graphs/turnaround-check.noodle-graph.json`](../graphs/turnaround-check.noodle-graph.json) | defaults in graph |
 | [Venn check, logic-audited](venn-check.md) | [`graphs/venn-check.noodle-graph.json`](../graphs/venn-check.noodle-graph.json) | defaults in graph |
 | [Weave check, parity-audited](weave-check.md) | [`graphs/weave-check.noodle-graph.json`](../graphs/weave-check.noodle-graph.json) | defaults in graph |

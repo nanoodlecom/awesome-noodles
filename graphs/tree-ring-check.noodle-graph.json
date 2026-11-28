@@ -1,0 +1,505 @@
+{
+ "v": 1,
+ "nodes": [
+  {
+   "id": "c1",
+   "type": "comment",
+   "x": 60,
+   "y": 30,
+   "fields": {
+    "text": "Can a picture keep a tree's diary honest? A trunk writes one ring a year: a wet, kind year lays down a wide band of pale wood, a drought year a narrow dark-edged one, so the cross-section of a felled tree is a nine-year weather record written radially, oldest at the pith, youngest just inside the bark. Image models paint tree rings as decoration - even, wallpaper rings that spell no years at all. A GLM director picks one tree from a menu printed in its own prompt and copies out a RING CARD: exactly nine rings and the width class of each one counted from the centre out (WIDE, MEDIUM or NARROW), the three trees shuffling the same three-wide, three-medium, three-narrow multiset into three different histories. Muse paints the cross-section straight-on. A blind Gemini reader, who never saw the card, counts the rings and classes each one's width from the pith outward. A GLM auditor scores COUNT and WIDTHS position by position and the BARK rim: GROWTH TRUE only when the painted diary spells the carded years exactly. A Decide judge headlines round 1 as a side output; a gated GLM editor turns any slip into concrete repaint notes (a true diary demands a verbatim copy), Muse Edit repairs the section, and a blind re-read plus the same auditor re-score the corrected cross-section, which is the flow's final output."
+   },
+   "w": 900,
+   "name": "Tree-ring check"
+  },
+  {
+   "id": "setting",
+   "type": "text",
+   "x": 60,
+   "y": 300,
+   "fields": {
+    "text": "One straight-on top view of a freshly sawn tree-trunk cross-section filling the frame, lying on a plain forest-floor backdrop of soft leaf litter at the edges: pale wood, a small dark pith at the centre, concentric growth rings running out to one unbroken dark bark rim. Even daylight. How many rings there are and how wide each one is has not been decided yet. No people, no hands, no tools, no text, no labels, no numbers."
+   },
+   "w": 300,
+   "name": "Section setting"
+  },
+  {
+   "id": "director",
+   "type": "llm",
+   "x": 440,
+   "y": 280,
+   "fields": {
+    "model": "z-ai/glm-5.3-flash",
+    "system": "You are a tree-ring director. The SETTING you receive describes a cross-section backdrop, not a tree to match: it names no ring pattern on purpose, because the painter will grow the chosen tree's rings afterwards. Do NOT try to match a menu entry to the setting, do NOT refuse, and never ask for a different input. Pick exactly one menu tree freely - any of the three is a correct choice - and copy it out as the card, in exactly the card format below.\n\nTHE GROWTH RULE (fixed, botanical): a trunk lays down exactly one growth ring per year, counted from the pith at the centre outward to the bark. A kind, wet year grows a WIDE ring; an average year a MEDIUM ring; a drought year a NARROW ring. Ring 1 is the innermost ring, around the pith - the tree's first year; the last ring is the outermost, just inside the bark - its most recent year. Every menu entry below has exactly nine rings holding three WIDE, three MEDIUM and three NARROW in a different order - copy the chosen entry exactly, do not recompute or rebalance it.\n\nMENU:\n1. RIVER OAK - a lowland oak felled by a river meadow, pale honey-coloured wood, deep-furrowed dark bark. WIDTHS centre out: 1 WIDE; 2 NARROW; 3 MEDIUM; 4 WIDE; 5 NARROW; 6 NARROW; 7 MEDIUM; 8 WIDE; 9 MEDIUM.\n2. HILL PINE - an upland pine from a dry stony hill, warm amber wood, scaly reddish bark. WIDTHS centre out: 1 NARROW; 2 MEDIUM; 3 WIDE; 4 NARROW; 5 WIDE; 6 MEDIUM; 7 NARROW; 8 MEDIUM; 9 WIDE.\n3. ORCHARD ASH - a garden ash from an old orchard wall, cream-pale wood, smooth grey bark. WIDTHS centre out: 1 MEDIUM; 2 WIDE; 3 NARROW; 4 MEDIUM; 5 NARROW; 6 WIDE; 7 WIDE; 8 NARROW; 9 MEDIUM.\n\nCARD FORMAT - copy the chosen entry out exactly in this shape, filling every line, nothing else:\nTREE: <RIVER OAK or HILL PINE or ORCHARD ASH>\nRINGS: 9\nWIDTHS: 1 <CLASS>; 2 <CLASS>; 3 <CLASS>; 4 <CLASS>; 5 <CLASS>; 6 <CLASS>; 7 <CLASS>; 8 <CLASS>; 9 <CLASS>\nFIRST RING: <CLASS> (innermost, around the pith)\nLAST RING: <CLASS> (outermost, just inside the bark)\nBARK: one unbroken dark bark rim around the whole section\nWOOD: <the tree's wood and bark, one short phrase>",
+    "maxTokens": 1100,
+    "reasoningEffort": "low"
+   },
+   "w": 280,
+   "name": "Ring card - GLM picks a tree and copies its nine carded widths",
+   "sizes": {
+    "system": 150
+   }
+  },
+  {
+   "id": "j0",
+   "type": "join",
+   "x": 800,
+   "y": 480,
+   "fields": {
+    "sep": "\n\nRING CARD (the tree - nine rings and the width class of each counted from the centre out, plus the bark rim; its exact wording must reach the image maker):\n"
+   },
+   "w": 200,
+   "name": "Setting + ring card"
+  },
+  {
+   "id": "stylist",
+   "type": "llm",
+   "x": 800,
+   "y": 280,
+   "fields": {
+    "model": "z-ai/glm-5.3-flash",
+    "system": "You are a cross-section brief writer. You receive a SETTING and a RING CARD. Turn them into ONE prompt for an image model that paints the cross-section photograph. Rules:\n- Demand ONE straight-on top-view photograph of a freshly sawn tree-trunk cross-section filling the frame: a small dark pith at the exact centre, concentric growth rings around it, and one unbroken bark rim of the carded kind around the whole outside edge, on the setting's backdrop at the frame's corners only.\n- State the ring count plainly: exactly nine separate growth rings, each one a complete closed band around the centre, no ring splitting, merging or fading out.\n- Describe the nine rings strictly in the card's centre-out order, one ring at a time, naming each ring's width in concrete visual terms: WIDE is a broad band, roughly three times as thick as the thinnest ring; MEDIUM is a clear band about twice the thinnest; NARROW is a thin band, the thinnest on the section. Alternate pale earlywood and a darker thin latewood edge inside each ring so neighbouring rings stay separable, but the ring's total thickness is what carries its class.\n- Keep the wood colour and bark as the card's WOOD line states; the pith stays a small dark dot, not a hole, knot or crack.\n- Forbid, by name: any text, labels, captions, numbers or drawn arrows; extra rings, missing rings or rings that branch; knots, cracks, saw marks across the face, rot holes or insect holes; people, hands, axes, saws or rulers; a second trunk or a cut log seen from the side.\nOutput ONLY the painter prompt, one paragraph, no preamble.",
+    "maxTokens": 900,
+    "reasoningEffort": "low"
+   },
+   "w": 280,
+   "name": "Section brief - GLM turns the card into a painter prompt (pith, nine rings, bark rim)",
+   "sizes": {
+    "system": 150
+   }
+  },
+  {
+   "id": "paint",
+   "type": "image",
+   "x": 1160,
+   "y": 280,
+   "fields": {
+    "model": "meta/muse-image/text-to-image",
+    "size": "16:9",
+    "variations": "1"
+   },
+   "w": 280,
+   "name": "Cross-section - Muse paints the pith, the nine rings and the bark rim"
+  },
+  {
+   "id": "surveyor",
+   "type": "llm",
+   "x": 1520,
+   "y": 280,
+   "fields": {
+    "model": "google/gemini-3.8-flash",
+    "system": "You are a blind ring reader. You see one straight-on photograph of a sawn tree-trunk cross-section: a small dark pith at the centre, concentric growth rings around it, and a bark rim at the outside edge. You have never seen any plan or card, and you must report only what you can actually see - never guess an intended pattern, never tidy the rings into a regular spacing.\nWork from the centre out. Ring 1 is the innermost complete band around the pith; count outward, one complete closed band at a time, until the bark. A band counts as a ring only if it runs all the way around the centre; a partial arc, a crack or a colour smudge is not a ring.\nJudge each ring's width class by its radial thickness compared with the other rings in the same picture: NARROW for the thinnest bands, WIDE for bands roughly three times the thinnest, MEDIUM for the ones in between. Class every ring you count, in centre-out order.\nReport in exactly this shape, nothing else:\nRINGS: <how many complete rings you counted, one whole number>\nRING 1 WIDTH: <WIDE or MEDIUM or NARROW>\nRING 2 WIDTH: <WIDE or MEDIUM or NARROW>\n...one RING line per ring you counted, in centre-out order, no lines for rings you did not count...\nBARK: <INTACT if one unbroken bark rim runs around the whole section, BROKEN if the rim has gaps, MISSING if there is no bark rim>\nSECTION: <the wood colour and bark kind, one short phrase>\nReport the section exactly as it lies - do not assume the widths must alternate, repeat or form any pattern, and do not use any word outside the choices given.",
+    "maxTokens": 700,
+    "reasoningEffort": "low"
+   },
+   "w": 280,
+   "name": "Ring read - Gemini counts and classes each ring centre-out, blind",
+   "sizes": {
+    "system": 150
+   }
+  },
+  {
+   "id": "j1",
+   "type": "join",
+   "x": 1880,
+   "y": 180,
+   "fields": {
+    "sep": "\n\nRING READ (a blind reader reported only the section actually visible - the ring count and each ring's width class counted from the centre out, and the bark rim; it never saw the ring card):\n"
+   },
+   "w": 200,
+   "name": "Ring card + ring read"
+  },
+  {
+   "id": "checker",
+   "type": "llm",
+   "x": 2240,
+   "y": 400,
+   "fields": {
+    "model": "z-ai/glm-5.3-flash",
+    "system": "You are a growth-truth auditor. You receive a RING CARD (one tree: exactly nine rings, the width class of each counted from the centre out, and an unbroken bark rim) and a RING READ (a blind reader's report of the cross-section actually painted; it never saw the card). Score the read against the card, mechanically:\n\nDEFINITIONS:\n- COUNT: MATCH when the read's RINGS number is exactly 9; DRIFTED when it is any other number.\n- WIDTHS: compare position by position, centre out, positions 1 to 9. A position scores when the read's RING line for that position names the card's class for that position. A position the read does not have (because it counted fewer rings) scores as wrong; read rings beyond position 9 are ignored here and charged to COUNT. Report X of 9.\n- BARK: INTACT when the read's BARK line is INTACT; BROKEN when BROKEN; MISSING when MISSING.\n- VERDICT, applying this precedence in order: UNBUILT - the read's RINGS number is under 5, or BARK is MISSING (no readable diary at all); GROWTH TRUE - COUNT MATCH, WIDTHS 9 of 9 and BARK INTACT; COUNT DRIFTED - COUNT is DRIFTED (the painted tree lived a different number of years, whatever the widths say); PATTERN BROKEN - anything else (nine rings, but at least one width class wrong, or the bark rim broken).\n\nOutput exactly five lines, nothing else:\nCOUNT: <MATCH or DRIFTED>\nWIDTHS: <X of 9>\nBARK: <INTACT or BROKEN or MISSING>\nVERDICT: <GROWTH TRUE or PATTERN BROKEN or COUNT DRIFTED or UNBUILT>\nDETAIL: <one short sentence naming the decisive evidence>",
+    "maxTokens": 1200,
+    "reasoningEffort": "low"
+   },
+   "w": 280,
+   "name": "Growth audit - GLM scores the read against the card, centre out",
+   "sizes": {
+    "system": 150
+   }
+  },
+  {
+   "id": "j2",
+   "type": "join",
+   "x": 2240,
+   "y": 180,
+   "fields": {
+    "sep": "\n\nGROWTH AUDIT (a GLM auditor scored the blind ring read against the ring card - the count, the nine widths position by position, and the bark rim):\n"
+   },
+   "w": 200,
+   "name": "Card, ring read + growth audit"
+  },
+  {
+   "id": "audit",
+   "type": "decide",
+   "x": 2600,
+   "y": 180,
+   "fields": {
+    "model": "perplexity/pplx-decider-v1.2",
+    "mode": "choose",
+    "question": "The picture should be one straight-on cross-section of a sawn trunk: a small dark pith at the centre, exactly nine complete concentric growth rings around it, and one unbroken bark rim. The rings are a diary counted from the centre out - ring 1 innermost - and each ring's width class (WIDE, MEDIUM or NARROW) must match the card position by position: three wide, three medium, three narrow in the card's order. The audit in the text scores a blind reader's centre-out enumeration against the card: GROWTH TRUE when the count is nine, all nine widths match and the bark is intact; COUNT DRIFTED when the ring count is not nine; PATTERN BROKEN when nine rings carry a wrong width; UNBUILT when no diary can be read. Choose the one label that best fits the round-1 picture.",
+    "options": "growth true\npattern broken\ncount drifted\nrings unreadable"
+   },
+   "w": 280,
+   "name": "Growth true - audited",
+   "sizes": {
+    "question": 130
+   }
+  },
+  {
+   "id": "editor",
+   "type": "llm",
+   "x": 2600,
+   "y": 520,
+   "fields": {
+    "model": "z-ai/glm-5.3-flash",
+    "system": "You are a growth repair editor. You receive a RING CARD, a RING READ and a GROWTH AUDIT of a cross-section photograph. Turn the audit into ONE concrete repaint instruction for an image editor working on that same photograph:\n- If the audit's VERDICT is GROWTH TRUE, output exactly this one line and nothing else:\nReproduce this picture exactly, unchanged - same cross-section, same pith, same nine rings in the same centre-out order at the same widths, same unbroken bark rim, no added marks and no other text.\n- If the VERDICT is UNBUILT, demand the whole section be regrown to the card: one straight-on cross-section, small dark pith at the centre, exactly nine complete concentric rings in the card's centre-out width order (WIDE a broad band about three times the thinnest, MEDIUM about twice, NARROW the thinnest), and one unbroken bark rim of the carded kind around the whole outside.\n- If the VERDICT is COUNT DRIFTED, demand the ring boundaries be redrawn so the section carries exactly nine complete rings in the card's centre-out width order, keeping the same wood, pith, bark and framing; name the card's full width sequence in centre-out order in the instruction.\n- In every other case, keep the section, pith, bark and every ring the audit scored as matching exactly as they are, and repair only what failed: for each position whose width the audit did not match, demand that ring alone be repainted to its carded class, locating it by its centre-out number and its neighbours (for example: the fourth ring out from the pith, between the third and fifth); if the audit's BARK line is not INTACT, demand the bark rim be repainted as one unbroken rim around the whole section.\n- NEVER demand text, labels, numbers or arrows; never add a knot, crack or hole; never change the wood colour or the framing.\nOutput ONLY the repaint instruction, one paragraph, no preamble.",
+    "maxTokens": 600,
+    "reasoningEffort": "low"
+   },
+   "w": 280,
+   "name": "Edit notes - GLM turns a broken diary into repaint demands",
+   "sizes": {
+    "system": 150
+   }
+  },
+  {
+   "id": "fix",
+   "type": "edit",
+   "x": 2960,
+   "y": 520,
+   "fields": {
+    "model": "meta/muse-image/edit",
+    "size": "auto"
+   },
+   "w": 280,
+   "name": "Corrected section - Muse Edit repaints the failing rings only"
+  },
+  {
+   "id": "surveyor2",
+   "type": "llm",
+   "x": 3320,
+   "y": 520,
+   "fields": {
+    "model": "google/gemini-3.8-flash",
+    "system": "You are a blind ring reader. You see one straight-on photograph of a sawn tree-trunk cross-section: a small dark pith at the centre, concentric growth rings around it, and a bark rim at the outside edge. You have never seen any plan or card, and you must report only what you can actually see - never guess an intended pattern, never tidy the rings into a regular spacing.\nWork from the centre out. Ring 1 is the innermost complete band around the pith; count outward, one complete closed band at a time, until the bark. A band counts as a ring only if it runs all the way around the centre; a partial arc, a crack or a colour smudge is not a ring.\nJudge each ring's width class by its radial thickness compared with the other rings in the same picture: NARROW for the thinnest bands, WIDE for bands roughly three times the thinnest, MEDIUM for the ones in between. Class every ring you count, in centre-out order.\nReport in exactly this shape, nothing else:\nRINGS: <how many complete rings you counted, one whole number>\nRING 1 WIDTH: <WIDE or MEDIUM or NARROW>\nRING 2 WIDTH: <WIDE or MEDIUM or NARROW>\n...one RING line per ring you counted, in centre-out order, no lines for rings you did not count...\nBARK: <INTACT if one unbroken bark rim runs around the whole section, BROKEN if the rim has gaps, MISSING if there is no bark rim>\nSECTION: <the wood colour and bark kind, one short phrase>\nReport the section exactly as it lies - do not assume the widths must alternate, repeat or form any pattern, and do not use any word outside the choices given.",
+    "maxTokens": 700,
+    "reasoningEffort": "low"
+   },
+   "w": 280,
+   "name": "Re-read - Gemini counts the corrected section's rings, blind",
+   "sizes": {
+    "system": 150
+   }
+  },
+  {
+   "id": "j4",
+   "type": "join",
+   "x": 3680,
+   "y": 420,
+   "fields": {
+    "sep": "\n\nRING READ (a blind reader reported only the section actually visible in the corrected picture - the ring count and each ring's width class counted from the centre out, and the bark rim; it never saw the ring card):\n"
+   },
+   "w": 200,
+   "name": "Ring card + re-read"
+  },
+  {
+   "id": "checker2",
+   "type": "llm",
+   "x": 4040,
+   "y": 520,
+   "fields": {
+    "model": "z-ai/glm-5.3-flash",
+    "system": "You are a growth-truth auditor. You receive a RING CARD (one tree: exactly nine rings, the width class of each counted from the centre out, and an unbroken bark rim) and a RING READ (a blind reader's report of the cross-section actually painted; it never saw the card). Score the read against the card, mechanically:\n\nDEFINITIONS:\n- COUNT: MATCH when the read's RINGS number is exactly 9; DRIFTED when it is any other number.\n- WIDTHS: compare position by position, centre out, positions 1 to 9. A position scores when the read's RING line for that position names the card's class for that position. A position the read does not have (because it counted fewer rings) scores as wrong; read rings beyond position 9 are ignored here and charged to COUNT. Report X of 9.\n- BARK: INTACT when the read's BARK line is INTACT; BROKEN when BROKEN; MISSING when MISSING.\n- VERDICT, applying this precedence in order: UNBUILT - the read's RINGS number is under 5, or BARK is MISSING (no readable diary at all); GROWTH TRUE - COUNT MATCH, WIDTHS 9 of 9 and BARK INTACT; COUNT DRIFTED - COUNT is DRIFTED (the painted tree lived a different number of years, whatever the widths say); PATTERN BROKEN - anything else (nine rings, but at least one width class wrong, or the bark rim broken).\n\nOutput exactly five lines, nothing else:\nCOUNT: <MATCH or DRIFTED>\nWIDTHS: <X of 9>\nBARK: <INTACT or BROKEN or MISSING>\nVERDICT: <GROWTH TRUE or PATTERN BROKEN or COUNT DRIFTED or UNBUILT>\nDETAIL: <one short sentence naming the decisive evidence>",
+    "maxTokens": 1200,
+    "reasoningEffort": "low"
+   },
+   "w": 280,
+   "name": "Growth re-audit - GLM re-scores the corrected section against the same card",
+   "sizes": {
+    "system": 150
+   }
+  },
+  {
+   "id": "ask",
+   "type": "text",
+   "x": 1160,
+   "y": 520,
+   "fields": {
+    "text": "Read the rings in the attached picture now, following your instructions exactly."
+   },
+   "w": 240,
+   "name": "Read ask"
+  },
+  {
+   "id": "ask2",
+   "type": "text",
+   "x": 2960,
+   "y": 900,
+   "fields": {
+    "text": "Read the rings in the attached picture now, following your instructions exactly."
+   },
+   "w": 240,
+   "name": "Re-read ask"
+  }
+ ],
+ "links": [
+  {
+   "id": "l1",
+   "from": {
+    "node": "setting",
+    "port": "text"
+   },
+   "to": {
+    "node": "director",
+    "port": "prompt"
+   }
+  },
+  {
+   "id": "l2",
+   "from": {
+    "node": "director",
+    "port": "text"
+   },
+   "to": {
+    "node": "j0",
+    "port": "b"
+   }
+  },
+  {
+   "id": "l12",
+   "from": {
+    "node": "setting",
+    "port": "text"
+   },
+   "to": {
+    "node": "j0",
+    "port": "a"
+   }
+  },
+  {
+   "id": "l13",
+   "from": {
+    "node": "j0",
+    "port": "text"
+   },
+   "to": {
+    "node": "stylist",
+    "port": "prompt"
+   }
+  },
+  {
+   "id": "l3",
+   "from": {
+    "node": "stylist",
+    "port": "text"
+   },
+   "to": {
+    "node": "paint",
+    "port": "prompt"
+   }
+  },
+  {
+   "id": "l4",
+   "from": {
+    "node": "paint",
+    "port": "image"
+   },
+   "to": {
+    "node": "surveyor",
+    "port": "img1"
+   }
+  },
+  {
+   "id": "l7",
+   "from": {
+    "node": "director",
+    "port": "text"
+   },
+   "to": {
+    "node": "j1",
+    "port": "a"
+   }
+  },
+  {
+   "id": "l8",
+   "from": {
+    "node": "surveyor",
+    "port": "text"
+   },
+   "to": {
+    "node": "j1",
+    "port": "b"
+   }
+  },
+  {
+   "id": "l11",
+   "from": {
+    "node": "j1",
+    "port": "text"
+   },
+   "to": {
+    "node": "checker",
+    "port": "prompt"
+   }
+  },
+  {
+   "id": "l14",
+   "from": {
+    "node": "j1",
+    "port": "text"
+   },
+   "to": {
+    "node": "j2",
+    "port": "a"
+   }
+  },
+  {
+   "id": "l15",
+   "from": {
+    "node": "checker",
+    "port": "text"
+   },
+   "to": {
+    "node": "j2",
+    "port": "b"
+   }
+  },
+  {
+   "id": "l16",
+   "from": {
+    "node": "j2",
+    "port": "text"
+   },
+   "to": {
+    "node": "audit",
+    "port": "text"
+   }
+  },
+  {
+   "id": "l17",
+   "from": {
+    "node": "paint",
+    "port": "image"
+   },
+   "to": {
+    "node": "audit",
+    "port": "img1"
+   }
+  },
+  {
+   "id": "l18",
+   "from": {
+    "node": "j2",
+    "port": "text"
+   },
+   "to": {
+    "node": "editor",
+    "port": "prompt"
+   }
+  },
+  {
+   "id": "l19",
+   "from": {
+    "node": "editor",
+    "port": "text"
+   },
+   "to": {
+    "node": "fix",
+    "port": "prompt"
+   }
+  },
+  {
+   "id": "l20",
+   "from": {
+    "node": "paint",
+    "port": "image"
+   },
+   "to": {
+    "node": "fix",
+    "port": "image"
+   }
+  },
+  {
+   "id": "l21",
+   "from": {
+    "node": "fix",
+    "port": "image"
+   },
+   "to": {
+    "node": "surveyor2",
+    "port": "img1"
+   }
+  },
+  {
+   "id": "l22",
+   "from": {
+    "node": "director",
+    "port": "text"
+   },
+   "to": {
+    "node": "j4",
+    "port": "a"
+   }
+  },
+  {
+   "id": "l23",
+   "from": {
+    "node": "surveyor2",
+    "port": "text"
+   },
+   "to": {
+    "node": "j4",
+    "port": "b"
+   }
+  },
+  {
+   "id": "l24",
+   "from": {
+    "node": "j4",
+    "port": "text"
+   },
+   "to": {
+    "node": "checker2",
+    "port": "prompt"
+   }
+  },
+  {
+   "id": "l39",
+   "from": {
+    "node": "ask",
+    "port": "text"
+   },
+   "to": {
+    "node": "surveyor",
+    "port": "prompt"
+   }
+  },
+  {
+   "id": "l40",
+   "from": {
+    "node": "ask2",
+    "port": "text"
+   },
+   "to": {
+    "node": "surveyor2",
+    "port": "prompt"
+   }
+  }
+ ],
+ "nid": 32,
+ "lid": 40,
+ "view": {
+  "panX": 40,
+  "panY": 40,
+  "scale": 0.5
+ }
+}
